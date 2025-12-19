@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Egyptian King Apparel - Premium Streetwear</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Using Inter font for clean, modern look -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <style>
+        /* Custom CSS Variables and Theme Setup */
+        :root {
+            --primary-color: #ffd700; /* Richer Gold */
+            --secondary-color: #b91c1c; /* Deep Crimson Red */
+            --background-dark: #111827; /* Dark Black-Blue - Main background */
+            --text-light: #f9fafb; /* Off-White - Main text color */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background-dark);
+            color: var(--text-light);
+            /* Optional: subtle diagonal texture background for depth */
+            background-image: linear-gradient(45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01)), linear-gradient(45deg, rgba(255, 255, 255, 0.01) 25%, transparent 25%, transparent 75%, rgba(255, 255, 255, 0.01) 75%, rgba(255, 255, 255, 0.01));
+            background-size: 40px 40px;
+        }
+
+        /* Hero Section Background (Thematic, high contrast) */
+        .hero-section {
+            background-image: url('/file/475886027_1698300074233512_140626632578860155_n(1).jpg');
+            background-size: cover;
+            background-position: center;
+            min-height: 80vh; 
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Gold Gradient Text for Logo/Title */
+        .gold-gradient-text {
+            background: linear-gradient(135deg, #ffd700, #ffc400, #f8b400);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        /* Product Card Polish */
+        .product-card {
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.4s ease;
+            border: 1px solid #374151; 
+        }
+        .product-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.8), 0 8px 10px -6px rgba(0, 0, 0, 0.5);
+            border-color: var(--primary-color);
+        }
+
+        /* Premium Button Style (Gold) */
+        .premium-button {
+            background-color: var(--primary-color);
+            color: var(--background-dark);
+            font-weight: 700;
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 5px 15px rgba(255, 215, 0, 0.3);
+        }
+        .premium-button:hover {
+            background-color: #f8b400;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(255, 215, 0, 0.5);
+        }
+        
+        /* Buy Button inside card */
+        .buy-button {
+            display: block;
+            width: 100%;
+            padding: 0.75rem;
+            margin-top: 1rem;
+            border-radius: 0.5rem;
+        }
+
+        /* Call-to-Action Button Style (Red) */
+        .cta-button {
+            background-color: var(--secondary-color);
+            transition: all 0.3s ease-in-out;
+        }
+        .cta-button:hover {
+            background-color: #dc2626;
+            transform: scale(1.03);
+        }
+        
+        /* Modal Overlay Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9);
+            display: none; /* Hidden by default */
+            justify-content: center;
+            align-items: center;
+            z-index: 100;
+            animation: fadeIn 0.3s ease-out;
+        }
+
+        /* Modal Content Styling */
+        .modal-content {
+            width: 90%;
+            max-width: 600px;
+            max-height: 90vh;
+            overflow-y: auto;
+            background-color: #1f2937; /* Gray-800 */
+            border: 3px solid var(--primary-color);
+            box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
+            animation: slideIn 0.3s ease-out;
+        }
+
+        /* Keyframe Animations */
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes slideIn {
+            from { transform: translateY(-50px); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        /* Input Styling */
+        .checkout-input {
+            background-color: #374151; /* Gray-700 */
+            border: 1px solid #4b5563; /* Gray-600 */
+            color: var(--text-light);
+            padding: 0.75rem;
+            border-radius: 0.375rem;
+            transition: border-color 0.2s;
+        }
+        .checkout-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(255, 215, 0, 0.5);
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Header / Navigation -->
+    <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
+            <nav class="hidden md:flex space-x-8 text-lg">
+                <a href="#collection" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Collection</a>
+                <a href="#themes" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Themes</a>
+                <a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
+                <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
+            </nav>
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden text-yellow-400 text-2xl" id="menu-button">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        <!-- Mobile Menu (Hidden by default) -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+            <a href="#collection" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Collection</a>
+            <a href="#themes" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Themes</a>
+            <a href="#social" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Social</a>
+            <a href="#contact" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Contact</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero-section text-center flex items-center justify-center p-8">
+        <div class="bg-black bg-opacity-70 backdrop-blur-sm p-8 md:p-16 rounded-2xl shadow-2xl max-w-3xl border-4 border-yellow-400/50">
+            <h1 class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter gold-gradient-text">
+                THE EGYPTIAN KING
+            </h1>
+            <p class="text-xl md:text-3xl font-light text-yellow-100 italic mb-10">
+                Dare to Wear Different. Rule Your Style.
+            </p>
+            <a href="#collection" class="inline-block premium-button py-3 px-10 rounded-full text-xl shadow-lg transform">
+                Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Product Grid / Collection Section -->
+    <section id="collection" class="py-20 md:py-28 px-4">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-6xl font-extrabold text-center mb-16 gold-gradient-text">Featured Pharaoh Gear</h2>
+
+            <!-- Grid for 8 products -->
+            <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                
+                <!-- Product Card 1: Nefertiti (Pharaoh, Hoodie - EGP 450) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/490642742_17856682884411646_4169497167177285254_n.jpg" 
+                         alt="Nefertiti Queen Hoodie" 
+                         data-image="/file/490642742_17856682884411646_4169497167177285254_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Nefertiti Queen Hoodie</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">The Heritage Collection</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 450</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Nefertiti Queen Hoodie" 
+                            data-product-price="450"
+                            data-product-image="/file/490642742_17856682884411646_4169497167177285254_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 2: CR7 Bicycle Kick (T-shirt - EGP 350) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/472608428_17843821857411646_5190413624021546847_n.jpg" 
+                         alt="CR7 Real Madrid Tee" 
+                         data-image="/file/472608428_17843821857411646_5190413624021546847_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">CR7 Bicycle Kick Tee</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Sports Legends Edition</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 350</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="CR7 Bicycle Kick Tee" 
+                            data-product-price="350"
+                            data-product-image="/file/472608428_17843821857411646_5190413624021546847_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 3: LeBron James (Hoodie - EGP 400) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/491433724_17856683178411646_4354845891759366564_n.jpg" 
+                         alt="LeBron James Hoodie" 
+                         data-image="/file/491433724_17856683178411646_4354845891759366564_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Lakers King Hoodie</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">The Akron Hammer</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 400</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Lakers King Hoodie" 
+                            data-product-price="400"
+                            data-product-image="/file/491433724_17856683178411646_4354845891759366564_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 4: Porsche 911 GT (Hoodie - EGP 400) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/472640130_17843821824411646_6190914740358970487_n.jpg" 
+                         alt="Porsche Hoodie" 
+                         data-image="/file/472640130_17843821824411646_6190914740358970487_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">911 GT Italia Hoodie</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Red Edition Speed</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 400</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="911 GT Italia Hoodie" 
+                            data-product-price="400"
+                            data-product-image="/file/472640130_17843821824411646_6190914740358970487_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 5: Streetwear Car (T-shirt - EGP 380) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/472560793_17843822010411646_6344178710943818255_n.jpg" 
+                         alt="Streetwear Car Tee" 
+                         data-image="/file/472560793_17843822010411646_6344178710943818255_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Night Rider Tee</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Urban Motorsport</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 380</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Night Rider Tee" 
+                            data-product-price="380"
+                            data-product-image="/file/472560793_17843822010411646_6344178710943818255_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 6: Masked Icon (Hoodie - EGP 480) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/472629477_17843821590411646_7830263349802794080_n.jpg" 
+                         alt="Masked Icon Hoodie" 
+                         data-image="/file/472629477_17843821590411646_7830263349802794080_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Vigilante Hood</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Action Hero Series</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 480</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Vigilante Hood" 
+                            data-product-price="480"
+                            data-product-image="/file/472629477_17843821590411646_7830263349802794080_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 7: Basketball Icon (T-shirt - EGP 370) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/472698557_17843821893411646_1529126455755902565_n.jpg" 
+                         alt="Basketball Player Icon" 
+                         data-image="/file/472698557_17843821893411646_1529126455755902565_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Hardwood Legend Tee</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Hoops & Goals</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 370</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Hardwood Legend Tee" 
+                            data-product-price="370"
+                            data-product-image="/file/472698557_17843821893411646_1529126455755902565_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+                <!-- Product Card 8: Graffiti Icon (T-shirt - EGP 360) -->
+                <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+                    <img src="/file/491432935_17856682944411646_9079000155778269197_n.jpg" 
+                         alt="Graffiti Icon Tee" 
+                         data-image="/file/491432935_17856682944411646_9079000155778269197_n.jpg"
+                         class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+                    <h3 class="text-xl font-bold text-yellow-400">Street Art Tag Tee</h3>
+                    <p class="text-sm text-gray-400 mt-1 mb-3">Modern Graffiti</p>
+                    <p class="text-3xl font-extrabold text-yellow-500 mb-4">EGP 360</p>
+                    <button class="buy-button premium-button" 
+                            data-product-name="Street Art Tag Tee" 
+                            data-product-price="360"
+                            data-product-image="/file/491432935_17856682944411646_9079000155778269197_n.jpg">
+                        Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+                    </button>
+                </div>
+
+
+            </div>
+            <!-- End Product Grid -->
+
+            <div class="text-center mt-20">
+                <button class="cta-button text-white font-bold py-4 px-12 rounded-full text-xl shadow-xl transform">
+                    View All Products
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thematic Sections (Unchanged) -->
+    <section id="themes" class="py-20 px-4 bg-gray-900/70 border-t border-b border-yellow-800">
+        <div class="container mx-auto">
+            <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-yellow-400">Explore Our Kingdoms</h2>
+            <div class="grid md:grid-cols-3 gap-10 text-center">
+                
+                <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+                    <i class="fas fa-dumbbell text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-yellow-100">Sports Legends</h3>
+                    <p class="text-gray-400">Hoodies and tees dedicated to the kings of the court and pitch, featuring iconic moments and athletes.</p>
+                </div>
+                
+                <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+                    <i class="fas fa-mask text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-yellow-100">Action & Icons</h3>
+                    <p class="text-gray-400">Designs featuring cinematic icons and strong personalities—wear the power of legendary figures.</p>
+                </div>
+                
+                <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+                    <i class="fas fa-crown text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+                    <h3 class="text-2xl font-bold mb-3 text-yellow-100">The Heritage Line</h3>
+                    <p class="text-gray-400">A profound tribute to the majestic history of Egypt, featuring timeless graphics like Nefertiti.</p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Social Media Section (Unchanged) -->
+    <section id="social" class="py-20 px-4">
+        <div class="container mx-auto text-center">
+            <h2 class="text-4xl md:text-5xl font-bold mb-10 text-yellow-400">Connect with the King</h2>
+            <p class="text-xl text-gray-300 mb-12">Follow us on all platforms for new drops and exclusive content!</p>
+            
+            <div class="flex justify-center space-x-10 text-6xl">
+                <!-- TikTok Link -->
+                <a href="https://www.tiktok.com/@TheEgyptianKing" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg" title="@TheEgyptianKing">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                
+                <!-- Instagram Link -->
+                <a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg" title="@the_egyptian_king10">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                
+                <!-- Snapchat Link -->
+                <a href="https://www.snapchat.com/add/tek" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg" title="@tek">
+                    <i class="fab fa-snapchat-ghost"></i>
+                </a>
+                
+                <!-- YouTube Placeholder -->
+                <a href="#" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg" title="YouTube Channel">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                
+                <!-- Facebook Link -->
+                <a href="https://www.facebook.com/the_egyptian_king10" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg" title="/the_egyptian_king10">
+                    <i class="fab fa-facebook"></i>
+                </a>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 py-10 mt-12 border-t border-gray-700">
+        <div class="container mx-auto px-4 text-center text-gray-400">
+            <!-- Contact Information Section -->
+            <p class="mb-5 text-gray-200 text-xl font-medium" id="contact">
+                <i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support
+            </p>
+            <p class="mb-4 text-lg">
+                <i class="fab fa-whatsapp mr-2 text-green-500"></i> WhatsApp: 
+                <a href="https://wa.me/201025002299" target="_blank" class="text-yellow-400 hover:text-yellow-300 hover:underline transition duration-300">01025002299</a>
+            </p>
+            
+            <div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
+
+            <p class="text-sm">&copy; 2025 The Egyptian King Production. All Rights Reserved.</p>
+            <p class="text-xs mt-1 text-gray-500">Crafted with the power of AI.</p>
+        </div>
+    </footer>
+
+    <!-- Simulated Checkout Modal -->
+    <div id="checkout-modal" class="modal-overlay">
+        <div class="modal-content rounded-2xl p-6 md:p-10 relative">
+            
+            <button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
+                <i class="fas fa-times"></i>
+            </button>
+            
+            <h2 class="text-3xl font-extrabold gold-gradient-text border-b pb-3 mb-6 border-yellow-800">
+                <span id="modal-title">Quick Checkout</span>
+            </h2>
+
+            <!-- Step 1: Order Summary -->
+            <div id="step-1-summary">
+                <div class="flex items-center space-x-4 mb-6 p-4 bg-gray-900/50 rounded-lg border border-yellow-900">
+                    <img id="modal-product-image" src="" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+                    <div>
+                        <p class="text-xl font-bold text-yellow-400" id="modal-product-name"></p>
+                        <p class="text-2xl font-black text-yellow-500" id="modal-product-price"></p>
+                    </div>
+                </div>
+
+                <div class="mb-6">
+                    <label for="product-size" class="block text-gray-300 mb-2 font-medium">Select Size (MANDATORY)</label>
+                    <select id="product-size" class="checkout-input w-full">
+                        <option value="" disabled selected>Choose size...</option>
+                        <option value="S">Small (S)</option>
+                        <option value="M">Medium (M)</option>
+                        <option value="L">Large (L)</option>
+                        <option value="XL">Extra Large (XL)</option>
+                    </select>
+                </div>
+
+                <button onclick="nextStep(2)" id="next-to-shipping-btn" class="premium-button w-full py-3 rounded-xl text-xl transition-transform transform hover:scale-[1.02]">
+                    Proceed to Shipping <i class="fas fa-truck ml-2"></i>
+                </button>
+            </div>
+            
+            <!-- Step 2: Shipping & Simulated Payment Form -->
+            <div id="step-2-shipping" style="display:none;">
+                <p class="text-lg font-bold text-yellow-400 mb-4">1. Shipping Information</p>
+                <form id="checkout-form" onsubmit="return false;">
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+                        <input type="text" id="full-name" placeholder="Full Name" required class="checkout-input">
+                        <input type="tel" id="phone" placeholder="Phone Number" required class="checkout-input">
+                    </div>
+                    <div class="mb-4">
+                        <input type="text" id="address" placeholder="Shipping Address (Street, City)" required class="checkout-input w-full">
+                    </div>
+                    
+                    <p class="text-lg font-bold text-yellow-400 mb-4 mt-8">2. Simulated Payment Details</p>
+                    <p class="text-sm text-red-400 mb-4 italic">
+                        <i class="fas fa-exclamation-triangle mr-2"></i> Note: This is a secure simulation. No real card details are collected or processed.
+                    </p>
+                    <div class="mb-4">
+                        <input type="text" id="card-number" placeholder="Card Number (XXXX XXXX XXXX XXXX)" required class="checkout-input w-full" maxlength="19">
+                    </div>
+                    <div class="grid grid-cols-3 gap-4">
+                        <input type="text" id="expiry" placeholder="MM/YY" required class="checkout-input" maxlength="5">
+                        <input type="text" id="cvv" placeholder="CVV" required class="checkout-input" maxlength="4">
+                        <!-- Updated Payment Select to be mandatory and clearly exclude PayPal -->
+                        <select class="checkout-input" required>
+                            <option value="" disabled selected>Select Payment Method</option>
+                            <option value="cod">Cash on Delivery</option>
+                            <option value="card">Credit/Debit Card</option>
+                        </select>
+                    </div>
+                    
+                    <button onclick="processPayment()" class="cta-button text-white w-full py-3 rounded-xl text-xl mt-8 transition-transform transform hover:scale-[1.02]">
+                        Pay Now <i class="fas fa-dollar-sign ml-2"></i>
+                    </button>
+                    <button onclick="nextStep(1)" class="text-gray-400 hover:text-yellow-400 mt-3 text-sm w-full transition-colors">
+                        <i class="fas fa-arrow-left mr-1"></i> Back to Order Summary
+                    </button>
+                </form>
+            </div>
+            
+            <!-- Step 3: Confirmation -->
+            <div id="step-3-confirmation" style="display:none;" class="text-center p-8">
+                <i class="fas fa-check-circle text-8xl text-green-500 mb-6 animate-pulse"></i>
+                <h3 class="text-4xl font-black gold-gradient-text mb-4">Payment Successful!</h3>
+                <p class="text-xl text-gray-200 mb-6">Your simulated order has been placed.</p>
+                <p class="text-sm text-gray-400 mb-8">You will receive a confirmation email at your provided address. Thank you for shopping with The Egyptian King.</p>
+                <button onclick="closeModal()" class="premium-button py-3 px-8 rounded-full">
+                    Close & Continue Shopping
+                </button>
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        // Global state for tracking the selected product and current step
+        let currentProduct = {};
+        let currentStep = 1;
+
+        // --- Core Modal Functions ---
+
+        function openModal(product) {
+            currentProduct = product;
+            // Set product details in Step 1
+            document.getElementById('modal-product-name').textContent = product.name;
+            document.getElementById('modal-product-price').textContent = `EGP ${product.price}`;
+            document.getElementById('modal-product-image').src = product.image;
+            
+            // Reset size selection
+            document.getElementById('product-size').value = "";
+            
+            // Set up initial state (Step 1)
+            setStep(1);
+            document.getElementById('checkout-modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('checkout-modal').style.display = 'none';
+        }
+        
+        // Function to control which step is visible
+        function setStep(step) {
+            currentStep = step;
+            // Hide all steps initially
+            document.getElementById('step-1-summary').style.display = 'none';
+            document.getElementById('step-2-shipping').style.display = 'none';
+            document.getElementById('step-3-confirmation').style.display = 'none';
+            
+            // Show the current step
+            if (step === 1) document.getElementById('step-1-summary').style.display = 'block';
+            if (step === 2) document.getElementById('step-2-shipping').style.display = 'block';
+            if (step === 3) document.getElementById('step-3-confirmation').style.display = 'block';
+
+            // Update modal title
+            if (step === 1) document.getElementById('modal-title').textContent = 'Quick Checkout';
+            if (step === 2) document.getElementById('modal-title').textContent = 'Shipping & Payment';
+            if (step === 3) document.getElementById('modal-title').textContent = 'Order Confirmed';
+        }
+
+        // Function to move to the next step
+        function nextStep(step) {
+            if (step === 2) {
+                const selectedSize = document.getElementById('product-size').value;
+                if (!selectedSize) {
+                    // Custom message box instead of alert()
+                    const title = "Size Required";
+                    const message = "Please select a size (S, M, L, or XL) before proceeding to shipping.";
+                    showMessageBox(title, message);
+                    return;
+                }
+            }
+            setStep(step);
+        }
+        
+        // --- Simulated Payment Logic ---
+
+        function processPayment() {
+            // Basic Form Validation Check for Step 2
+            const fullName = document.getElementById('full-name').value;
+            const phone = document.getElementById('phone').value;
+            const address = document.getElementById('address').value;
+            const cardNumber = document.getElementById('card-number').value.replace(/\s/g, ''); // Remove spaces
+            const expiry = document.getElementById('expiry').value;
+            const cvv = document.getElementById('cvv').value;
+            const paymentMethod = document.querySelector('#step-2-shipping select').value; // Get selected payment method
+
+            if (!fullName || !phone || !address || !cardNumber || !expiry || !cvv || !paymentMethod) {
+                const title = "Missing Information";
+                const message = "Please fill in all shipping and simulated payment fields, and select a payment method to complete the order.";
+                showMessageBox(title, message);
+                return;
+            }
+
+            if (cardNumber.length < 16) {
+                const title = "Invalid Card Number";
+                const message = "The simulated card number must be at least 16 digits long.";
+                showMessageBox(title, message);
+                return;
+            }
+
+            // Simulate a delay for payment processing
+            document.getElementById('modal-title').textContent = 'Processing Payment...';
+            document.querySelector('#step-2-shipping button.cta-button').disabled = true;
+            document.querySelector('#step-2-shipping button.cta-button').innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i> Processing...';
+            
+            // After a successful simulation delay, move to confirmation step
+            setTimeout(() => {
+                setStep(3); // Go to confirmation step
+                // Reset button text
+                document.querySelector('#step-2-shipping button.cta-button').disabled = false;
+                document.querySelector('#step-2-shipping button.cta-button').innerHTML = 'Pay Now <i class="fas fa-dollar-sign ml-2"></i>';
+                // Reset form fields after successful order
+                document.getElementById('checkout-form').reset();
+            }, 2000); // 2 second delay
+        }
+        
+        // --- Custom Message Box (Instead of alert/confirm) ---
+
+        // Append a message box to the body if it doesn't exist
+        if (!document.getElementById('message-box-overlay')) {
+            const messageBoxHTML = `
+                <div id="message-box-overlay" class="modal-overlay" style="display:none; background-color: rgba(0, 0, 0, 0.7); z-index: 110;">
+                    <div id="message-box-content" class="bg-gray-800 rounded-xl p-6 md:p-8 w-11/12 max-w-sm border-2 border-red-500 shadow-2xl">
+                        <h4 id="message-box-title" class="text-2xl font-bold text-red-400 mb-3">Error</h4>
+                        <p id="message-box-text" class="text-gray-300 mb-6"></p>
+                        <button onclick="document.getElementById('message-box-overlay').style.display = 'none';" class="cta-button w-full py-2 rounded-lg text-lg">
+                            OK
+                        </button>
+                    </div>
+                </div>
+            `;
+            document.body.insertAdjacentHTML('beforeend', messageBoxHTML);
+        }
+
+        function showMessageBox(title, message) {
+            document.getElementById('message-box-title').textContent = title;
+            document.getElementById('message-box-text').textContent = message;
+            document.getElementById('message-box-overlay').style.display = 'flex';
+        }
+
+        // --- Event Listeners ---
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Mobile menu toggle
+            document.getElementById('menu-button').addEventListener('click', () => {
+                const menu = document.getElementById('mobile-menu');
+                menu.classList.toggle('hidden');
+            });
+
+            // Close mobile menu when a link is clicked
+            document.querySelectorAll('#mobile-menu a').forEach(link => {
+                link.addEventListener('click', () => {
+                    document.getElementById('mobile-menu').classList.add('hidden');
+                });
+            });
+
+            // Handle "Quick Buy" button clicks
+            document.querySelectorAll('.buy-button').forEach(button => {
+                button.addEventListener('click', function() {
+                    const product = {
+                        name: this.dataset.productName,
+                        price: this.dataset.productPrice,
+                        image: this.dataset.productImage
+                    };
+                    openModal(product);
+                });
+            });
+
+            // Close modal when clicking outside (on the overlay)
+            document.getElementById('checkout-modal').addEventListener('click', function(e) {
+                if (e.target === this) {
+                    closeModal();
+                }
+            });
+
+            // Simple smooth scrolling for navigation links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+
+</body>
+</html>
