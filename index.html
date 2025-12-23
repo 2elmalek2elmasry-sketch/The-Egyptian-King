@@ -36,6 +36,12 @@ background-size: 40px 40px;
 @keyframes slideIn { from {transform:translateY(-50px);opacity:0;} to {transform:translateY(0);opacity:1;} }
 .checkout-input { background-color:#374151; border:1px solid #4b5563; color:var(--text-light); padding:0.75rem; border-radius:0.375rem; transition:border-color 0.2s;}
 .checkout-input:focus { outline:none; border-color: var(--primary-color); box-shadow:0 0 0 2px rgba(255,215,0,0.5);}
+#currency-btn{
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
+}
 </style>
 </head>
 <body>
@@ -285,6 +291,33 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </div>
 </footer>
 
+<!-- Currency Floating Button -->
+<button id="currency-btn" class="premium-button px-6 py-3 rounded-full">
+  💱 Currency
+</button>
+
+<!-- Currency Modal -->
+<div id="currency-modal" class="modal-overlay">
+  <div class="modal-content max-w-md">
+    <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
+
+    <select id="currency-select" class="checkout-input w-full mb-4">
+      <option value="USD">USD – Dollar</option>
+      <option value="EUR">EUR – Euro</option>
+      <option value="GBP">GBP – Pound</option>
+      <option value="SAR">SAR – Riyal</option>
+      <option value="AED">AED – Dirham</option>
+      <option value="KWD">KWD – Dinar</option>
+      <option value="TRY">TRY – Lira</option>
+    </select>
+
+    <button id="apply-currency" class="premium-button w-full py-3">
+      Apply
+    </button>
+  </div>
+</div>
+
+
 <!-- Checkout Modal -->
 <div id="checkout-modal" class="modal-overlay">
 <div class="modal-content rounded-2xl p-6 md:p-10 relative">
@@ -400,6 +433,41 @@ showStep(3);
 document.getElementById('menu-button').addEventListener('click', () => {
 document.getElementById('mobile-menu').classList.toggle('hidden');
 });
+let exchangeRate = 1;
+let currentCurrency = "EGP";
+
+document.getElementById('currency-btn').onclick = () => {
+  document.getElementById('currency-modal').style.display = 'flex';
+};
+
+document.getElementById('apply-currency').onclick = async () => {
+  const currency = document.getElementById('currency-select').value;
+
+  const res = await fetch(`https://api.exchangerate.host/latest?base=EGP&symbols=${currency}`);
+  const data = await res.json();
+  exchangeRate = data.rates[currency];
+  currentCurrency = currency;
+
+  document.querySelectorAll('.price-text').forEach(priceEl => {
+    const base = Number(priceEl.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    priceEl.innerText = `${currency} ${converted}`;
+  });
+
+  document.querySelectorAll('.buy-button').forEach(btn => {
+    const base = Number(btn.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    btn.dataset.productPrice = `${currency} ${converted}`;
+  });
+
+  document.getElementById('currency-modal').style.display = 'none';
+};
+
+// close modal on background click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
+});
+
 </script>
 
 </body>
