@@ -46,27 +46,59 @@ background-size: 40px 40px;
 </head>
 <body>
 
+<!-- Sign Choice Modal -->
+<div id="sign-choice-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative text-center">
+    <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
+      <i class="fas fa-times"></i>
+    </button>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+    <p class="text-gray-300 mb-6">Do you want to Sign In or Sign Up?</p>
+    <div class="flex justify-center gap-6">
+      <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">Sign In</button>
+      <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">Sign Up</button>
+    </div>
+  </div>
+</div>
+
 <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
-<div class="container mx-auto px-4 py-4 flex justify-between items-center">
-<a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
-<nav class="hidden md:flex space-x-8 text-lg">
-<a href="#collection" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Collection</a>
-<a href="#themes" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Themes</a>
-<a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
-<a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
-</nav>
-<button class="md:hidden text-yellow-400 text-2xl" id="menu-button">
-<i class="fas fa-bars"></i>
-</button>
-</div>
-<div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
-<a href="#collection" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Collection</a>
-<a href="#themes" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Themes</a>
-<a href="#social" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Social</a>
-<a href="#contact" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Contact</a>
-</div>
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
+
+    <!-- Navigation Links + Sign In on Desktop -->
+    <div class="flex items-center space-x-8">
+      <nav class="hidden md:flex space-x-6 text-lg">
+        <a href="#collection" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Collection</a>
+        <a href="#themes" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Themes</a>
+        <a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
+        <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
+      </nav>
+
+      <!-- Sign In / Up Button (Top Right) -->
+      <button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
+        🔑 Sign In / Up
+      </button>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-yellow-400 text-2xl" id="menu-button">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+    <a href="#collection" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Collection</a>
+    <a href="#themes" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Themes</a>
+    <a href="#social" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Social</a>
+    <a href="#contact" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Contact</a>
+    <a href="#" id="sign-btn-mobile" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Sign In / Up</a>
+  </div>
 </header>
 
+<!-- Hero Section -->
 <section class="hero-section text-center flex items-center justify-center p-8">
 <div class="bg-black bg-opacity-70 backdrop-blur-sm p-8 md:p-16 rounded-2xl shadow-2xl max-w-3xl border-4 border-yellow-400/50">
 <h1 class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter gold-gradient-text">
@@ -81,8 +113,82 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
 </div>
 </section>
 
+<!-- Themes, Social, Footer, Currency Modal, Checkout Modal -->
+<!-- Keep all of your previous code for themes, social, checkout, currency, etc. unchanged -->
+
+<!-- Sign In Modal -->
+<div id="signin-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative">
+    <button onclick="closeSignModal('signin-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign In</h2>
+    <form onsubmit="return false;" class="space-y-4">
+      <input type="email" placeholder="Email" class="checkout-input w-full" required>
+      <input type="password" placeholder="Password" class="checkout-input w-full" required>
+      <button class="premium-button w-full py-3 rounded-xl">Sign In</button>
+    </form>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div id="signup-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative">
+    <button onclick="closeSignModal('signup-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign Up</h2>
+    <form onsubmit="return false;" class="space-y-4">
+      <input type="text" placeholder="Full Name" class="checkout-input w-full" required>
+      <input type="email" placeholder="Email" class="checkout-input w-full" required>
+      <input type="password" placeholder="Password" class="checkout-input w-full" required>
+      <button class="premium-button w-full py-3 rounded-xl">Sign Up</button>
+    </form>
+  </div>
+</div>
+
+<script>
+// ===== Existing Scripts =====
+
+// Mobile menu toggle
+document.getElementById('menu-button').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+
+// Sign In / Up buttons functionality
+document.getElementById('sign-btn-header').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+document.getElementById('sign-btn-mobile').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+
+// Functions to open/close Sign modals
+function openSignIn() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signin-modal').style.display = 'flex';
+}
+function openSignUp() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signup-modal').style.display = 'flex';
+}
+function closeSignModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal on background click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
+});
+</script>
+
 <section id="collection" class="py-20 md:py-28 px-4">
 <div class="container mx-auto">
+<div class="text-center mb-16">
+  <h2 class="text-4xl md:text-5xl font-extrabold gold-gradient-text mb-4">
+    Next Drop In
+  </h2>
+  <p id="countdown-timer" class="text-3xl md:text-4xl font-black text-yellow-400 tracking-wider">
+    01d 00h 00m 00s
+  </p>
+</div>
+
 <h2 class="text-4xl md:text-6xl font-extrabold text-center mb-16 gold-gradient-text">Featured Pharaoh Gear</h2>
 <div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
 
@@ -336,6 +442,14 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </div>
 </footer>
 
+><!-- Floating Day/Night Toggle Button -->
+<button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full" 
+style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
+  🌞 / 🌙
+</button>
+
+
+
 <!-- Currency Floating Button -->
 <button id="currency-btn" class="premium-button px-6 py-3 rounded-full">
   💱 Currency
@@ -512,9 +626,153 @@ document.getElementById('apply-currency').onclick = async () => {
 document.querySelectorAll('.modal-overlay').forEach(m => {
   m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
 });
+// Theme toggle
+const themeBtn = document.getElementById('theme-toggle-btn');
+themeBtn.onclick = () => {
+  const body = document.body;
+  if(body.classList.contains('light-mode')){
+    body.classList.remove('light-mode');
+    body.style.backgroundColor = 'var(--background-dark)';
+    body.style.color = 'var(--text-light)';
+    themeBtn.innerText = '🌞 / 🌙';
+  } else {
+    body.classList.add('light-mode');
+    body.style.backgroundColor = '#f9fafb';
+    body.style.color = '#111827';
+    themeBtn.innerText = '🌞 / 🌙';
+  }
+};
 
+</script>
+<script>
+const ONE_DAY = 24 * 60 * 60 * 1000;
+const ONE_WEEK = 7 * ONE_DAY;
+
+let targetTime = localStorage.getItem("dropTarget");
+let mode = localStorage.getItem("dropMode");
+
+if (!targetTime || !mode) {
+  targetTime = Date.now() + ONE_DAY;
+  mode = "day";
+  localStorage.setItem("dropTarget", targetTime);
+  localStorage.setItem("dropMode", mode);
+}
+
+function updateDropCountdown() {
+  const now = Date.now();
+  let diff = targetTime - now;
+
+  if (diff <= 0) {
+    if (mode === "day") {
+      targetTime = Date.now() + ONE_WEEK;
+      mode = "week";
+    } else {
+      targetTime = Date.now() + ONE_DAY;
+      mode = "day";
+    }
+    localStorage.setItem("dropTarget", targetTime);
+    localStorage.setItem("dropMode", mode);
+    diff = targetTime - now;
+  }
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("countdown-timer").textContent =
+    `${String(d).padStart(2,"0")}d ` +
+    `${String(h).padStart(2,"0")}h ` +
+    `${String(m).padStart(2,"0")}m ` +
+    `${String(s).padStart(2,"0")}s`;
+}
+
+setInterval(updateDropCountdown, 1000);
+updateDropCountdown();
+</script>
+
+
+<body>
+  <!-- Your page content here -->
+
+  <!-- Sign Choice Modal -->
+  <div id="sign-choice-modal" class="modal-overlay">
+    <div class="modal-content max-w-md rounded-2xl p-6 relative text-center">
+      <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
+        <i class="fas fa-times"></i>
+      </button>
+      <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+      <p class="text-gray-300 mb-6">Do you want to Sign In or Sign Up?</p>
+      <div class="flex justify-center gap-6">
+        <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">Sign In</button>
+        <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">Sign Up</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Sign In Modal -->
+  <div id="signin-modal" class="modal-overlay" style="display:none;">
+    <!-- ...your Sign In modal content... -->
+  </div>
+
+  <!-- Sign Up Modal -->
+  <div id="signup-modal" class="modal-overlay" style="display:none;">
+    <!-- ...your Sign Up modal content... -->
+  </div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Sign In button
+  document.querySelector('#signin-modal form button').addEventListener('click', (e) => {
+    e.preventDefault(); // prevent form submission
+    alert('Signed In Successfully!'); // or any action you want
+    closeSignModal('signin-modal'); // close the modal
+  });
+
+  // Sign Up button
+  document.querySelector('#signup-modal form button').addEventListener('click', (e) => {
+    e.preventDefault(); // prevent form submission
+    alert('Signed Up Successfully!'); // or any action you want
+    closeSignModal('signup-modal'); // close the modal
+  });
+});
+</script>
+
+
+</body>
+<script>
+function openSignChoice() {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+}
+
+function openSignIn() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signin-modal').style.display = 'flex';
+}
+
+function openSignUp() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signup-modal').style.display = 'flex';
+}
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  // Sign In button
+  document.querySelector('#signin-modal form button').addEventListener('click', (e) => {
+    e.preventDefault(); // prevent form submission
+    alert('Signed In Successfully!'); // or any action you want
+    closeSignModal('signin-modal'); // close the modal
+  });
+
+  // Sign Up button
+  document.querySelector('#signup-modal form button').addEventListener('click', (e) => {
+    e.preventDefault(); // prevent form submission
+    alert('Signed Up Successfully!'); // or any action you want
+    closeSignModal('signup-modal'); // close the modal
+  });
+});
 </script>
 
 </body>
 </html>
-
