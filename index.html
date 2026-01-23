@@ -648,9 +648,11 @@ themeBtn.onclick = () => {
 const ONE_DAY = 24 * 60 * 60 * 1000;
 const ONE_WEEK = 7 * ONE_DAY;
 
-let targetTime = localStorage.getItem("dropTarget");
+// 🔒 Load & FORCE number
+let targetTime = Number(localStorage.getItem("dropTarget"));
 let mode = localStorage.getItem("dropMode");
 
+// ✅ Create ONLY ONCE
 if (!targetTime || !mode) {
   targetTime = Date.now() + ONE_DAY;
   mode = "day";
@@ -662,13 +664,14 @@ function updateDropCountdown() {
   const now = Date.now();
   let diff = targetTime - now;
 
+  // 🔁 Switch modes WITHOUT resetting wrongly
   if (diff <= 0) {
     if (mode === "day") {
-      targetTime = Date.now() + ONE_WEEK;
       mode = "week";
+      targetTime += ONE_WEEK;
     } else {
-      targetTime = Date.now() + ONE_DAY;
       mode = "day";
+      targetTime += ONE_DAY;
     }
     localStorage.setItem("dropTarget", targetTime);
     localStorage.setItem("dropMode", mode);
