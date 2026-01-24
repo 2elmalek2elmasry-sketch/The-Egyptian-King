@@ -645,49 +645,35 @@ themeBtn.onclick = () => {
 
 </script>
 <script>
-const ONE_DAY = 24 * 60 * 60 * 1000;
-
-// Get next Friday at 11:00 AM
 function getNextFriday11AM() {
   const now = new Date();
-  const friday = new Date(now);
+  const result = new Date(now);
 
-  const daysUntilFriday = (5 - now.getDay() + 7) % 7 || 7;
-  friday.setDate(now.getDate() + daysUntilFriday);
-  friday.setHours(11, 0, 0, 0);
+  // Set time to 11:00 AM
+  result.setHours(11, 0, 0, 0);
 
-  return friday.getTime();
+  // 5 = Friday (0 Sunday)
+  const day = now.getDay();
+  let daysUntilFriday = (5 - day + 7) % 7;
+
+  // If today is Friday but past 11 AM → go to next Friday
+  if (daysUntilFriday === 0 && now >= result) {
+    daysUntilFriday = 7;
+  }
+
+  result.setDate(now.getDate() + daysUntilFriday);
+  return result.getTime();
 }
 
-let targetTime = Number(localStorage.getItem("dropTarget"));
-let mode = localStorage.getItem("dropMode");
+let dropTime = getNextFriday11AM();
 
-// FIRST TIME ONLY
-if (!targetTime || !mode) {
-  targetTime = Date.now() + ONE_DAY;
-  mode = "day";
-  localStorage.setItem("dropTarget", targetTime);
-  localStorage.setItem("dropMode", mode);
-}
-
-function updateDropCountdown() {
+function updateCountdown() {
   const now = Date.now();
-  let diff = targetTime - now;
+  let diff = dropTime - now;
 
   if (diff <= 0) {
-    if (mode === "day") {
-      // switch to WEEK → ends Friday 11 AM
-      targetTime = getNextFriday11AM();
-      mode = "week";
-    } else {
-      // switch back to DAY → 24 hours
-      targetTime = Date.now() + ONE_DAY;
-      mode = "day";
-    }
-
-    localStorage.setItem("dropTarget", targetTime);
-    localStorage.setItem("dropMode", mode);
-    diff = targetTime - now;
+    dropTime = getNextFriday11AM();
+    diff = dropTime - now;
   }
 
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
@@ -696,14 +682,11 @@ function updateDropCountdown() {
   const s = Math.floor((diff / 1000) % 60);
 
   document.getElementById("countdown-timer").textContent =
-    `${String(d).padStart(2,"0")}d ` +
-    `${String(h).padStart(2,"0")}h ` +
-    `${String(m).padStart(2,"0")}m ` +
-    `${String(s).padStart(2,"0")}s`;
+    `${d}d ${h}h ${m}m ${s}s`;
 }
 
-setInterval(updateDropCountdown, 1000);
-updateDropCountdown();
+setInterval(updateCountdown, 1000);
+updateCountdown();
 </script>
 
 
