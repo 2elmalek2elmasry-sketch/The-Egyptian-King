@@ -646,13 +646,23 @@ themeBtn.onclick = () => {
 </script>
 <script>
 const ONE_DAY = 24 * 60 * 60 * 1000;
-const ONE_WEEK = 7 * ONE_DAY;
 
-// 🔒 Load & FORCE number
+// Get next Friday at 11:00 AM
+function getNextFriday11AM() {
+  const now = new Date();
+  const friday = new Date(now);
+
+  const daysUntilFriday = (5 - now.getDay() + 7) % 7 || 7;
+  friday.setDate(now.getDate() + daysUntilFriday);
+  friday.setHours(11, 0, 0, 0);
+
+  return friday.getTime();
+}
+
 let targetTime = Number(localStorage.getItem("dropTarget"));
 let mode = localStorage.getItem("dropMode");
 
-// ✅ Create ONLY ONCE
+// FIRST TIME ONLY
 if (!targetTime || !mode) {
   targetTime = Date.now() + ONE_DAY;
   mode = "day";
@@ -664,15 +674,17 @@ function updateDropCountdown() {
   const now = Date.now();
   let diff = targetTime - now;
 
-  // 🔁 Switch modes WITHOUT resetting wrongly
   if (diff <= 0) {
     if (mode === "day") {
+      // switch to WEEK → ends Friday 11 AM
+      targetTime = getNextFriday11AM();
       mode = "week";
-      targetTime += ONE_WEEK;
     } else {
+      // switch back to DAY → 24 hours
+      targetTime = Date.now() + ONE_DAY;
       mode = "day";
-      targetTime += ONE_DAY;
     }
+
     localStorage.setItem("dropTarget", targetTime);
     localStorage.setItem("dropMode", mode);
     diff = targetTime - now;
