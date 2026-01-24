@@ -645,36 +645,25 @@ themeBtn.onclick = () => {
 
 </script>
 <script>
-function getNextFriday11AM() {
-  const now = new Date();
-  const result = new Date(now);
+function getNextFriday11AM(fromDate = new Date()) {
+  const date = new Date(fromDate);
+  const day = date.getDay(); // 0 = Sunday, 5 = Friday
 
-  // Set time to 11:00 AM
-  result.setHours(11, 0, 0, 0);
-
-  // 5 = Friday (0 Sunday)
-  const day = now.getDay();
   let daysUntilFriday = (5 - day + 7) % 7;
-
-  // If today is Friday but past 11 AM → go to next Friday
-  if (daysUntilFriday === 0 && now >= result) {
+  if (daysUntilFriday === 0 && date.getHours() >= 11) {
     daysUntilFriday = 7;
   }
 
-  result.setDate(now.getDate() + daysUntilFriday);
-  return result.getTime();
+  date.setDate(date.getDate() + daysUntilFriday);
+  date.setHours(11, 0, 0, 0);
+  return date;
 }
 
-let dropTime = getNextFriday11AM();
-
 function updateCountdown() {
-  const now = Date.now();
-  let diff = dropTime - now;
+  const now = new Date();
+  const nextFriday = getNextFriday11AM(now);
 
-  if (diff <= 0) {
-    dropTime = getNextFriday11AM();
-    diff = dropTime - now;
-  }
+  const diff = nextFriday - now;
 
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -682,14 +671,15 @@ function updateCountdown() {
   const s = Math.floor((diff / 1000) % 60);
 
   document.getElementById("countdown-timer").textContent =
-    `${d}d ${h}h ${m}m ${s}s`;
+    `${String(d).padStart(2, "0")}d ` +
+    `${String(h).padStart(2, "0")}h ` +
+    `${String(m).padStart(2, "0")}m ` +
+    `${String(s).padStart(2, "0")}s`;
 }
 
 setInterval(updateCountdown, 1000);
 updateCountdown();
 </script>
-
-
 <body>
   <!-- Your page content here -->
 
