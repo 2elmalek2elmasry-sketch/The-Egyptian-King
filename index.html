@@ -645,25 +645,58 @@ themeBtn.onclick = () => {
 
 </script>
 <script>
-function getNextFriday11AM(fromDate = new Date()) {
-  const date = new Date(fromDate);
-  const day = date.getDay(); // 0 = Sunday, 5 = Friday
+/*
+GLOBAL DROP SYSTEM
+Phase 1: 1 day
+Phase 2: Until next Friday 11:00 AM
+Repeats forever
+Same on all devices
+*/
 
+// 🔒 GLOBAL START (SET THIS ONCE)
+// Example: Jan 1, 2026 @ 11:00 AM UTC
+const GLOBAL_START = Date.UTC(2026, 0, 1, 11, 0, 0);
+
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+function getNextFriday11UTC(fromTime) {
+  const date = new Date(fromTime);
+  const day = date.getUTCDay(); // 0 = Sun, 5 = Fri
   let daysUntilFriday = (5 - day + 7) % 7;
-  if (daysUntilFriday === 0 && date.getHours() >= 11) {
+  if (daysUntilFriday === 0 && date.getUTCHours() >= 11) {
     daysUntilFriday = 7;
   }
+  date.setUTCDate(date.getUTCDate() + daysUntilFriday);
+  date.setUTCHours(11, 0, 0, 0);
+  return date.getTime();
+}
 
-  date.setDate(date.getDate() + daysUntilFriday);
-  date.setHours(11, 0, 0, 0);
-  return date;
+function getCurrentPhase() {
+  let t = GLOBAL_START;
+  let phase = "day";
+
+  while (true) {
+    if (phase === "day") {
+      if (Date.now() < t + ONE_DAY) {
+        return { phase: "day", target: t + ONE_DAY };
+      }
+      t += ONE_DAY;
+      phase = "friday";
+    } else {
+      const friday = getNextFriday11UTC(t);
+      if (Date.now() < friday) {
+        return { phase: "friday", target: friday };
+      }
+      t = friday;
+      phase = "day";
+    }
+  }
 }
 
 function updateCountdown() {
-  const now = new Date();
-  const nextFriday = getNextFriday11AM(now);
-
-  const diff = nextFriday - now;
+  const { target } = getCurrentPhase();
+  let diff = target - Date.now();
+  if (diff < 0) diff = 0;
 
   const d = Math.floor(diff / (1000 * 60 * 60 * 24));
   const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
@@ -671,10 +704,10 @@ function updateCountdown() {
   const s = Math.floor((diff / 1000) % 60);
 
   document.getElementById("countdown-timer").textContent =
-    `${String(d).padStart(2, "0")}d ` +
-    `${String(h).padStart(2, "0")}h ` +
-    `${String(m).padStart(2, "0")}m ` +
-    `${String(s).padStart(2, "0")}s`;
+    `${String(d).padStart(2,"0")}d ` +
+    `${String(h).padStart(2,"0")}h ` +
+    `${String(m).padStart(2,"0")}m ` +
+    `${String(s).padStart(2,"0")}s`;
 }
 
 setInterval(updateCountdown, 1000);
