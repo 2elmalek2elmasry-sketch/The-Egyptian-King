@@ -136,7 +136,6 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
 </div>
 
 <!-- Sign Up Modal -->
-<!-- Sign Up Modal -->
 <div id="signup-modal" class="modal-overlay">
   <div class="modal-content max-w-md rounded-2xl p-6 relative">
     <button onclick="closeSignModal('signup-modal')" 
@@ -160,7 +159,21 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
   </div>
 </div>
 
+<!-- Sign Out Modal -->
+<div id="signout-modal" class="modal-overlay">
+  <div class="modal-content max-w-sm rounded-2xl p-6 relative text-center">
+    <button onclick="closeSignModal('signout-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold text-yellow-400 mb-4">Do you want to sign out?</h2>
+    <div class="flex justify-center gap-6">
+      <button onclick="logoutUser()" class="premium-button py-2 px-6 rounded-xl">Yes</button>
+      <button onclick="closeSignModal('signout-modal')" class="premium-button py-2 px-6 rounded-xl">No</button>
+    </div>
+  </div>
+</div>
+
+
 <script>
+
 // ===== Existing Scripts =====
 
 // Mobile menu toggle
@@ -781,20 +794,93 @@ document.addEventListener('DOMContentLoaded', () => {
 </script>
 
 <script>
-function handleSignIn() {
-  const email = document.querySelector('#signin-modal input[type="email"]').value;
-  if (!email) return;
+// Open Sign Out modal when avatar is clicked
+const avatar = document.getElementById('user-avatar');
+avatar.addEventListener('click', () => {
+  // Only open if avatar is visible
+  if (!avatar.classList.contains('hidden')) {
+    document.getElementById('signout-modal').style.display = 'flex';
+  }
+});
 
-  loginUser(email);
-  closeSignModal('signin-modal');
+// Logout function
+function logoutUser() {
+  localStorage.removeItem('loggedInUser');
+
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
+
+  avatar.classList.add('hidden');
+  avatar.textContent = '';
+  signBtnHeader.style.display = 'inline-block';
+  signBtnMobile.style.display = 'block';
+
+  closeSignModal('signout-modal');
+}
+</script>
+<script>
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPassword(password) {
+  return /^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password);
 }
 
 function handleSignUp() {
-  const email = document.querySelector('#signup-modal input[type="email"]').value;
-  if (!email) return;
+  const name = document.querySelector('#signup-modal input[placeholder="Full Name"]').value.trim();
+  const email = document.querySelector('#signup-modal input[type="email"]').value.trim();
+  const password = document.querySelector('#signup-modal input[type="password"]').value.trim();
+
+  if (!name) {
+    alert("Enter your full name.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Enter a valid email.");
+    return;
+  }
+
+  if (!isValidPassword(password)) {
+    alert("Password must be 6+ characters with letters & numbers.");
+    return;
+  }
+
+  if (USERS.some(u => u.email === email)) {
+    alert("Email already registered.");
+    return;
+  }
+
+  USERS.push({ email, password });
+  localStorage.setItem('users', JSON.stringify(USERS));
 
   loginUser(email);
   closeSignModal('signup-modal');
+
+  alert("Account created successfully 👑");
+}
+</script>
+
+<script>
+// ===== USER DATABASE =====
+let USERS = JSON.parse(localStorage.getItem('users')) || [];
+</script>
+
+<script>
+function handleSignIn() {
+  const email = document.querySelector('#signin-modal input[type="email"]').value.trim();
+  const password = document.querySelector('#signin-modal input[type="password"]').value.trim();
+
+  const user = USERS.find(u => u.email === email && u.password === password);
+
+  if (!user) {
+    alert("Invalid email or password.");
+    return;
+  }
+
+  loginUser(email);
+  closeSignModal('signin-modal');
 }
 </script>
 
