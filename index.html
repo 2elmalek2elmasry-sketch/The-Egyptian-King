@@ -734,24 +734,69 @@ updateCountdown();
   </div>
 
   <!-- Sign In Modal -->
-  <div id="signin-modal" class="modal-overlay" style="display:none;">
-    <!-- ...your Sign In modal content... -->
-  </div>
-
-  <!-- Sign Up Modal -->
-  <div id="signup-modal" class="modal-overlay" style="display:none;">
-    <!-- ...your Sign Up modal content... -->
-  </div>
-
-document.addEventListener('DOMContentLoaded', () => {
-  // Sign In button
-  <button onclick="handleSignIn()" class="premium-button w-full py-3 rounded-xl">
+<button type="button"
+        onclick="handleSignIn()"
+        class="premium-button w-full py-3 rounded-xl">
   Sign In
 </button>
-  // Sign Up button
-<button onclick="handleSignUp()" class="premium-button w-full py-3 rounded-xl">
+
+  <!-- Sign Up Modal -->
+  <button type="button"
+        onclick="handleSignUp()"
+        class="premium-button w-full py-3 rounded-xl">
   Sign Up
 </button>
+
+<script>
+// ===== USER AUTH =====
+
+// Generate color from email
+function getColorFromEmail(email) {
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl(${hash % 360}, 70%, 55%)`;
+}
+
+function showUserAvatar(email) {
+  const avatar = document.getElementById('user-avatar');
+  const signBtn = document.getElementById('sign-btn-header');
+
+  avatar.textContent = email.charAt(0).toUpperCase();
+  avatar.style.backgroundColor = getColorFromEmail(email);
+  avatar.style.color = '#111';
+
+  avatar.classList.remove('hidden');
+  signBtn.style.display = 'none';
+}
+
+function loginUser(email) {
+  localStorage.setItem('loggedInUser', email);
+  showUserAvatar(email);
+}
+
+function handleSignIn() {
+  const email = document.querySelector('#signin-modal input[type="email"]').value;
+  if (!email) return;
+
+  loginUser(email);
+  closeSignModal('signin-modal');
+}
+
+function handleSignUp() {
+  const email = document.querySelector('#signup-modal input[type="email"]').value;
+  if (!email) return;
+
+  loginUser(email);
+  closeSignModal('signup-modal');
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+  const savedUser = localStorage.getItem('loggedInUser');
+  if (savedUser) showUserAvatar(savedUser);
+});
+</script>
 
 </body>
 <script>
@@ -768,24 +813,6 @@ function openSignUp() {
   document.getElementById('sign-choice-modal').style.display = 'none';
   document.getElementById('signup-modal').style.display = 'flex';
 }
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-  // Sign In button
-  document.querySelector('#signin-modal form button').addEventListener('click', (e) => {
-    e.preventDefault(); // prevent form submission
-    alert('Signed In Successfully!'); // or any action you want
-    closeSignModal('signin-modal'); // close the modal
-  });
-
-  // Sign Up button
-  document.querySelector('#signup-modal form button').addEventListener('click', (e) => {
-    e.preventDefault(); // prevent form submission
-    alert('Signed Up Successfully!'); // or any action you want
-    closeSignModal('signup-modal'); // close the modal
-  });
-});
 </script>
 
 <script>
