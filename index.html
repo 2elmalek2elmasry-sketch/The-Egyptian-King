@@ -126,7 +126,11 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
     <form onsubmit="return false;" class="space-y-4">
       <input type="email" placeholder="Email" class="checkout-input w-full" required>
       <input type="password" placeholder="Password" class="checkout-input w-full" required>
-      <button class="premium-button w-full py-3 rounded-xl">Sign In</button> 
+       <button type="button"
+        onclick="handleSignIn()"
+        class="premium-button w-full py-3 rounded-xl">
+  Sign In
+</button>
     </form>
   </div>
 </div>
@@ -173,22 +177,12 @@ document.getElementById('sign-btn-mobile').addEventListener('click', () => {
 });
 
 // Functions to open/close Sign modals
-function openSignIn() {
-  document.getElementById('sign-choice-modal').style.display = 'none';
-  document.getElementById('signin-modal').style.display = 'flex';
-}
-function openSignUp() {
-  document.getElementById('sign-choice-modal').style.display = 'none';
-  document.getElementById('signup-modal').style.display = 'flex';
-}
+
 function closeSignModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
 }
 
 // Close modal on background click
-document.querySelectorAll('.modal-overlay').forEach(m => {
-  m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
-});
 </script>
 
 <section id="collection" class="py-20 md:py-28 px-4">
@@ -756,7 +750,8 @@ function getColorFromEmail(email) {
 
 function showUserAvatar(email) {
   const avatar = document.getElementById('user-avatar');
-  const signBtn = document.getElementById('sign-btn-header');
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
 
   const firstLetter = email.charAt(0).toUpperCase();
   const color = getColorFromEmail(email);
@@ -766,7 +761,8 @@ function showUserAvatar(email) {
   avatar.style.color = '#111';
 
   avatar.classList.remove('hidden');
-  signBtn.style.display = 'none';
+  signBtnHeader.style.display = 'none';
+  signBtnMobile.style.display = 'none';
 }
 
 // Save user
