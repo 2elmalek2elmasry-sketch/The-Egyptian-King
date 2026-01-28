@@ -77,9 +77,11 @@ background-size: 40px 40px;
       </nav>
 
       <!-- Sign In / Up Button (Top Right) -->
-      <button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
-        🔑 Sign In / Up
-      </button>
+     <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
+
+<button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
+  🔑 Sign In / Up
+</button>
     </div>
 
     <!-- Mobile Menu Button -->
@@ -741,24 +743,15 @@ updateCountdown();
     <!-- ...your Sign Up modal content... -->
   </div>
 
-<script>
 document.addEventListener('DOMContentLoaded', () => {
   // Sign In button
-  document.querySelector('#signin-modal form button').addEventListener('click', (e) => {
-    e.preventDefault(); // prevent form submission
-    alert('Signed In Successfully!'); // or any action you want
-    closeSignModal('signin-modal'); // close the modal
-  });
-
+  <button onclick="handleSignIn()" class="premium-button w-full py-3 rounded-xl">
+  Sign In
+</button>
   // Sign Up button
-  document.querySelector('#signup-modal form button').addEventListener('click', (e) => {
-    e.preventDefault(); // prevent form submission
-    alert('Signed Up Successfully!'); // or any action you want
-    closeSignModal('signup-modal'); // close the modal
-  });
-});
-</script>
-
+<button onclick="handleSignUp()" class="premium-button w-full py-3 rounded-xl">
+  Sign Up
+</button>
 
 </body>
 <script>
@@ -793,6 +786,66 @@ document.addEventListener('DOMContentLoaded', () => {
     closeSignModal('signup-modal'); // close the modal
   });
 });
+</script>
+
+<script>
+// ===== USER AUTH UI =====
+
+// Generate color from email (same email = same color)
+function getColorFromEmail(email) {
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl(${hash % 360}, 70%, 55%)`;
+}
+
+function showUserAvatar(email) {
+  const avatar = document.getElementById('user-avatar');
+  const signBtn = document.getElementById('sign-btn-header');
+
+  const firstLetter = email.charAt(0).toUpperCase();
+  const color = getColorFromEmail(email);
+
+  avatar.textContent = firstLetter;
+  avatar.style.backgroundColor = color;
+  avatar.style.color = '#111';
+
+  avatar.classList.remove('hidden');
+  signBtn.style.display = 'none';
+}
+
+// Save user
+function loginUser(email) {
+  localStorage.setItem('loggedInUser', email);
+  showUserAvatar(email);
+}
+
+// Auto-login on refresh
+document.addEventListener('DOMContentLoaded', () => {
+  const savedUser = localStorage.getItem('loggedInUser');
+  if (savedUser) {
+    showUserAvatar(savedUser);
+  }
+});
+</script>
+
+<script>
+function handleSignIn() {
+  const email = document.querySelector('#signin-modal input[type="email"]').value;
+  if (!email) return;
+
+  loginUser(email);
+  closeSignModal('signin-modal');
+}
+
+function handleSignUp() {
+  const email = document.querySelector('#signup-modal input[type="email"]').value;
+  if (!email) return;
+
+  loginUser(email);
+  closeSignModal('signup-modal');
+}
 </script>
 
 </body>
