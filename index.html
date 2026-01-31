@@ -383,6 +383,23 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 }
 </script>
 
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src="https://i.postimg.cc/W3s0LzFr/IMG-5148.png"alt="" data-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">FLAG TRIO HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=FLAG TRIO HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
 <!-- Generate 1 product cards -->
 <script>
 for (let i = 1; i <= 1; i++) {
@@ -399,24 +416,6 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 `);
 }
 </script>
-
-<!-- Generate product card -->
-<script>
-for (let i = 1; i <=1 ; i++) {
-document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src=""alt="" data-image"" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
-<h3 class="text-xl font-bold text-yellow-400">COMING SOON</h3>
-<p class="text-sm text-gray-400 mt-1 mb-3">EGP ???</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="buy-button premium-button" data-product-name=COMING SOONdata-product-price=EGP ??? data-product-image="">
-Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
-</button>
-</div>
-`);
-}
-</script>
-
 
 </div>
 </div>
