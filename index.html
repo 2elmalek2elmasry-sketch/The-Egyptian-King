@@ -857,14 +857,9 @@ function isValidEmail(email) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 }
 
-function isValidPassword(password) {
-  return /^(?=.*)(?=.*\d).{6,}$/.test(password);
-}
-
 function handleSignUp() {
   const name = document.querySelector('#signup-modal input[placeholder="Full Name"]').value.trim();
   const email = document.querySelector('#signup-modal input[type="email"]').value.trim();
-  const password = document.querySelector('#signup-modal input[type="password"]').value.trim();
 
   if (!name) {
     alert("Enter your full name.");
@@ -876,18 +871,10 @@ function handleSignUp() {
     return;
   }
 
-  if (!isValidPassword(password)) {
-    alert("Password must be 6+ characters .");
-    return;
-  }
-
   if (USERS.some(u => u.email === email)) {
     alert("Email already registered.");
     return;
   }
-
-  USERS.push({ email, password });
-  localStorage.setItem('users', JSON.stringify(USERS));
 
   loginUser(email);
   closeSignModal('signup-modal');
@@ -907,11 +894,6 @@ function handleSignIn() {
   const password = document.querySelector('#signin-modal input[type="password"]').value.trim();
 
   const user = USERS.find(u => u.email === email && u.password === password);
-
-  if (!user) {
-    alert("Invalid email or password.");
-    return;
-  }
 
   loginUser(email);
   closeSignModal('signin-modal');
