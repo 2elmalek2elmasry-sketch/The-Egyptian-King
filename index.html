@@ -1,15 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3KYF9YLPM"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-Z3KYF9YLPM');
-</script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>The Egyptian King Apparel - Premium Streetwear</title>
@@ -392,23 +383,6 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 }
 </script>
 
-<!-- Generate product card -->
-<script>
-for (let i = 1; i <=1 ; i++) {
-document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/W3s0LzFr/IMG-5148.png"alt="" data-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
-<h3 class="text-xl font-bold text-yellow-400">FLAG TRIO HOODIE</h3>
-<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="buy-button premium-button" data-product-name=FLAG TRIO HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png">
-Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
-</button>
-</div>
-`);
-}
-</script>
-
 <!-- Generate 1 product cards -->
 <script>
 for (let i = 1; i <= 1; i++) {
@@ -425,6 +399,24 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 `);
 }
 </script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src=""alt="" data-image"" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">COMING SOON</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP ???</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=COMING SOONdata-product-price=EGP ??? data-product-image="">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
 
 </div>
 </div>
@@ -849,7 +841,7 @@ function isValidEmail(email) {
 }
 
 function isValidPassword(password) {
-  return /^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password);
+  return /^(?=.*)(?=.*\d).{6,}$/.test(password);
 }
 
 function handleSignUp() {
@@ -868,7 +860,7 @@ function handleSignUp() {
   }
 
   if (!isValidPassword(password)) {
-    alert("Password must be 6+ characters with letters & numbers.");
+    alert("Password must be 6+ characters .");
     return;
   }
 
