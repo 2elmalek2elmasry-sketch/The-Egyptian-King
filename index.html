@@ -52,7 +52,7 @@ background-size: 40px 40px;
     <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
       <i class="fas fa-times"></i>
     </button>
-    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome ð</h2>
     <p class="text-gray-300 mb-6">Do you want to Sign In or Sign Up?</p>
     <div class="flex justify-center gap-6">
       <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">Sign In</button>
@@ -80,7 +80,7 @@ background-size: 40px 40px;
      <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
 
 <button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
-  🔑 Sign In / Up
+  ð Sign In / Up
 </button>
     </div>
 
@@ -442,10 +442,10 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <section id="themes" class="py-20 px-4 bg-gray-900/900 border-t border-b border-yellow-800">
   <div class="container mx-auto text-center">
     <div class="flex flex-col md:flex-row justify-center items-center gap-10 text-gray-300 text-lg font-semibold">
-      <span>🔥 LIMITED DROP</
+      <span>ð¥ LIMITED DROP</
         >
-      <span>📦 Fast Shipping</span>
-      <span>🚫 No Restocks</span>
+      <span>ð¦ Fast Shipping</span>
+      <span>ð« No Restocks</span>
     </div>
   </div>
 </section>
@@ -466,7 +466,7 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
 <i class="fas fa-crown text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
 <h3 class="text-2xl font-bold mb-3 text-yellow-100">The Heritage Line</h3>
-<p class="text-gray-400">A tribute to Egypt’s majestic history and timeless graphics.</p>
+<p class="text-gray-400">A tribute to Egyptâs majestic history and timeless graphics.</p>
 </div>
 </div>
 </div>
@@ -499,14 +499,14 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 ><!-- Floating Day/Night Toggle Button -->
 <button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full" 
 style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
-  🌞 / 🌙
+  ð / ð
 </button>
 
 
 
 <!-- Currency Floating Button -->
 <button id="currency-btn" class="premium-button px-6 py-3 rounded-full">
-  💱 Currency
+  ð± Currency
 </button>
 
 <!-- Currency Modal -->
@@ -515,13 +515,13 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
     <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
 
     <select id="currency-select" class="checkout-input w-full mb-4">
-      <option value="USD">USD – Dollar</option>
-      <option value="EUR">EUR – Euro</option>
-      <option value="GBP">GBP – Pound</option>
-      <option value="SAR">SAR – Riyal</option>
-      <option value="AED">AED – Dirham</option>
-      <option value="KWD">KWD – Dinar</option>
-      <option value="TRY">TRY – Lira</option>
+      <option value="USD">USD â Dollar</option>
+      <option value="EUR">EUR â Euro</option>
+      <option value="GBP">GBP â Pound</option>
+      <option value="SAR">SAR â Riyal</option>
+      <option value="AED">AED â Dirham</option>
+      <option value="KWD">KWD â Dinar</option>
+      <option value="TRY">TRY â Lira</option>
     </select>
 
     <button id="apply-currency" class="premium-button w-full py-3">
@@ -688,12 +688,12 @@ themeBtn.onclick = () => {
     body.classList.remove('light-mode');
     body.style.backgroundColor = 'var(--background-dark)';
     body.style.color = 'var(--text-light)';
-    themeBtn.innerText = '🌞 / 🌙';
+    themeBtn.innerText = 'ð / ð';
   } else {
     body.classList.add('light-mode');
     body.style.backgroundColor = '#f9fafb';
     body.style.color = '#111827';
-    themeBtn.innerText = '🌞 / 🌙';
+    themeBtn.innerText = 'ð / ð';
   }
 };
 
@@ -707,7 +707,7 @@ Repeats forever
 Same on all devices
 */
 
-// 🔒 GLOBAL START (SET THIS ONCE)
+// ð GLOBAL START (SET THIS ONCE)
 // Example: Jan 1, 2026 @ 11:00 AM UTC
 const GLOBAL_START = Date.UTC(2026, 0, 1, 11, 0, 0);
 
@@ -879,7 +879,7 @@ function handleSignUp() {
   loginUser(email);
   closeSignModal('signup-modal');
 
-  alert("Account created successfully 👑");
+  alert("Account created successfully ð");
 }
 </script>
 
