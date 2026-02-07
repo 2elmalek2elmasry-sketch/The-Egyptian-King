@@ -3,154 +3,215 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Egyptian King - Premium Streetwear</title>
+    <title>The Egyptian King</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --primary-gold: #ffd700;
-            --bg-dark: #0f172a;
-            --card-bg: #1e293b;
-        }
         body {
             font-family: 'Inter', sans-serif;
-            background-color: var(--bg-dark);
-            color: #f8fafc;
+            background-color: #0F111A; /* Deep dark blue/black from screenshot */
+            color: white;
         }
-        .gold-gradient {
-            background: linear-gradient(135deg, #ffd700, #b4941f);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .text-gold { color: #FFC000; }
+        .bg-gold { background-color: #FFC000; }
+        .border-gold { border-color: #FFC000; }
+        .btn-primary {
+            background-color: #FFC000;
+            color: #000;
+            font-weight: 700;
+            transition: all 0.2s;
         }
-        .nav-link:hover { color: var(--primary-gold); transform: translateY(-2px); }
+        .btn-primary:hover { transform: scale(1.02); background-color: #ffcd29; }
+        
+        .btn-outline {
+            border: 1px solid #333;
+            color: #ccc;
+            transition: all 0.2s;
+        }
+        .btn-outline:hover { border-color: #FFC000; color: #FFC000; }
+
+        .nav-link { color: #ccc; font-weight: 600; font-size: 0.9rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .nav-link:hover { color: #FFC000; }
+
         .product-card {
-            background: #111827;
-            border: 1px solid #374151;
-            transition: all 0.3s ease;
+            background-color: #161B28;
+            border: 1px solid #1F2937;
+            transition: transform 0.2s;
         }
-        .product-card:hover {
-            border-color: var(--primary-gold);
-            transform: translateY(-5px);
+        .product-card:hover { transform: translateY(-5px); border-color: #FFC000; }
+
+        .footer-card {
+            background-color: #161B28;
+            border-radius: 12px;
+            padding: 2rem;
+            border: 1px solid #1F2937;
         }
-        .btn-gold {
-            background-color: var(--primary-gold);
-            color: black;
-            font-weight: 800;
-            transition: 0.3s;
-        }
-        .btn-gold:hover { background-color: #eab308; transform: scale(1.02); }
-        .footer-card { background: #1e293b; border-radius: 1rem; padding: 2rem; }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col">
 
-<header class="sticky top-0 z-50 bg-[#0f172a]/90 backdrop-blur-md border-b border-gray-800">
-    <div class="container mx-auto px-6 py-4 flex justify-between items-center">
-        <div class="text-2xl font-black tracking-tighter uppercase leading-tight">
-            THE EGYPTIAN <br> <span class="gold-gradient">KING</span>
+    <header class="py-5 px-8 flex justify-between items-center border-b border-gray-800 bg-[#0F111A] sticky top-0 z-50">
+        <div class="flex flex-col leading-tight">
+            <span class="text-2xl font-black tracking-tighter text-white">THE EGYPTIAN</span>
+            <span class="text-2xl font-black tracking-tighter text-gold">KING</span>
         </div>
-        
-        <nav class="hidden md:flex space-x-8 font-bold uppercase text-sm tracking-widest">
-            <a href="#collection" class="nav-link transition">Collection</a>
-            <a href="#themes" class="nav-link transition">Themes</a>
-            <a href="#social" class="nav-link transition">Social</a>
-            <a href="#contact" class="nav-link transition">Contact</a>
+
+        <nav class="hidden md:flex space-x-8">
+            <a href="#" class="nav-link">Collection</a>
+            <a href="#" class="nav-link">Themes</a>
+            <a href="#" class="nav-link">Social</a>
+            <a href="#" class="nav-link">Contact</a>
         </nav>
 
         <div class="flex items-center space-x-4">
-            <button class="border border-yellow-600 px-5 py-2 rounded text-xs font-bold uppercase hover:bg-yellow-600 transition">
+            <button class="btn-outline px-6 py-2 rounded-lg flex items-center font-semibold text-sm">
                 <i class="far fa-user mr-2"></i> Sign In
             </button>
-            <button class="btn-gold px-6 py-2 rounded text-xs uppercase flex items-center">
+            <button class="btn-primary px-6 py-2 rounded-lg flex items-center text-sm">
                 Shop Now <i class="fas fa-shopping-bag ml-2"></i>
             </button>
         </div>
-    </div>
-</header>
+    </header>
 
-<section class="container mx-auto px-6 py-12 grid md:grid-cols-2 gap-12 items-center">
-    <div>
-        <h2 class="text-2xl font-light mb-2 italic">Dare to Wear Different.</h2>
-        <h1 class="text-5xl font-black mb-8">Rule Your Style.</h1>
+    <main class="flex-grow container mx-auto px-6 py-12">
         
-        <div class="bg-gray-900/50 p-8 rounded-2xl border border-gray-800 inline-block">
-            <p class="text-gray-400 uppercase tracking-widest mb-2">Next Drop In</p>
-            <p id="countdown-timer" class="text-4xl font-black text-yellow-500 mb-6">05d 16h 53m 00s</p>
-            <button class="btn-gold px-12 py-3 rounded-lg text-lg">Quick Buy</button>
-        </div>
-    </div>
-
-    <div>
-        <h3 class="text-xl font-bold mb-6 text-gray-300">Featured Pharaoh Gear</h3>
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div class="product-card rounded-2xl p-4 relative">
-                <span class="absolute top-2 right-2 bg-yellow-500 text-black text-[10px] font-black px-2 py-1 rounded">NEW DROP</span>
-                <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="rounded-xl mb-4 w-full h-48 object-cover">
-                <div class="flex justify-between items-end">
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase">Hoodie</h4>
-                        <p class="text-sm font-black uppercase">Queen Hatshepsut</p>
-                    </div>
-                    <p class="text-yellow-500 font-bold">EGP 800</p>
-                </div>
-                <button class="btn-gold w-full mt-4 py-2 rounded-lg text-xs uppercase">Quick Buy <i class="fas fa-shopping-cart ml-1"></i></button>
-            </div>
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-12">
             
-            <div class="product-card rounded-2xl p-4 relative">
-                <span class="absolute top-2 right-2 bg-yellow-500 text-black text-[10px] font-black px-2 py-1 rounded">NEW DROP</span>
-                <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="rounded-xl mb-4 w-full h-48 object-cover">
-                <div class="flex justify-between items-end">
-                    <div>
-                        <h4 class="text-xs font-bold text-gray-400 uppercase">Hoodie</h4>
-                        <p class="text-sm font-black uppercase">Khaby Lame</p>
+            <div class="lg:col-span-4 flex flex-col justify-center pt-10">
+                <h1 class="text-4xl md:text-5xl font-light text-gray-200 mb-2">Dare to Wear Different.</h1>
+                <h1 class="text-4xl md:text-5xl font-bold text-white mb-16">Rule Your Style.</h1>
+
+                <div class="mb-2 text-gray-400 text-lg">Next Drop In</div>
+                <div id="countdown" class="text-4xl font-bold text-gold mb-8 tracking-widest">05d 16h 53m 00s</div>
+
+                <button class="btn-primary w-full md:w-64 py-4 rounded-lg text-lg">
+                    Quick Buy
+                </button>
+            </div>
+
+            <div class="lg:col-span-8">
+                <h2 class="text-xl font-medium text-gray-300 mb-6">Featured Pharoh Gear</h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    
+                    <div class="product-card rounded-xl overflow-hidden p-4 relative group">
+                        <div class="absolute top-4 right-4 bg-gold text-black text-[10px] font-bold px-2 py-1 rounded">NEW DROP</div>
+                        <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-48 object-cover rounded-lg mb-4 opacity-90 group-hover:opacity-100 transition">
+                        <div class="mb-2">
+                            <h3 class="text-xs text-gray-500 font-bold uppercase">Hoodie</h3>
+                            <h4 class="text-sm font-bold text-white">QUEEN HATSHEPSOUT</h4>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-gold font-bold">EGP 800</span>
+                        </div>
+                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+                        </button>
                     </div>
-                    <p class="text-yellow-500 font-bold">EGP 800</p>
+
+                    <div class="product-card rounded-xl overflow-hidden p-4 relative group">
+                        <div class="absolute top-4 right-4 bg-gold text-black text-[10px] font-bold px-2 py-1 rounded">NEW DROP</div>
+                        <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-48 object-cover rounded-lg mb-4 opacity-90 group-hover:opacity-100 transition">
+                        <div class="mb-2">
+                            <h3 class="text-xs text-gray-500 font-bold uppercase">Hoodie</h3>
+                            <h4 class="text-sm font-bold text-white">KHABY LAME HOODIE</h4>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-gold font-bold">EGP 800</span>
+                        </div>
+                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+                        </button>
+                    </div>
+
+                    <div class="product-card rounded-xl overflow-hidden p-4 relative group">
+                        <div class="absolute top-4 right-4 bg-gold text-black text-[10px] font-bold px-2 py-1 rounded">NEW DROP</div>
+                        <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-48 object-cover rounded-lg mb-4 opacity-90 group-hover:opacity-100 transition">
+                        <div class="mb-2">
+                            <h3 class="text-xs text-gray-500 font-bold uppercase">Hoodie</h3>
+                            <h4 class="text-sm font-bold text-white">LBRO JAMES CULTURE</h4>
+                        </div>
+                        <div class="flex justify-between items-center mt-3">
+                            <span class="text-gold font-bold">EGP 800</span>
+                        </div>
+                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+                        </button>
+                    </div>
+
                 </div>
-                <button class="btn-gold w-full mt-4 py-2 rounded-lg text-xs uppercase">Quick Buy <i class="fas fa-shopping-cart ml-1"></i></button>
             </div>
         </div>
-    </div>
-</section>
 
-<section class="container mx-auto px-6 py-12 border-t border-gray-800">
-    <div class="flex justify-between items-center mb-12">
-        <h2 class="text-4xl font-black uppercase">Explore Our Kingdoms</h2>
-        <div class="flex space-x-2">
-            <button class="px-4 py-1 rounded-full bg-gray-800 text-[10px] uppercase font-bold hover:bg-gray-700">Instagram</button>
-            <button class="px-4 py-1 rounded-full bg-gray-800 text-[10px] uppercase font-bold hover:bg-gray-700">TikTok</button>
-            <button class="px-4 py-1 rounded-full bg-gray-800 text-[10px] uppercase font-bold hover:bg-gray-700">Snapchat</button>
-        </div>
-    </div>
-
-    <div class="grid md:grid-cols-3 gap-6">
-        <div class="footer-card">
-            <h3 class="text-lg font-black uppercase mb-4">The <span class="text-yellow-500">Egyptian King</span></h3>
-            <p class="text-gray-400 text-sm leading-relaxed">A premium apparel brand celebrating historical legends and modern icons. Wear the legacy.</p>
-        </div>
-        <div class="footer-card">
-            <div class="flex items-center space-x-4 mb-4">
-                <div class="w-10 h-10 bg-yellow-500/20 rounded-full flex items-center justify-center text-yellow-500">
-                    <i class="fas fa-crown"></i>
+        <div class="mt-24">
+            <div class="flex flex-col md:flex-row justify-between items-end mb-8 border-b border-gray-800 pb-4">
+                <h2 class="text-3xl font-normal text-white">Explore Our Kingdoms</h2>
+                
+                <div class="flex space-x-2 mt-4 md:mt-0">
+                    <button class="px-4 py-1.5 rounded-full border border-gray-700 text-xs font-bold text-gray-400 hover:text-white hover:border-gray-500 transition">INSTAGRAM</button>
+                    <button class="px-4 py-1.5 rounded-full border border-gray-700 text-xs font-bold text-gray-400 hover:text-white hover:border-gray-500 transition">TIKTOK</button>
+                    <button class="px-4 py-1.5 rounded-full border border-gray-700 text-xs font-bold text-gray-400 hover:text-white hover:border-gray-500 transition">SNAPCHAT</button>
+                    <button class="px-4 py-1.5 rounded-full border border-gray-700 text-xs font-bold text-gold hover:text-yellow-300 border-gold hover:border-yellow-300 transition">YOUTUBE</button>
                 </div>
-                <h3 class="text-lg font-black uppercase">Heritage Line</h3>
             </div>
-            <p class="text-gray-400 text-sm">The foundation of our brand. Designs that pay homage to the kings of old.</p>
+
+            <p class="text-gray-500 text-sm mb-12">Follow us for exclusive leaks, giveaways, and behind-the-scenes content.</p>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                
+                <div class="footer-card">
+                    <h3 class="text-xl font-bold mb-4 text-white">THE <span class="text-gold">EGYPTIAN KING</span></h3>
+                    <p class="text-gray-400 text-sm leading-relaxed">
+                        A premium apparel brand celebrating historical figures and modern legends. Wear the legacy.
+                    </p>
+                </div>
+
+                <div class="footer-card">
+                    <i class="fas fa-cube text-gold text-2xl mb-4"></i>
+                    <h3 class="text-lg font-bold text-white mb-2">Sports Legends</h3>
+                    <p class="text-gray-400 text-sm">
+                        The crowned brave majesty Egypt's last stages natural icons.
+                    </p>
+                </div>
+
+                <div class="footer-card">
+                    <i class="fas fa-ghost text-gold text-2xl mb-4"></i>
+                    <h3 class="text-lg font-bold text-white mb-2">Icons & Culture</h3>
+                    <ul class="text-gray-400 text-sm space-y-2 mt-3">
+                        <li><a href="#" class="hover:text-gold">FAQ & Support</a></li>
+                        <li><a href="#" class="hover:text-gold">Shipping Policy</a></li>
+                        <li><a href="#" class="hover:text-gold">Size Guide</a></li>
+                    </ul>
+                </div>
+
+            </div>
         </div>
-        <div class="footer-card">
-            <h3 class="text-lg font-black uppercase mb-4 italic"><i class="fas fa-ghost mr-2"></i> Icons & Culture</h3>
-            <ul class="text-gray-400 text-sm space-y-2">
-                <li>FAQ</li>
-                <li>Shipping Policy</li>
-                <li>Size Guide</li>
-            </ul>
-        </div>
+    </main>
+
+    <div class="fixed bottom-8 right-8">
+        <button class="w-12 h-12 rounded-full border border-gray-700 bg-[#161B28] text-gold flex items-center justify-center shadow-lg hover:border-gold transition">
+            <i class="fas fa-moon"></i>
+        </button>
     </div>
-</section>
 
-<footer class="text-center py-8 text-xs text-gray-600 uppercase tracking-widest">
-    &copy; 2026 The Egyptian King Production. Crafted by the CTO Team.
-</footer>
-
+    <script>
+        // Simple Countdown Logic
+        function updateTimer() {
+            const now = new Date();
+            const future = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5);
+            
+            const diff = future - now;
+            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+            const m = Math.floor((diff / 1000 / 60) % 60);
+            const s = Math.floor((diff / 1000) % 60);
+            
+            document.getElementById('countdown').innerText = 
+                `${d < 10 ? '0'+d : d}d ${h < 10 ? '0'+h : h}h ${m < 10 ? '0'+m : m}m ${s < 10 ? '0'+s : s}s`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
 </body>
 </html>
