@@ -57,6 +57,7 @@
             <span class="text-2xl font-black tracking-tighter text-gold">KING</span>
         </div>
 
+<button onclick="openAuth()" class="btn-outline px-6 py-2 rounded-lg flex items-center font-semibold text-sm">
         <nav class="hidden md:flex space-x-8">
             <a href="#" class="nav-link">Collection</a>
             <a href="#" class="nav-link">Themes</a>
@@ -85,29 +86,23 @@
                 <div class="mb-2 text-gray-400 text-lg">Next Drop In</div>
                 <div id="countdown" class="text-4xl font-bold text-gold mb-8 tracking-widest">05d 16h 53m 00s</div>
 
-                <button class="btn-primary w-full md:w-64 py-4 rounded-lg text-lg">
-                    Quick Buy
-                </button>
+              <button onclick="openProduct('QUEEN HATSHEPSOUT', 'EGP 800')"
+  class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+  Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+</button>
             </div>
 
             <div class="lg:col-span-8">
                 <h2 class="text-xl font-medium text-gray-300 mb-6">Featured Pharoh Gear</h2>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    
-                    <div class="product-card rounded-xl overflow-hidden p-4 relative group">
-                        <div class="absolute top-4 right-4 bg-gold text-black text-[10px] font-bold px-2 py-1 rounded">NEW DROP</div>
-                        <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-48 object-cover rounded-lg mb-4 opacity-90 group-hover:opacity-100 transition">
-                        <div class="mb-2">
-                            <h3 class="text-xs text-gray-500 font-bold uppercase">Hoodie</h3>
-                            <h4 class="text-sm font-bold text-white">QUEEN HATSHEPSOUT</h4>
-                        </div>
+                <div id="productsGrid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
                         <div class="flex justify-between items-center mt-3">
                             <span class="text-gold font-bold">EGP 800</span>
                         </div>
-                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
-                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
-                        </button>
+                      <button onclick="openProduct('QUEEN HATSHEPSOUT', 'EGP 800')"
+  class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+  Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+</button>
                     </div>
 
                     <div class="product-card rounded-xl overflow-hidden p-4 relative group">
@@ -120,9 +115,10 @@
                         <div class="flex justify-between items-center mt-3">
                             <span class="text-gold font-bold">EGP 800</span>
                         </div>
-                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
-                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
-                        </button>
+                      <button onclick="openProduct('QUEEN HATSHEPSOUT', 'EGP 800')"
+  class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+  Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+</button>
                     </div>
 
                     <div class="product-card rounded-xl overflow-hidden p-4 relative group">
@@ -135,9 +131,10 @@
                         <div class="flex justify-between items-center mt-3">
                             <span class="text-gold font-bold">EGP 800</span>
                         </div>
-                        <button class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
-                            Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
-                        </button>
+                      <button onclick="openProduct('QUEEN HATSHEPSOUT', 'EGP 800')"
+  class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+  Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+</button>
                     </div>
 
                 </div>
@@ -190,28 +187,136 @@
     </main>
 
     <div class="fixed bottom-8 right-8">
-        <button class="w-12 h-12 rounded-full border border-gray-700 bg-[#161B28] text-gold flex items-center justify-center shadow-lg hover:border-gold transition">
-            <i class="fas fa-moon"></i>
-        </button>
     </div>
 
+// ===== PRODUCTS DATA =====
+const products = [
+  {
+    name: "QUEEN HATSHEPSOUT",
+    type: "Hoodie",
+    price: "EGP 800",
+    image: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg",
+    badge: "NEW DROP"
+  },
+  {
+    name: "KHABY LAME HOODIE",
+    type: "Hoodie",
+    price: "EGP 800",
+    image: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg",
+    badge: "NEW DROP"
+  },
+  {
+    name: "LBRO JAMES CULTURE",
+    type: "Hoodie",
+    price: "EGP 800",
+    image: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg",
+    badge: "NEW DROP"
+  }
+];
+
+// ===== RENDER PRODUCTS =====
+const grid = document.getElementById("productsGrid");
+
+products.forEach(p => {
+  grid.innerHTML += `
+    <div class="product-card rounded-xl overflow-hidden p-4 relative group">
+      <div class="absolute top-4 right-4 bg-gold text-black text-[10px] font-bold px-2 py-1 rounded">
+        ${p.badge}
+      </div>
+
+      <img src="${p.image}"
+        class="w-full h-48 object-cover rounded-lg mb-4 opacity-90 group-hover:opacity-100 transition">
+
+      <div class="mb-2">
+        <h3 class="text-xs text-gray-500 font-bold uppercase">${p.type}</h3>
+        <h4 class="text-sm font-bold text-white">${p.name}</h4>
+      </div>
+
+      <div class="flex justify-between items-center mt-3">
+        <span class="text-gold font-bold">${p.price}</span>
+      </div>
+
+      <button onclick="openProduct('${p.name}', '${p.price}')"
+        class="w-full bg-gold text-black font-bold text-sm py-2 rounded mt-4 hover:bg-yellow-400 transition">
+        Quick Buy <i class="fas fa-lock ml-1 text-xs"></i>
+      </button>
+    </div>
+  `;
+});
     <script>
-        // Simple Countdown Logic
-        function updateTimer() {
-            const now = new Date();
-            const future = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5);
-            
-            const diff = future - now;
-            const d = Math.floor(diff / (1000 * 60 * 60 * 24));
-            const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
-            const m = Math.floor((diff / 1000 / 60) % 60);
-            const s = Math.floor((diff / 1000) % 60);
-            
-            document.getElementById('countdown').innerText = 
-                `${d < 10 ? '0'+d : d}d ${h < 10 ? '0'+h : h}h ${m < 10 ? '0'+m : m}m ${s < 10 ? '0'+s : s}s`;
-        }
-        setInterval(updateTimer, 1000);
-        updateTimer();
-    </script>
+/* ===== COUNTDOWN ===== */
+function updateTimer() {
+  const now = new Date();
+  const future = new Date(now.getFullYear(), now.getMonth(), now.getDate() + 5);
+  const diff = future - now;
+
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor(diff / 3600000) % 24;
+  const m = Math.floor(diff / 60000) % 60;
+  const s = Math.floor(diff / 1000) % 60;
+
+  document.getElementById('countdown').innerText =
+    `${d.toString().padStart(2,'0')}d ${h.toString().padStart(2,'0')}h ${m.toString().padStart(2,'0')}m ${s.toString().padStart(2,'0')}s`;
+}
+setInterval(updateTimer, 1000);
+updateTimer();
+
+/* ===== AUTH ===== */
+function openAuth() {
+  document.getElementById("authModal").classList.remove("hidden");
+  document.getElementById("authModal").classList.add("flex");
+}
+
+function closeAuth() {
+  document.getElementById("authModal").classList.add("hidden");
+}
+
+document.getElementById("authSubmit").onclick = () => {
+  closeAuth();
+};
+
+/* ===== PRODUCT ===== */
+function openProduct(name, price) {
+  document.getElementById("productName").innerText = name;
+  document.getElementById("productPrice").innerText = price;
+  document.getElementById("productModal").classList.remove("hidden");
+  document.getElementById("productModal").classList.add("flex");
+}
+
+function closeProduct() {
+  document.getElementById("productModal").classList.add("hidden");
+}
+</script>
+    <div id="authModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-[#161B28] p-6 rounded-xl w-[90%] max-w-sm">
+    <h2 class="text-xl font-bold text-gold mb-4">Sign In / Sign Up</h2>
+
+    <input id="emailInput" type="email" placeholder="Email"
+      class="w-full mb-3 p-3 rounded bg-[#0F111A] border border-gray-700 text-white">
+
+    <button id="authSubmit" class="w-full bg-gold text-black font-bold py-3 rounded">
+      Continue
+    </button>
+
+    <button onclick="closeAuth()" class="w-full mt-3 text-gray-400 text-sm">
+      Cancel
+    </button>
+  </div>
+</div>
+<div id="productModal" class="fixed inset-0 bg-black/70 hidden items-center justify-center z-50">
+  <div class="bg-[#161B28] p-6 rounded-xl w-[90%] max-w-sm text-center">
+    <h2 id="productName" class="text-lg font-bold text-white mb-2"></h2>
+    <p id="productPrice" class="text-gold font-bold mb-4"></p>
+
+    <button class="w-full bg-gold text-black font-bold py-3 rounded mb-3">
+      Checkout (Coming Soon)
+    </button>
+
+    <button onclick="closeProduct()" class="text-gray-400 text-sm">
+      Close
+    </button>
+  </div>
+</div>
+
 </body>
 </html>
