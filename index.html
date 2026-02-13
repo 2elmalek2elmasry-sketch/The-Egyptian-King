@@ -531,25 +531,61 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
 
 <!-- Currency Modal -->
 <div id="currency-modal" class="modal-overlay">
-  <div class="modal-content max-w-md">
+  <div class="modal-content max-w-md rounded-2xl p-6">
     <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
 
-    <select id="currency-select" class="checkout-input w-full mb-4">
-      <option value="USD">USD – Dollar</option>
-      <option value="EUR">EUR – Euro</option>
-      <option value="GBP">GBP – Pound</option>
-      <option value="SAR">SAR – Riyal</option>
-      <option value="AED">AED – Dirham</option>
-      <option value="KWD">KWD – Dinar</option>
-      <option value="TRY">TRY – Lira</option>
-    </select>
+    <div id="currency-options" class="grid grid-cols-3 gap-4 mb-4">
+      <button class="currency-option premium-button py-2 px-4" data-currency="USD" data-rate="0.032">USD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="EUR" data-rate="0.029">EUR</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="GBP" data-rate="0.025">GBP</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="SAR" data-rate="0.12">SAR</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="AED" data-rate="0.12">AED</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="KWD" data-rate="0.01">KWD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="TRY" data-rate="0.93">TRY</button>
+    </div>
 
-    <button id="apply-currency" class="premium-button w-full py-3">
-      Apply
-    </button>
+    <button id="apply-currency" class="premium-button w-full py-3">Apply</button>
   </div>
 </div>
+<script>
+const currencyBtn = document.getElementById("currency-btn");
+const currencyModal = document.getElementById("currency-modal");
+const applyCurrencyBtn = document.getElementById("apply-currency");
+let selectedCurrency = "EGP"; // default
 
+// Open modal
+currencyBtn.addEventListener("click", () => {
+  currencyModal.style.display = "flex";
+});
+
+// Close modal when clicking outside content
+currencyModal.addEventListener("click", (e) => {
+  if (e.target === currencyModal) currencyModal.style.display = "none";
+});
+
+// Highlight selected button
+document.querySelectorAll(".currency-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".currency-option").forEach(b => b.classList.remove("bg-yellow-400", "text-black"));
+    btn.classList.add("bg-yellow-400", "text-black");
+    selectedCurrency = btn.dataset.currency;
+    selectedRate = parseFloat(btn.dataset.rate);
+  });
+});
+
+// Apply currency
+applyCurrencyBtn.addEventListener("click", () => {
+  const productPrices = document.querySelectorAll(".product-card p.text-gray-400");
+  
+  productPrices.forEach(p => {
+    let egp = parseFloat(p.textContent.replace(/[^0-9]/g, ""));
+    let converted = (egp * selectedRate).toFixed(2);
+    p.textContent = `${selectedCurrency} ${converted}`;
+  });
+
+  currencyModal.style.display = "none";
+});
+</script>
 
 <!-- Checkout Modal -->
 <div id="checkout-modal" class="modal-overlay">
