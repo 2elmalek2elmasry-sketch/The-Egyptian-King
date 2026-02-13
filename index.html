@@ -529,29 +529,48 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
   💱 Currency
 </button>
 
+<!-- Currency Button -->
+<button id="currency-btn" class="premium-button py-2 px-4">
+  EGP
+</button>
+
 <!-- Currency Modal -->
-<div id="currency-modal" class="modal-overlay">
-  <div class="modal-content max-w-md rounded-2xl p-6">
+<div id="currency-modal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div class="modal-content max-w-md rounded-2xl p-6 bg-white">
     <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
 
     <div id="currency-options" class="grid grid-cols-3 gap-4 mb-4">
+      <!-- EGP First -->
+      <button class="currency-option premium-button py-2 px-4 bg-yellow-400 text-black" data-currency="EGP" data-rate="1">EGP</button>
+
+      <!-- More accurate rates -->
       <button class="currency-option premium-button py-2 px-4" data-currency="USD" data-rate="0.032">USD</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="EUR" data-rate="0.029">EUR</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="GBP" data-rate="0.025">GBP</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="SAR" data-rate="0.12">SAR</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="AED" data-rate="0.12">AED</button>
-      <button class="currency-option premium-button py-2 px-4" data-currency="KWD" data-rate="0.01">KWD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="KWD" data-rate="0.0097">KWD</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="TRY" data-rate="0.93">TRY</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="JPY" data-rate="4.62">JPY</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="AUD" data-rate="0.048">AUD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="CAD" data-rate="0.043">CAD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="CHF" data-rate="0.028">CHF</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="CNY" data-rate="0.21">CNY</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="INR" data-rate="2.75">INR</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="BRL" data-rate="0.17">BRL</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="MXN" data-rate="0.61">MXN</button>
     </div>
 
     <button id="apply-currency" class="premium-button w-full py-3">Apply</button>
   </div>
 </div>
+
 <script>
 const currencyBtn = document.getElementById("currency-btn");
 const currencyModal = document.getElementById("currency-modal");
 const applyCurrencyBtn = document.getElementById("apply-currency");
-let selectedCurrency = "EGP"; // default
+let selectedCurrency = "EGP"; 
+let selectedRate = 1;
 
 // Open modal
 currencyBtn.addEventListener("click", () => {
@@ -578,10 +597,13 @@ applyCurrencyBtn.addEventListener("click", () => {
   const productPrices = document.querySelectorAll(".product-card p.text-gray-400");
   
   productPrices.forEach(p => {
-    let egp = parseFloat(p.textContent.replace(/[^0-9]/g, ""));
+    let egp = parseFloat(p.textContent.replace(/[^0-9.]/g, ""));
     let converted = (egp * selectedRate).toFixed(2);
     p.textContent = `${selectedCurrency} ${converted}`;
   });
+
+  // Update button text to current currency
+  currencyBtn.textContent = selectedCurrency;
 
   currencyModal.style.display = "none";
 });
