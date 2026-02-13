@@ -516,21 +516,6 @@ document.addEventListener("click", function(e){
 </div>
 </section>
 
-<footer class="bg-gray-900 py-10 mt-12 border-t border-gray-700" id="contact">
-<div class="container mx-auto px-4 text-center text-gray-400">
-<p class="mb-5 text-gray-200 text-xl font-medium"><i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support</p>
-<p class="mb-4 text-lg"><i class="fab fa-whatsapp mr-2 text-green-500"></i> WhatsApp: <a href="https://wa.me/201025002299" target="_blank" class="text-yellow-400 hover:text-yellow-300 hover:underline transition duration-300">01025002299</a></p>
-<div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
-<p class="text-sm">&copy; 2026 The Egyptian King Production. All Rights Reserved.</p>
-<p class="text-xs mt-1 text-gray-500">Crafted by The Egyptian King's CTO team.</p>
- <script>
-    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
-    const now = new Date();
-    document.getElementById("currentMonth").textContent = months[now.getMonth()];
-  </script>
-</div> 
-</footer>
-
 ><!-- Floating Day/Night Toggle Button -->
 <button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full" 
 style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
@@ -954,6 +939,21 @@ function handleSignIn() {
   closeSignModal('signin-modal');
 }
 </script>
+
+<footer class="bg-gray-900 py-10 mt-12 border-t border-gray-700" id="contact">
+<div class="container mx-auto px-4 text-center text-gray-400">
+<p class="mb-5 text-gray-200 text-xl font-medium"><i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support</p>
+<p class="mb-4 text-lg"><i class="fab fa-whatsapp mr-2 text-green-500"></i> WhatsApp: <a href="https://wa.me/201025002299" target="_blank" class="text-yellow-400 hover:text-yellow-300 hover:underline transition duration-300">01025002299</a></p>
+<div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
+<p class="text-sm">&copy; 2026 The Egyptian King Production. All Rights Reserved.</p>
+<p class="text-xs mt-1 text-gray-500">Crafted by The Egyptian King's CTO team.</p>
+ <script>
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const now = new Date();
+    document.getElementById("currentMonth").textContent = months[now.getMonth()];
+  </script>
+</div> 
+</footer>
 
 </body>
 </html>
