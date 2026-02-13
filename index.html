@@ -537,6 +537,9 @@ let selectedCurrency = "EGP"; // default
 let selectedRate = 1; // default rate
 
 // Open modal
+<button id="currency-btn" class="premium-button py-2 px-4">
+  EGP
+</button>
 currencyBtn.addEventListener("click", () => {
   currencyModal.style.display = "flex";
 });
@@ -577,7 +580,7 @@ applyCurrencyBtn.addEventListener("click", () => {
 });
 </script>
 
-
+<script>
 // Apply currency
 applyCurrencyBtn.addEventListener("click", () => {
   const productPrices = document.querySelectorAll(".product-card p.text-gray-400");
