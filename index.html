@@ -524,7 +524,12 @@ document.addEventListener("click", function(e){
 <div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
 <p class="text-sm">&copy; 2026 The Egyptian King Production. All Rights Reserved.</p>
 <p class="text-xs mt-1 text-gray-500">Crafted by The Egyptian King's CTO team.</p>
-</div>
+ <script>
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const now = new Date();
+    document.getElementById("currentMonth").textContent = months[now.getMonth()];
+  </script>
+</div> 
 </footer>
 
 ><!-- Floating Day/Night Toggle Button -->
