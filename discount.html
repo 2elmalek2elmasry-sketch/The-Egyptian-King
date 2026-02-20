@@ -3,40 +3,64 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Discount Store | The Egyptian King</title>
+    <title>Discount Store</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    </head>
-<body class="bg-gray-900 text-white">
+    <style>
+        :root { --gold: #ffd700; --dark: #111827; }
+        body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; }
+        .side-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: #1f2937; z-index: 1000; transition: 0.4s; padding-top: 80px; border-right: 2px solid var(--gold); }
+        .side-menu.active { left: 0; }
+        .menu-item { padding: 15px 20px; display: flex; align-items: center; color: #d1d5db; text-decoration: none; }
+        .menu-row-special { display: flex; align-items: center; padding-right: 15px; border-bottom: 1px solid #374151; border-top: 1px solid #374151; }
+        .discount-nav-btn { background: var(--gold); color: #111; font-weight: 900; font-size: 0.65rem; padding: 8px 12px; border-radius: 5px; margin-left: auto; text-transform: uppercase; }
+        .menu-trigger { position: fixed; top: 20px; left: 20px; z-index: 1001; background: var(--gold); width: 45px; height: 45px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; cursor: pointer; }
+        .menu-trigger span { width: 22px; height: 3px; background: #111; border-radius: 2px; }
+        .product-card { background: #1f2937; border: 1px solid #374151; transition: 0.3s; }
+        .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
+        .overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
+        .overlay.active { display: block; }
+    </style>
+</head>
+<body>
 
-    <div class="menu-trigger" onclick="toggleMenu()" style="position: fixed; top: 20px; left: 20px; z-index: 1001; background: #ffd700; width: 45px; height: 45px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
-        <span style="width: 22px; height: 3px; background: #111;"></span>
-        <span style="width: 22px; height: 3px; background: #111;"></span>
-        <span style="width: 22px; height: 3px; background: #111;"></span>
+    <div class="menu-trigger" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
     </div>
 
     <div id="sideMenu" class="side-menu">
-        <a href="index.html" class="menu-item"><i class="fas fa-home w-8"></i> Home Page</a>
+        <a href="index.html" class="menu-item"><i class="fas fa-home w-8"></i> Home</a>
         <div class="menu-row-special">
-            <div class="menu-item flex-grow"><i class="fas fa-envelope w-8"></i> Contact</div>
+            <a href="#" class="menu-item flex-grow"><i class="fas fa-envelope w-8"></i> Contact</a>
             <div class="discount-nav-btn">Discount Store</div>
         </div>
     </div>
+    <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
 
     <div class="container mx-auto px-6 pt-24 pb-12">
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-            <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+            
+            <div class="product-card rounded-2xl p-5 flex flex-col">
                 <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-64 object-cover rounded-xl mb-4">
-                <h3 class="text-yellow-400 font-bold uppercase">Discount Hoodie</h3>
-                <p class="text-2xl font-black mt-2">$84</p>
-                <button class="w-full py-2 mt-4 bg-yellow-400 text-black font-bold rounded-lg">Buy Now</button>
+                <h3 class="font-bold text-yellow-400">DISCOUNT HOODIE</h3>
+                <p class="text-2xl font-black mt-2 text-white">$84</p>
+                <button class="bg-yellow-400 text-black font-bold py-2 mt-4 rounded-lg">Buy Now</button>
             </div>
+
+            <div class="product-card rounded-2xl p-5 flex flex-col">
+                <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-64 object-cover rounded-xl mb-4">
+                <h3 class="font-bold text-yellow-400">KHABY LAME HOODIE</h3>
+                <p class="text-2xl font-black mt-2 text-white">EGP 800</p>
+                <button class="bg-yellow-400 text-black font-bold py-2 mt-4 rounded-lg">Buy Now</button>
             </div>
+
+        </div>
     </div>
 
     <script>
         function toggleMenu() {
             document.getElementById("sideMenu").classList.toggle("active");
+            document.getElementById("overlay").classList.toggle("active");
         }
     </script>
 </body>
