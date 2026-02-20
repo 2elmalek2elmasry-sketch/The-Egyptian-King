@@ -78,7 +78,7 @@
         <a href="index.html" class="menu-item"><i class="fas fa-home w-8"></i> Home</a>
         <div class="menu-row-special">
             <a href="#" class="menu-item flex-grow"><i class="fas fa-envelope w-8"></i> Contact</a>
-            <div class="discount-nav-btn">Discount Store</div>
+            <div class="discount-nav-btn"></div>
         </div>
     </div>
     <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
@@ -86,22 +86,22 @@
     <div class="container mx-auto px-6 pt-24 pb-12">
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             
-            <div class="product-card rounded-2xl p-5 flex flex-col">
-                <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-64 object-cover rounded-xl mb-4">
-                <h3 class="font-bold text-yellow-400">DISCOUNT HOODIE</h3>
-                <p class="text-2xl font-black mt-2 text-white">$84</p>
-                <button class="bg-yellow-400 text-black font-bold py-2 mt-4 rounded-lg">Buy Now</button>
-            </div>
-
-            <div class="product-card rounded-2xl p-5 flex flex-col">
-                <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-64 object-cover rounded-xl mb-4">
-                <h3 class="font-bold text-yellow-400">KHABY LAME HOODIE</h3>
-                <p class="text-2xl font-black mt-2 text-white">EGP 800</p>
-                <button class="bg-yellow-400 text-black font-bold py-2 mt-4 rounded-lg">Buy Now</button>
-            </div>
-
-        </div>
-    </div>
+  <!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN HATSHEPSOUT HOODIE" data-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">QUEEN HATSHEPSOUT HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 850</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=QUEEN HATSHEPSOUT HOODIE data-product-price=EGP 850 data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
 
     <script>
         function toggleMenu() {
