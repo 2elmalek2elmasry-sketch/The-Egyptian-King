@@ -3,17 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
+    <title>   </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
     /* Sidebar Menu Container */
 .side-menu {
-  position: fixed; top: 0; left: -300px; width: 300px; height: 100%;
+  position: fixed; top: 0; right: -300px; width: 300px; height: 100%;
   background: #1f2937; z-index: 1000; transition: 0.4s;
   padding-top: 80px; border-right: 2px solid #ffd700;
 }
-.side-menu.active { left: 0; }
+.side-menu.active { right: 0; }
 
 /* The Row with Email + Discount Button */
 .menu-row-special { 
@@ -23,7 +23,7 @@
 
 /* The 3-Line Button (Hamburger) */
 .menu-trigger {
-  position: fixed; top: 20px; left: 20px; z-index: 1001;
+  position: fixed; top: 20px; right: 20px; z-index: 1001;
   background: #ffd700; width: 45px; height: 45px;
   border-radius: 10px; display: flex; flex-direction: column;
   justify-content: center; align-items: center; gap: 4px; cursor: pointer;
@@ -35,12 +35,12 @@
 
         :root { --gold: #ffd700; --dark: #111827; }
         body { background-color: var(--dark); color: white; font-family: 'Inter', sans-serif; margin: 0; }
-        .side-menu { position: fixed; top: 0; left: -300px; width: 300px; height: 100%; background: #1f2937; z-index: 1000; transition: 0.4s; padding-top: 80px; border-right: 2px solid var(--gold); }
-        .side-menu.active { left: 0; }
+        .side-menu { position: fixed; top: 0; right: -300px; width: 300px; height: 100%; background: #1f2937; z-index: 1000; transition: 0.4s; padding-top: 80px; border-right: 2px solid var(--gold); }
+        .side-menu.active { right: 0; }
         .menu-item { padding: 15px 20px; display: flex; align-items: center; color: #d1d5db; text-decoration: none; }
         .menu-row-special { display: flex; align-items: center; padding-right: 15px; border-bottom: 1px solid #374151; border-top: 1px solid #374151; }
-        .discount-nav-btn { background: var(--gold); color: #111; font-weight: 900; font-size: 0.65rem; padding: 8px 12px; border-radius: 5px; margin-left: auto; text-transform: uppercase; }
-        .menu-trigger { position: fixed; top: 20px; left: 20px; z-index: 1001; background: var(--gold); width: 45px; height: 45px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; cursor: pointer; }
+        .discount-nav-btn { background: var(--gold); color: #111; font-weight: 900; font-size: 0.65rem; padding: 8px 12px; border-radius: 5px; margin-right: auto; text-transform: uppercase; }
+        .menu-trigger { position: fixed; top: 20px; right: 20px; z-index: 1001; background: var(--gold); width: 45px; height: 45px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; cursor: pointer; }
         .menu-trigger span { width: 22px; height: 3px; background: #111; border-radius: 2px; }
         .product-card { background: #1f2937; border: 1px solid #374151; transition: 0.3s; }
         .product-card:hover { border-color: var(--gold); transform: translateY(-5px); }
