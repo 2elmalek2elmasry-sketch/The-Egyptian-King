@@ -1,36 +1,43 @@
-<div id="product-view" class="container mx-auto px-6 pt-24 pb-12">
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-        
-        <div class="product-card bg-gray-800/80 rounded-2xl overflow-hidden p-5 flex flex-col border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-            <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="Discount Hoodie" class="w-full h-72 object-cover rounded-xl mb-4">
-            <h3 class="text-lg font-bold text-yellow-400 uppercase tracking-wider">Discount Hoodie</h3>
-            <div class="flex items-center gap-3 my-2">
-                <span class="text-gray-500 line-through text-sm">$120</span>
-                <span class="text-2xl font-black text-white">$84</span>
-            </div>
-            <button class="w-full py-3 mt-auto bg-yellow-400 text-gray-900 font-extrabold rounded-lg hover:bg-white transition-colors uppercase text-sm">Buy Now</button>
-        </div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discount Store | The Egyptian King</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    </head>
+<body class="bg-gray-900 text-white">
 
-        <div class="product-card bg-gray-800/80 rounded-2xl overflow-hidden p-5 flex flex-col border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-            <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="Khaby Lame Hoodie" class="w-full h-72 object-cover rounded-xl mb-4">
-            <h3 class="text-lg font-bold text-yellow-400 uppercase tracking-wider">Khaby Lame Hoodie</h3>
-            <p class="text-2xl font-black text-white my-2">EGP 800</p>
-            <button class="w-full py-3 mt-auto bg-yellow-400 text-gray-900 font-extrabold rounded-lg hover:bg-white transition-colors uppercase text-sm">Quick Buy</button>
-        </div>
-
-        <div class="product-card bg-gray-800/80 rounded-2xl overflow-hidden p-5 flex flex-col border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-            <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LeBron James Hoodie" class="w-full h-72 object-cover rounded-xl mb-4">
-            <h3 class="text-lg font-bold text-yellow-400 uppercase tracking-wider">LeBron James Hoodie</h3>
-            <p class="text-2xl font-black text-white my-2">EGP 800</p>
-            <button class="w-full py-3 mt-auto bg-yellow-400 text-gray-900 font-extrabold rounded-lg hover:bg-white transition-colors uppercase text-sm">Quick Buy</button>
-        </div>
-
-        <div class="product-card bg-gray-800/80 rounded-2xl overflow-hidden p-5 flex flex-col border border-gray-700 hover:border-yellow-400 transition-all duration-300">
-            <img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="Egyptian Rulers Hoodie" class="w-full h-72 object-cover rounded-xl mb-4">
-            <h3 class="text-lg font-bold text-yellow-400 uppercase tracking-wider">Egyptian Rulers</h3>
-            <p class="text-2xl font-black text-white my-2">EGP 800</p>
-            <button class="w-full py-3 mt-auto bg-yellow-400 text-gray-900 font-extrabold rounded-lg hover:bg-white transition-colors uppercase text-sm">Quick Buy</button>
-        </div>
-
+    <div class="menu-trigger" onclick="toggleMenu()" style="position: fixed; top: 20px; left: 20px; z-index: 1001; background: #ffd700; width: 45px; height: 45px; border-radius: 10px; display: flex; flex-direction: column; justify-content: center; align-items: center; gap: 4px; cursor: pointer;">
+        <span style="width: 22px; height: 3px; background: #111;"></span>
+        <span style="width: 22px; height: 3px; background: #111;"></span>
+        <span style="width: 22px; height: 3px; background: #111;"></span>
     </div>
-</div>
+
+    <div id="sideMenu" class="side-menu">
+        <a href="index.html" class="menu-item"><i class="fas fa-home w-8"></i> Home Page</a>
+        <div class="menu-row-special">
+            <div class="menu-item flex-grow"><i class="fas fa-envelope w-8"></i> Contact</div>
+            <div class="discount-nav-btn">Discount Store</div>
+        </div>
+    </div>
+
+    <div class="container mx-auto px-6 pt-24 pb-12">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+            <div class="bg-gray-800 p-5 rounded-2xl border border-gray-700">
+                <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-64 object-cover rounded-xl mb-4">
+                <h3 class="text-yellow-400 font-bold uppercase">Discount Hoodie</h3>
+                <p class="text-2xl font-black mt-2">$84</p>
+                <button class="w-full py-2 mt-4 bg-yellow-400 text-black font-bold rounded-lg">Buy Now</button>
+            </div>
+            </div>
+    </div>
+
+    <script>
+        function toggleMenu() {
+            document.getElementById("sideMenu").classList.toggle("active");
+        }
+    </script>
+</body>
+</html>
