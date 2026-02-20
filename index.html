@@ -9,6 +9,32 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <style>
+/* Sidebar Logic */
+.side-menu {
+  position: fixed; top: 0; left: -300px; width: 300px; height: 100%;
+  background: #1f2937; z-index: 1000; transition: 0.4s;
+  padding-top: 80px; border-right: 2px solid #ffd700;
+}
+.side-menu.active { left: 0; }
+
+/* Special Row: Email + Discount Store */
+.menu-row-special { 
+  display: flex; align-items: center; padding-right: 15px; 
+  border-top: 1px solid #374151; border-bottom: 1px solid #374151; 
+}
+
+/* The Toggle Button (3 Lines) */
+.menu-trigger {
+  position: fixed; top: 20px; left: 20px; z-index: 1001;
+  background: #ffd700; width: 45px; height: 45px;
+  border-radius: 10px; display: flex; flex-direction: column;
+  justify-content: center; align-items: center; gap: 4px; cursor: pointer;
+}
+.menu-trigger span { width: 22px; height: 3px; background: #111; border-radius: 2px; }
+
+.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
+.overlay.active { display: block; }
+
 :root {
 --primary-color: #ffd700;
 --secondary-color: #b91c1c;
@@ -46,6 +72,31 @@ background-size: 40px 40px;
 </style>
 </head>
 <body>
+<div class="menu-trigger" onclick="toggleMenu()">
+  <span></span><span></span><span></span>
+</div>
+
+<div id="sideMenu" class="side-menu">
+  <a href="index.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">Home</a>
+  
+  <div class="menu-row-special">
+    <a href="mailto:support@test.com" style="padding:15px 20px; color:#d1d5db; text-decoration:none; flex-grow:1;">
+      <i class="fas fa-envelope mr-2"></i> Contact
+    </a>
+    <a href="discount.html" style="background:#ffd700; color:#111; font-weight:800; font-size:0.7rem; padding:6px 10px; border-radius:4px; text-decoration:none;">
+      DISCOUNT STORE
+    </a>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("active");
+  document.getElementById("overlay").classList.toggle("active");
+}
+</script>
 
 <!-- Sign Choice Modal -->
 <div id="sign-choice-modal" class="modal-overlay">
