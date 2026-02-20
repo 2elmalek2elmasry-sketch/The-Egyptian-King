@@ -49,6 +49,26 @@
     </style>
 </head>
 <body>
+<div class="menu-trigger" onclick="toggleMenu()">
+  <span></span><span></span><span></span>
+</div>
+
+<div id="sideMenu" class="side-menu">
+  <a href="index.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
+     <i class="fas fa-home mr-2"></i> Home
+  </a>
+  
+  <div class="menu-row-special">
+    <a href="mailto:support@test.com" style="padding:15px 20px; color:#d1d5db; text-decoration:none; flex-grow:1;">
+      <i class="fas fa-envelope mr-2"></i> Contact
+    </a>
+    <a href="discount.html" style="background:#ffd700; color:#111; font-weight:800; font-size:0.7rem; padding:8px 12px; border-radius:4px; text-decoration:none;">
+      DISCOUNT STORE
+    </a>
+  </div>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
 
     <div class="menu-trigger" onclick="toggleMenu()">
         <span></span><span></span><span></span>
