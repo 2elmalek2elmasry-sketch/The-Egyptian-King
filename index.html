@@ -7,7 +7,6 @@
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-
   <a href="index.html"></a>
   <a href="discount.html"></a>
   <a href="themes.html"></a>
@@ -141,6 +140,83 @@ function toggleMenu() {
 }
 </script>
 
+<!-- Sign Choice Modal -->
+<div id="sign-choice-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative text-center">
+    <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
+      <i class="fas fa-times"></i>
+    </button>
+    <button id="google-login-btn" 
+  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
+  Continue with Google
+</button>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+    <p class="text-gray-300 mb-6">Do you want to Sign In or Sign Up?</p>
+    <div class="flex justify-center gap-6">
+      <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">Sign In</button>
+      <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">Sign Up</button>
+    </div>
+  </div>
+</div>
+
+<header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
+
+    <!-- Navigation Links + Sign In on Desktop -->
+    <div class="flex items-center space-x-8">
+      <nav class="hidden md:flex space-x-6 text-lg">
+        <a href="#collection" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Collection</a>
+        <a href="#themes" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Themes</a>
+        <a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
+        <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
+      </nav>
+
+      <!-- Sign In / Up Button (Top Right) -->
+     <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
+<button id="google-login-btn" 
+  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
+  Continue with Google
+</button>
+<button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
+  🔑 Sign In / Up
+</button>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-yellow-400 text-2xl" id="menu-button">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+    <a href="#collection" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Collection</a>
+    <a href="#themes" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Themes</a>
+    <a href="#social" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Social</a>
+    <a href="#contact" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Contact</a>
+    <a href="#" id="sign-btn-mobile" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Sign In / Up</a>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section text-center flex items-center justify-center p-8">
+<div class="bg-black bg-opacity-70 backdrop-blur-sm p-8 md:p-16 rounded-2xl shadow-2xl max-w-3xl border-4 border-yellow-400/50">
+<h1 class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter gold-gradient-text">
+THE EGYPTIAN KING
+</h1>
+<p class="text-xl md:text-3xl font-light text-yellow-100 italic mb-10">
+Dare to Wear Different. Rule Your Style.
+</p>
+<a href="#collection" class="inline-block premium-button py-3 px-10 rounded-full text-xl shadow-lg transform">
+Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
+</a>
+</div>
+</section>
+
+<!-- Themes, Social, Footer, Currency Modal, Checkout Modal -->
 
 <!-- Sign In Modal -->
 <div id="signin-modal" class="modal-overlay">
@@ -1084,6 +1160,7 @@ function handleSignIn() {
       });
   });
 </script>
-  <script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async></script>
+<script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async>
+</script>
 </body>
 </html>
