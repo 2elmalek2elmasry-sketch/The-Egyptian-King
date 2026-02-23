@@ -115,12 +115,6 @@ background-size: 40px 40px;
      <i class="fas fa-home mr-2"></i> Home
   </a>
 
-<div id="sideMenu" class="side-menu">
-  <a href="themes.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
-     <i class="fas fa-palette mr-2"></i> Themes
-  </a>
-</div>
-
   <div class="menu-row-special">
     <a href="mailto:support@test.com" style="padding:15px 20px; color:#d1d5db; text-decoration:none; flex-grow:1;">
       <i class="fas fa-envelope mr-2"></i> Contact
@@ -146,7 +140,7 @@ function toggleMenu() {
     <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
       <i class="fas fa-times"></i>
     </button>
-    <button id="google-login-btn" 
+    <button class="google-login-btn"
   style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
   Continue with Google
 </button>
@@ -176,7 +170,7 @@ function toggleMenu() {
 
       <!-- Sign In / Up Button (Top Right) -->
      <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
-<button id="google-login-btn" 
+<button class="google-login-btn"
   style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
   Continue with Google
 </button>
@@ -222,7 +216,7 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
 <div id="signin-modal" class="modal-overlay">
   <div class="modal-content max-w-md rounded-2xl p-6 relative">
     <button onclick="closeSignModal('signin-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
-    <button id="google-login-btn" 
+    <button class="google-login-btn"
   style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
   Continue with Google
 </button>
@@ -246,7 +240,7 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
       class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl">
       <i class="fas fa-times"></i>
     </button>
-    <button id="google-login-btn" 
+    <button class="google-login-btn"
   style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
   Continue with Google
 </button>
@@ -444,7 +438,7 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 for (let i = 1; i <= 1; i++) {
 document.write(`
 <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image"https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">KING TUTANKAMUN HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=KING TUTANKAMUN HOODIE. data-product-price= EGP800 data-product-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg">
@@ -461,7 +455,7 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 for (let i = 1; i <= 1; i++) {
 document.write(`
 <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image"https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">EGYPTIAN CULTURE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=EGYPTIAN CULTURE HOODIE. data-product-price=EGP 800 data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">
@@ -546,7 +540,7 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 for (let i = 1; i <= 1; i++) {
 document.write(`
 <div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image"https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">TRAVIS SCOTT TEE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 700</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=TRAVIS SCOTT TEE. data-product-price=EGP 700 data-product-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg">
@@ -596,8 +590,7 @@ document.addEventListener("click", function(e){
 <section id="themes" class="py-20 px-4 bg-gray-900/900 border-t border-b border-yellow-800">
   <div class="container mx-auto text-center">
     <div class="flex flex-col md:flex-row justify-center items-center gap-10 text-gray-300 text-lg font-semibold">
-      <span>🔥 LIMITED DROP</
-        >
+      <span>🔥 LIMITED DROP</span>
       <span>📦 Fast Shipping</span>
       <span>🚫 No Restocks</span>
     </div>
