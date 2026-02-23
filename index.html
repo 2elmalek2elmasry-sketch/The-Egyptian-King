@@ -136,21 +136,21 @@ function toggleMenu() {
 
 <!-- Sign Choice Modal -->
 <div id="sign-choice-modal" class="modal-overlay">
-  <div class="modal-content max-w-md rounded-2xl p-6 relative text-center">
-    <button onclick="closeSignModal('sign-choice-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors">
-      <i class="fas fa-times"></i>
-    </button>
-    <button class="google-login-btn"
-  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
-  Continue with Google
+<h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+
+<button id="google-signin-btn"
+  class="w-full bg-white text-black py-3 rounded-xl font-bold mb-6 hover:scale-105 transition">
+  <i class="fab fa-google mr-2"></i> Continue with Google
 </button>
-    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
-    <p class="text-gray-300 mb-6">Do you want to Sign In or Sign Up?</p>
-    <div class="flex justify-center gap-6">
-      <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">Sign In</button>
-      <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">Sign Up</button>
-    </div>
-  </div>
+
+<div class="flex justify-center gap-6">
+  <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">
+    Sign In
+  </button>
+  <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">
+    Sign Up
+  </button>
+</div>
 </div>
 
 <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
@@ -170,10 +170,6 @@ function toggleMenu() {
 
       <!-- Sign In / Up Button (Top Right) -->
      <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
-<button class="google-login-btn"
-  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
-  Continue with Google
-</button>
 <button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
   🔑 Sign In / Up
 </button>
@@ -216,10 +212,6 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
 <div id="signin-modal" class="modal-overlay">
   <div class="modal-content max-w-md rounded-2xl p-6 relative">
     <button onclick="closeSignModal('signin-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
-    <button class="google-login-btn"
-  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
-  Continue with Google
-</button>
     <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign In</h2>
     <form onsubmit="return false;" class="space-y-4">
       <input type="email" placeholder="Email" class="checkout-input w-full" required>
@@ -240,10 +232,6 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
       class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl">
       <i class="fas fa-times"></i>
     </button>
-    <button class="google-login-btn"
-  style="width:100%; padding:12px; background:white; color:black; border-radius:8px; margin-top:10px; font-weight:bold; cursor:pointer;">
-  Continue with Google
-</button>
 
     <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign Up</h2>
 
@@ -1152,8 +1140,125 @@ function handleSignIn() {
         alert("Login Failed");
       });
   });
+  <!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+const firebaseConfig = {
+  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+  authDomain: "elmalkkeke.firebaseapp.com",
+  projectId: "elmalkkeke",
+  storageBucket: "elmalkkeke.firebasestorage.app",
+  messagingSenderId: "1098086705134",
+  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+  measurementId: "G-0XWQX5YKBM"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+const googleBtn = document.getElementById("google-signin-btn");
+const signBtnHeader = document.getElementById("sign-btn-header");
+const avatar = document.getElementById("user-avatar");
+
+// Google Sign In
+googleBtn.addEventListener("click", () => {
+  auth.signInWithPopup(provider)
+    .then(() => {
+      document.getElementById("sign-choice-modal").style.display = "none";
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+});
+
+// Listen for login state
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    signBtnHeader.style.display = "none";
+    avatar.classList.remove("hidden");
+    avatar.innerHTML = `
+      <img src="${user.photoURL}" 
+           class="w-10 h-10 rounded-full object-cover cursor-pointer">
+    `;
+  } else {
+    signBtnHeader.style.display = "block";
+    avatar.classList.add("hidden");
+    avatar.innerHTML = "";
+  }
+});
+
+// Logout function (call this from your signout button)
+function logoutUser() {
+  auth.signOut();
+}
+</script>
 </script>
 <script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async>
+</script>
+<!-- Firebase SDK -->
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+  authDomain: "elmalkkeke.firebaseapp.com",
+  projectId: "elmalkkeke",
+  storageBucket: "elmalkkeke.firebasestorage.app",
+  messagingSenderId: "1098086705134",
+  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+  measurementId: "G-0XWQX5YKBM"
+};
+
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const provider = new GoogleAuthProvider();
+
+// Google Sign In Click
+document.getElementById("google-signin-btn").addEventListener("click", async () => {
+  try {
+    const result = await signInWithPopup(auth, provider);
+    const user = result.user;
+
+    document.getElementById("sign-choice-modal").style.display = "none";
+  } catch (error) {
+    alert(error.message);
+  }
+});
+
+// Detect Login State
+onAuthStateChanged(auth, (user) => {
+  const avatar = document.getElementById("user-avatar");
+  const signBtn = document.getElementById("sign-btn-header");
+
+  if (user) {
+    signBtn.style.display = "none";
+
+    avatar.classList.remove("hidden");
+    avatar.innerHTML = `<img src="${user.photoURL}" class="w-10 h-10 rounded-full">`;
+    
+    avatar.onclick = () => {
+      document.getElementById("signout-modal").style.display = "flex";
+    };
+  } else {
+    signBtn.style.display = "inline-block";
+    avatar.classList.add("hidden");
+  }
+});
+
+// Logout
+window.logoutUser = async function() {
+  await signOut(auth);
+  document.getElementById("signout-modal").style.display = "none";
+};
 </script>
 </body>
 </html>
