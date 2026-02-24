@@ -1,108 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>The Egyptian King Apparel - Premium Streetwear</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-  <a href="index.html"></a>
-  <a href="discount.html"></a>
-  <a href="themes.html"></a>
-</nav>
-<title>The Egyptian King Apparel - Premium Streetwear</title>
-<script src="https://cdn.tailwindcss.com"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
-<style>
-/* Sidebar Menu Container */
-.side-menu {
-  position: fixed; top: 0; right: -300px; width: 300px; height: 100%;
-  background: #1f2937; z-index: 1000; transition: 0.4s;
-  padding-top: 80px; border-right: 2px solid #ffd700;
-}
-.side-menu.active { right: 0; }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Egyptian King Apparel - Premium Streetwear</title>
 
-/* The Row with Email + Discount Button */
-.menu-row-special { 
-  display: flex; align-items: center; padding-right: 15px; 
-  border-top: 1px solid #374151; border-bottom: 1px solid #374151; 
-}
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com" type="module"></script>
 
-/* The 3-Line Button (Hamburger) */
-.menu-trigger {
-  position: fixed; top: 20px; right: 20px; z-index: 1001;
-  background: #ffd700; width: 45px; height: 45px;
-  border-radius: 10px; display: flex; flex-direction: column;
-  justify-content: center; align-items: center; gap: 4px; cursor: pointer;
-}
-.menu-trigger span { width: 22px; height: 3px; background: #111; border-radius: 2px; }
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
-.overlay.active { display: block; }
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 
-/* Sidebar Logic */
-.side-menu {
-  position: fixed; top: 0; right: -300px; width: 300px; height: 100%;
-  background: #1f2937; z-index: 1000; transition: 0.4s;
-  padding-top: 80px; border-right: 2px solid #ffd700;
-}
-.side-menu.active { right: 0; }
+  <style>
+    :root {
+      --primary-color: #ffd700;
+      --secondary-color: #b91c1c;
+      --background-dark: #111827;
+      --text-light: #f9fafb;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      background-image: linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01)),
+                        linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01));
+      background-size: 40px 40px;
+    }
 
-/* Special Row: Email + Discount Store */
-.menu-row-special { 
-  display: flex; align-items: center; padding-right: 15px; 
-  border-top: 1px solid #374151; border-bottom: 1px solid #374151; 
-}
+    /* Sidebar */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: #1f2937;
+      z-index: 1000;
+      transition: 0.4s;
+      padding-top: 80px;
+      border-right: 2px solid var(--primary-color);
+    }
+    .side-menu.active { right: 0; }
 
-/* The Toggle Button (3 Lines) */
-.menu-trigger {
-  position: fixed; top: 20px; right: 20px; z-index: 1001;
-  background: #ffd700; width: 45px; height: 45px;
-  border-radius: 10px; display: flex; flex-direction: column;
-  justify-content: center; align-items: center; gap: 4px; cursor: pointer;
-}
-.menu-trigger span { width: 22px; height: 3px; background: #111; border-radius: 2px; }
+    /* Toggle button */
+    .menu-trigger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: var(--primary-color);
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .menu-trigger span {
+      width: 22px;
+      height: 3px;
+      background: #111;
+      border-radius: 2px;
+    }
 
-.overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.7); display: none; z-index: 998; }
-.overlay.active { display: block; }
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      z-index: 998;
+    }
+    .overlay.active { display: block; }
 
-:root {
---primary-color: #ffd700;
---secondary-color: #b91c1c;
---background-dark: #111827;
---text-light: #f9fafb;
-}
-body {
-font-family: 'Inter', sans-serif;
-background-color: var(--background-dark);
-color: var(--text-light);
-background-image: linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01)), linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01));
-background-size: 40px 40px;
-}
-.hero-section { background-size: cover; background-position: center; min-height: 80vh; box-shadow: 0 10px 30px rgba(0,0,0,0.7); }
-.gold-gradient-text { background: linear-gradient(135deg,#ffd700,#ffc400,#f8b400); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; text-fill-color: transparent; text-shadow: 0 0 5px rgba(255,215,0,0.5);}
-.product-card { transition: transform 0.4s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.4s ease; border:1px solid #374151; }
-.product-card:hover { transform: translateY(-8px); box-shadow: 0 20px 25px -5px rgba(0,0,0,0.8), 0 8px 10px -6px rgba(0,0,0,0.5); border-color: var(--primary-color);}
-.premium-button { background-color: var(--primary-color); color: var(--background-dark); font-weight:700; transition: all 0.3s ease-in-out; box-shadow:0 5px 15px rgba(255,215,0,0.3);}
-.premium-button:hover { background-color: #f8b400; transform: scale(1.05); box-shadow:0 10px 20px rgba(255,215,0,0.5);}
-.buy-button { display:block; width:100%; padding:0.75rem; margin-top:1rem; border-radius:0.5rem;}
-.cta-button { background-color: var(--secondary-color); transition: all 0.3s ease-in-out; }
-.cta-button:hover { background-color: #dc2626; transform: scale(1.03);}
-.modal-overlay { position: fixed; top:0; right:0; width:100%; height:100%; background-color: rgba(0,0,0,0.9); display:none; justify-content:center; align-items:center; z-index:100; animation: fadeIn 0.3s ease-out; }
-.modal-content { width: 90%; max-width:600px; max-height:90vh; overflow-y:auto; background-color:#1f2937; border:3px solid var(--primary-color); box-shadow:0 15px 30px rgba(255,215,0,0.2); animation: slideIn 0.3s ease-out;}
-@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
-@keyframes slideIn { from {transform:translateY(-50px);opacity:0;} to {transform:translateY(0);opacity:1;} }
-.checkout-input { background-color:#374151; border:1px solid #4b5563; color:var(--text-light); padding:0.75rem; border-radius:0.375rem; transition:border-color 0.2s;}
-.checkout-input:focus { outline:none; border-color: var(--primary-color); box-shadow:0 0 0 2px rgba(255,215,0,0.5);}
-#currency-btn{
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
-  z-index: 999;
-}
-</style>
+    /* Product cards */
+    .product-card {
+      transition: transform 0.4s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.4s ease;
+      border:1px solid #374151;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.8), 0 8px 10px -6px rgba(0,0,0,0.5);
+      border-color: var(--primary-color);
+    }
+
+    /* Buttons */
+    .premium-button {
+      background-color: var(--primary-color);
+      color: var(--background-dark);
+      font-weight:700;
+      transition: all 0.3s ease-in-out;
+      box-shadow:0 5px 15px rgba(255,215,0,0.3);
+    }
+    .premium-button:hover {
+      background-color: #f8b400;
+      transform: scale(1.05);
+      box-shadow:0 10px 20px rgba(255,215,0,0.5);
+    }
+    .cta-button {
+      background-color: var(--secondary-color);
+      transition: all 0.3s ease-in-out;
+    }
+    .cta-button:hover {
+      background-color: #dc2626;
+      transform: scale(1.03);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top:0;
+      right:0;
+      width:100%;
+      height:100%;
+      background-color: rgba(0,0,0,0.9);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:100;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .modal-content {
+      width: 90%;
+      max-width:600px;
+      max-height:90vh;
+      overflow-y:auto;
+      background-color:#1f2937;
+      border:3px solid var(--primary-color);
+      box-shadow:0 15px 30px rgba(255,215,0,0.2);
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes slideIn { from {transform:translateY(-50px);opacity:0;} to {transform:translateY(0);opacity:1;} }
+
+    /* Inputs */
+    .checkout-input {
+      background-color:#374151;
+      border:1px solid #4b5563;
+      color:var(--text-light);
+      padding:0.75rem;
+      border-radius:0.375rem;
+      transition:border-color 0.2s;
+    }
+    .checkout-input:focus {
+      outline:none;
+      border-color: var(--primary-color);
+      box-shadow:0 0 0 2px rgba(255,215,0,0.5);
+    }
+
+    #currency-btn{
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+    }
+  </style>
 </head>
 <body>
 
@@ -128,7 +185,6 @@ background-size: 40px 40px;
   <a href="themes.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
     <i class="fas fa-palette mr-2"></i> Themes
   </a>
-</div>
 </div>
 
 <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
@@ -1145,126 +1201,68 @@ function handleSignIn() {
         console.error(error);
         alert("Login Failed");
       });
-  });
-  <!-- Firebase -->
+  })
+<!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 
 <script>
-const firebaseConfig = {
-  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
-  authDomain: "elmalkkeke.firebaseapp.com",
-  projectId: "elmalkkeke",
-  storageBucket: "elmalkkeke.firebasestorage.app",
-  messagingSenderId: "1098086705134",
-  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
-  measurementId: "G-0XWQX5YKBM"
-};
+document.addEventListener("DOMContentLoaded", function() {
 
-firebase.initializeApp(firebaseConfig);
+  const firebaseConfig = {
+    apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+    authDomain: "elmalkkeke.firebaseapp.com",
+    projectId: "elmalkkeke",
+    storageBucket: "elmalkkeke.firebasestorage.app",
+    messagingSenderId: "1098086705134",
+    appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+    measurementId: "G-0XWQX5YKBM"
+  };
 
-const auth = firebase.auth();
-const provider = new firebase.auth.GoogleAuthProvider();
+  firebase.initializeApp(firebaseConfig);
 
-const googleBtn = document.getElementById("google-signin-btn");
-const signBtnHeader = document.getElementById("sign-btn-header");
-const avatar = document.getElementById("user-avatar");
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
 
-// Google Sign In
-googleBtn.addEventListener("click", () => {
-  auth.signInWithPopup(provider)
-    .then(() => {
-      document.getElementById("sign-choice-modal").style.display = "none";
-    })
-    .catch((error) => {
-      console.error(error);
-    });
-});
-
-// Listen for login state
-auth.onAuthStateChanged((user) => {
-  if (user) {
-    signBtnHeader.style.display = "none";
-    avatar.classList.remove("hidden");
-    avatar.innerHTML = `
-      <img src="${user.photoURL}" 
-           class="w-10 h-10 rounded-full object-cover cursor-pointer">
-    `;
-  } else {
-    signBtnHeader.style.display = "block";
-    avatar.classList.add("hidden");
-    avatar.innerHTML = "";
-  }
-});
-
-// Logout function (call this from your signout button)
-function logoutUser() {
-  auth.signOut();
-}
-</script>
-</script>
-<script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async>
-</script>
-<!-- Firebase SDK -->
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js"></script>
-<script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js"></script>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-import { getAuth, GoogleAuthProvider, signInWithPopup, signOut, onAuthStateChanged } 
-from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
-  authDomain: "elmalkkeke.firebaseapp.com",
-  projectId: "elmalkkeke",
-  storageBucket: "elmalkkeke.firebasestorage.app",
-  messagingSenderId: "1098086705134",
-  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
-  measurementId: "G-0XWQX5YKBM"
-};
-
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
-
-// Google Sign In Click
-document.getElementById("google-signin-btn").addEventListener("click", async () => {
-  try {
-    const result = await signInWithPopup(auth, provider);
-    const user = result.user;
-
-    document.getElementById("sign-choice-modal").style.display = "none";
-  } catch (error) {
-    alert(error.message);
-  }
-});
-
-// Detect Login State
-onAuthStateChanged(auth, (user) => {
+  const googleBtn = document.getElementById("google-signin-btn");
   const avatar = document.getElementById("user-avatar");
   const signBtn = document.getElementById("sign-btn-header");
 
-  if (user) {
-    signBtn.style.display = "none";
-
-    avatar.classList.remove("hidden");
-    avatar.innerHTML = `<img src="${user.photoURL}" class="w-10 h-10 rounded-full">`;
-    
-    avatar.onclick = () => {
-      document.getElementById("signout-modal").style.display = "flex";
-    };
-  } else {
-    signBtn.style.display = "inline-block";
-    avatar.classList.add("hidden");
+  if (googleBtn) {
+    googleBtn.addEventListener("click", () => {
+      auth.signInWithPopup(provider)
+        .then(() => {
+          document.getElementById("sign-choice-modal").style.display = "none";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    });
   }
-});
 
-// Logout
-window.logoutUser = async function() {
-  await signOut(auth);
-  document.getElementById("signout-modal").style.display = "none";
-};
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      if (signBtn) signBtn.style.display = "none";
+      if (avatar) {
+        avatar.classList.remove("hidden");
+        avatar.innerHTML =
+          `<img src="${user.photoURL}" class="w-10 h-10 rounded-full object-cover">`;
+      }
+    } else {
+      if (signBtn) signBtn.style.display = "inline-block";
+      if (avatar) {
+        avatar.classList.add("hidden");
+        avatar.innerHTML = "";
+      }
+    }
+  });
+
+  window.logoutUser = function() {
+    auth.signOut();
+  };
+
+});
 </script>
+
 </body>
 </html>
