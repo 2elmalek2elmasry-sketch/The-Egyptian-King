@@ -1,0 +1,1268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Egyptian King Apparel - Premium Streetwear</title>
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com" type="module"></script>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <!-- Google Fonts -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root {
+      --primary-color: #ffd700;
+      --secondary-color: #b91c1c;
+      --background-dark: #111827;
+      --text-light: #f9fafb;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--background-dark);
+      color: var(--text-light);
+      background-image: linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01)),
+                        linear-gradient(45deg, rgba(255,255,255,0.01) 25%, transparent 25%, transparent 75%, rgba(255,255,255,0.01) 75%, rgba(255,255,255,0.01));
+      background-size: 40px 40px;
+    }
+
+    /* Sidebar */
+    .side-menu {
+      position: fixed;
+      top: 0;
+      right: -300px;
+      width: 300px;
+      height: 100%;
+      background: #1f2937;
+      z-index: 1000;
+      transition: 0.4s;
+      padding-top: 80px;
+      border-right: 2px solid var(--primary-color);
+    }
+    .side-menu.active { right: 0; }
+
+    /* Toggle button */
+    .menu-trigger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1001;
+      background: var(--primary-color);
+      width: 45px;
+      height: 45px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 4px;
+      cursor: pointer;
+    }
+    .menu-trigger span {
+      width: 22px;
+      height: 3px;
+      background: #111;
+      border-radius: 2px;
+    }
+
+    .overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      z-index: 998;
+    }
+    .overlay.active { display: block; }
+
+    /* Product cards */
+    .product-card {
+      transition: transform 0.4s cubic-bezier(0.25,0.8,0.25,1), box-shadow 0.4s ease;
+      border:1px solid #374151;
+    }
+    .product-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 25px -5px rgba(0,0,0,0.8), 0 8px 10px -6px rgba(0,0,0,0.5);
+      border-color: var(--primary-color);
+    }
+
+    /* Buttons */
+    .premium-button {
+      background-color: var(--primary-color);
+      color: var(--background-dark);
+      font-weight:700;
+      transition: all 0.3s ease-in-out;
+      box-shadow:0 5px 15px rgba(255,215,0,0.3);
+    }
+    .premium-button:hover {
+      background-color: #f8b400;
+      transform: scale(1.05);
+      box-shadow:0 10px 20px rgba(255,215,0,0.5);
+    }
+    .cta-button {
+      background-color: var(--secondary-color);
+      transition: all 0.3s ease-in-out;
+    }
+    .cta-button:hover {
+      background-color: #dc2626;
+      transform: scale(1.03);
+    }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed;
+      top:0;
+      right:0;
+      width:100%;
+      height:100%;
+      background-color: rgba(0,0,0,0.9);
+      display:none;
+      justify-content:center;
+      align-items:center;
+      z-index:100;
+      animation: fadeIn 0.3s ease-out;
+    }
+    .modal-content {
+      width: 90%;
+      max-width:600px;
+      max-height:90vh;
+      overflow-y:auto;
+      background-color:#1f2937;
+      border:3px solid var(--primary-color);
+      box-shadow:0 15px 30px rgba(255,215,0,0.2);
+      animation: slideIn 0.3s ease-out;
+    }
+    @keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+    @keyframes slideIn { from {transform:translateY(-50px);opacity:0;} to {transform:translateY(0);opacity:1;} }
+
+    /* Inputs */
+    .checkout-input {
+      background-color:#374151;
+      border:1px solid #4b5563;
+      color:var(--text-light);
+      padding:0.75rem;
+      border-radius:0.375rem;
+      transition:border-color 0.2s;
+    }
+    .checkout-input:focus {
+      outline:none;
+      border-color: var(--primary-color);
+      box-shadow:0 0 0 2px rgba(255,215,0,0.5);
+    }
+
+    #currency-btn{
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      z-index: 999;
+    }
+  </style>
+</head>
+<body>
+
+<div class="menu-trigger" onclick="toggleMenu()">
+  <span></span>
+  <span></span>
+  <span></span>
+</div>
+
+<div id="sideMenu" class="side-menu">
+  <a href="index.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
+     <i class="fas fa-home mr-2"></i> Home
+  </a>
+
+  <a href="mailto:2el.malek.2el.masry@gmail.com" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
+    <i class="fas fa-envelope mr-2"></i> Contact
+  </a>
+ 
+  <a href="discount.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
+    <i class="fas fa-tag mr-2"></i> Discount Store
+  </a>
+
+  <a href="themes.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
+    <i class="fas fa-palette mr-2"></i> Themes
+  </a>
+</div>
+
+<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
+
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("active");
+  document.getElementById("overlay").classList.toggle("active");
+}
+</script>
+
+<!-- Sign Choice Modal -->
+<div id="sign-choice-modal" class="modal-overlay">
+<h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Welcome 👑</h2>
+
+<button id="google-signin-btn"
+  class="w-full bg-white text-black py-3 rounded-xl font-bold mb-6 hover:scale-105 transition">
+  <i class="fab fa-google mr-2"></i> Continue with Google
+</button>
+
+<div class="flex justify-center gap-6">
+  <button onclick="openSignIn()" class="premium-button py-3 px-6 rounded-xl">
+    Sign In
+  </button>
+  <button onclick="openSignUp()" class="premium-button py-3 px-6 rounded-xl">
+    Sign Up
+  </button>
+</div>
+</div>
+
+<header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
+  <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+
+    <!-- Logo -->
+    <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
+
+    <!-- Navigation Links + Sign In on Desktop -->
+    <div class="flex items-center space-x-8">
+      <nav class="hidden md:flex space-x-6 text-lg">
+        <a href="#collection" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Collection</a>
+        <a href="#themes" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Themes</a>
+        <a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
+        <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
+      </nav>
+
+      <!-- Sign In / Up Button (Top Right) -->
+     <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
+<button id="sign-btn-header" class="premium-button px-4 py-2 rounded-full text-sm whitespace-nowrap">
+  🔑 Sign In / Up
+</button>
+    </div>
+
+    <!-- Mobile Menu Button -->
+    <button class="md:hidden text-yellow-400 text-2xl" id="menu-button">
+      <i class="fas fa-bars"></i>
+    </button>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobile-menu" class="hidden md:hidden bg-gray-800 border-t border-gray-700">
+    <a href="#collection" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Collection</a>
+    <a href="#themes" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Themes</a>
+    <a href="#social" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Social</a>
+    <a href="#contact" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Contact</a>
+    <a href="#" id="sign-btn-mobile" class="block px-4 py-3 text-gray-300 hover:bg-gray-700 transition duration-200">Sign In / Up</a>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero-section text-center flex items-center justify-center p-8">
+<div class="bg-black bg-opacity-70 backdrop-blur-sm p-8 md:p-16 rounded-2xl shadow-2xl max-w-3xl border-4 border-yellow-400/50">
+<h1 class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter gold-gradient-text">
+THE EGYPTIAN KING
+</h1>
+<p class="text-xl md:text-3xl font-light text-yellow-100 italic mb-10">
+Dare to Wear Different. Rule Your Style.
+</p>
+<a href="#collection" class="inline-block premium-button py-3 px-10 rounded-full text-xl shadow-lg transform">
+Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
+</a>
+</div>
+</section>
+
+<!-- Themes, Social, Footer, Currency Modal, Checkout Modal -->
+
+<!-- Sign In Modal -->
+<div id="signin-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative">
+    <button onclick="closeSignModal('signin-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign In</h2>
+    <form onsubmit="return false;" class="space-y-4">
+      <input type="email" placeholder="Email" class="checkout-input w-full" required>
+      <input type="password" placeholder="Password" class="checkout-input w-full" required>
+       <button type="button"
+        onclick="handleSignIn()"
+        class="premium-button w-full py-3 rounded-xl">
+  Sign In
+</button>
+    </form>
+  </div>
+</div>
+
+<!-- Sign Up Modal -->
+<div id="signup-modal" class="modal-overlay">
+  <div class="modal-content max-w-md rounded-2xl p-6 relative">
+    <button onclick="closeSignModal('signup-modal')" 
+      class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl">
+      <i class="fas fa-times"></i>
+    </button>
+
+    <h2 class="text-3xl font-extrabold gold-gradient-text mb-6">Sign Up</h2>
+
+    <form onsubmit="return false;" class="space-y-4">
+      <input type="text" placeholder="Full Name" class="checkout-input w-full" required>
+      <input type="email" placeholder="Email" class="checkout-input w-full" required>
+      <input type="password" placeholder="Password" class="checkout-input w-full" required>
+
+      <button type="button"
+              onclick="handleSignUp()"
+              class="premium-button w-full py-3 rounded-xl">
+        Sign Up
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Sign Out Modal -->
+<div id="signout-modal" class="modal-overlay">
+  <div class="modal-content max-w-sm rounded-2xl p-6 relative text-center">
+    <button onclick="closeSignModal('signout-modal')" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-2xl">&times;</button>
+    <h2 class="text-2xl font-bold text-yellow-400 mb-4">Do you want to sign out?</h2>
+    <div class="flex justify-center gap-6">
+      <button onclick="logoutUser()" class="premium-button py-2 px-6 rounded-xl">Yes</button>
+      <button onclick="closeSignModal('signout-modal')" class="premium-button py-2 px-6 rounded-xl">No</button>
+    </div>
+  </div>
+</div>
+
+
+<script>
+
+// ===== Existing Scripts =====
+
+// Mobile menu toggle
+document.getElementById('menu-button').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+
+// Sign In / Up buttons functionality
+document.getElementById('sign-btn-header').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+document.getElementById('sign-btn-mobile').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+
+// Functions to open/close Sign modals
+
+function closeSignModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal on background click
+</script>
+
+<section id="collection" class="py-20 md:py-28 px-4">
+<div class="container mx-auto">
+<div class="text-center mb-16">
+  <h2 class="text-4xl md:text-5xl font-extrabold gold-gradient-text mb-4">
+    Next Drop In
+  </h2>
+  <p id="countdown-timer" class="text-3xl md:text-4xl font-black text-yellow-400 tracking-wider">
+    01d 00h 00m 00s
+  </p>
+</div>
+
+<h2 class="text-4xl md:text-6xl font-extrabold text-center mb-16 gold-gradient-text">Featured Pharaoh Gear</h2>
+<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN HATSHEPSOUT HOODIE" data-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">QUEEN HATSHEPSOUT HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 850</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=QUEEN HATSHEPSOUT HOODIE data-product-price=EGP 850 data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="KHABY LAME HOODIE" data-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">KHABY LAME HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=KHABY LAME HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES HOODIE" data-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">LBRON JAMES HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=LBRON JAMES HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWANE JHONSON HOODIE" data-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">DWANE JHONSON HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=DWANE JHONSON HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM HOODIE" data-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">JUDE BELLINGHAM HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=JUDE BELLINGHAM HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA HOODIE" data-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">SOCIAL MEDIA HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=SOCIAL MEDIA HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS HOODIE" data-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">EGYPTIAN RULERS HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=EGYPTIAN RULERS HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">KING TUTANKAMUN HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=KING TUTANKAMUN HOODIE. data-product-price= EGP800 data-product-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">EGYPTIAN CULTURE HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=EGYPTIAN CULTURE HOODIE. data-product-price=EGP 800 data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src="https://i.postimg.cc/qRHPBMmP/unnamed.png"alt="FIFA WORLD CUP HOODIE" data-image="https://i.postimg.cc/qRHPBMmP/unnamed.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">FIFA WORLD CUP HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=FIFA WORLD CUP HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/qRHPBMmP/unnamed.png">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src="https://i.postimg.cc/W3s0LzFr/IMG-5148.png"alt="" data-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">FLAG TRIO HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=FLAG TRIO HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png"alt="CROWNED SKULL HOODIE" data-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">CROWNED SKULL HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=CROWNED SKULL HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=1 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src="https://i.postimg.cc/3rZnLTjD/IMG-5187.png"alt="ALGERIAN CULTURE HOODIE" data-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">ALGERIAN CULTURE HOODIE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=ALGERIAN CULTURE HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate 1 product cards -->
+<script>
+for (let i = 1; i <= 1; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
+<img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">TRAVIS SCOTT TEE</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP 700</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=TRAVIS SCOTT TEE. data-product-price=EGP 700 data-product-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
+</button>
+</div>
+`);
+}
+</script>
+
+<!-- Generate product card -->
+<script>
+for (let i = 1; i <=3 ; i++) {
+document.write(`
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
+<img src=""alt="" data-image"" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">COMING SOON</h3>
+<p class="text-sm text-gray-400 mt-1 mb-3">EGP ???</p>
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="buy-button premium-button" data-product-name=COMING SOONdata-product-price=EGP ??? data-product-image="">
+Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+</button>
+</div>
+`);
+}
+</script>
+
+<script>
+  // Click card to zoom image
+document.addEventListener("click", function(e){
+  const card = e.target.closest(".product-card");
+  if(!card) return;
+
+  const img = card.querySelector(".product-image");
+  if(!img) return;
+
+  img.classList.toggle("scale-125");
+  img.classList.toggle("scale-100");
+});
+
+</script>
+</div>
+</div>
+</section>
+
+<section id="themes" class="py-20 px-4 bg-gray-900/900 border-t border-b border-yellow-800">
+  <div class="container mx-auto text-center">
+    <div class="flex flex-col md:flex-row justify-center items-center gap-10 text-gray-300 text-lg font-semibold">
+      <span>🔥 LIMITED DROP</span>
+      <span>📦 Fast Shipping</span>
+      <span>🚫 No Restocks</span>
+    </div>
+  </div>
+</section>
+
+<div class="container mx-auto">
+  <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-yellow-400">Explore Our Kingdoms</h2>
+<div class="grid md:grid-cols-3 gap-10 text-center">
+<div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+<i class="fas fa-dumbbell text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<h3 class="text-2xl font-bold mb-3 text-yellow-100">Sports Legends</h3>
+<p class="text-gray-400">Hoodies and tees dedicated to the kings of the court and pitch.</p>
+</div>
+<div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+<i class="fas fa-mask text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<h3 class="text-2xl font-bold mb-3 text-yellow-100">Action & Icons</h3>
+<p class="text-gray-400">Cinematic icons and strong personalities in every design.</p>
+</div>
+<div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
+<i class="fas fa-crown text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<h3 class="text-2xl font-bold mb-3 text-yellow-100">The Heritage Line</h3>
+<p class="text-gray-400">A tribute to Egypt’s majestic history and timeless graphics.</p>
+</div>
+</div>
+</div>
+</section>
+
+<section id="social" class="py-20 px-4">
+<div class="container mx-auto text-center">
+<h2 class="text-4xl md:text-5xl font-bold mb-10 text-yellow-400">Connect with the King</h2>
+<p class="text-xl text-gray-300 mb-12">Follow us for new drops and exclusive content!</p>
+<div class="flex justify-center space-x-10 text-6xl">
+<a href="https://www.tiktok.com/@TheEgyptianKing" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-tiktok"></i></a>
+<a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-instagram"></i></a>
+<a href="https://www.snapchat.com/add/tek" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-snapchat-ghost"></i></a>
+<a href="#" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-youtube"></i></a>
+<a href="https://www.facebook.com/the_egyptian_king10" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-facebook"></i></a>
+</div>
+</div>
+</section>
+
+><!-- Floating Day/Night Toggle Button -->
+<button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full" 
+style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
+  🌞 / 🌙
+</button>
+
+
+
+<!-- Currency Floating Button -->
+<button id="currency-btn" class="premium-button px-6 py-3 rounded-full">
+  💱 Currency
+</button>
+
+<!-- Currency Modal -->
+<div id="currency-modal" class="modal-overlay" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,0.5); justify-content:center; align-items:center;">
+  <div class="modal-content max-w-md rounded-2xl p-6 bg-white">
+    <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
+
+    <div id="currency-options" class="grid grid-cols-3 gap-4 mb-4">
+      <!-- EGP First -->
+      <button class="currency-option premium-button py-2 px-4 bg-yellow-400 text-black" data-currency="EGP" data-rate="1">EGP</button>
+
+      <!-- Other currencies -->
+      <button class="currency-option premium-button py-2 px-4" data-currency="USD" data-rate="0.032">USD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="EUR" data-rate="0.029">EUR</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="GBP" data-rate="0.025">GBP</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="SAR" data-rate="0.12">SAR</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="AED" data-rate="0.12">AED</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="KWD" data-rate="0.0097">KWD</button>
+      <button class="currency-option premium-button py-2 px-4" data-currency="TRY" data-rate="0.93">TRY</button>
+    </div>
+
+    <button id="apply-currency" class="premium-button w-full py-3">Apply</button>
+  </div>
+</div>
+
+<script>
+const currencyBtn = document.getElementById("currency-btn");
+const currencyModal = document.getElementById("currency-modal");
+const applyCurrencyBtn = document.getElementById("apply-currency");
+let selectedCurrency = "EGP"; 
+let selectedRate = 1;
+
+// Store original EGP prices
+const productPrices = document.querySelectorAll(".product-card p.text-gray-400");
+productPrices.forEach(p => {
+  p.dataset.egp = parseFloat(p.textContent.replace(/[^0-9.]/g, ""));
+});
+
+// Open modal
+currencyBtn.addEventListener("click", () => {
+  currencyModal.style.display = "flex";
+});
+
+// Close modal when clicking outside content
+currencyModal.addEventListener("click", (e) => {
+  if (e.target === currencyModal) currencyModal.style.display = "none";
+});
+
+// Highlight selected button
+document.querySelectorAll(".currency-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".currency-option").forEach(b => b.classList.remove("bg-yellow-400", "text-black"));
+    btn.classList.add("bg-yellow-400", "text-black");
+    selectedCurrency = btn.dataset.currency;
+    selectedRate = parseFloat(btn.dataset.rate);
+  });
+});
+
+// Apply currency
+applyCurrencyBtn.addEventListener("click", () => {
+  productPrices.forEach(p => {
+    let egp = parseFloat(p.dataset.egp);
+    let converted = (egp * selectedRate).toFixed(2);
+    p.textContent = `${selectedCurrency} ${converted}`;
+  });
+
+  // Update button text
+  currencyBtn.textContent = selectedCurrency;
+  currencyModal.style.display = "none";
+});
+</script>
+
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="modal-overlay">
+<div class="modal-content rounded-2xl p-6 md:p-10 relative">
+<button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
+<h2 class="text-3xl font-extrabold gold-gradient-text border-b pb-3 mb-6 border-yellow-800" id="modal-title">Quick Checkout</h2>
+
+<div id="step-1-summary">
+<div class="flex items-center space-x-4 mb-6 p-4 bg-gray-900/50 rounded-lg border border-yellow-900">
+<img id="modal-product-image" src="" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+<div>
+<p class="text-xl font-bold text-yellow-400" id="modal-product-name"></p>
+<p class="text-2xl font-black text-yellow-500" id="modal-product-price"></p>
+</div>
+</div>
+<div class="mb-6">
+<label for="product-size" class="block text-gray-300 mb-2 font-medium">Select Size (MANDATORY)</label>
+<select id="product-size" class="checkout-input w-full">
+<option value="" disabled selected>Choose size...</option>
+<option value="S">Small (S)</option>
+<option value="M">Medium (M)</option>
+<option value="L">Large (L)</option>
+<option value="XL">Extra Large (XL)</option>
+</select>
+</div>
+<button onclick="nextStep(2)" id="next-to-shipping-btn" class="premium-button w-full py-3 rounded-xl text-xl transition-transform transform hover:scale-[1.02]">Proceed to Shipping <i class="fas fa-truck ml-2"></i></button>
+</div>
+
+<div id="step-2-shipping" style="display:none;">
+<p class="text-lg font-bold text-yellow-400 mb-4">1. Shipping Information</p>
+<form id="checkout-form" onsubmit="return false;">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<input type="text" id="full-name" placeholder="Full Name" required class="checkout-input">
+<input type="tel" id="phone" placeholder="Phone Number" required class="checkout-input" maxlength="11">
+</div>
+<div class="mb-4">
+<input type="text" id="address" placeholder="Shipping Address (Street, City)" required class="checkout-input w-full">
+</div>
+
+<p class="text-lg font-bold text-yellow-400 mb-4 mt-8">2. Payment</p>
+<p class="text-sm text-red-400 mb-4 italic"><i class="fas fa-exclamation-triangle mr-2"></i> You will be redirected to PayPal to complete your payment securely.</p>
+
+<div class="mb-4">
+<input type="text" id="card-number" placeholder="Card Number (XXXX XXXX XXXX XXXX)" required class="checkout-input w-full" maxlength="19">
+</div>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<input type="text" id="expiry" placeholder="MM/YY" required class="checkout-input" maxlength="5">
+<input type="text" id="cvv" placeholder="CVV" required class="checkout-input" maxlength="4">
+<select class="checkout-input" required>
+<option value="" disabled selected>Select Payment Method</option>
+<option value="cod">Cash on Delivery</option>
+<option value="card">Credit/Debit Card</option>
+</select>
+</div>
+
+<button onclick="redirectPayPal()" class="cta-button text-white w-full py-3 rounded-xl text-xl mt-8 transition-transform transform hover:scale-[1.02]">Pay Now <i class="fas fa-dollar-sign ml-2"></i></button>
+<button onclick="nextStep(1)" class="text-gray-400 hover:text-yellow-400 mt-3 text-sm w-full transition-colors"><i class="fas fa-arrow-left mr-1"></i> Back to Order Summary</button>
+</form>
+</div>
+
+<div id="step-3-confirmation" style="display:none;" class="text-center p-8">
+<i class="fas fa-check-circle text-8xl text-green-500 mb-6 animate-pulse"></i>
+<h3 class="text-4xl font-black gold-gradient-text mb-4">Payment Successful!</h3>
+<p class="text-xl text-gray-200 mb-6">Your order has been placed successfully.</p>
+<p class="text-sm text-gray-400 mb-8">You will receive a confirmation from PayPal shortly. Thank you for shopping with The Egyptian King.</p>
+<button onclick="closeModal()" class="premium-button py-3 px-8 rounded-full">Close & Continue Shopping</button>
+</div>
+</div>
+</div>
+
+<script>
+let currentProduct = {};
+let currentStep = 1;
+
+function openModal(productName, productPrice, productImage) {
+currentProduct = { name: productName, price: productPrice, image: productImage };
+document.getElementById('modal-product-name').innerText = productName;
+document.getElementById('modal-product-price').innerText = productPrice;
+document.getElementById('modal-product-image').src = productImage || '';
+document.getElementById('checkout-modal').style.display = 'flex';
+showStep(1);
+}
+
+function closeModal() {
+document.getElementById('checkout-modal').style.display = 'none';
+document.getElementById('checkout-form').reset();
+currentStep = 1;
+}
+
+function showStep(step) {
+currentStep = step;
+document.getElementById('step-1-summary').style.display = step === 1 ? 'block' : 'none';
+document.getElementById('step-2-shipping').style.display = step === 2 ? 'block' : 'none';
+document.getElementById('step-3-confirmation').style.display = step === 3 ? 'block' : 'none';
+}
+
+function nextStep(step) { showStep(step); }
+
+// Add event listeners to all Quick Buy buttons
+document.querySelectorAll('.buy-button').forEach(btn => {
+btn.addEventListener('click', function() {
+openModal(this.dataset.productName, this.dataset.productPrice, this.dataset.productImage);
+});
+});
+
+// Redirect to PayPal
+function redirectPayPal() {
+const paypalLink = 'https://www.paypal.me/OmarGlelah1';
+window.open(paypalLink, '_blank');
+showStep(3);
+}
+
+// Mobile menu toggle
+document.getElementById('menu-button').addEventListener('click', () => {
+document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+let exchangeRate = 1;
+let currentCurrency = "EGP";
+
+document.getElementById('currency-btn').onclick = () => {
+  document.getElementById('currency-modal').style.display = 'flex';
+};
+
+document.getElementById('apply-currency').onclick = async () => {
+  const currency = document.getElementById('currency-select').value;
+
+  const res = await fetch(`https://api.exchangerate.host/latest?base=EGP&symbols=${currency}`);
+  const data = await res.json();
+  exchangeRate = data.rates[currency];
+  currentCurrency = currency;
+
+  document.querySelectorAll('.price-text').forEach(priceEl => {
+    const base = Number(priceEl.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    priceEl.innerText = `${currency} ${converted}`;
+  });
+
+  document.querySelectorAll('.buy-button').forEach(btn => {
+    const base = Number(btn.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    btn.dataset.productPrice = `${currency} ${converted}`;
+  });
+
+  document.getElementById('currency-modal').style.display = 'none';
+};
+
+// close modal on background click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
+});
+// Theme toggle
+const themeBtn = document.getElementById('theme-toggle-btn');
+themeBtn.onclick = () => {
+  const body = document.body;
+  if(body.classList.contains('light-mode')){
+    body.classList.remove('light-mode');
+    body.style.backgroundColor = 'var(--background-dark)';
+    body.style.color = 'var(--text-light)';
+    themeBtn.innerText = '🌞 / 🌙';
+  } else {
+    body.classList.add('light-mode');
+    body.style.backgroundColor = '#f9fafb';
+    body.style.color = '#111827';
+    themeBtn.innerText = '🌞 / 🌙';
+  }
+};
+
+</script>
+<script>
+/*
+GLOBAL DROP SYSTEM
+Phase 1: 1 day
+Phase 2: Until next Friday 11:00 AM
+Repeats forever
+Same on all devices
+*/
+
+// 🔒 GLOBAL START (SET THIS ONCE)
+// Example: Jan 1, 2026 @ 11:00 AM UTC
+const GLOBAL_START = Date.UTC(2026, 0, 1, 11, 0, 0);
+
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+function getNextFriday11UTC(fromTime) {
+  const date = new Date(fromTime);
+  const day = date.getUTCDay(); // 0 = Sun, 5 = Fri
+  let daysUntilFriday = (5 - day + 7) % 7;
+  if (daysUntilFriday === 0 && date.getUTCHours() >= 11) {
+    daysUntilFriday = 7;
+  }
+  date.setUTCDate(date.getUTCDate() + daysUntilFriday);
+  date.setUTCHours(11, 0, 0, 0);
+  return date.getTime();
+}
+
+function getCurrentPhase() {
+  let t = GLOBAL_START;
+  let phase = "day";
+
+  while (true) {
+    if (phase === "day") {
+      if (Date.now() < t + ONE_DAY) {
+        return { phase: "day", target: t + ONE_DAY };
+      }
+      t += ONE_DAY;
+      phase = "friday";
+    } else {
+      const friday = getNextFriday11UTC(t);
+      if (Date.now() < friday) {
+        return { phase: "friday", target: friday };
+      }
+      t = friday;
+      phase = "day";
+    }
+  }
+}
+
+function updateCountdown() {
+  const { target } = getCurrentPhase();
+  let diff = target - Date.now();
+  if (diff < 0) diff = 0;
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("countdown-timer").textContent =
+    `${String(d).padStart(2,"0")}d ` +
+    `${String(h).padStart(2,"0")}h ` +
+    `${String(m).padStart(2,"0")}m ` +
+    `${String(s).padStart(2,"0")}s`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+function handleDropEnd(){
+  const timer = document.getElementById("countdown-timer");
+
+  if(timer.innerText.includes("00d 00h 00m 00s")){
+    
+    // Add message under timer
+    if(!document.getElementById("drop-message")){
+      const msg = document.createElement("p");
+      msg.id = "drop-message";
+      msg.className = "text-yellow-400 mt-4 font-bold text-xl";
+      msg.innerText = "CHECK DOWN";
+      timer.parentElement.appendChild(msg);
+    }
+
+    setTimeout(()=>{
+      alert("Refresh the page.");
+    },500);
+  }
+}
+
+</script>
+<script>
+function openSignChoice() {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+}
+
+function openSignIn() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signin-modal').style.display = 'flex';
+}
+
+function openSignUp() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signup-modal').style.display = 'flex';
+}
+</script>
+
+<script>
+// ===== USER AUTH UI =====
+
+// Generate color from email (same email = same color)
+function getColorFromEmail(email) {
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl(${hash % 360}, 70%, 55%)`;
+}
+
+function showUserAvatar(email) {
+  const avatar = document.getElementById('user-avatar');
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
+
+  const firstLetter = email.charAt(0).toUpperCase();
+  const color = getColorFromEmail(email);
+
+  avatar.textContent = firstLetter;
+  avatar.style.backgroundColor = color;
+  avatar.style.color = '#111';
+
+  avatar.classList.remove('hidden');
+  signBtnHeader.style.display = 'none';
+  signBtnMobile.style.display = 'none';
+}
+
+// Save user
+function loginUser(email) {
+  localStorage.setItem('loggedInUser', email);
+  showUserAvatar(email);
+}
+
+// Auto-login on refresh
+document.addEventListener('DOMContentLoaded', () => {
+  const savedUser = localStorage.getItem('loggedInUser');
+  if (savedUser) {
+    showUserAvatar(savedUser);
+  }
+});
+</script>
+
+<script>
+// Open Sign Out modal when avatar is clicked
+const avatar = document.getElementById('user-avatar');
+avatar.addEventListener('click', () => {
+  // Only open if avatar is visible
+  if (!avatar.classList.contains('hidden')) {
+    document.getElementById('signout-modal').style.display = 'flex';
+  }
+});
+
+// Logout function
+function logoutUser() {
+  localStorage.removeItem('loggedInUser');
+
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
+
+  avatar.classList.add('hidden');
+  avatar.textContent = '';
+  signBtnHeader.style.display = 'inline-block';
+  signBtnMobile.style.display = 'block';
+
+  closeSignModal('signout-modal');
+}
+</script>
+<script>
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function handleSignUp() {
+  const name = document.querySelector('#signup-modal input[placeholder="Full Name"]').value.trim();
+  const email = document.querySelector('#signup-modal input[type="email"]').value.trim();
+
+  if (!name) {
+    alert("Enter your full name.");
+    return;
+  }
+
+  if (!isValidEmail(email)) {
+    alert("Enter a valid email.");
+    return;
+  }
+
+  if (USERS.some(u => u.email === email)) {
+    alert("Email already registered.");
+    return;
+  }
+
+  loginUser(email);
+  closeSignModal('signup-modal');
+
+  alert("Account created successfully 👑");
+}
+</script>
+
+<script>
+// ===== USER DATABASE =====
+let USERS = JSON.parse(localStorage.getItem('users')) || [];
+</script>
+
+<script>
+function handleSignIn() {
+  const email = document.querySelector('#signin-modal input[type="email"]').value.trim();
+  const password = document.querySelector('#signin-modal input[type="password"]').value.trim();
+
+  const user = USERS.find(u => u.email === email && u.password === password);
+
+  loginUser(email);
+  closeSignModal('signin-modal');
+}
+</script>
+
+<footer class="bg-gray-900 py-10 mt-12 border-t border-gray-700" id="contact">
+<div class="container mx-auto px-4 text-center text-gray-400">
+<p class="mb-5 text-gray-200 text-xl font-medium"><i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support</p>
+<p class="mb-4 text-lg"><i class="fab fa-whatsapp mr-2 text-green-500"></i> WhatsApp: <a href="https://wa.me/201025002299" target="_blank" class="text-yellow-400 hover:text-yellow-300 hover:underline transition duration-300">01025002299</a></p>
+<div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
+<p>© <span id="currentMonth"></span> 2026 The Egyptian King Production. All Rights Reserved.</p>
+<p class="text-xs mt-1 text-gray-500">Crafted by The Egyptian King's production team.</p>
+ <script>
+    const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+    const now = new Date();
+    document.getElementById("currentMonth").textContent = months[now.getMonth()];
+  </script>
+</div> 
+</footer>
+<script type="module">
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+  import { getAuth, GoogleAuthProvider, signInWithPopup } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+    authDomain: "elmalkkeke.firebaseapp.com",
+    projectId: "elmalkkeke",
+    storageBucket: "elmalkkeke.firebasestorage.app",
+    messagingSenderId: "1098086705134",
+    appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+    measurementId: "G-0XWQX5YKBM"
+  };
+
+  const app = initializeApp(firebaseConfig);
+  const auth = getAuth(app);
+  const provider = new GoogleAuthProvider();
+
+  // Connect button to Google Sign-In
+  const googleBtn = document.getElementById("google-login-btn");
+
+  googleBtn.addEventListener("click", () => {
+    signInWithPopup(auth, provider)
+      .then((result) => {
+        const user = result.user;
+        alert("Welcome " + user.displayName);
+        console.log(user);
+      })
+      .catch((error) => {
+        console.error(error);
+        alert("Login Failed");
+      });
+  })
+<!-- Firebase v8 -->
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+
+<script>
+document.addEventListener("DOMContentLoaded", function() {
+
+  const firebaseConfig = {
+    apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+    authDomain: "elmalkkeke.firebaseapp.com",
+    projectId: "elmalkkeke",
+    storageBucket: "elmalkkeke.firebasestorage.app",
+    messagingSenderId: "1098086705134",
+    appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+    measurementId: "G-0XWQX5YKBM"
+  };
+
+  firebase.initializeApp(firebaseConfig);
+
+  const auth = firebase.auth();
+  const provider = new firebase.auth.GoogleAuthProvider();
+
+  const googleBtn = document.getElementById("google-signin-btn");
+  const avatar = document.getElementById("user-avatar");
+  const signBtn = document.getElementById("sign-btn-header");
+
+  if (googleBtn) {
+    googleBtn.addEventListener("click", () => {
+      auth.signInWithPopup(provider)
+        .then(() => {
+          document.getElementById("sign-choice-modal").style.display = "none";
+        })
+        .catch((error) => {
+          alert(error.message);
+        });
+    });
+  }
+
+  auth.onAuthStateChanged((user) => {
+    if (user) {
+      if (signBtn) signBtn.style.display = "none";
+      if (avatar) {
+        avatar.classList.remove("hidden");
+        avatar.innerHTML =
+          `<img src="${user.photoURL}" class="w-10 h-10 rounded-full object-cover">`;
+      }
+    } else {
+      if (signBtn) signBtn.style.display = "inline-block";
+      if (avatar) {
+        avatar.classList.add("hidden");
+        avatar.innerHTML = "";
+      }
+    }
+  });
+
+  window.logoutUser = function() {
+    auth.signOut();
+  };
+
+});
+</script>
+
+</body>
+</html>
