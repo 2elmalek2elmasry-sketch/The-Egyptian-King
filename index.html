@@ -32,6 +32,39 @@
   <a href="themes.html" style="padding:15px 20px; display:block; color:#d1d5db; text-decoration:none;">
     <i class="fas fa-palette mr-2"></i> Themes
   </a>
+  <div class="px-5 py-6 border-t border-gray-800 mt-4">
+  <h3 class="text-yellow-500 font-black mb-4 uppercase text-xs tracking-widest">Royal Reviews</h3>
+  
+  <form id="side-review-form" class="space-y-3 mb-6">
+    <input type="text" id="side-rev-name" placeholder="Your Name" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-yellow-500" required>
+    
+    <select id="side-rev-rating" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white focus:outline-none">
+      <option value="5">⭐⭐⭐⭐⭐</option>
+      <option value="4">⭐⭐⭐⭐</option>
+      <option value="3">⭐⭐⭐</option>
+      <option value="2">⭐⭐</option>
+      <option value="1">⭐</option>
+    </select>
+
+    <textarea id="side-rev-text" placeholder="Write your review..." class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white h-20 focus:outline-none focus:border-yellow-500" required></textarea>
+    
+    <button type="submit" class="premium-button w-full py-2 rounded-lg text-xs font-bold">
+      POST REVIEW
+    </button>
+  </form>
+
+  <div id="side-reviews-list" class="space-y-4 max-h-64 overflow-y-auto pr-2 custom-review-scroll">
+    <p class="text-[10px] text-gray-500 text-center italic">Loading reviews...</p>
+  </div>
+</div>
+
+<style>
+  /* Fancy scrollbar for the reviews */
+  .custom-review-scroll::-webkit-scrollbar { width: 3px; }
+  .custom-review-scroll::-webkit-scrollbar-track { background: #111; }
+  .custom-review-scroll::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
+</style>
+
 </div>
 
 <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
@@ -907,7 +940,63 @@ function isValidPassword(password) {
 <!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+<script>
+// 1. Initialize Firestore
+const db = firebase.firestore();
 
+// 2. Form Submission Logic
+const sideReviewForm = document.getElementById('side-review-form');
+if (sideReviewForm) {
+  sideReviewForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    
+    const name = document.getElementById('side-rev-name').value;
+    const rating = document.getElementById('side-rev-rating').value;
+    const text = document.getElementById('side-rev-text').value;
+
+    try {
+      await db.collection("reviews").add({
+        name: name,
+        rating: parseInt(rating),
+        text: text,
+        timestamp: firebase.firestore.FieldValue.serverTimestamp()
+      });
+      alert("The King has received your feedback! 👑");
+      sideReviewForm.reset();
+    } catch (error) {
+      console.error("Error adding review: ", error);
+      alert("Error: Make sure 'Firestore' is enabled in your Firebase Console.");
+    }
+  });
+}
+
+// 3. Real-time Review Loading
+db.collection("reviews").orderBy("timestamp", "desc").limit(10).onSnapshot((querySnapshot) => {
+  const list = document.getElementById('side-reviews-list');
+  if (!list) return;
+  
+  list.innerHTML = ""; 
+
+  if (querySnapshot.empty) {
+    list.innerHTML = "<p class='text-[10px] text-gray-500 text-center'>No reviews yet. Be the first!</p>";
+    return;
+  }
+
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    const stars = "⭐".repeat(data.rating);
+    list.innerHTML += `
+      <div class="border-b border-gray-800 pb-3 mb-2 animate-fade-in">
+        <div class="flex justify-between text-[10px] text-yellow-500 font-bold mb-1">
+          <span>${data.name.toUpperCase()}</span>
+          <span>${stars}</span>
+        </div>
+        <p class="text-[11px] text-gray-400 italic leading-tight">"${data.text}"</p>
+      </div>
+    `;
+  });
+});
 <script>
 document.addEventListener("DOMContentLoaded", function() {
 
