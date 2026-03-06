@@ -578,9 +578,9 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
 
 
 
-<!-- Currency Button -->
-<button id="currency-btn" class="premium-button py-2 px-4">
-Currency
+<!-- Currency Floating Button -->
+<button id="currency-btn" class="premium-button px-6 py-3 rounded-full">
+  💱 Currency
 </button>
 
 <!-- Currency Modal -->
@@ -589,7 +589,10 @@ Currency
     <h2 class="text-xl font-bold text-yellow-400 mb-4">Select Currency</h2>
 
     <div id="currency-options" class="grid grid-cols-3 gap-4 mb-4">
-      <!-- Other currencies only -->
+      <!-- EGP First -->
+      <button class="currency-option premium-button py-2 px-4 bg-yellow-400 text-black" data-currency="EGP" data-rate="1">EGP</button>
+
+      <!-- Other currencies -->
       <button class="currency-option premium-button py-2 px-4" data-currency="USD" data-rate="0.032">USD</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="EUR" data-rate="0.029">EUR</button>
       <button class="currency-option premium-button py-2 px-4" data-currency="GBP" data-rate="0.025">GBP</button>
@@ -639,7 +642,7 @@ document.querySelectorAll(".currency-option").forEach(btn => {
 // Apply currency
 applyCurrencyBtn.addEventListener("click", () => {
   productPrices.forEach(p => {
-    let egp = parseFloat(p.dataset.egp); // always use original EGP
+    let egp = parseFloat(p.dataset.egp);
     let converted = (egp * selectedRate).toFixed(2);
     p.textContent = `${selectedCurrency} ${converted}`;
   });
