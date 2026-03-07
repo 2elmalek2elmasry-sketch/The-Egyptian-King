@@ -1,4 +1,4 @@
-:root {
+.:root {
 --primary-color: #ffd700;
 --secondary-color: #b91c1c;
 --background-dark: #111827;
@@ -311,4 +311,26 @@ z-index: 999;
 #currency-menu button:hover {
   background-color: var(--primary-color);
   color: var(--background-dark);
+}
+/* Force currency dropdown theme */
+#currency-menu,
+.currency-menu,
+.currency-dropdown {
+  background-color: var(--background-dark) !important;
+  color: var(--primary-color) !important;
+  border: 1px solid var(--primary-color) !important;
+}
+
+#currency-menu button,
+.currency-menu button,
+.currency-dropdown button {
+  background-color: var(--background-dark) !important;
+  color: var(--primary-color) !important;
+}
+
+#currency-menu button:hover,
+.currency-menu button:hover,
+.currency-dropdown button:hover {
+  background-color: var(--primary-color) !important;
+  color: var(--background-dark) !important;
 }
