@@ -296,21 +296,27 @@ z-index: 999;
   font-size: 18px;
   color: #fff;
 }
-/* Currency menu */
-#currency-menu {
-    background-color: var(--background-dark); /* This is the #111827 blue */
-    color: var(--primary-color);
-    border: 2px solid var(--primary-color); /* Slightly thicker for the premium look */
-    border-radius: 15px; /* Matches the rounded corners in your screenshot */
+#currency-btn {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 999;
 }
 
-#currency-menu button {
-    background-color: var(--background-dark); /* Changes button from yellow to navy */
-    color: var(--primary-color);
-    border: 1px solid var(--primary-color);
+#currency-modal .modal-content {
+  background-color: var(--background-dark); /* Deep Navy #111827 */
+  border: 3px solid var(--primary-color);
+  box-shadow: 0 15px 30px rgba(255, 215, 0, 0.2);
 }
 
-#currency-menu button:hover {
-    background-color: var(--primary-color); /* Flips to gold on hover */
-    color: var(--background-dark);
+.currency-option {
+  background-color: var(--background-dark);
+  color: var(--primary-color);
+  border: 1px solid var(--primary-color);
+  transition: all 0.2s;
+}
+
+.currency-option:hover, .currency-option.active {
+  background-color: var(--primary-color);
+  color: var(--background-dark);
 }
