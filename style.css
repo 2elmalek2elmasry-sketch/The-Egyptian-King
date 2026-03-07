@@ -298,17 +298,19 @@ z-index: 999;
 }
 /* Currency menu */
 #currency-menu {
-    background-color: var(--background-dark);
+    background-color: var(--background-dark); /* This is the #111827 blue */
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color); /* Slightly thicker for the premium look */
+    border-radius: 15px; /* Matches the rounded corners in your screenshot */
+}
+
+#currency-menu button {
+    background-color: var(--background-dark); /* Changes button from yellow to navy */
     color: var(--primary-color);
     border: 1px solid var(--primary-color);
 }
 
-#currency-menu button {
-    background-color: var(--background-dark);
-    color: var(--primary-color);
-}
-
 #currency-menu button:hover {
-    background-color: var(--primary-color);
+    background-color: var(--primary-color); /* Flips to gold on hover */
     color: var(--background-dark);
 }
