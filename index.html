@@ -987,9 +987,8 @@ function isValidPassword(password) {
 <!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
 <script>
-// 1. Initialize Firestore
-const db = firebase.firestore();
 
 // 2. Form Submission Logic
 const sideReviewForm = document.getElementById('side-review-form');
@@ -1043,9 +1042,10 @@ db.collection("reviews").orderBy("timestamp", "desc").limit(10).onSnapshot((quer
     `;
   });
 });
+</script>
 <script>
 document.addEventListener("DOMContentLoaded", function() {
-
+</script>
   const firebaseConfig = {
     apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
     authDomain: "elmalkkeke.firebaseapp.com",
@@ -1055,10 +1055,10 @@ document.addEventListener("DOMContentLoaded", function() {
     appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
     measurementId: "G-0XWQX5YKBM"
   };
+firebase.initializeApp(firebaseConfig);
 
-  firebase.initializeApp(firebaseConfig);
-
-  const auth = firebase.auth();
+const auth = firebase.auth();
+const db = firebase.firestore();
   const provider = new firebase.auth.GoogleAuthProvider();
 
   const googleBtn = document.getElementById("google-signin-btn");
