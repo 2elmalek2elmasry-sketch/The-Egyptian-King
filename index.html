@@ -990,24 +990,37 @@ function isValidPassword(password) {
 </div> 
 </footer>
 <script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async></script>
-<!-- Firebase v8 -->
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
 <script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
-<script>
 
-// Global variables for pagination
+<script>
+// 1. Initialize Firebase ONCE
+const firebaseConfig = {
+  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+  authDomain: "elmalkkeke.firebaseapp.com",
+  projectId: "elmalkkeke",
+  storageBucket: "elmalkkeke.firebasestorage.app",
+  messagingSenderId: "1098086705134",
+  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+  measurementId: "G-0XWQX5YKBM"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+// 2. Global variables for pagination
 let lastVisible = null;
 const reviewsPerPage = 5;
 
-// 1. Submit Review Logic
+// 3. Review Submission Logic
 const sideReviewForm = document.getElementById('side-review-form');
 if (sideReviewForm) {
   sideReviewForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
-    // Ensure Firebase is ready
-    const db = firebase.firestore();
     const name = document.getElementById('side-rev-name').value;
     const rating = document.getElementById('side-rev-rating').value;
     const text = document.getElementById('side-rev-text').value;
@@ -1021,20 +1034,23 @@ if (sideReviewForm) {
       });
       alert("The King has received your feedback! 👑");
       sideReviewForm.reset();
+      loadReviews(true); // Refresh list automatically
     } catch (error) {
       console.error("Error adding review: ", error);
-      alert("Error saving review. Make sure your Firestore rules are set to public.");
+      alert("Error: Please check your Firebase Firestore rules.");
     }
   });
 }
 
-// 2. Load Reviews Function
+// 4. Load Reviews Logic
 async function loadReviews(isInitial = true) {
-  const db = firebase.firestore();
   const list = document.getElementById('side-reviews-list');
   const seeMoreBtn = document.getElementById('see-more-reviews');
   
-  if (isInitial) list.innerHTML = ""; 
+  if (isInitial) {
+    list.innerHTML = "";
+    lastVisible = null;
+  }
 
   let query = db.collection("reviews").orderBy("timestamp", "desc").limit(reviewsPerPage);
   
@@ -1042,122 +1058,84 @@ async function loadReviews(isInitial = true) {
     query = query.startAfter(lastVisible);
   }
 
-  const querySnapshot = await query.get();
-  
-  if (querySnapshot.empty && isInitial) {
-    list.innerHTML = "<p class='text-[10px] text-gray-500 text-center'>No reviews yet. Be the first!</p>";
-    return;
-  }
+  try {
+    const querySnapshot = await query.get();
+    
+    if (querySnapshot.empty && isInitial) {
+      list.innerHTML = "<p class='text-[10px] text-gray-500 text-center'>No reviews yet. Be the first!</p>";
+      return;
+    }
 
-  // Save the last visible document for the next "See More" click
-  lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+    lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
 
-  querySnapshot.forEach((doc) => {
-    const data = doc.data();
-    const stars = "⭐".repeat(data.rating);
-    const reviewHTML = `
-      <div class="border-b border-gray-800 pb-3 mb-2 animate-fade-in">
-        <div class="flex justify-between text-[10px] text-yellow-500 font-bold mb-1">
-          <span>${data.name.toUpperCase()}</span>
-          <span>${stars}</span>
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const stars = "⭐".repeat(data.rating || 5);
+      const reviewHTML = `
+        <div class="border-b border-gray-800 pb-3 mb-2 animate-fade-in">
+          <div class="flex justify-between text-[10px] text-yellow-500 font-bold mb-1">
+            <span>${(data.name || "Anonymous").toUpperCase()}</span>
+            <span>${stars}</span>
+          </div>
+          <p class="text-[11px] text-gray-400 italic leading-tight">"${data.text || ""}"</p>
         </div>
-        <p class="text-[11px] text-gray-400 italic leading-tight">"${data.text}"</p>
-      </div>
-    `;
-    list.insertAdjacentHTML('beforeend', reviewHTML);
-  });
+      `;
+      list.insertAdjacentHTML('beforeend', reviewHTML);
+    });
 
-  // Show "See More" button if there are exactly 5 reviews (meaning there might be more)
-  if (querySnapshot.docs.length === reviewsPerPage) {
-    seeMoreBtn.classList.remove('hidden');
-  } else {
-    seeMoreBtn.classList.add('hidden');
+    if (querySnapshot.docs.length === reviewsPerPage) {
+      seeMoreBtn.classList.remove('hidden');
+    } else {
+      seeMoreBtn.classList.add('hidden');
+    }
+  } catch (err) {
+    console.error("Load error:", err);
   }
 }
 
-// 3. Set up listeners
-document.getElementById('see-more-reviews').addEventListener('click', () => loadReviews(false));
-
-// Load first 5 reviews on page load
-document.addEventListener("DOMContentLoaded", () => {
-    // Small delay to ensure Firebase is initialized
-    setTimeout(() => loadReviews(true), 1500); 
-});
-
-</script>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-  const firebaseConfig = {
-    apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
-    authDomain: "elmalkkeke.firebaseapp.com",
-    projectId: "elmalkkeke",
-    storageBucket: "elmalkkeke.firebasestorage.app",
-    messagingSenderId: "1098086705134",
-    appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
-    measurementId: "G-0XWQX5YKBM"
-  };
-firebase.initializeApp(firebaseConfig);
-
-const auth = firebase.auth();
-const db = firebase.firestore();
-  const provider = new firebase.auth.GoogleAuthProvider();
-
-  const googleBtn = document.getElementById("google-signin-btn");
+// 5. Auth State Logic
+auth.onAuthStateChanged((user) => {
   const avatar = document.getElementById("user-avatar");
   const signBtnHeader = document.getElementById("sign-btn-header");
   const signBtnMobile = document.getElementById("sign-btn-mobile");
 
-  // Google Sign In
-  if (googleBtn) {
-    googleBtn.addEventListener("click", () => {
-      auth.signInWithPopup(provider)
-        .then(() => {
-          document.getElementById("sign-choice-modal").style.display = "none";
-          document.getElementById("signin-modal").style.display = "none";
-        })
-        .catch((error) => {
-          alert(error.message);
-        });
-    });
-  }
-
-  // Listen for login state
-  auth.onAuthStateChanged((user) => {
-    if (user) {
-      if (signBtnHeader) signBtnHeader.style.display = "none";
-      if (signBtnMobile) signBtnMobile.style.display = "none";
-
-      if (avatar) {
-        avatar.classList.remove("hidden");
-        avatar.innerHTML =
-          `<img src="${user.photoURL}" class="w-10 h-10 rounded-full object-cover cursor-pointer">`;
-      }
-    } else {
-      if (signBtnHeader) signBtnHeader.style.display = "inline-block";
-      if (signBtnMobile) signBtnMobile.style.display = "block";
-
-      if (avatar) {
-        avatar.classList.add("hidden");
-        avatar.innerHTML = "";
-      }
+  if (user) {
+    if (signBtnHeader) signBtnHeader.style.display = "none";
+    if (signBtnMobile) signBtnMobile.style.display = "none";
+    if (avatar) {
+      avatar.classList.remove("hidden");
+      avatar.innerHTML = `<img src="${user.photoURL || ''}" class="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-yellow-500">`;
     }
-  });
+  } else {
+    if (signBtnHeader) signBtnHeader.style.display = "inline-block";
+    if (signBtnMobile) signBtnMobile.style.display = "block";
+    if (avatar) {
+      avatar.classList.add("hidden");
+      avatar.innerHTML = "";
+    }
+  }
+});
 
-  // Logout
-  window.logoutUser = function() {
-    auth.signOut();
-  };
+// 6. Google Login
+window.handleGoogleLogin = function() {
+  auth.signInWithPopup(provider).catch(err => alert(err.message));
+};
 
+// 7. Logout
+window.logoutUser = function() {
+  auth.signOut().then(() => location.reload());
+};
+
+// Start Up
+document.addEventListener("DOMContentLoaded", () => {
+  loadReviews(true);
+  
+  const googleBtn = document.getElementById("google-signin-btn");
+  if(googleBtn) googleBtn.onclick = handleGoogleLogin;
+  
+  document.getElementById('see-more-reviews').onclick = () => loadReviews(false);
 });
 </script>
-<!-- Ramadan Popup -->
-<div id="ramadan-popup">
-  <div class="ramadan-box">
-    <span class="close-btn" onclick="closeRamadanPopup()">✕</span>
-    <h2>🌙 Ramadan Kareem</h2>
-    <p>Wishing you peace, blessings, and success this Ramadan.</p>
-  </div>
-</div>
 
 <script>
 function closeRamadanPopup() {
