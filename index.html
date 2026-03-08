@@ -48,9 +48,10 @@
 
     <textarea id="side-rev-text" placeholder="Write your review..." class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white h-20 focus:outline-none focus:border-yellow-500" required></textarea>
     
-    <button type="submit" class="premium-button w-full py-2 rounded-lg text-xs font-bold">
-      POST REVIEW
-    </button>
+   <button type="button" onclick="submitRoyalReview()" class="premium-button w-full py-2 rounded-lg text-xs font-bold">
+  POST REVIEW
+</button>
+
   </form>
 
   <div id="side-reviews-list" class="space-y-4 max-h-80 overflow-y-auto pr-2 custom-review-scroll">
@@ -1015,32 +1016,39 @@ const provider = new firebase.auth.GoogleAuthProvider();
 let lastVisible = null;
 const reviewsPerPage = 5;
 
-// 3. Review Submission Logic
-const sideReviewForm = document.getElementById('side-review-form');
-if (sideReviewForm) {
-  sideReviewForm.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    
-    const name = document.getElementById('side-rev-name').value;
-    const rating = document.getElementById('side-rev-rating').value;
-    const text = document.getElementById('side-rev-text').value;
+// 3. Review Submission Logic (Updated for stability)
+window.submitRoyalReview = async function() {
+  const name = document.getElementById('side-rev-name').value;
+  const rating = document.getElementById('side-rev-rating').value;
+  const text = document.getElementById('side-rev-text').value;
 
-    try {
-      await db.collection("reviews").add({
-        name: name,
-        rating: parseInt(rating),
-        text: text,
-        timestamp: firebase.firestore.FieldValue.serverTimestamp()
-      });
-      alert("The King has received your feedback! 👑");
-      sideReviewForm.reset();
-      loadReviews(true); // Refresh list automatically
-    } catch (error) {
-      console.error("Error adding review: ", error);
-      alert("Error: Please check your Firebase Firestore rules.");
-    }
-  });
-}
+  if(!name || !text) {
+    alert("The King requests your name and message! 👑");
+    return;
+  }
+
+  try {
+    await db.collection("reviews").add({
+      name: name,
+      rating: parseInt(rating),
+      text: text,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    alert("The King has received your feedback! 👑");
+    
+    // Clear the form
+    document.getElementById('side-rev-name').value = "";
+    document.getElementById('side-rev-text').value = "";
+    
+    // Refresh the list
+    loadReviews(true); 
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Database Error: Make sure your Firestore rules allow 'write'.");
+  }
+};
+
 
 // 4. Load Reviews Logic
 async function loadReviews(isInitial = true) {
