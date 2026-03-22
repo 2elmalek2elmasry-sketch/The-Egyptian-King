@@ -128,60 +128,6 @@ background-size: 40px 40px;
     <i class="fas fa-palette mr-2"></i> Themes
   </a>
 </div>
-<div class="px-5 py-6 border-t border-gray-800 mt-4">
-  <h3 class="text-yellow-500 font-black mb-4 uppercase text-xs tracking-widest">Royal Reviews</h3>
-  
-  <form id="side-review-form" class="space-y-3 mb-6">
-    <input type="text" id="side-rev-name" placeholder="Your Name" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white focus:outline-none focus:border-yellow-500" required>
-    
-    <select id="side-rev-rating" class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white focus:outline-none">
-      <option value="5">⭐⭐⭐⭐⭐</option>
-      <option value="4">⭐⭐⭐⭐</option>
-      <option value="3">⭐⭐⭐</option>
-      <option value="2">⭐⭐</option>
-      <option value="1">⭐</option>
-    </select>
-
-    <textarea id="side-rev-text" placeholder="Write your review..." class="w-full bg-gray-800 border border-gray-700 rounded-lg p-2 text-sm text-white h-20 focus:outline-none focus:border-yellow-500" required></textarea>
-    
-   <button type="button" onclick="submitRoyalReview()" class="premium-button w-full py-2 rounded-lg text-xs font-bold">
-  POST REVIEW
-</button>
-
-  </form>
-
-  <div id="side-reviews-list" class="space-y-4 max-h-80 overflow-y-auto pr-2 custom-review-scroll">
-    </div>
-
-<button id="see-more-reviews" class="mt-4 text-[10px] text-yellow-500 hover:underline w-full text-center hidden">
-    SEE MORE REVIEWS
-</button>
-
-    <p class="text-[10px] text-gray-500 text-center italic">Loading reviews...</p>
-  </div>
-</div>
-
-<style>
-  /* Fancy scrollbar for the reviews */
-  .custom-review-scroll::-webkit-scrollbar { width: 3px; }
-  .custom-review-scroll::-webkit-scrollbar-track { background: #111; }
-  .custom-review-scroll::-webkit-scrollbar-thumb { background: #ca8a04; border-radius: 10px; }
-</style>
-
-</div>
-
-<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
-</div>
-
-<div id="overlay" class="overlay" onclick="toggleMenu()"></div>
-
-<script>
-function toggleMenu() {
-  document.getElementById("sideMenu").classList.toggle("active");
-  document.getElementById("overlay").classList.toggle("active");
-}
-</script>
-
 <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
 
