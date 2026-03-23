@@ -51,10 +51,6 @@
 
 <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-    <div class="flex items-center space-x-8">
-      <button id="cart-btn" class="premium-button px-4 py-2 rounded-full">
-  🛒 Cart (<span id="cart-count">0</span>)
-</button>
 
     <!-- Logo -->
     <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
@@ -179,7 +175,7 @@ document.getElementById('menu-button').addEventListener('click', () => {
   document.getElementById('mobile-menu').classList.toggle('hidden');
 });
 
-// Sign In / Up buttons onality
+// Sign In / Up buttons functionality
 document.getElementById('sign-btn-header').addEventListener('click', () => {
   document.getElementById('sign-choice-modal').style.display = 'flex';
 });
@@ -187,9 +183,9 @@ document.getElementById('sign-btn-mobile').addEventListener('click', () => {
   document.getElementById('sign-choice-modal').style.display = 'flex';
 });
 
-// ons to open/close Sign modals
+// Functions to open/close Sign modals
 
-on closeSignModal(modalId) {
+function closeSignModal(modalId) {
   document.getElementById(modalId).style.display = 'none';
 }
 
@@ -219,9 +215,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">QUEEN HATSHEPSOUT HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 850</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=QUEEN HATSHEPSOUT HOODIE data-product-price=EGP 850 data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -240,9 +233,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">KHABY LAME HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=KHABY LAME HOODIEdata-product-price=EGP 800 data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -259,12 +249,9 @@ document.write(`
 <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES HOODIE" data-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">LBRON JAMES HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=LBRON JAMES HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=LBRON JAMES HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
+
 </button>
 </div>
 `);
@@ -279,11 +266,7 @@ document.write(`
 <img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWANE JHONSON HOODIE" data-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">DWANE JHONSON HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=DWANE JHONSON HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=DWANE JHONSON HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -300,11 +283,7 @@ document.write(`
 <img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM HOODIE" data-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">JUDE BELLINGHAM HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=JUDE BELLINGHAM HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=JUDE BELLINGHAM HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -321,11 +300,7 @@ document.write(`
 <img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA HOODIE" data-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">SOCIAL MEDIA HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=SOCIAL MEDIA HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=SOCIAL MEDIA HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -342,11 +317,7 @@ document.write(`
 <img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS HOODIE" data-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">EGYPTIAN RULERS HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=EGYPTIAN RULERS HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=EGYPTIAN RULERS HOODIE. data-product-price=EGP800 data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -363,11 +334,7 @@ document.write(`
 <img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image"https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">KING TUTANKAMUN HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=KING TUTANKAMUN HOODIE. data-product-price= EGP800 data-product-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=KING TUTANKAMUN HOODIE. data-product-price= EGP800 data-product-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -384,11 +351,7 @@ document.write(`
 <img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image"https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">EGYPTIAN CULTURE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
-<button class="buy-button premium-button" data-product-name=EGYPTIAN CULTURE HOODIE. data-product-price=EGP 800 data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=EGYPTIAN CULTURE HOODIE. data-product-price=EGP 800 data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -406,9 +369,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">FIFA WORLD CUP HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=FIFA WORLD CUP HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/qRHPBMmP/unnamed.png">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -426,9 +386,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">FLAG TRIO HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=FLAG TRIO HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -446,9 +403,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">CROWNED SKULL HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=CROWNED SKULL HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -466,9 +420,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">ALGERIAN CULTURE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=ALGERIAN CULTURE HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -485,9 +436,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">GOLDEN PHAROH FADE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name=GOLDEN PHAROH FADE HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -505,9 +453,6 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400"> TUNISIA CULTURE HOODIE </h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <button class="buy-button premium-button" data-product-name= TUNISIA CULTURE HOODIE data-product-price=EGP 800 data-product-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -523,9 +468,6 @@ document.write(`
 <img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">TRAVIS SCOTT TEE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 700</p>
-<button class="add-to-cart premium-button w-full mb-2"
-Add to Cart 🛒
-</button>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=TRAVIS SCOTT TEE. data-product-price=EGP 700 data-product-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
@@ -741,7 +683,7 @@ applyCurrencyBtn.addEventListener("click", () => {
 let currentProduct = {};
 let currentStep = 1;
 
-on openModal(productName, productPrice, productImage) {
+function openModal(productName, productPrice, productImage) {
 currentProduct = { name: productName, price: productPrice, image: productImage };
 document.getElementById('modal-product-name').innerText = productName;
 document.getElementById('modal-product-price').innerText = productPrice;
@@ -750,7 +692,7 @@ document.getElementById('checkout-modal').style.display = 'flex';
 showStep(1);
 }
 
-on closeModal() {
+function closeModal() {
 document.getElementById('checkout-modal').style.display = 'none';
 document.getElementById('checkout-form').reset();
 currentStep = 1;
@@ -764,6 +706,13 @@ document.getElementById('step-3-confirmation').style.display = step === 3 ? 'blo
 }
 
 function nextStep(step) { showStep(step); }
+
+// Add event listeners to all Quick Buy buttons
+document.querySelectorAll('.buy-button').forEach(btn => {
+btn.addEventListener('click', function() {
+openModal(this.dataset.productName, this.dataset.productPrice, this.dataset.productImage);
+});
+});
 
 // Redirect to PayPal
 function redirectPayPal() {
@@ -1156,111 +1105,5 @@ function closeRamadanPopup() {
   const sideMenu = document.getElementById('sideMenu');
   sideMenu.classList.toggle('hidden'); // Add/remove hidden class
 }
-  
-  <div class="modal-content p-6 rounded-2xl max-w-md bg-gray-900">
-
-    <div class="flex justify-between items-center mb-4">
-      <h2 class="text-2xl font-bold text-yellow-400">Your Cart</h2>
-      <button onclick="closeCart()" class="px-4 py-2 bg-red-500 rounded-full">✖</button>
-    </div>
-
-    <div id="cart-items"></div>
-
-    <div class="mt-6 border-t border-gray-700 pt-4">
-      <p class="text-lg text-yellow-400 font-bold">
-        Total: <span id="cart-total">EGP 0</span>
-      </p>
-    </div>
-
-  </div>
-</div>
-<script>
-let cart = JSON.parse(localStorage.getItem("cart")) || [];
-  
-// ADD TO CART (from Quick Buy)
-document.querySelectorAll('.add-to-cart').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const name = btn.dataset.productName;
-    const price = parseFloat(btn.dataset.productPrice.replace(/[^0-9.]/g, ""));
-
-    const existing = cart.find(item => item.name === name);
-
-    if (existing) {
-      existing.qty++;
-    } else {
-      cart.push({ name, price, qty: 1 });
-    }
-
-    saveCart();
-    updateCartUI();
-  });
-});
-
-function saveCart() {
-  localStorage.setItem("cart", JSON.stringify(cart));
-}
-
-// UPDATE UI
-function updateCartUI() {
-  const cartItems = document.getElementById("cart-items");
-  const cartCount = document.getElementById("cart-count");
-  const totalPriceEl = document.getElementById("cart-total");
-
-  cartItems.innerHTML = "";
-  let total = 0;
-
-  cart.forEach((item, index) => {
-    total += item.price * item.qty;
-
-    cartItems.innerHTML += `
-      <div class="flex justify-between items-center mb-3 bg-gray-800 p-3 rounded-xl">
-        <div>
-          <p class="text-yellow-400 font-bold">${item.name}</p>
-          <p class="text-gray-400 text-sm">${item.price} EGP</p>
-        </div>
-
-        <div class="flex items-center gap-2">
-          <button onclick="decreaseQty(${index})" class="px-3 py-1 bg-red-500 rounded-lg">-</button>
-          <span class="text-white font-bold">${item.qty}</span>
-          <button onclick="increaseQty(${index})" class="px-3 py-1 bg-green-500 rounded-lg">+</button>
-        </div>
-      </div>
-    `;
-  });
-
-  cartCount.textContent = cart.length;
-  totalPriceEl.textContent = "EGP " + total.toFixed(2);
-}
-
-// INCREASE
-function increaseQty(index) {
-  cart[index].qty++;
-  saveCart();
-  updateCartUI();
-}
-
-// DECREASE
-function decreaseQty(index) {
-  if (cart[index].qty > 1) {
-    cart[index].qty--;
-  } else {
-    cart.splice(index, 1);
-  }
-  saveCart();
-  updateCartUI();
-}
-
-// OPEN / CLOSE
-document.getElementById("cart-btn").onclick = () => {
-  document.getElementById("cart-modal").style.display = "flex";
-};
-
-function closeCart() {
-  document.getElementById("cart-modal").style.display = "none";
-}
-
-// LOAD ON START
-updateCartUI();
-</script>
 </body>
 </html>
