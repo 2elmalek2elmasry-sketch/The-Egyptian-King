@@ -1110,45 +1110,108 @@ function closeRamadanPopup() {
   sideMenu.classList.toggle('hidden'); // Add/remove hidden class
 }
   <div id="cart-modal" class="modal-overlay" style="display:none;">
-  <div class="modal-content p-6 rounded-2xl max-w-md">
-    <h2 class="text-2xl font-bold text-yellow-400 mb-4">Your Cart</h2>
+  <div class="modal-content p-6 rounded-2xl max-w-md bg-gray-900">
+
+    <div class="flex justify-between items-center mb-4">
+      <h2 class="text-2xl font-bold text-yellow-400">Your Cart</h2>
+      <button onclick="closeCart()" class="px-4 py-2 bg-red-500 rounded-full">✖</button>
+    </div>
+
     <div id="cart-items"></div>
-    <button onclick="closeCart()" class="premium-button w-full mt-4 py-2">Close</button>
+
+    <div class="mt-6 border-t border-gray-700 pt-4">
+      <p class="text-lg text-yellow-400 font-bold">
+        Total: <span id="cart-total">EGP 0</span>
+      </p>
+    </div>
+
   </div>
 </div>
-  <script>
-let cart = [];
 
+// ADD TO CART (from Quick Buy)
 document.querySelectorAll('.buy-button').forEach(btn => {
   btn.addEventListener('click', () => {
-    const item = {
-      name: btn.dataset.productName,
-      price: btn.dataset.productPrice
-    };
+    const name = btn.dataset.productName;
+    const price = parseFloat(btn.dataset.productPrice.replace(/[^0-9.]/g, ""));
 
-    cart.push(item);
-    updateCart();
+    const existing = cart.find(item => item.name === name);
+
+    if (existing) {
+      existing.qty++;
+    } else {
+      cart.push({ name, price, qty: 1 });
+    }
+
+    saveCart();
+    updateCartUI();
   });
 });
 
-function updateCart() {
-  document.getElementById('cart-count').textContent = cart.length;
-
-  const cartItems = document.getElementById('cart-items');
-  cartItems.innerHTML = "";
-
-  cart.forEach(item => {
-    cartItems.innerHTML += `<p class="text-gray-300">${item.name} - ${item.price}</p>`;
-  });
+function saveCart() {
+  localStorage.setItem("cart", JSON.stringify(cart));
 }
 
-document.getElementById('cart-btn').onclick = () => {
-  document.getElementById('cart-modal').style.display = 'flex';
+// UPDATE UI
+function updateCartUI() {
+  const cartItems = document.getElementById("cart-items");
+  const cartCount = document.getElementById("cart-count");
+  const totalPriceEl = document.getElementById("cart-total");
+
+  cartItems.innerHTML = "";
+  let total = 0;
+
+  cart.forEach((item, index) => {
+    total += item.price * item.qty;
+
+    cartItems.innerHTML += `
+      <div class="flex justify-between items-center mb-3 bg-gray-800 p-3 rounded-xl">
+        <div>
+          <p class="text-yellow-400 font-bold">${item.name}</p>
+          <p class="text-gray-400 text-sm">${item.price} EGP</p>
+        </div>
+
+        <div class="flex items-center gap-2">
+          <button onclick="decreaseQty(${index})" class="px-3 py-1 bg-red-500 rounded-lg">-</button>
+          <span class="text-white font-bold">${item.qty}</span>
+          <button onclick="increaseQty(${index})" class="px-3 py-1 bg-green-500 rounded-lg">+</button>
+        </div>
+      </div>
+    `;
+  });
+
+  cartCount.textContent = cart.length;
+  totalPriceEl.textContent = "EGP " + total.toFixed(2);
+}
+
+// INCREASE
+function increaseQty(index) {
+  cart[index].qty++;
+  saveCart();
+  updateCartUI();
+}
+
+// DECREASE
+function decreaseQty(index) {
+  if (cart[index].qty > 1) {
+    cart[index].qty--;
+  } else {
+    cart.splice(index, 1);
+  }
+  saveCart();
+  updateCartUI();
+}
+
+// OPEN / CLOSE
+document.getElementById("cart-btn").onclick = () => {
+  document.getElementById("cart-modal").style.display = "flex";
 };
 
 function closeCart() {
-  document.getElementById('cart-modal').style.display = 'none';
+  document.getElementById("cart-modal").style.display = "none";
 }
+
+// LOAD ON START
+updateCartUI();
 </script>
 </body>
 </html>
