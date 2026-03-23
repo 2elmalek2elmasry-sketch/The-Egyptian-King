@@ -51,6 +51,10 @@
 
 <header class="bg-gray-900 shadow-2xl sticky top-0 z-50 border-b border-yellow-800">
   <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+    <div class="flex items-center space-x-8">
+      <button id="cart-btn" class="premium-button px-4 py-2 rounded-full">
+  🛒 Cart (<span id="cart-count">0</span>)
+</button>
 
     <!-- Logo -->
     <a href="#" class="text-3xl font-extrabold gold-gradient-text">The Egyptian King</a>
@@ -1105,5 +1109,46 @@ function closeRamadanPopup() {
   const sideMenu = document.getElementById('sideMenu');
   sideMenu.classList.toggle('hidden'); // Add/remove hidden class
 }
+  <div id="cart-modal" class="modal-overlay" style="display:none;">
+  <div class="modal-content p-6 rounded-2xl max-w-md">
+    <h2 class="text-2xl font-bold text-yellow-400 mb-4">Your Cart</h2>
+    <div id="cart-items"></div>
+    <button onclick="closeCart()" class="premium-button w-full mt-4 py-2">Close</button>
+  </div>
+</div>
+  <script>
+let cart = [];
+
+document.querySelectorAll('.buy-button').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const item = {
+      name: btn.dataset.productName,
+      price: btn.dataset.productPrice
+    };
+
+    cart.push(item);
+    updateCart();
+  });
+});
+
+function updateCart() {
+  document.getElementById('cart-count').textContent = cart.length;
+
+  const cartItems = document.getElementById('cart-items');
+  cartItems.innerHTML = "";
+
+  cart.forEach(item => {
+    cartItems.innerHTML += `<p class="text-gray-300">${item.name} - ${item.price}</p>`;
+  });
+}
+
+document.getElementById('cart-btn').onclick = () => {
+  document.getElementById('cart-modal').style.display = 'flex';
+};
+
+function closeCart() {
+  document.getElementById('cart-modal').style.display = 'none';
+}
+</script>
 </body>
 </html>
