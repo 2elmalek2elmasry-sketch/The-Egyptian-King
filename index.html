@@ -1109,7 +1109,7 @@ function closeRamadanPopup() {
   const sideMenu = document.getElementById('sideMenu');
   sideMenu.classList.toggle('hidden'); // Add/remove hidden class
 }
-  <div id="cart-modal" class="modal-overlay" style="display:none;">
+  
   <div class="modal-content p-6 rounded-2xl max-w-md bg-gray-900">
 
     <div class="flex justify-between items-center mb-4">
@@ -1127,7 +1127,9 @@ function closeRamadanPopup() {
 
   </div>
 </div>
-
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+  
 // ADD TO CART (from Quick Buy)
 document.querySelectorAll('.buy-button').forEach(btn => {
   btn.addEventListener('click', () => {
