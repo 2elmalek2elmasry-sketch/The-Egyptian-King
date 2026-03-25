@@ -73,6 +73,11 @@ function toggleMenu() {
         <a href="#social" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Social</a>
         <a href="#contact" class="text-gray-300 hover:text-yellow-400 transition duration-300 hover:scale-105">Contact</a>
       </nav>
+      
+      <div class="relative">
+  <i class="fas fa-shopping-cart text-2xl text-yellow-400"></i>
+  <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-xs px-2 rounded-full">0</span>
+</div>
 
       <!-- Sign In / Up Button (Top Right) -->
      <div id="user-avatar" class="hidden w-10 h-10 rounded-full flex items-center justify-center font-black text-lg cursor-pointer"></div>
@@ -225,7 +230,7 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">QUEEN HATSHEPSOUT HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 850</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="buy-button premium-button" data-product-name=QUEEN HATSHEPSOUT HOODIE data-product-price=EGP 850 data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
+<button class="buy-button premium-button" data-product-name="QUEEN HATSHEPSOUT HOODIE" data-product-price="EGP 850" data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
 </div>
@@ -243,6 +248,12 @@ document.write(`
 <h3 class="text-xl font-bold text-yellow-400">KHABY LAME HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
+<button class="add-to-cart premium-button" 
+        data-product-name="KHABY LAME HOODIE" 
+        data-product-price="800" 
+        data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">
+Add to Cart <i class="fas fa-shopping-cart ml-1"></i>
+</button>
 <button class="buy-button premium-button" data-product-name=KHABY LAME HOODIEdata-product-price=EGP 800 data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
@@ -259,7 +270,7 @@ document.write(`
 <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES HOODIE" data-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">LBRON JAMES HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=LBRON JAMES HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name="LBRON JAMES HOODIE" data-product-price=EGP800 data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -276,7 +287,7 @@ document.write(`
 <img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWANE JHONSON HOODIE" data-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">DWANE JHONSON HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
-<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name=DWANE JHONSON HOODIE data-product-price=EGP800 data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
+<p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p><button class="buy-button premium-button" data-product-name="DWANE JHONSON HOODIE" data-product-price=EGP800 data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 
 </button>
@@ -942,7 +953,7 @@ function isValidPassword(password) {
 <p class="mb-5 text-gray-200 text-xl font-medium"><i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support</p>
 <p class="mb-4 text-lg"><i class="fab fa-whatsapp mr-2 text-green-500"></i> WhatsApp: <a href="https://wa.me/201025002299" target="_blank" class="text-yellow-400 hover:text-yellow-300 hover:underline transition duration-300">01025002299</a></p>
 <div class="h-px bg-gray-700 w-1/4 mx-auto my-6"></div>
-<p>© <span id="currentMonth"></span> 2026 The Egyptian King Production. All Rights Reserved.</p>
+<p>© ="currentMonth"></span> 2026 The Egyptian King Production. All Rights Reserved.</p>
 <p class="text-xs mt-1 text-gray-500">Crafted by The Egyptian King's production team.</p>
  <script>
     const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
@@ -1110,6 +1121,33 @@ document.addEventListener("DOMContentLoaded", () => {
 function closeRamadanPopup() {
   document.getElementById("ramadan-popup").style.display = "none";
 }
+</script>
+<script>
+let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+// Update cart count UI
+function updateCartCount() {
+  document.getElementById("cart-count").innerText = cart.length;
+}
+
+// Add to cart buttons
+document.querySelectorAll(".add-to-cart").forEach(btn => {
+  btn.addEventListener("click", function() {
+    const product = {
+      name: this.dataset.productName,
+      price: this.dataset.productPrice,
+      image: this.dataset.productImage
+    };
+
+    cart.push(product);
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    updateCartCount();
+  });
+});
+
+// Run on load
+updateCartCount();
 </script>
 </body>
 </html>
