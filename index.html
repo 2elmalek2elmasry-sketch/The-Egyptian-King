@@ -8,7 +8,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
-<script src="script.js" defer></script>
 </head>
 <body>
 <div class="menu-trigger" onclick="toggleMenu()">
@@ -38,6 +37,12 @@
 
 <div id="overlay" class="overlay" onclick="toggleMenu()"></div>
 
+<script>
+function toggleMenu() {
+  document.getElementById("sideMenu").classList.toggle("active");
+  document.getElementById("overlay").classList.toggle("active");
+}
+</script>
 
 <!-- Sign Choice Modal -->
 <div id="sign-choice-modal" class="modal-overlay">
@@ -169,6 +174,33 @@ Shop The Royal Collection <i class="fas fa-arrow-right ml-3"></i>
     </div>
   </div>
 </div>
+
+
+<script>
+
+// ===== Existing Scripts =====
+
+// Mobile menu toggle
+document.getElementById('menu-button').addEventListener('click', () => {
+  document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+
+// Sign In / Up buttons functionality
+document.getElementById('sign-btn-header').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+document.getElementById('sign-btn-mobile').addEventListener('click', () => {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+});
+
+// Functions to open/close Sign modals
+
+function closeSignModal(modalId) {
+  document.getElementById(modalId).style.display = 'none';
+}
+
+// Close modal on background click
+</script>
 
 <section id="collection" class="py-20 md:py-28 px-4">
 <div class="container mx-auto">
@@ -541,6 +573,53 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
     <button id="apply-currency" class="premium-button w-full py-3">Apply</button>
   </div>
 </div>
+
+<script>
+const currencyBtn = document.getElementById("currency-btn");
+const currencyModal = document.getElementById("currency-modal");
+const applyCurrencyBtn = document.getElementById("apply-currency");
+let selectedCurrency = "EGP"; 
+let selectedRate = 1;
+
+// Store original EGP prices
+const productPrices = document.querySelectorAll(".product-card p.text-gray-400");
+productPrices.forEach(p => {
+  p.dataset.egp = parseFloat(p.textContent.replace(/[^0-9.]/g, ""));
+});
+
+// Open modal
+currencyBtn.addEventListener("click", () => {
+  currencyModal.style.display = "flex";
+});
+
+// Close modal when clicking outside content
+currencyModal.addEventListener("click", (e) => {
+  if (e.target === currencyModal) currencyModal.style.display = "none";
+});
+
+// Highlight selected button
+document.querySelectorAll(".currency-option").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".currency-option").forEach(b => b.classList.remove("bg-yellow-400", "text-black"));
+    btn.classList.add("bg-yellow-400", "text-black");
+    selectedCurrency = btn.dataset.currency;
+    selectedRate = parseFloat(btn.dataset.rate);
+  });
+});
+
+// Apply currency
+applyCurrencyBtn.addEventListener("click", () => {
+  productPrices.forEach(p => {
+    let egp = parseFloat(p.dataset.egp);
+    let converted = (egp * selectedRate).toFixed(2);
+    p.textContent = `${selectedCurrency} ${converted}`;
+  });
+
+  // Update button text
+  currencyBtn.textContent = selectedCurrency;
+  currencyModal.style.display = "none";
+});
+</script>
 <!-- Checkout Modal -->
 <div id="checkout-modal" class="modal-overlay">
 <div class="modal-content rounded-2xl p-6 md:p-10 relative">
@@ -610,6 +689,254 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
 </div>
 </div>
 
+<script>
+let currentProduct = {};
+let currentStep = 1;
+
+function openModal(productName, productPrice, productImage) {
+currentProduct = { name: productName, price: productPrice, image: productImage };
+document.getElementById('modal-product-name').innerText = productName;
+document.getElementById('modal-product-price').innerText = productPrice;
+document.getElementById('modal-product-image').src = productImage || '';
+document.getElementById('checkout-modal').style.display = 'flex';
+showStep(1);
+}
+
+function closeModal() {
+document.getElementById('checkout-modal').style.display = 'none';
+document.getElementById('checkout-form').reset();
+currentStep = 1;
+}
+
+function showStep(step) {
+currentStep = step;
+document.getElementById('step-1-summary').style.display = step === 1 ? 'block' : 'none';
+document.getElementById('step-2-shipping').style.display = step === 2 ? 'block' : 'none';
+document.getElementById('step-3-confirmation').style.display = step === 3 ? 'block' : 'none';
+}
+
+function nextStep(step) { showStep(step); }
+
+// Add event listeners to all Quick Buy buttons
+document.querySelectorAll('.buy-button').forEach(btn => {
+btn.addEventListener('click', function() {
+openModal(this.dataset.productName, this.dataset.productPrice, this.dataset.productImage);
+});
+});
+
+// Redirect to PayPal
+function redirectPayPal() {
+const paypalLink = 'https://www.paypal.me/OmarGlelah1';
+window.open(paypalLink, '_blank');
+showStep(3);
+}
+
+// Mobile menu toggle
+document.getElementById('menu-button').addEventListener('click', () => {
+document.getElementById('mobile-menu').classList.toggle('hidden');
+});
+let exchangeRate = 1;
+let currentCurrency = "EGP";
+
+document.getElementById('currency-btn').onclick = () => {
+  document.getElementById('currency-modal').style.display = 'flex';
+};
+
+document.getElementById('apply-currency').onclick = async () => {
+  const currency = document.getElementById('currency-select').value;
+
+  const res = await fetch(`https://api.exchangerate.host/latest?base=EGP&symbols=${currency}`);
+  const data = await res.json();
+  exchangeRate = data.rates[currency];
+  currentCurrency = currency;
+
+  document.querySelectorAll('.price-text').forEach(priceEl => {
+    const base = Number(priceEl.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    priceEl.innerText = `${currency} ${converted}`;
+  });
+
+  document.querySelectorAll('.buy-button').forEach(btn => {
+    const base = Number(btn.dataset.basePrice);
+    const converted = (base * exchangeRate).toFixed(2);
+    btn.dataset.productPrice = `${currency} ${converted}`;
+  });
+
+  document.getElementById('currency-modal').style.display = 'none';
+};
+
+// close modal on background click
+document.querySelectorAll('.modal-overlay').forEach(m => {
+  m.onclick = e => { if (e.target === m) m.style.display = 'none'; };
+});
+// Theme toggle
+const themeBtn = document.getElementById('theme-toggle-btn');
+themeBtn.onclick = () => {
+  const body = document.body;
+  if(body.classList.contains('light-mode')){
+    body.classList.remove('light-mode');
+    body.style.backgroundColor = 'var(--background-dark)';
+    body.style.color = 'var(--text-light)';
+    themeBtn.innerText = '🌞 / 🌙';
+  } else {
+    body.classList.add('light-mode');
+    body.style.backgroundColor = '#f9fafb';
+    body.style.color = '#111827';
+    themeBtn.innerText = '🌞 / 🌙';
+  }
+};
+
+</script>
+<script>
+/*
+GLOBAL DROP SYSTEM
+Phase 1: 1 day
+Phase 2: Until next Friday 11:00 AM
+Repeats forever
+Same on all devices
+*/
+
+// 🔒 GLOBAL START (SET THIS ONCE)
+// Example: Jan 1, 2026 @ 11:00 AM UTC
+const GLOBAL_START = Date.UTC(2026, 0, 1, 11, 0, 0);
+
+const ONE_DAY = 24 * 60 * 60 * 1000;
+
+function getNextFriday11UTC(fromTime) {
+  const date = new Date(fromTime);
+  const day = date.getUTCDay(); // 0 = Sun, 5 = Fri
+  let daysUntilFriday = (5 - day + 7) % 7;
+  if (daysUntilFriday === 0 && date.getUTCHours() >= 11) {
+    daysUntilFriday = 7;
+  }
+  date.setUTCDate(date.getUTCDate() + daysUntilFriday);
+  date.setUTCHours(11, 0, 0, 0);
+  return date.getTime();
+}
+
+function getCurrentPhase() {
+  let t = GLOBAL_START;
+  let phase = "day";
+
+  while (true) {
+    if (phase === "day") {
+      if (Date.now() < t + ONE_DAY) {
+        return { phase: "day", target: t + ONE_DAY };
+      }
+      t += ONE_DAY;
+      phase = "friday";
+    } else {
+      const friday = getNextFriday11UTC(t);
+      if (Date.now() < friday) {
+        return { phase: "friday", target: friday };
+      }
+      t = friday;
+      phase = "day";
+    }
+  }
+}
+
+function updateCountdown() {
+  const { target } = getCurrentPhase();
+  let diff = target - Date.now();
+  if (diff < 0) diff = 0;
+
+  const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+  const h = Math.floor((diff / (1000 * 60 * 60)) % 24);
+  const m = Math.floor((diff / (1000 * 60)) % 60);
+  const s = Math.floor((diff / 1000) % 60);
+
+  document.getElementById("countdown-timer").textContent =
+    `${String(d).padStart(2,"0")}d ` +
+    `${String(h).padStart(2,"0")}h ` +
+    `${String(m).padStart(2,"0")}m ` +
+    `${String(s).padStart(2,"0")}s`;
+}
+
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+<script>
+function openSignChoice() {
+  document.getElementById('sign-choice-modal').style.display = 'flex';
+}
+
+function openSignIn() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signin-modal').style.display = 'flex';
+}
+
+function openSignUp() {
+  document.getElementById('sign-choice-modal').style.display = 'none';
+  document.getElementById('signup-modal').style.display = 'flex';
+}
+</script>
+
+<script>
+// ===== USER AUTH UI =====
+
+// Generate color from email (same email = same color)
+function getColorFromEmail(email) {
+  let hash = 0;
+  for (let i = 0; i < email.length; i++) {
+    hash = email.charCodeAt(i) + ((hash << 5) - hash);
+  }
+  return `hsl(${hash % 360}, 70%, 55%)`;
+}
+
+function showUserAvatar(email) {
+  const avatar = document.getElementById('user-avatar');
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
+
+  const firstLetter = email.charAt(0).toUpperCase();
+  const color = getColorFromEmail(email);
+
+  avatar.textContent = firstLetter;
+  avatar.style.backgroundColor = color;
+  avatar.style.color = '#111';
+
+  avatar.classList.remove('hidden');
+  signBtnHeader.style.display = 'none';
+  signBtnMobile.style.display = 'none';
+}
+</script>
+
+<script>
+// Open Sign Out modal when avatar is clicked
+const avatar = document.getElementById('user-avatar');
+avatar.addEventListener('click', () => {
+  // Only open if avatar is visible
+  if (!avatar.classList.contains('hidden')) {
+    document.getElementById('signout-modal').style.display = 'flex';
+  }
+});
+// Logout function
+function logoutUser() {
+  localStorage.removeItem('loggedInUser');
+
+  const signBtnHeader = document.getElementById('sign-btn-header');
+  const signBtnMobile = document.getElementById('sign-btn-mobile');
+
+  avatar.classList.add('hidden');
+  avatar.textContent = '';
+  signBtnHeader.style.display = 'inline-block';
+  signBtnMobile.style.display = 'block';
+
+  closeSignModal('signout-modal');
+}
+</script>
+<script>
+function isValidEmail(email) {
+  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+}
+
+function isValidPassword(password) {
+  return /^(?=.*[A-Za-z])(?=.*\d).{6,}$/.test(password);
+}
+
+</script>
+
 <footer class="bg-gray-900 py-10 mt-12 border-t border-gray-700" id="contact">
 <div class="container mx-auto px-4 text-center text-gray-400">
 <p class="mb-5 text-gray-200 text-xl font-medium"><i class="fas fa-headset mr-2 text-yellow-400"></i> Contact & Support</p>
@@ -624,5 +951,159 @@ style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
   </script>
 </div> 
 </footer>
+<script src="//code.tidio.co/6wkx0rcfbhp7xbkqael99zbbqiulfejy.js" async></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-auth.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.0/firebase-firestore.js"></script>
+
+<script>
+// 1. Initialize Firebase ONCE
+const firebaseConfig = {
+  apiKey: "AIzaSyCysMVjzRSEaudRwhHRd2YE2MmBqA5brYw",
+  authDomain: "elmalkkeke.firebaseapp.com",
+  projectId: "elmalkkeke",
+  storageBucket: "elmalkkeke.firebasestorage.app",
+  messagingSenderId: "1098086705134",
+  appId: "1:1098086705134:web:ff6c24cc33e407facd90ff",
+  measurementId: "G-0XWQX5YKBM"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+const auth = firebase.auth();
+const provider = new firebase.auth.GoogleAuthProvider();
+
+// 2. Global variables for pagination
+let lastVisible = null;
+const reviewsPerPage = 5;
+
+// 3. Review Submission Logic (Updated for stability)
+window.submitRoyalReview = async function() {
+  const name = document.getElementById('side-rev-name').value;
+  const rating = document.getElementById('side-rev-rating').value;
+  const text = document.getElementById('side-rev-text').value;
+
+  if(!name || !text) {
+    alert("The King requests your name and message! 👑");
+    return;
+  }
+
+  try {
+    await db.collection("reviews").add({
+      name: name,
+      rating: parseInt(rating),
+      text: text,
+      timestamp: firebase.firestore.FieldValue.serverTimestamp()
+    });
+    
+    alert("The King has received your feedback! 👑");
+    
+    // Clear the form
+    document.getElementById('side-rev-name').value = "";
+    document.getElementById('side-rev-text').value = "";
+    
+    // Refresh the list
+    loadReviews(true); 
+  } catch (error) {
+    console.error("Error:", error);
+    alert("Database Error: Make sure your Firestore rules allow 'write'.");
+  }
+};
+
+
+// 4. Load Reviews Logic
+async function loadReviews(isInitial = true) {
+  const list = document.getElementById('side-reviews-list');
+  const seeMoreBtn = document.getElementById('see-more-reviews');
+  
+  if (isInitial) {
+    list.innerHTML = "";
+    lastVisible = null;
+  }
+
+  let query = db.collection("reviews").orderBy("timestamp", "desc").limit(reviewsPerPage);
+  
+  if (!isInitial && lastVisible) {
+    query = query.startAfter(lastVisible);
+  }
+
+  try {
+    const querySnapshot = await query.get();
+    
+    if (querySnapshot.empty && isInitial) {
+      list.innerHTML = "<p class='text-[10px] text-gray-500 text-center'>No reviews yet. Be the first!</p>";
+      return;
+    }
+
+    lastVisible = querySnapshot.docs[querySnapshot.docs.length - 1];
+
+    querySnapshot.forEach((doc) => {
+      const data = doc.data();
+      const stars = "⭐".repeat(data.rating || 5);
+      const reviewHTML = `
+        <div class="border-b border-gray-800 pb-3 mb-2 animate-fade-in">
+          <div class="flex justify-between text-[10px] text-yellow-500 font-bold mb-1">
+            <span>${(data.name || "Anonymous").toUpperCase()}</span>
+            <span>${stars}</span>
+          </div>
+          <p class="text-[11px] text-gray-400 italic leading-tight">"${data.text || ""}"</p>
+        </div>
+      `;
+      list.insertAdjacentHTML('beforeend', reviewHTML);
+    });
+
+    if (querySnapshot.docs.length === reviewsPerPage) {
+      seeMoreBtn.classList.remove('hidden');
+    } else {
+      seeMoreBtn.classList.add('hidden');
+    }
+  } catch (err) {
+    console.error("Load error:", err);
+  }
+}
+
+// 5. Auth State Logic
+auth.onAuthStateChanged((user) => {
+  const avatar = document.getElementById("user-avatar");
+  const signBtnHeader = document.getElementById("sign-btn-header");
+  const signBtnMobile = document.getElementById("sign-btn-mobile");
+
+  if (user) {
+    if (signBtnHeader) signBtnHeader.style.display = "none";
+    if (signBtnMobile) signBtnMobile.style.display = "none";
+    if (avatar) {
+      avatar.classList.remove("hidden");
+      avatar.innerHTML = `<img src="${user.photoURL || ''}" class="w-10 h-10 rounded-full object-cover cursor-pointer border-2 border-yellow-500">`;
+    }
+  } else {
+    if (signBtnHeader) signBtnHeader.style.display = "inline-block";
+    if (signBtnMobile) signBtnMobile.style.display = "block";
+    if (avatar) {
+      avatar.classList.add("hidden");
+      avatar.innerHTML = "";
+    }
+  }
+});
+
+// 6. Google Login
+window.handleGoogleLogin = function() {
+  auth.signInWithPopup(provider).catch(err => alert(err.message));
+};
+
+// 7. Logout
+window.logoutUser = function() {
+  auth.signOut().then(() => location.reload());
+};
+
+// Start Up
+document.addEventListener("DOMContentLoaded", () => {
+  loadReviews(true);
+  
+  const googleBtn = document.getElementById("google-signin-btn");
+  if(googleBtn) googleBtn.onclick = handleGoogleLogin;
+  
+  document.getElementById('see-more-reviews').onclick = () => loadReviews(false);
+});
+</script>
 </body>
 </html>
