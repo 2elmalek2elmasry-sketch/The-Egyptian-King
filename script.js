@@ -1,3 +1,4 @@
+console.log("JS IS WORKING");
 function toggleMenu() {
   document.getElementById("sideMenu").classList.toggle("active");
   document.getElementById("overlay").classList.toggle("active");
