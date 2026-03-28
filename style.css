@@ -65,7 +65,7 @@ margin-top: 1rem;
 border-radius: 0.5rem;
 }
 
-.add-to-cart-button {
+.add-to-cart {
 display: block;
 width: 100%;
 padding: 0.75rem;
@@ -328,6 +328,7 @@ z-index: 999;
   background-color: var(--primary-color);
   color: var(--background-dark);
 }
+
 #mini-cart {
   display: none; /* hidden by default */
   backdrop-filter: blur(6px);
