@@ -231,5 +231,41 @@ window.open(paypalLink, '_blank');
 showStep(3);
 }
 </script>
+<script>
+// 1️⃣ Disable right-click
+document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+  alert("Right-click is disabled on this site!");
+});
+
+// 2️⃣ Disable key combinations commonly used for dev tools
+document.addEventListener('keydown', function(e) {
+  // F12
+  if(e.key === "F12") {
+    e.preventDefault();
+    alert("Opening DevTools is disabled!");
+  }
+  // Ctrl+Shift+I (Inspect)
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "i") {
+    e.preventDefault();
+    alert("Inspect is disabled!");
+  }
+  // Ctrl+Shift+J (Console)
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "j") {
+    e.preventDefault();
+    alert("Console is disabled!");
+  }
+  // Ctrl+U (View Source)
+  if(e.ctrlKey && e.key.toLowerCase() === "u") {
+    e.preventDefault();
+    alert("View Source is disabled!");
+  }
+  // Ctrl+Shift+C (Inspect Element)
+  if(e.ctrlKey && e.shiftKey && e.key.toLowerCase() === "c") {
+    e.preventDefault();
+    alert("Inspect Element is disabled!");
+  }
+});
+</script>
 </body>
 </html>
