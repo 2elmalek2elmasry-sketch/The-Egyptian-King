@@ -65,6 +65,14 @@ margin-top: 1rem;
 border-radius: 0.5rem;
 }
 
+.add-to-cart {
+display: block;
+width: 100%;
+padding: 0.75rem;
+margin-top: 1rem;
+border-radius: 0.5rem;
+}
+
 .cta-button {
 background-color: var(--secondary-color);
 transition: all 0.3s ease-in-out;
@@ -319,4 +327,18 @@ z-index: 999;
 .currency-option:hover, .currency-option.active {
   background-color: var(--primary-color);
   color: var(--background-dark);
+}
+
+#mini-cart {
+  display: none; /* hidden by default */
+  backdrop-filter: blur(6px);
+}
+
+#mini-cart button {
+  cursor: pointer;
+  transition: transform 0.2s;
+}
+
+#mini-cart button:hover {
+  transform: scale(1.1);
 }
