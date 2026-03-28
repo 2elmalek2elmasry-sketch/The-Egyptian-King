@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Cart</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <style>
+    body {
+      background-color: #111827;
+      color: #f9fafb;
+      font-family: 'Inter', sans-serif;
+    }
+    .product-card {
+      background-color: rgba(31, 41, 55, 0.9);
+      padding: 1rem;
+      border-radius: 1rem;
+      position: relative;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    }
+    .product-card img {
+      border-radius: 0.75rem;
+      height: 180px;
+      object-fit: cover;
+      width: 100%;
+    }
+    .premium-button {
+      background-color: #ffd700;
+      color: #111827;
+      font-weight: bold;
+      padding: 0.5rem 1rem;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .premium-button:hover {
+      transform: scale(1.05);
+      background-color: #e6c200;
+    }
+  </style>
+</head>
+<body class="p-6">
+
+  <!-- Return Button -->
+  <div class="flex justify-end mb-4">
+    <button onclick="window.location.href='index.html'" class="premium-button">
+      Return to Homepage
+    </button>
+  </div>
+
+  <!-- Cart Container -->
+  <div id="cart-container" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"></div>
+
+  <script>
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    // RENDER CART
+    function renderCart() {
+      const container = document.getElementById("cart-container");
+      container.innerHTML = "";
+
+      if (cart.length === 0) {
+        container.innerHTML = "<h2 class='text-center text-xl'>Your cart is empty</h2>";
+        return;
+      }
+
+      cart.forEach((item, index) => {
+        const card = document.createElement("div");
+        card.className = "product-card";
+
+        card.innerHTML = `
+          <!-- Remove Button -->
+          <button onclick="openRemoveModal(${index})"
+            class="absolute top-2 right-2 bg-red-500 px-2 rounded">
+            X
+          </button>
+
+          <!-- Image -->
+          <img src="${item.image}" alt="${item.name}">
+
+          <!-- Info -->
+          <h2 class="text-yellow-400 font-bold mt-2">${item.name}</h2>
+          <p class="mt-2">Quantity: ${item.quantity}</p>
+          <p>Total: EGP ${item.price * item.quantity}</p>
+
+          <!-- Quick Buy -->
+          <button onclick="quickBuy(${index})"
+            class="buy-button premium-button mt-3 w-full">
+            Quick Buy
+          </button>
+        `;
+
+        container.appendChild(card);
+      });
+    }
+
+    // QUICK BUY
+    function quickBuy(index) {
+      cart.splice(index, 1);
+      save();
+    }
+
+    // REMOVE ITEM
+    function openRemoveModal(index) {
+      if (confirm("Remove item?")) {
+        cart.splice(index, 1);
+        save();
+      }
+    }
+
+    
+    // SAVE CART
+    function save() {
+      localStorage.setItem("cart", JSON.stringify(cart));
+      renderCart();
+    }
+
+    // LOAD
+    renderCart();
+  </script>
+  
+<script>
+<!-- Checkout Modal -->
+<div id="checkout-modal" class="modal-overlay">
+<div class="modal-content rounded-2xl p-6 md:p-10 relative">
+<button onclick="closeModal()" class="absolute top-4 right-4 text-gray-400 hover:text-red-500 text-3xl transition-colors"><i class="fas fa-times"></i></button>
+<h2 class="text-3xl font-extrabold gold-gradient-text border-b pb-3 mb-6 border-yellow-800" id="modal-title">Quick Checkout</h2>
+
+<div id="step-1-summary">
+<div class="flex items-center space-x-4 mb-6 p-4 bg-gray-900/50 rounded-lg border border-yellow-900">
+<img id="modal-product-image" src="" alt="Product Image" class="w-20 h-20 object-cover rounded-md">
+<div>
+<p class="text-xl font-bold text-yellow-400" id="modal-product-name"></p>
+<p class="text-2xl font-black text-yellow-500" id="modal-product-price"></p>
+</div>
+</div>
+<div class="mb-6">
+<label for="product-size" class="block text-gray-300 mb-2 font-medium">Select Size (MANDATORY)</label>
+<select id="product-size" class="checkout-input w-full">
+<option value="" disabled selected>Choose size...</option>
+<option value="S">Small (S)</option>
+<option value="M">Medium (M)</option>
+<option value="L">Large (L)</option>
+<option value="XL">Extra Large (XL)</option>
+</select>
+</div>
+<button onclick="nextStep(2)" id="next-to-shipping-btn" class="premium-button w-full py-3 rounded-xl text-xl transition-transform transform hover:scale-[1.02]">Proceed to Shipping <i class="fas fa-truck ml-2"></i></button>
+</div>
+
+<div id="step-2-shipping" style="display:none;">
+<p class="text-lg font-bold text-yellow-400 mb-4">1. Shipping Information</p>
+<form id="checkout-form" onsubmit="return false;">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-4">
+<input type="text" id="full-name" placeholder="Full Name" required class="checkout-input">
+<input type="tel" id="phone" placeholder="Phone Number" required class="checkout-input" maxlength="11">
+</div>
+<div class="mb-4">
+<input type="text" id="address" placeholder="Shipping Address (Street, City)" required class="checkout-input w-full">
+</div>
+
+<p class="text-lg font-bold text-yellow-400 mb-4 mt-8">2. Payment</p>
+<p class="text-sm text-red-400 mb-4 italic"><i class="fas fa-exclamation-triangle mr-2"></i> You will be redirected to PayPal to complete your payment securely.</p>
+
+<div class="mb-4">
+<input type="text" id="card-number" placeholder="Card Number (XXXX XXXX XXXX XXXX)" required class="checkout-input w-full" maxlength="19">
+</div>
+<div class="grid grid-cols-3 gap-4 mb-6">
+<input type="text" id="expiry" placeholder="MM/YY" required class="checkout-input" maxlength="5">
+<input type="text" id="cvv" placeholder="CVV" required class="checkout-input" maxlength="4">
+<select class="checkout-input" required>
+<option value="" disabled selected>Select Payment Method</option>
+<option value="cod">Cash on Delivery</option>
+<option value="card">Credit/Debit Card</option>
+</select>
+</div>
+
+<button onclick="redirectPayPal()" class="cta-button text-white w-full py-3 rounded-xl text-xl mt-8 transition-transform transform hover:scale-[1.02]">Pay Now <i class="fas fa-dollar-sign ml-2"></i></button>
+<button onclick="nextStep(1)" class="text-gray-400 hover:text-yellow-400 mt-3 text-sm w-full transition-colors"><i class="fas fa-arrow-left mr-1"></i> Back to Order Summary</button>
+</form>
+</div>
+
+<div id="step-3-confirmation" style="display:none;" class="text-center p-8">
+<i class="fas fa-check-circle text-8xl text-green-500 mb-6 animate-pulse"></i>
+<h3 class="text-4xl font-black gold-gradient-text mb-4">Payment Successful!</h3>
+<p class="text-xl text-gray-200 mb-6">Your order has been placed successfully.</p>
+<p class="text-sm text-gray-400 mb-8">You will receive a confirmation from PayPal shortly. Thank you for shopping with The Egyptian King.</p>
+<button onclick="closeModal()" class="premium-button py-3 px-8 rounded-full">Close & Continue Shopping</button>
+</div>
+</div>
+</div>
+
+<script>
+let currentProduct = {};
+let currentStep = 1;
+
+function openModal(productName, productPrice, productImage) {
+currentProduct = { name: productName, price: productPrice, image: productImage };
+document.getElementById('modal-product-name').innerText = productName;
+document.getElementById('modal-product-price').innerText = productPrice;
+document.getElementById('modal-product-image').src = productImage || '';
+document.getElementById('checkout-modal').style.display = 'flex';
+showStep(1);
+}
+
+function closeModal() {
+document.getElementById('checkout-modal').style.display = 'none';
+document.getElementById('checkout-form').reset();
+currentStep = 1;
+}
+
+function showStep(step) {
+currentStep = step;
+document.getElementById('step-1-summary').style.display = step === 1 ? 'block' : 'none';
+document.getElementById('step-2-shipping').style.display = step === 2 ? 'block' : 'none';
+document.getElementById('step-3-confirmation').style.display = step === 3 ? 'block' : 'none';
+}
+
+function nextStep(step) { showStep(step); }
+
+// Add event listeners to all Quick Buy buttons
+document.querySelectorAll('.buy-button').forEach(btn => {
+btn.addEventListener('click', function() {
+openModal(this.dataset.productName, this.dataset.productPrice, this.dataset.productImage);
+});
+});
+
+// Redirect to PayPal
+function redirectPayPal() {
+const paypalLink = 'https://www.paypal.me/OmarGlelah1';
+window.open(paypalLink, '_blank');
+showStep(3);
+}
+</script>
+</body>
+</html>
