@@ -105,10 +105,10 @@ function toggleMenu() {
 <!-- Hero Section -->
 <section class="hero-section text-center flex items-center justify-center p-8">
 <div class="bg-black bg-opacity-70 backdrop-blur-sm p-8 md:p-16 rounded-2xl shadow-2xl max-w-3xl border-4 border-yellow-400/50">
-<h1 class="text-6xl md:text-8xl font-black mb-4 uppercase tracking-tighter gold-gradient-text">
+<h1 class="text-3xl sm:text-5xl md:text-7xl font-black mb-4 uppercase tracking-tight gold-gradient-text">
 THE EGYPTIAN KING
 </h1>
-<p class="text-xl md:text-3xl font-light text-yellow-100 italic mb-10">
+<p class="text-sm sm:text-lg md:text-2xl font-light text-yellow-100 italic mb-6 sm:mb-10">
 Dare to Wear Different. Rule Your Style.
 </p>
 <a href="#collection" class="inline-block premium-button py-3 px-10 rounded-full text-xl shadow-lg transform">
@@ -217,25 +217,25 @@ function closeSignModal(modalId) {
   </p>
 </div>
 
-<h2 class="text-4xl md:text-6xl font-extrabold text-center mb-16 gold-gradient-text">Featured Pharaoh Gear</h2>
-<div class="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+<h2 class="text-4xl md:text-4xl sm:text-6xl font-extrabold text-center mb-16 gold-gradient-text">Featured Pharaoh Gear</h2>
+<div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
 
 <!-- Generate 1 product cards -->
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN HATSHEPSOUT HOODIE" data-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
-<h3 class="text-xl font-bold text-yellow-400">QUEEN HATSHEPSOUT HOODIE</h3>
+<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN NEFERTITI HOODIE" data-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<h3 class="text-xl font-bold text-yellow-400">QUEEN NEFERTITI HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 850</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
-  data-product-name="QUEEN HATSHEPSOUT HOODIE"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
+  data-product-name="QUEEN NEFERTITI HOODIE"
   data-product-price="EGP 850"
   data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
   Add to Cart <i class="fas fa-cart-plus ml-1"></i>
 </button>
-<button class="buy-button premium-button" data-product-name="QUEEN HATSHEPSOUT HOODIE" data-product-price="EGP 850" data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
+<button class="buy-button premium-button" data-product-name="QUEEN NEFERTITI HOODIE" data-product-price="EGP 850" data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">
 Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </button>
 </div>
@@ -248,12 +248,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="KHABY LAME HOODIE" data-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="KHABY LAME HOODIE" data-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">KHABY LAME HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="KHABY LAME HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">
@@ -271,12 +271,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES HOODIE" data-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES HOODIE" data-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">LBRON JAMES HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="LBRON JAMES HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">
@@ -295,12 +295,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWANE JHONSON HOODIE" data-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWANE JHONSON HOODIE" data-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">DWANE JHONSON HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="DWANE JHONSON HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">
@@ -319,12 +319,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM HOODIE" data-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM HOODIE" data-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">JUDE BELLINGHAM HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="JUDE BELLINGHAM HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">
@@ -342,12 +342,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA HOODIE" data-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA HOODIE" data-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">SOCIAL MEDIA HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="SOCIAL MEDIA HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">
@@ -366,12 +366,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS HOODIE" data-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS HOODIE" data-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">EGYPTIAN RULERS HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="EGYPTIAN RULERS HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">
@@ -390,12 +390,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image"https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" alt="KING TUTANKAMUN HOODIE" data-image"https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">KING TUTANKAMUN HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="KING TUTANKAMUN HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/YqgPcF95/472989124-17843821437411646-5990367707247327182-n.jpg">
@@ -414,12 +414,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image"https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE HOODIE" data-image"https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">EGYPTIAN CULTURE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="EGYPTIAN CULTURE HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">
@@ -438,12 +438,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/qRHPBMmP/unnamed.png"alt="FIFA WORLD CUP HOODIE" data-image="https://i.postimg.cc/qRHPBMmP/unnamed.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/qRHPBMmP/unnamed.png"alt="FIFA WORLD CUP HOODIE" data-image="https://i.postimg.cc/qRHPBMmP/unnamed.png" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">FIFA WORLD CUP HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="FIFA WORLD CUP HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/qRHPBMmP/unnamed.png">
@@ -461,12 +461,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/W3s0LzFr/IMG-5148.png"alt="" data-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5"> 
+<img src="https://i.postimg.cc/W3s0LzFr/IMG-5148.png"alt="" data-image="https://i.postimg.cc/W3s0LzFr/IMG-5148.png" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">FLAG TRIO HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="FLAG TRIO HOODIE"
   data-product-price="EGP 800"
   data-product-image="="https://i.postimg.cc/W3s0LzFr/IMG-5148.png">
@@ -484,12 +484,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png"alt="CROWNED SKULL HOODIE" data-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5"> 
+<img src="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png"alt="CROWNED SKULL HOODIE" data-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">CROWNED SKULL HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="CROWNED SKULL HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/fb9PwtrW/Chat-GPT-Image-Feb-13-2026-11-48-51-AM.png">
@@ -507,12 +507,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/3rZnLTjD/IMG-5187.png"alt="ALGERIAN CULTURE HOODIE" data-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5"> 
+<img src="https://i.postimg.cc/3rZnLTjD/IMG-5187.png"alt="ALGERIAN CULTURE HOODIE" data-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">ALGERIAN CULTURE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="ALGERIAN CULTURE HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png">
@@ -529,12 +529,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png"alt="GOLDEN PHAROH FADE HOODIE" data-image="https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5"> 
+<img src="https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png"alt="GOLDEN PHAROH FADE HOODIE" data-image="https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">GOLDEN PHAROH FADE HOODIE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="GOLDEN PHAROH FADE HOODIE"
   data-product-price="EGP 800"
   data-product-image=""https://i.postimg.cc/fyF7D8px/7737277e-2dcb-4dcb-8d0c-cc5297dda1b4.png">
@@ -552,12 +552,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <=1 ; i++) {
 document.write(`
-<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5"> 
-<img src="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg"alt="TUNISIA CULTURE HOODIE " data-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5"> 
+<img src="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg"alt="TUNISIA CULTURE HOODIE " data-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400"> TUNISIA CULTURE HOODIE </h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 800</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="TUNISIA CULTURE HOODIE"
   data-product-price="EGP 800"
   data-product-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg">
@@ -574,12 +574,12 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <script>
 for (let i = 1; i <= 1; i++) {
 document.write(`
-<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-5">
-<img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-48 sm:h-64 object-cover rounded-lg mb-4 border-2 border-yellow-800">
+<div class="product-card ramadan deal bg-gray-800/70 rounded-xl overflow-hidden shadow-2xl p-3 sm:p-5">
+<img src="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" alt="TRAVIS SCOTT TEE" data-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg" class="w-full h-40 sm:h-56 object-cover rounded-lg mb-4 border-2 border-yellow-800">
 <h3 class="text-xl font-bold text-yellow-400">TRAVIS SCOTT TEE</h3>
 <p class="text-sm text-gray-400 mt-1 mb-3">EGP 700</p>
 <p class="text-3xl font-extrabold text-yellow-500 mb-4">&nbsp;</p>
-<button class="add-to-cart premium-button mb-2"
+<button class="add-to-cart premium-button mb-2 hidden sm:block"
   data-product-name="TRAVIS SCOTT TEE"
   data-product-price="EGP 700"
   data-product-image="https://i.postimg.cc/fLfbgyd3/491433724-17856683178411646-4354845891759366564-n.jpg">
@@ -630,17 +630,17 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
   <h2 class="text-4xl md:text-5xl font-bold text-center mb-16 text-yellow-400">Explore Our Kingdoms</h2>
 <div class="grid md:grid-cols-3 gap-10 text-center">
 <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
-<i class="fas fa-dumbbell text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<i class="fas fa-dumbbell text-4xl sm:text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
 <h3 class="text-2xl font-bold mb-3 text-yellow-100">Sports Legends</h3>
 <p class="text-gray-400">Hoodies and tees dedicated to the kings of the court and pitch.</p>
 </div>
 <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
-<i class="fas fa-mask text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<i class="fas fa-mask text-4xl sm:text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
 <h3 class="text-2xl font-bold mb-3 text-yellow-100">Action & Icons</h3>
 <p class="text-gray-400">Cinematic icons and strong personalities in every design.</p>
 </div>
 <div class="p-8 bg-gray-800 rounded-2xl shadow-2xl border-t-8 border-yellow-500 transition duration-300 hover:bg-gray-700/80">
-<i class="fas fa-crown text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
+<i class="fas fa-crown text-4xl sm:text-6xl text-yellow-400 mb-4 transform hover:scale-110 transition duration-300"></i>
 <h3 class="text-2xl font-bold mb-3 text-yellow-100">The Heritage Line</h3>
 <p class="text-gray-400">A tribute to Egypt’s majestic history and timeless graphics.</p>
 </div>
@@ -652,7 +652,7 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 <div class="container mx-auto text-center">
 <h2 class="text-4xl md:text-5xl font-bold mb-10 text-yellow-400">Connect with the King</h2>
 <p class="text-xl text-gray-300 mb-12">Follow us for new drops and exclusive content!</p>
-<div class="flex justify-center space-x-10 text-6xl">
+<div class="flex justify-center space-x-10 text-4xl sm:text-6xl">
 <a href="https://www.tiktok.com/@TheEgyptianKing" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-tiktok"></i></a>
 <a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-instagram"></i></a>
 <a href="https://www.snapchat.com/add/tek" target="_blank" class="text-gray-300 hover:text-yellow-400 transition duration-300 transform hover:scale-125 hover:drop-shadow-lg"><i class="fab fa-snapchat-ghost"></i></a>
@@ -663,8 +663,8 @@ Quick Buy <i class="fas fa-shopping-bag ml-1"></i>
 </section>
 
 ><!-- Floating Day/Night Toggle Button -->
-<button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full" 
-style="position: fixed; bottom: 80px; right: 24px; z-index: 999;">
+<button id="theme-toggle-btn" class="premium-button px-6 py-3 rounded-full hidden sm:block" 
+class="hidden sm:block" style="position: fixed; bottom: 80px; right: 24px z-index: 999;".
   🌞 / 🌙
 </button>
 
