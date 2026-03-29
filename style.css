@@ -342,3 +342,17 @@ z-index: 999;
 #mini-cart button:hover {
   transform: scale(1.1);
 }
+
+@media (max-width: 640px) {
+  .product-card {
+    transform: scale(0.98);
+  }
+
+  .hero-section {
+    padding: 20px;
+  }
+
+  .gold-gradient-text {
+    letter-spacing: 1px;
+  }
+}
