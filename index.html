@@ -1,16 +1,199 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
-    <title>The Egyptian King</title>
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.tsx"></script>
-  </body>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE EGYPTIAN KING | Concept Store</title>
+    <style>
+       :root {
+            --accent: #d1ff27; /* Neon yellow */
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-main);
+            line-height: 1.1;
+            overflow-x: hidden;
+        }
+
+        /* 1. Header with the 3 original buttons */
+        header {
+            position: fixed; top: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 50px; mix-blend-mode: difference;
+        }
+        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -1px; }
+        nav { display: flex; gap: 40px; }
+        nav a { color: white; text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+        /* 2. Hero Section */
+        .hero {
+            height: 100vh; display: flex; align-items: center; justify-content: center;
+            position: relative; overflow: hidden;
+        }
+        .hero-image {
+            width: 45%; height: 65%;
+            background: url('hero-img.jpg') center/cover no-repeat;
+            border-radius: 4px; z-index: 1;
+        }
+        .hero-title {
+            position: absolute; font-size: 18vw; font-weight: 900; text-transform: uppercase;
+            line-height: 0.8; letter-spacing: -10px; z-index: 2; mix-blend-mode: overlay;
+        }
+
+        /* 3. Marquee */
+        .marquee {
+            background: var(--accent); color: #000; padding: 25px 0;
+            overflow: hidden; white-space: nowrap; display: flex;
+            font-weight: 900; text-transform: uppercase; font-size: 1.8rem;
+        }
+        .marquee-inner { display: flex; animation: scroll 25s linear infinite; }
+        .marquee-inner span { margin-right: 60px; }
+        @keyframes scroll { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+
+        /* 4. Featured Bento Grid */
+        .featured-row {
+            padding: 150px 50px;
+            display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px;
+        }
+        .feature-item { position: relative; aspect-ratio: 3/4; background: #1a1a1a; border-radius: 10px; overflow: hidden; }
+        .feature-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.8; }
+        .feature-label { position: absolute; bottom: 20px; left: 20px; font-weight: 900; text-transform: uppercase; font-size: 1.2rem; }
+
+        /* 5. Editorial Section */
+        .editorial {
+            padding: 100px 50px; display: flex; gap: 50px; align-items: center;
+            background: #fff; color: #000; 
+        }
+        .editorial-img { width: 40%; aspect-ratio: 1/1; background: #eee; }
+        .editorial-content { width: 50%; }
+        .editorial-content h2 { font-size: 6vw; text-transform: uppercase; margin-bottom: 20px; }
+        .editorial-content p { font-size: 1.2rem; line-height: 1.5; margin-bottom: 30px; }
+
+        /* 6. Lookbook Grid */
+        .lookbook-grid {
+            display: grid; grid-template-columns: repeat(4, 1fr); height: 80vh;
+        }
+        .look-img { background: #111; border: 1px solid #222; background-size: cover; background-position: center; }
+
+        /* 7. Newsletter */
+        .newsletter {
+            height: 60vh; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            background: #000; color: #fff; text-align: center;
+        }
+        .newsletter h2 { font-size: 5vw; text-transform: uppercase; margin-bottom: 20px; }
+        .newsletter input {
+            background: transparent; border: none; border-bottom: 4px solid var(--accent);
+            font-size: 2rem; text-align: center; width: 60%; padding: 10px; font-weight: 900;
+            outline: none; text-transform: uppercase; color: var(--accent);
+        }
+
+        /* 8. The Oval Neon "Shop Now" Button Section */
+        .final-cta {
+            padding: 150px 0; text-align: center;
+            background: #000;
+        }
+        .shop-btn {
+            display: inline-block;
+            background-color: var(--accent);
+            color: #000;
+            padding: 25px 80px;
+            font-size: 1.5rem;
+            font-weight: 900;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 100px; /* Makes it an oval */
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            box-shadow: 0 0 20px rgba(209, 255, 39, 0.4);
+        }
+        .shop-btn:hover { 
+            transform: scale(1.1); 
+            background-color: #fff; 
+            box-shadow: 0 0 40px rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 20px; }
+            nav { gap: 15px; }
+            .hero-title { font-size: 25vw; }
+            .featured-row { grid-template-columns: 1fr; }
+            .editorial { flex-direction: column; }
+            .lookbook-grid { grid-template-columns: repeat(2, 1fr); height: auto; }
+            .look-img { height: 300px; }
+            .shop-btn { padding: 20px 50px; font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo">THE EGYPTIAN KING™</div>
+        <!-- Original 3 Buttons -->
+        <nav>
+            <a href="shop.html">Shop All</a>
+            <a href="#">PAST HISTORY</a>
+            <a href="#">Information</a>
+        </nav>
+        <div style="font-weight: 800;">BAG (0)</div>
+    </header>
+
+    <section class="hero">
+        <div class="hero-image"></div>
+        <h1 class="hero-title">THE<br>EGYPTIAN KING</h1>
+    </section>
+
+    <div class="marquee">
+        <div class="marquee-inner">
+            <span>DYNASTY COLLECTION</span> <span>GLOBAL SHIPPING</span> <span>WEEKLY DROP</span>
+            <span>DYNASTY COLLECTION</span> <span>GLOBAL SHIPPING</span> <span>WEEKLY DROP</span>
+        </div>
+    </div>
+
+    <section class="featured-row">
+        <div class="feature-item"><div class="feature-label">HOODIES</div></div>
+        <div class="feature-item"><div class="feature-label">T-SHIRTS</div></div>
+        <div class="feature-item"><div class="feature-label">DEALS</div></div>
+    </section>
+
+    <section class="editorial">
+        <div class="editorial-img"></div>
+        <div class="editorial-content">
+            <h2>The Newspaper Project</h2>
+            <p>street culture and ancient Egyptian iconography. Every piece tells a story through custom typography and heavyweight silhouettes.</p>
+            <a href="shop.html" style="color: #000; font-weight: 900; text-transform: uppercase;">Discover the Process →</a>
+        </div>
+    </section>
+
+    <section class="lookbook-grid">
+        <div class="look-img"></div>
+        <div class="look-img"></div>
+        <div class="look-img"></div>
+        <div class="look-img"></div>
+    </section>
+
+    <section class="newsletter">
+        <h2>Join The Egyptian King</h2>
+        <input type="email" placeholder="YOUR@EMAIL.COM">
+    </section>
+
+    <section class="final-cta">
+        <!-- The Neon Oval Shop Now Button -->
+        <a href="shop.html" class="shop-btn">Shop Now</a>
+    </section>
+
+    <footer style="padding: 80px 50px; display: flex; justify-content: space-between; border-top: 1px solid #222; font-size: 0.8rem; color: #555;">
+        <div>© 2026 THE EGYPTIAN KING ALL RIGHTS RESERVED</div>
+        <div>CRAFTED BY THE EGYPTIAN KING PRODUCTION TEAM</div>
+        <div style="display: flex; gap: 20px;">
+            <span>INSTAGRAM</span>
+            <span>TIKTOK</span>
+        </div>
+    </footer>
+
+</body>
 </html>
