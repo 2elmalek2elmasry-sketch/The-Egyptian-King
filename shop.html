@@ -85,9 +85,7 @@
         }
 
         .details { display: flex; justify-content: space-between; align-items: flex-end; }
-
         .product-name { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; }
-
         .price { font-family: var(--font-display); color: var(--primary); font-weight: 900; font-size: 1.2rem; }
 
         .buy-button {
@@ -109,49 +107,45 @@
             align-items: center; z-index: 9999; padding: 20px;
         }
 
-        footer { text-align: center; padding: 60px 0; border-top: 1px solid var(--border-light); margin-top: 60px; }
-        .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 15px; font-size: 0.8rem; text-transform: uppercase; font-weight: 700; }
+        /* Size Radio Buttons */
+        .size-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+        .size-selector input { display: none; }
+        .size-selector span {
+            display: block; padding: 10px 15px; border: 1px solid #333; 
+            background: #000; cursor: pointer; font-weight: 900; border-radius: 8px;
+        }
+        .size-selector input:checked + span { background: var(--neon-yellow); color: #000; }
+
+        footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
     </style>
 </head>
 <body>
 
     <header>
         <a href="index.html" class="logo">THE EGYPTIAN KING</a>
-        <nav style="font-size: 0.75rem; font-weight: 800; text-transform: uppercase; color: var(--text-muted); letter-spacing: 1px;">
-            New Drops
-        </nav>
         <div style="font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;">CART (0)</div>
     </header>
 
     <main class="container">
         <div class="product-grid">
-            
+            <!-- Product Card -->
             <div class="product-card">
-                <div class="img-holder">            <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN NEFERTITI">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">QUEEN NEFERTITI HOODIE</span>
-
-                <span class="price price-text" data-base-price="850">EGP 850</span>
-
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN NEFERTITI">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">QUEEN NEFERTITI HOODIE</span>
+                        <span class="price">EGP 850</span>
+                    </div>
+                    <button class="buy-button" 
+                        data-product-name="QUEEN NEFERTITI HOODIE" 
+                        data-product-price="EGP 850" 
+                        data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">Quick Buy</button>
+                </div>
             </div>
-
-            <button class="buy-button" data-product-name="QUEEN NEFERTITI HOODIE" data-product-price="EGP 850" data-base-price="850" data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
+             <div class="product-card">
 
         <div class="img-holder">
 
@@ -430,11 +424,25 @@
     </div>
 
 </div>
-            </div>
+        </div>
     </main>
 
+    <!-- Collection Concept Section -->
+    <section style="padding: 100px 5%; background: #000; border-top: 1px solid #222;">
+        <div style="display: flex; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;">
+            <div style="flex: 1; min-width: 300px;">
+                <div style="width: 100%; aspect-ratio: 3/4; background: url('https://i.postimg.cc/J4yzQdQf/logo.png') center/cover; filter: grayscale(100%);"></div>
+            </div>
+            <div style="flex: 1; min-width: 300px;">
+                <h2 style="font-size: 3rem; text-transform: uppercase; font-weight: 900; color: var(--neon-yellow); margin-bottom: 20px;">The Story</h2>
+                <p style="color: #aaa; line-height: 1.8;">Blending Ancient Egyptian iconography with modern street culture. Our designs are inspired by the heavy bass of Egyptian Trap and the precision of historical art. Every hoodie is heavyweight and oversized.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Integrated Checkout Modal -->
     <div id="checkout-modal" class="modal-overlay">
-        <div style="background: #111; border: 1px solid #333; padding: 30px; border-radius: 20px; max-width: 400px; width: 100%; position: relative;">
+        <div style="background: #111; border: 1px solid #333; padding: 30px; border-radius: 20px; max-width: 450px; width: 100%; position: relative;">
             <span onclick="closeModal()" style="position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: 900;">✕</span>
             
             <div id="step-1-summary">
@@ -444,58 +452,63 @@
                 <button class="buy-button" onclick="nextStep(2)">Next: Shipping</button>
             </div>
 
-<div id="step-2-shipping" style="display:none;">
-            <h3 style="margin-bottom: 15px; font-family: var(--font-display); text-transform: uppercase; font-size: 0.9rem;">Contact Details</h3>
-            <form id="checkout-form">
-                <input type="text" id="cust-name" placeholder="Full Name" required 
-                    style="width:100%; padding:12px; margin-bottom:10px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
-                
-                <input type="email" id="cust-email" placeholder="Your Email" required 
-                    style="width:100%; padding:12px; margin-bottom:10px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
-                
-                <input type="tel" id="cust-phone" placeholder="Phone Number" required 
-                    style="width:100%; padding:12px; margin-bottom:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
-            </form>
-            <button class="buy-button" onclick="handleCheckout()">Send Details & Pay</button>
-        </div>
+            <div id="step-2-shipping" style="display:none;">
+                <h3 style="margin-bottom: 15px; text-transform: uppercase; font-size: 0.9rem;">Contact & Size</h3>
+                <form id="checkout-form">
+                    <input type="text" id="cust-name" placeholder="Full Name" required style="width:100%; padding:12px; margin-bottom:10px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
+                    <input type="email" id="cust-email" placeholder="Your Email" required style="width:100%; padding:12px; margin-bottom:10px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
+                    <input type="tel" id="cust-phone" placeholder="WhatsApp Number" required style="width:100%; padding:12px; margin-bottom:15px; background:#000; border:1px solid #333; color:#fff; border-radius:8px;">
+                    
+                    <label style="display:block; font-size:0.7rem; margin-bottom:10px; color:var(--text-muted);">SELECT SIZE (OVERSIZED FIT):</label>
+                    <div class="size-selector">
+                        <label><input type="radio" name="size" value="S" required><span>S</span></label>
+                        <label><input type="radio" name="size" value="M"><span>M</span></label>
+                        <label><input type="radio" name="size" value="L"><span>L</span></label>
+                        <label><input type="radio" name="size" value="XL"><span>XL</span></label>
+                    </div>
+                </form>
+                <button class="buy-button" onclick="handleCheckout()">Send Details & Pay</button>
+            </div>
             
             <div id="step-3-confirmation" style="display:none; text-align: center;">
-                <h2>Order Placed!</h2>
-                <p style="margin: 15px 0;">Redirecting to PayPal...</p>
+                <h2>Order Sent!</h2>
+                <p style="margin: 15px 0;">Check your email/WhatsApp. Redirecting to PayPal...</p>
                 <button class="buy-button" onclick="closeModal()">Close</button>
             </div>
         </div>
     </div>
 
     <footer>
-        <div class="footer-links">
-            <a href="#">Instagram</a>
-            <a href="#">Shipping</a>
-            <a href="terms.html">Terms</a>
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 40px; text-align: left; max-width: 1200px; margin: 0 auto;">
+            <div>
+                <p style="font-weight: 900; margin-bottom: 10px;">SUPPORT</p>
+                <p style="font-size: 0.8rem; color: #aaa;">WhatsApp: +20 102 500 2299</p>
+                <p style="font-size: 0.8rem; color: #aaa;">Email: 2el.malek.2el.masry@gmail.com</p>
+            </div>
+            <div>
+                <p style="font-weight: 900; margin-bottom: 10px;">PAGES</p>
+                <a href="terms.html" style="display:block; color:#aaa; text-decoration:none; font-size:0.8rem; margin-bottom:5px;">Terms & Policies</a>
+                <a href="#" style="display:block; color:#aaa; text-decoration:none; font-size:0.8rem;">Instagram</a>
+            </div>
         </div>
-        <p style="font-size: 0.7rem; opacity: 0.3; letter-spacing: 2px;">© 2026 THE EGYPTIAN KING CLOTHING BRAND</p>
+        <p style="font-size: 0.7rem; opacity: 0.3; letter-spacing: 2px; margin-top: 40px; text-align: center;">© 2026 THE EGYPTIAN KING</p>
     </footer>
 
     <script>
-     let currentProduct = {};
-        let currentStep = 1;
+        let currentProduct = {};
 
-        function openModal(productName, productPrice, productImage) {
-            currentProduct = { name: productName, price: productPrice, image: productImage };
-            document.getElementById('modal-product-name').innerText = productName;
-            document.getElementById('modal-product-price').innerText = productPrice;
-            document.getElementById('modal-product-image').src = productImage || '';
+        function openModal(name, price, image) {
+            currentProduct = { name, price, image };
+            document.getElementById('modal-product-name').innerText = name;
+            document.getElementById('modal-product-price').innerText = price;
+            document.getElementById('modal-product-image').src = image;
             document.getElementById('checkout-modal').style.display = 'flex';
             showStep(1);
         }
 
-        function closeModal() {
-            document.getElementById('checkout-modal').style.display = 'none';
-            currentStep = 1;
-        }
+        function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
 
         function showStep(step) {
-            currentStep = step;
             document.getElementById('step-1-summary').style.display = step === 1 ? 'block' : 'none';
             document.getElementById('step-2-shipping').style.display = step === 2 ? 'block' : 'none';
             document.getElementById('step-3-confirmation').style.display = step === 3 ? 'block' : 'none';
@@ -507,38 +520,28 @@
             const name = document.getElementById('cust-name').value;
             const email = document.getElementById('cust-email').value;
             const phone = document.getElementById('cust-phone').value;
+            const size = document.querySelector('input[name="size"]:checked')?.value;
 
-            if(!name || !email || !phone) {
-                alert("Please enter your details so I can contact you!");
+            if(!name || !email || !phone || !size) {
+                alert("Please complete all fields and select a size.");
                 return;
             }
 
-            // 1. Create the Email content
-            const recipient = "2el.malek.2el.masry@gmail.com"; // <--- CHANGE THIS TO YOUR EMAIL
-            const subject = `Order: ${currentProduct.name}`;
-            const body = `Customer Info:\nName: ${name}\nEmail: ${email}\nPhone: ${phone}\n\nProduct: ${currentProduct.name}\nPrice: ${currentProduct.price}`;
+            const body = `Order Details:\nProduct: ${currentProduct.name}\nSize: ${size}\nPrice: ${currentProduct.price}\n\nCustomer:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}`;
+            window.location.href = `mailto:2el.malek.2el.masry@gmail.com?subject=Order: ${currentProduct.name}&body=${encodeURIComponent(body)}`;
 
-            // 2. Open User's Email App
-            window.location.href = `mailto:${recipient}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-
-            // 3. Open PayPal in new tab after a tiny delay
             setTimeout(() => {
                 window.open('https://www.paypal.me/OmarGlelah1', '_blank');
                 showStep(3);
             }, 1000);
         }
 
-        // Initialize click listeners for buttons
-        document.addEventListener('click', function (e) {
+        document.addEventListener('click', (e) => {
             const btn = e.target.closest('.buy-button');
-            if (btn && btn.hasAttribute('data-product-name')) {
+            if (btn && btn.dataset.productName) {
                 openModal(btn.dataset.productName, btn.dataset.productPrice, btn.dataset.productImage);
             }
         });
-
-        window.onclick = function(event) {
-            if (event.target.classList.contains('modal-overlay')) closeModal();
-        }
     </script>
 </body>
 </html>
