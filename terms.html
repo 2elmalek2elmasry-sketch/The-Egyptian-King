@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TERMS & POLICIES | THE EGYPTIAN KING</title>
+    <style>
+        :root {
+            --accent: #d1ff27;
+            --bg: #0a0a0a;
+            --text: #ffffff;
+            --font-main: 'Inter', sans-serif;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { 
+            background-color: var(--bg); 
+            color: var(--text); 
+            font-family: var(--font-main);
+            line-height: 1.6;
+            padding: 100px 50px;
+        }
+
+        header {
+            position: fixed; top: 0; left: 0; width: 100%; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 30px 50px; background: rgba(10, 10, 10, 0.9);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid #222;
+        }
+
+        .logo { font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -1px; text-decoration: none; color: white; }
+
+        .content-wrap { max-width: 800px; margin: 0 auto; }
+
+        h1 { font-size: 5vw; text-transform: uppercase; font-weight: 900; color: var(--accent); margin-bottom: 50px; line-height: 0.8; }
+        
+        section { margin-bottom: 60px; }
+        h2 { font-size: 1.5rem; text-transform: uppercase; margin-bottom: 20px; border-left: 4px solid var(--accent); padding-left: 15px; }
+        p { color: #aaa; margin-bottom: 15px; font-size: 1rem; }
+        .highlight { color: var(--accent); font-weight: 700; }
+
+        .contact-box {
+            background: #111;
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid #222;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            display: inline-block;
+            margin-top: 40px;
+            color: #000;
+            background: var(--accent);
+            padding: 15px 30px;
+            text-decoration: none;
+            font-weight: 900;
+            text-transform: uppercase;
+            border-radius: 50px;
+            transition: transform 0.3s ease;
+        }
+        .back-btn:hover { transform: scale(1.05); }
+
+        @media (max-width: 768px) {
+            body { padding: 80px 20px; }
+            h1 { font-size: 12vw; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+    </header>
+
+    <div class="content-wrap">
+        <h1>TERMS &<br>CONDITIONS</h1>
+
+        <section>
+            <h2>01. FULFILLMENT & LOGISTICS</h2>
+            <p>Orders are processed and dispatched according to global logistics availability. Tracking information will be provided once the shipment is secured.</p>
+        </section>
+
+        <section>
+            <h2>02. CANCELLATION POLICY</h2>
+            <p>If an order cannot be fulfilled due to distance or logistics constraints, the customer will be notified via the contact details provided. In these cases, a <span class="highlight">75% refund</span> will be issued to cover operational and processing costs.</p>
+        </section>
+
+        <section>
+            <h2>03. FINAL SALE</h2>
+            <p>To maintain the exclusivity of our drops and current operational standards, <span class="highlight">all sales are final.</span> THE EGYPTIAN KING™ does not offer returns, exchanges, or full refunds once an order is processed for shipping.</p>
+        </section>
+
+        <section>
+            <h2>04. BRAND SUPPORT</h2>
+            <div class="contact-box">
+                <p>For inquiries regarding specific order status or logistics, contact the support team:</p>
+                <p><strong>WhatsApp:</strong> <a href="https://wa.me/201025002299" style="color: var(--accent); text-decoration: none;">+20 102 500 2299</a></p>
+                <p><strong>Email:</strong> <a href="mailto:2el.malek.2el.masry@gmail.com" style="color: var(--accent); text-decoration: none;">2el.malek.2el.masry@gmail.com</a></p>
+            </div>
+        </section>
+
+        <a href="shop.html" class="back-btn">Back to Shop</a>
+    </div>
+
+</body>
+</html>
