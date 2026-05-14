@@ -165,70 +165,80 @@
             .look-img { height: 300px; }
             .shop-btn { padding: 20px 50px; font-size: 1.2rem; }
         }
-        /* Theme Colors */
+        /* --- THEME DEFINITIONS --- */
 :root {
-    --bg: #000000;
-    --text: #ffffff;
-    --accent: #d1ff27; /* Your neon yellow */
-    --border: rgba(255, 255, 255, 0.1);
+    /* DARK MODE (Default) */
+    --bg: #000000;            /* Pure Black Background */
+    --stealth-text: #333333;  /* Dark Grey Text (Barely visible on black) */
+    --ui-text: #ffffff;       /* White for other readable text */
+    --accent: #d1ff27;        /* Your Neon Yellow */
 }
 
 [data-theme="light"] {
-    --bg: #ffffff;
-    --text: #000000;
-    --border: rgba(0, 0, 0, 0.1);
+    /* LIGHT MODE */
+    --bg: #ffffff;            /* Pure White Background */
+    --stealth-text: #cccccc;  /* Light Grey Text (Barely visible on white) */
+    --ui-text: #000000;       /* Black for other readable text */
 }
 
-body {
-    background-color: var(--bg);
-    color: var(--text);
-    transition: background 0.4s ease;
+/* --- LOGO STYLE --- */
+.logo {
+    color: var(--stealth-text) !important; /* Forces the "barely visible" look */
+    font-size: 1.5rem;
+    font-weight: 900;
+    text-transform: uppercase;
+    text-decoration: none;
+    letter-spacing: 4px;
+    transition: color 0.5s ease;
 }
 
-/* The Sun/Moon Button */
+/* Hover effect so people can actually see it if they try */
+.logo:hover {
+    color: var(--accent) !important;
+}
+
+/* --- THE BUTTONS --- */
+.buy-button {
+    background-color: var(--ui-text) !important;
+    color: var(--bg) !important;
+    border: none;
+    font-weight: 800;
+    padding: 12px 24px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+/* --- THE THEME TOGGLE --- */
 .theme-btn {
     background: none;
-    border: 2px solid var(--text);
+    border: 2px solid var(--ui-text);
     cursor: pointer;
-    padding: 5px;
     border-radius: 50%;
-    width: 45px;
-    height: 45px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
-    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
-
-.theme-btn:hover { transform: scale(1.1) rotate(15deg); }
 
 .orb {
-    position: relative;
-    width: 24px;
-    height: 24px;
+    display: flex;
+    width: 20px;
+    height: 20px;
     border-radius: 50%;
     overflow: hidden;
-    display: flex;
+    border: 1px solid var(--ui-text);
 }
 
-/* Half Sun / Half Moon Design */
-.sun {
-    flex: 1;
-    background: var(--text);
-    border-right: 1px solid var(--bg);
-}
+.sun { flex: 1; background: var(--ui-text); }
+.moon { flex: 1; background: transparent; }
 
-.moon {
-    flex: 1;
-    background: transparent;
-    border: 2px solid var(--text);
-    border-left: none;
-    border-radius: 0 50% 50% 0;
+body {
+    background-color: var(--bg);
+    color: var(--ui-text);
+    transition: background 0.5s ease;
+    margin: 0;
 }
-
-/* Light mode specific tweaks to the icon */
-[data-theme="light"] .sun { background: #000; }
-[data-theme="light"] .theme-btn { border-color: #000; }
     </style>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
@@ -316,21 +326,18 @@ body {
 
         <script>
             const themeToggle = document.getElementById('theme-toggle');
-const htmlElement = document.documentElement;
+const root = document.documentElement;
 
-// Check for saved preference
+// Load saved theme or default to dark
 const savedTheme = localStorage.getItem('theme') || 'dark';
-htmlElement.setAttribute('data-theme', savedTheme);
+root.setAttribute('data-theme', savedTheme);
 
 themeToggle.addEventListener('click', () => {
-    const currentTheme = htmlElement.getAttribute('data-theme');
+    const currentTheme = root.getAttribute('data-theme');
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
     
-    htmlElement.setAttribute('data-theme', newTheme);
+    root.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
-    
-    // Optional: Add a "glitch" sound or effect here to match your brand
-    console.log(`SYSTEM_OVERRIDE: ${newTheme.toUpperCase()}_MODE_ACTIVATED`);
 });
         </script>
 </body>
