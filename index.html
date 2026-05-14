@@ -156,7 +156,7 @@
         }
 
         @media (max-width: 768px) {
-            header { padding: 20px; }
+             { padding: 20px; }
             nav { gap: 15px; }
             .hero-title { font-size: 25vw; }
             .featured-row { flex-direction: column; }
@@ -165,15 +165,85 @@
             .look-img { height: 300px; }
             .shop-btn { padding: 20px 50px; font-size: 1.2rem; }
         }
+        /* Theme Colors */
+:root {
+    --bg: #000000;
+    --text: #ffffff;
+    --accent: #d1ff27; /* Your neon yellow */
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg: #ffffff;
+    --text: #000000;
+    --border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background 0.4s ease;
+}
+
+/* The Sun/Moon Button */
+.theme-btn {
+    background: none;
+    border: 2px solid var(--text);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-btn:hover { transform: scale(1.1) rotate(15deg); }
+
+.orb {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+}
+
+/* Half Sun / Half Moon Design */
+.sun {
+    flex: 1;
+    background: var(--text);
+    border-right: 1px solid var(--bg);
+}
+
+.moon {
+    flex: 1;
+    background: transparent;
+    border: 2px solid var(--text);
+    border-left: none;
+    border-radius: 0 50% 50% 0;
+}
+
+/* Light mode specific tweaks to the icon */
+[data-theme="light"] .sun { background: #000; }
+[data-theme="light"] .theme-btn { border-color: #000; }
     </style>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/J4yzQdQf/logo.png">
-    
+
+    <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+    <div class="orb">
+        <span class="sun"></span>
+        <span class="moon"></span>
+    </div>
+</button>
 </head>
 <body>
 
-    <header>
+    <>
         <div class="logo">THE EGYPTIAN KING™</div>
         <nav>
             <a href="shop.html">Shop All</a>
@@ -181,6 +251,7 @@
             <a href="#">Information</a>
         </nav>
         <div style="font-weight: 800;">BAG (0)</div>
+
     </header>
 
     <section class="hero">
@@ -244,5 +315,24 @@
         </div>
     </footer>
 
+        <script>
+            const themeToggle = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+// Check for saved preference
+const savedTheme = localStorage.getItem('theme') || 'dark';
+htmlElement.setAttribute('data-theme', savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Optional: Add a "glitch" sound or effect here to match your brand
+    console.log(`SYSTEM_OVERRIDE: ${newTheme.toUpperCase()}_MODE_ACTIVATED`);
+});
+        </script>
 </body>
 </html>
