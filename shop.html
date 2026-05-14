@@ -117,6 +117,70 @@
         .size-selector input:checked + span { background: var(--neon-yellow); color: #000; }
 
         footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
+        /* Theme Colors */
+:root {
+    --bg: #000000;
+    --text: #ffffff;
+    --accent: #d1ff27; /* Your neon yellow */
+    --border: rgba(255, 255, 255, 0.1);
+}
+
+[data-theme="light"] {
+    --bg: #ffffff;
+    --text: #000000;
+    --border: rgba(0, 0, 0, 0.1);
+}
+
+body {
+    background-color: var(--bg);
+    color: var(--text);
+    transition: background 0.4s ease;
+}
+
+/* The Sun/Moon Button */
+.theme-btn {
+    background: none;
+    border: 2px solid var(--text);
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 50%;
+    width: 45px;
+    height: 45px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.theme-btn:hover { transform: scale(1.1) rotate(15deg); }
+
+.orb {
+    position: relative;
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    overflow: hidden;
+    display: flex;
+}
+
+/* Half Sun / Half Moon Design */
+.sun {
+    flex: 1;
+    background: var(--text);
+    border-right: 1px solid var(--bg);
+}
+
+.moon {
+    flex: 1;
+    background: transparent;
+    border: 2px solid var(--text);
+    border-left: none;
+    border-radius: 0 50% 50% 0;
+}
+
+/* Light mode specific tweaks to the icon */
+[data-theme="light"] .sun { background: #000; }
+[data-theme="light"] .theme-btn { border-color: #000; }
     </style>
 </head>
 <body>
@@ -124,6 +188,12 @@
     <header>
         <a href="index.html" class="logo">THE EGYPTIAN KING</a>
         <div style="font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;">CART (0)</div>
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+    <div class="orb">
+        <span class="sun"></span>
+        <span class="moon"></span>
+    </div>
+</button>
     </header>
 
     <main class="container">
@@ -542,6 +612,25 @@
                 openModal(btn.dataset.productName, btn.dataset.productPrice, btn.dataset.productImage);
             }
         });
+    </script>
+    <script>
+        const themeToggle = document.getElementById('theme-toggle');
+const htmlElement = document.documentElement;
+
+// Check for saved preference
+const savedTheme = localStorage.getItem('theme') || 'dark';
+htmlElement.setAttribute('data-theme', savedTheme);
+
+themeToggle.addEventListener('click', () => {
+    const currentTheme = htmlElement.getAttribute('data-theme');
+    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    htmlElement.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
+    
+    // Optional: Add a "glitch" sound or effect here to match your brand
+    console.log(`SYSTEM_OVERRIDE: ${newTheme.toUpperCase()}_MODE_ACTIVATED`);
+});
     </script>
 </body>
 </html>
