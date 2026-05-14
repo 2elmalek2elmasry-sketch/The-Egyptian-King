@@ -165,79 +165,46 @@
             .look-img { height: 300px; }
             .shop-btn { padding: 20px 50px; font-size: 1.2rem; }
         }
-        /* --- THEME DEFINITIONS --- */
+       /* --- THEME DEFINITIONS --- */
 :root {
-    /* DARK MODE (Default) */
     --bg: #000000;            /* Pure Black Background */
-    --stealth-text: #333333;  /* Dark Grey Text (Barely visible on black) */
-    --ui-text: #ffffff;       /* White for other readable text */
-    --accent: #d1ff27;        /* Your Neon Yellow */
+    --stealth-grey: #333333;  /* Dark Grey (Barely visible on black) */
+    --standard-text: #ffffff; /* High Contrast White */
+    --accent: #d1ff27;        /* Neon Yellow */
 }
 
 [data-theme="light"] {
-    /* LIGHT MODE */
     --bg: #ffffff;            /* Pure White Background */
-    --stealth-text: #cccccc;  /* Light Grey Text (Barely visible on white) */
-    --ui-text: #000000;       /* Black for other readable text */
+    --stealth-grey: #cccccc;  /* Light Grey (Barely visible on white) */
+    --standard-text: #000000; /* High Contrast Black */
 }
 
-/* --- LOGO STYLE --- */
-.logo {
-    color: var(--stealth-text) !important; /* Forces the "barely visible" look */
-    font-size: 1.5rem;
+/* THE BIG STEALTH HEADING (The one you want barely visible) */
+.hero-title {
+    color: var(--stealth-grey) !important;
+    font-size: 10vw; /* Big impact size */
     font-weight: 900;
     text-transform: uppercase;
-    text-decoration: none;
-    letter-spacing: 4px;
+    line-height: 0.9;
     transition: color 0.5s ease;
 }
 
-/* Hover effect so people can actually see it if they try */
-.logo:hover {
-    color: var(--accent) !important;
-}
-
-/* --- THE BUTTONS --- */
-.buy-button {
-    background-color: var(--ui-text) !important;
-    color: var(--bg) !important;
-    border: none;
+/* THE BRAND LOGO / TM (The one that stays Black & White) */
+.logo, .brand-tm {
+    color: var(--standard-text) !important;
     font-weight: 800;
-    padding: 12px 24px;
-    cursor: pointer;
-    transition: background 0.3s;
+    text-decoration: none;
+    transition: color 0.5s ease;
 }
 
-/* --- THE THEME TOGGLE --- */
-.theme-btn {
-    background: none;
-    border: 2px solid var(--ui-text);
-    cursor: pointer;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.orb {
-    display: flex;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    overflow: hidden;
-    border: 1px solid var(--ui-text);
-}
-
-.sun { flex: 1; background: var(--ui-text); }
-.moon { flex: 1; background: transparent; }
+/* UI Elements: Keep these visible */
+.theme-btn { border: 2px solid var(--standard-text); }
+.sun { background: var(--standard-text); }
+.orb { border: 1px solid var(--standard-text); }
 
 body {
     background-color: var(--bg);
-    color: var(--ui-text);
     transition: background 0.5s ease;
-    margin: 0;
 }
     </style>
 
@@ -325,17 +292,14 @@ body {
     </footer>
 
         <script>
-            const themeToggle = document.getElementById('theme-toggle');
+           const themeToggle = document.getElementById('theme-toggle');
 const root = document.documentElement;
 
-// Load saved theme or default to dark
 const savedTheme = localStorage.getItem('theme') || 'dark';
 root.setAttribute('data-theme', savedTheme);
 
 themeToggle.addEventListener('click', () => {
-    const currentTheme = root.getAttribute('data-theme');
-    const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-    
+    const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
     root.setAttribute('data-theme', newTheme);
     localStorage.setItem('theme', newTheme);
 });
