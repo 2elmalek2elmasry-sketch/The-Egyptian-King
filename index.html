@@ -156,7 +156,7 @@
         }
 
         @media (max-width: 768px) {
-             { padding: 20px; }
+            header { padding: 20px; }
             nav { gap: 15px; }
             .hero-title { font-size: 25vw; }
             .featured-row { flex-direction: column; }
@@ -165,51 +165,11 @@
             .look-img { height: 300px; }
             .shop-btn { padding: 20px 50px; font-size: 1.2rem; }
         }
-       /* --- THEME DEFINITIONS --- */
-:root {
-    --bg: #000000;            /* Pure Black Background */
-    --stealth-grey: #333333;  /* Dark Grey (Barely visible on black) */
-    --standard-text: #ffffff; /* High Contrast White */
-    --accent: #d1ff27;        /* Neon Yellow */
-}
-
-[data-theme="light"] {
-    --bg: #ffffff;            /* Pure White Background */
-    --stealth-grey: #cccccc;  /* Light Grey (Barely visible on white) */
-    --standard-text: #000000; /* High Contrast Black */
-}
-
-/* THE BIG STEALTH HEADING (The one you want barely visible) */
-.hero-title {
-    color: var(--stealth-grey) !important;
-    font-size: 10vw; /* Big impact size */
-    font-weight: 900;
-    text-transform: uppercase;
-    line-height: 0.9;
-    transition: color 0.5s ease;
-}
-
-/* THE BRAND LOGO / TM (The one that stays Black & White) */
-.logo, .brand-tm {
-    color: var(--standard-text) !important;
-    font-weight: 800;
-    text-decoration: none;
-    transition: color 0.5s ease;
-}
-
-/* UI Elements: Keep these visible */
-.theme-btn { border: 2px solid var(--standard-text); }
-.sun { background: var(--standard-text); }
-.orb { border: 1px solid var(--standard-text); }
-
-body {
-    background-color: var(--bg);
-    transition: background 0.5s ease;
-}
     </style>
 
     <link rel="icon" type="image/x-icon" href="favicon.ico">
     <link rel="icon" type="image/png" href="https://i.postimg.cc/J4yzQdQf/logo.png">
+    
 </head>
 <body>
 
@@ -221,13 +181,6 @@ body {
             <a href="#">Information</a>
         </nav>
         <div style="font-weight: 800;">BAG (0)</div>
-        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
-    <div class="orb">
-        <span class="sun"></span>
-        <span class="moon"></span>
-    </div>
-</button>
-
     </header>
 
     <section class="hero">
@@ -291,18 +244,5 @@ body {
         </div>
     </footer>
 
-        <script>
-           const themeToggle = document.getElementById('theme-toggle');
-const root = document.documentElement;
-
-const savedTheme = localStorage.getItem('theme') || 'dark';
-root.setAttribute('data-theme', savedTheme);
-
-themeToggle.addEventListener('click', () => {
-    const newTheme = root.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
-    root.setAttribute('data-theme', newTheme);
-    localStorage.setItem('theme', newTheme);
-});
-        </script>
 </body>
 </html>
