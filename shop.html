@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <title>Shop | THE EGYPTIAN KING</title>
     <style>
         :root {
@@ -17,14 +18,23 @@
             --font-body: 'Plus Jakarta Sans', sans-serif;
             --neon-yellow: #d1ff27;
         }
+        [data-theme="light"] {
+    --bg-base: #ffffff;
+    --bg-surface: #f4f4f5;
+    --text-main: #000000;
+    --text-muted: #71717a;
+    --border-light: rgba(0, 0, 0, 0.1);
+    --primary: #000000;
+}
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-            background: var(--bg-base); 
-            color: var(--text-main); 
-            font-family: var(--font-body); 
-            overflow-x: hidden;
+           background: var(--bg-base); 
+    color: var(--text-main); 
+    font-family: var(--font-body); 
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease; /* <-- ADD THIS LINE */
         }
 
         header {
@@ -117,6 +127,30 @@
         .size-selector input:checked + span { background: var(--neon-yellow); color: #000; }
 
         footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
+        
+         /* --- FIXED NAVIGATION BASE EXTENSIONS --- */
+nav { display: flex; gap: 40px; align-items: center; }
+nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+
+.header-controls { display: flex; align-items: center; gap: 15px; }
+
+/* --- GEOLOCATION BADGE --- */
+.country-indicator {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+    background: transparent; border: 1px solid var(--text-main); border-radius: 50px;
+    font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--text-main);
+}
+#countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
+#countryCode { color: var(--neon-yellow); font-weight: 900; }
+
+/* --- SYSTEM ORB TOGGLE --- */
+.theme-btn {
+    background: none; border: 2px solid var(--text-main); cursor: pointer;
+    border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+}
+.orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--text-main); }
+.sun { flex: 1; background: var(--text-main); }
+.moon { flex: 1; background: transparent; }
     </style>
 </head>
 <body>
@@ -125,6 +159,29 @@
         <a href="index.html" class="logo">THE EGYPTIAN KING</a>
         <div style="font-weight: 800; font-size: 0.75rem; letter-spacing: 1px;">CART (0)</div>
     </header>
+      <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+    <nav>
+        <a href="shop.html">Shop All</a>
+        <a href="#">PAST HISTORY</a>
+        <a href="#">Information</a>
+    </nav>
+    
+    <div class="header-controls">
+        <div class="country-indicator" id="locationIndicator" title="Detected country">
+            <i class="fas fa-location-dot"></i>
+            <img id="countryFlagIcon" src="https://flagcdn.com/w40/un.png" alt="Country Flag">
+            <span id="countryCode">--</span>
+            <span id="countryName">Detecting...</span>
+        </div>
+
+        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+            <div class="orb">
+                <span class="sun"></span>
+                <span class="moon"></span>
+            </div>
+        </button>
+    </div>
+</header>
 
     <main class="container">
         <div class="product-grid">
@@ -543,5 +600,58 @@
             }
         });
     </script>
+    <script>
+document.addEventListener("DOMContentLoaded", () => {
+    detectCustomerCountry();
+
+    // System Overriding Theme Initializer
+    const themeToggle = document.getElementById('theme-toggle');
+    const root = document.documentElement;
+
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    root.setAttribute('data-theme', savedTheme);
+
+    themeToggle.addEventListener('click', () => {
+        const currentTheme = root.getAttribute('data-theme');
+        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+        root.setAttribute('data-theme', newTheme);
+        localStorage.setItem('theme', newTheme);
+    });
+});
+
+async function detectCustomerCountry() {
+    const codeEl = document.getElementById("countryCode");
+    const nameEl = document.getElementById("countryName");
+    const flagEl = document.getElementById("countryFlagIcon");
+
+    try {
+        const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
+        const text = await res.text();
+        const lines = text.split("\n");
+        const loc = lines.find(l => l.startsWith("loc="));
+
+        if (loc) {
+            const code = loc.split("=")[1].trim().toUpperCase();
+             const countryRes = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+            const data = await countryRes.json();
+
+            codeEl.textContent = code;
+            nameEl.textContent = data[0]?.name?.common || "Unknown";
+            flagEl.src = `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+        } else {
+            setFallbackLocation(codeEl, nameEl, flagEl);
+        }
+    } catch (error) {
+        console.log("LOCATION_ERROR: Using fallback terminal coordinates.");
+        setFallbackLocation(codeEl, nameEl, flagEl);
+    }
+}
+
+function setFallbackLocation(code, name, flag) {
+    code.textContent = "--";
+    name.textContent = "Global Terminal";
+    flag.src = "https://flagcdn.com/w40/un.png";
+}
+</script>
 </body>
 </html>
