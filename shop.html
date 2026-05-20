@@ -128,6 +128,15 @@
 
         footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
         
+        @media (max-width: 768px) {
+    /* Adjust overall spacing */
+    .container, .story-section, footer {
+        padding: 40px 20px !important;
+    header { padding: 20px; flex-direction: column; gap: 15px; position: relative; }
+    nav { gap: 20px; width: 100%; justify-content: center; }
+    .header-controls { width: 100%; justify-content: space-between; }
+    }
+        
          /* --- FIXED NAVIGATION BASE EXTENSIONS --- */
 nav { display: flex; gap: 40px; align-items: center; }
 nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
