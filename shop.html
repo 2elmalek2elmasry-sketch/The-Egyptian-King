@@ -151,6 +151,26 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
 .orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--text-main); }
 .sun { flex: 1; background: var(--text-main); }
 .moon { flex: 1; background: transparent; }
+
+        .category-title {
+    width: 100%;            /* Forces it to stretch all the way across the screen */
+    clear: both;            /* Prevents other floating grid elements from sitting next to it */
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 3rem;        /* Big bold impact style */
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    margin-top: 80px;       /* Pushes the title down away from the section above it */
+    margin-bottom: 30px;    /* Adds clean space before the cards below start */
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 15px;
+    color: var(--text-main);
+}
+
+/* Fixes spacing for the absolute first title on the page */
+h2.category-title:first-of-type {
+    margin-top: 20px;
+}
     </style>
 </head>
 <body>
@@ -181,6 +201,7 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
 </header>
 
     <main class="container">
+        <h2 class="category-title">HOODIES</h2>
         <div class="product-grid">
             <!-- Product Card -->
             <div class="product-card">
