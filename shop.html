@@ -19,22 +19,22 @@
             --neon-yellow: #d1ff27;
         }
         [data-theme="light"] {
-    --bg-base: #ffffff;
-    --bg-surface: #f4f4f5;
-    --text-main: #000000;
-    --text-muted: #71717a;
-    --border-light: rgba(0, 0, 0, 0.1);
-    --primary: #000000;
-}
+            --bg-base: #ffffff;
+            --bg-surface: #f4f4f5;
+            --text-main: #000000;
+            --text-muted: #71717a;
+            --border-light: rgba(0, 0, 0, 0.1);
+            --primary: #000000;
+        }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
         
         body { 
-           background: var(--bg-base); 
-    color: var(--text-main); 
-    font-family: var(--font-body); 
-    overflow-x: hidden;
-    transition: background 0.5s ease, color 0.5s ease; /* <-- ADD THIS LINE */
+            background: var(--bg-base); 
+            color: var(--text-main); 
+            font-family: var(--font-body); 
+            overflow-x: hidden;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         header {
@@ -49,12 +49,13 @@
             color: #fff; letter-spacing: 2px; font-size: 1.2rem;
         }
 
-        .container { max-width: 1400px; margin: 0 auto; padding: 60px 5%; }
+        .container { max-width: 1400px; margin: 0 auto; padding: 60px 5%; display: grid; gap: 20px; }
         
         .product-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
             gap: 40px 30px;
+            width: 100%;
         }
 
         .product-card {
@@ -117,7 +118,6 @@
             align-items: center; z-index: 9999; padding: 20px;
         }
 
-        /* Size Radio Buttons */
         .size-selector { display: flex; gap: 10px; margin-bottom: 20px; }
         .size-selector input { display: none; }
         .size-selector span {
@@ -128,86 +128,93 @@
 
         footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
         
-         /* --- FIXED NAVIGATION BASE EXTENSIONS --- */
-nav { display: flex; gap: 40px; align-items: center; }
-nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+        nav { display: flex; gap: 40px; align-items: center; }
+        nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
 
-.header-controls { display: flex; align-items: center; gap: 15px; }
+        .header-controls { display: flex; align-items: center; gap: 15px; }
 
-/* --- GEOLOCATION BADGE --- */
-.country-indicator {
-    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
-    background: transparent; border: 1px solid var(--text-main); border-radius: 50px;
-    font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--text-main);
-}
-#countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
-#countryCode { color: var(--neon-yellow); font-weight: 900; }
+        .country-indicator {
+            display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+            background: transparent; border: 1px solid var(--text-main); border-radius: 50px;
+            font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--text-main);
+        }
+        #countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
+        #countryCode { color: var(--neon-yellow); font-weight: 900; }
 
-/* --- SYSTEM ORB TOGGLE --- */
-.theme-btn {
-    background: none; border: 2px solid var(--text-main); cursor: pointer;
-    border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
-}
-.orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--text-main); }
-.sun { flex: 1; background: var(--text-main); }
-.moon { flex: 1; background: transparent; }
+        .theme-btn {
+            background: none; border: 2px solid var(--text-main); cursor: pointer;
+            border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+        }
+        .orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--text-main); }
+        .sun { flex: 1; background: var(--text-main); }
+        .moon { flex: 1; background: transparent; }
 
-/* This forces the container grid context to reset and break onto a new row */
-.row-break {
-    flex-basis: 100%;
-    width: 100%;
-    height: 0;
-    clear: both;
-}
+        /* --- BREAKOUT AND LINE RESET STYLES --- */
+        .grid-breakout-row {
+            grid-column: 1 / -1 !important;
+            width: 100% !important;
+            clear: both !important;
+            margin-top: 50px !important;
+            margin-bottom: 20px !important;
+        }
 
-.category-title {
-    flex-basis: 100%;       /* Ensures it spans the entire container width */
-    width: 100%;
-    clear: both;            /* Prevents products from floating up next to it */
-    font-family: var(--font-display);
-    font-weight: 900;
-    font-size: 3rem;
-    text-transform: uppercase;
-    letter-spacing: -1px;
-    margin-top: 60px;
-    margin-bottom: 30px;
-    border-bottom: 2px solid var(--border-light);
-    padding-bottom: 15px;
-    color: var(--text-main);
-}
+        .category-title {
+            font-family: var(--font-display);
+            font-weight: 900;
+            font-size: 3rem;
+            text-transform: uppercase;
+            letter-spacing: -1px;
+            border-bottom: 2px solid var(--border-light);
+            padding-bottom: 15px;
+            color: var(--text-main);
+            margin: 0 !important;
+            width: 100%;
+        }
+
+        @media (max-width: 768px) {
+            .category-title {
+                font-size: 2rem !important;
+            }
+            .grid-breakout-row {
+                margin-top: 30px !important;
+            }
+        }
     </style>
 </head>
 <body>
 
     <header>
-      <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
-    <nav>
-        <a href="shop.html">Shop All</a>
-        <a href="#">PAST HISTORY</a>
-        <a href="#">Information</a>
-    </nav>
-    
-    <div class="header-controls">
-        <div class="country-indicator" id="locationIndicator" title="Detected country">
-            <i class="fas fa-location-dot"></i>
-            <img id="countryFlagIcon" src="https://flagcdn.com/w40/un.png" alt="Country Flag">
-            <span id="countryCode">--</span>
-            <span id="countryName">Detecting...</span>
-        </div>
-
-        <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
-            <div class="orb">
-                <span class="sun"></span>
-                <span class="moon"></span>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+        <nav>
+            <a href="shop.html">Shop All</a>
+            <a href="#">PAST HISTORY</a>
+            <a href="#">Information</a>
+        </nav>
+        
+        <div class="header-controls">
+            <div class="country-indicator" id="locationIndicator" title="Detected country">
+                <i class="fas fa-location-dot"></i>
+                <img id="countryFlagIcon" src="https://flagcdn.com/w40/un.png" alt="Country Flag">
+                <span id="countryCode">--</span>
+                <span id="countryName">Detecting...</span>
             </div>
-        </button>
-    </div>
-</header>
+
+            <button id="theme-toggle" class="theme-btn" aria-label="Toggle Theme">
+                <div class="orb">
+                    <span class="sun"></span>
+                    <span class="moon"></span>
+                </div>
+            </button>
+        </div>
+    </header>
 
     <main class="container">
-        <h2 class="category-title">HOODIES</h2>
+        
+        <div class="grid-breakout-row">
+            <h2 class="category-title">HOODIES</h2>
+        </div>
+
         <div class="product-grid">
-            <!-- Product Card -->
             <div class="product-card">
                 <div class="img-holder">
                     <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="QUEEN NEFERTITI">
@@ -224,369 +231,212 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
                         data-product-image="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg">Quick Buy</button>
                 </div>
             </div>
-             <div class="product-card">
 
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="KHABY LAME">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Icons</span>
-
-            <div class="details">
-
-                <span class="product-name">KHABY LAME HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" alt="KHABY LAME">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Icons</span>
+                    <div class="details">
+                        <span class="product-name">KHABY LAME HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="KHABY LAME HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="KHABY LAME HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Sports</span>
-
-            <div class="details">
-
-                <span class="product-name">LBRON JAMES HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" alt="LBRON JAMES">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Sports</span>
+                    <div class="details">
+                        <span class="product-name">LBRON JAMES HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="LBRON JAMES HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="LBRON JAMES HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWAYNE JOHNSON">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Icon</span>
-
-            <div class="details">
-
-                <span class="product-name">DWAYNE JOHNSON HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" alt="DWAYNE JOHNSON">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Icon</span>
+                    <div class="details">
+                        <span class="product-name">DWAYNE JOHNSON HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="DWAYNE JOHNSON HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="DWAYNE JOHNSON HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Sports</span>
-
-            <div class="details">
-
-                <span class="product-name">JUDE BELLINGHAM HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" alt="JUDE BELLINGHAM">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Sports</span>
+                    <div class="details">
+                        <span class="product-name">JUDE BELLINGHAM HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="JUDE BELLINGHAM HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="JUDE BELLINGHAM HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Sociality</span>
-
-            <div class="details">
-
-                <span class="product-name">SOCIAL MEDIA HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" alt="SOCIAL MEDIA">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Sociality</span>
+                    <div class="details">
+                        <span class="product-name">SOCIAL MEDIA HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="SOCIAL MEDIA HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="SOCIAL MEDIA HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">EGYPTIAN RULERS HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" alt="EGYPTIAN RULERS">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">EGYPTIAN RULERS HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="EGYPTIAN RULERS HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="EGYPTIAN RULERS HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">EGYPTIAN CULTURE HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" alt="EGYPTIAN CULTURE">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">EGYPTIAN CULTURE HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="EGYPTIAN CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="EGYPTIAN CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/qRHPBMmP/unnamed.png" alt="FIFA WORLD CUP">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Sport</span>
-
-            <div class="details">
-
-                <span class="product-name">FIFA WORLD CUP HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/qRHPBMmP/unnamed.png" alt="FIFA WORLD CUP">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Sport</span>
+                    <div class="details">
+                        <span class="product-name">FIFA WORLD CUP HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="FIFA WORLD CUP HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/qRHPBMmP/unnamed.png">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="FIFA WORLD CUP HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/qRHPBMmP/unnamed.png">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/3rZnLTjD/IMG-5187.png" alt="ALGERIAN CULTURE">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">ALGERIAN CULTURE HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/3rZnLTjD/IMG-5187.png" alt="ALGERIAN CULTURE">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">ALGERIAN CULTURE HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="ALGERIAN CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="ALGERIAN CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/3rZnLTjD/IMG-5187.png">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" alt="TUNISIA CULTURE">
-
-        </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">TUNISIA CULTURE HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" alt="TUNISIA CULTURE">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">TUNISIA CULTURE HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="TUNISIA CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="TUNISIA CULTURE HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg">Quick Buy</button>
-
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" alt="REWAYET EL 3OMR">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">REWAYET EL 3OMR HOODIE</span>
+                        <span class="price price-text" data-base-price="900">EGP 900</span>
+                    </div>
+                    <button class="buy-button" data-product-name="REWAYET EL 3OMR HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/ZKC1zyjb/Untitled-design.png">Quick Buy</button>
+                </div>
+            </div>
         </div>
 
-    </div>
-
-    <div class="product-card">
-
-        <div class="img-holder">
-
-            <img src="https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" alt="REWAYET EL 3OMR">
-
+        <div class="grid-breakout-row">
+            <h2 class="category-title">T-SHIRTS</h2>
         </div>
-
-        <div class="product-info">
-
-            <span class="category-tag">Collection: Dynasty</span>
-
-            <div class="details">
-
-                <span class="product-name">REWAYET EL 3OMR HOODIE</span>
-
-                <span class="price price-text" data-base-price="900">EGP 900</span>
-
+           
+        <div class="product-grid">
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" alt="EL DONYA RABY3">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">EL DONYA RABY3 T-SHIRT</span>
+                        <span class="price price-text" data-base-price="900">EGP 600</span>
+                    </div>
+                    <button class="buy-button" data-product-name="EL DONYA RABY3 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png">Quick Buy</button>
+                </div>
             </div>
 
-            <button class="buy-button" data-product-name="REWAYET EL 3OMR HOODIE" data-product-price="EGP 900" data-base-price="900" data-product-image="https://i.postimg.cc/ZKC1zyjb/Untitled-design.png">Quick Buy</button>
-
-        </div>
-
-    </div>
-
-<div class="row-break"></div>
-
-<h2 class="category-title">T-SHIRTS</h2>
-
-            
-<div class="product-grid">
-    <div class="product-card">
-        <div class="img-holder">
-            <img src="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" alt="EL DONYA RABY3">
-        </div>
-        <div class="product-info">
-            <span class="category-tag">Collection: Dynasty</span>
-            <div class="details">
-                <span class="product-name">EL DONYA RABY3 T-SHIRT</span>
-                <span class="price price-text" data-base-price="900">EGP 600</span>
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" alt="EL R7LA WL FEKR">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">EL R7LA WL FEKR T-SHIRT</span>
+                        <span class="price price-text" data-base-price="900">EGP 600</span>
+                    </div>
+                    <button class="buy-button" data-product-name="EL R7LA WL FEKR T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png">Quick Buy</button>
+                </div>
             </div>
-            <button class="buy-button" data-product-name="EL DONYA RABY3 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png">Quick Buy</button>
-        </div>
-    </div>
-</div>
 
-<div class="product-grid">
-    <div class="product-card">
-        <div class="img-holder">
-            <img src="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" alt="EL R7LA WL FEKR">
-        </div>
-        <div class="product-info">
-            <span class="category-tag">Collection: Dynasty</span>
-            <div class="details">
-                <span class="product-name">EL R7LA WL FEKR T-SHIRT</span>
-                <span class="price price-text" data-base-price="900">EGP 600</span>
+            <div class="product-card">
+                <div class="img-holder">
+                    <img src="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" alt="ZKRAYAT 3310">
+                </div>
+                <div class="product-info">
+                    <span class="category-tag">Collection: Dynasty</span>
+                    <div class="details">
+                        <span class="product-name">ZKRAYAT 3310 T-SHIRT</span>
+                        <span class="price price-text" data-base-price="900">EGP 600</span>
+                    </div>
+                    <button class="buy-button" data-product-name="ZKRAYAT 3310 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png">Quick Buy</button>
+                </div>
             </div>
-            <button class="buy-button" data-product-name="EL R7LA WL FEKR T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png">Quick Buy</button>
         </div>
-    </div>
-</div>
 
-<div class="product-grid">
-    <div class="product-card">
-        <div class="img-holder">
-            <img src="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" alt="ZKRAYAT 3310">
-        </div>
-        <div class="product-info">
-            <span class="category-tag">Collection: Dynasty</span>
-            <div class="details">
-                <span class="product-name">ZKRAYAT 3310 T-SHIRT</span>
-                <span class="price price-text" data-base-price="900">EGP 600</span>
-            </div>
-            <button class="buy-button" data-product-name="ZKRAYAT 3310 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png">Quick Buy</button>
-        </div>
-    </div>
-</div>
-</div>
-            
-</div>
-        </div>
     </main>
 
-    <!-- Collection Concept Section -->
     <section style="padding: 100px 5%; background: #000; border-top: 1px solid #222;">
         <div style="display: flex; gap: 60px; align-items: center; max-width: 1200px; margin: 0 auto; flex-wrap: wrap;">
             <div style="flex: 1; min-width: 300px;">
@@ -599,7 +449,6 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
         </div>
     </section>
 
-    <!-- Integrated Checkout Modal -->
     <div id="checkout-modal" class="modal-overlay">
         <div style="background: #111; border: 1px solid #333; padding: 30px; border-radius: 20px; max-width: 450px; width: 100%; position: relative;">
             <span onclick="closeModal()" style="position: absolute; top: 15px; right: 20px; cursor: pointer; font-weight: 900;">✕</span>
@@ -703,57 +552,56 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
         });
     </script>
     <script>
-document.addEventListener("DOMContentLoaded", () => {
-    detectCustomerCountry();
+    document.addEventListener("DOMContentLoaded", () => {
+        detectCustomerCountry();
 
-    // System Overriding Theme Initializer
-    const themeToggle = document.getElementById('theme-toggle');
-    const root = document.documentElement;
+        const themeToggle = document.getElementById('theme-toggle');
+        const root = document.documentElement;
 
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    root.setAttribute('data-theme', savedTheme);
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        root.setAttribute('data-theme', savedTheme);
 
-    themeToggle.addEventListener('click', () => {
-        const currentTheme = root.getAttribute('data-theme');
-        const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', newTheme);
-        localStorage.setItem('theme', newTheme);
+        themeToggle.addEventListener('click', () => {
+            const currentTheme = root.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            root.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        });
     });
-});
 
-async function detectCustomerCountry() {
-    const codeEl = document.getElementById("countryCode");
-    const nameEl = document.getElementById("countryName");
-    const flagEl = document.getElementById("countryFlagIcon");
+    async function detectCustomerCountry() {
+        const codeEl = document.getElementById("countryCode");
+        const nameEl = document.getElementById("countryName");
+        const flagEl = document.getElementById("countryFlagIcon");
 
-    try {
-        const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
-        const text = await res.text();
-        const lines = text.split("\n");
-        const loc = lines.find(l => l.startsWith("loc="));
+        try {
+            const res = await fetch("https://www.cloudflare.com/cdn-cgi/trace");
+            const text = await res.text();
+            const lines = text.split("\n");
+            const loc = lines.find(l => l.startsWith("loc="));
 
-        if (loc) {
-            const code = loc.split("=")[1].trim().toUpperCase();
-             const countryRes = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
-            const data = await countryRes.json();
+            if (loc) {
+                const code = loc.split("=")[1].trim().toUpperCase();
+                const countryRes = await fetch(`https://restcountries.com/v3.1/alpha/${code}`);
+                const data = await countryRes.json();
 
-            codeEl.textContent = code;
-            nameEl.textContent = data[0]?.name?.common || "Unknown";
-            flagEl.src = `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
-        } else {
+                codeEl.textContent = code;
+                nameEl.textContent = data[0]?.name?.common || "Unknown";
+                flagEl.src = `https://flagcdn.com/w40/${code.toLowerCase()}.png`;
+            } else {
+                setFallbackLocation(codeEl, nameEl, flagEl);
+            }
+        } catch (error) {
+            console.log("LOCATION_ERROR: Using fallback terminal coordinates.");
             setFallbackLocation(codeEl, nameEl, flagEl);
         }
-    } catch (error) {
-        console.log("LOCATION_ERROR: Using fallback terminal coordinates.");
-        setFallbackLocation(codeEl, nameEl, flagEl);
     }
-}
 
-function setFallbackLocation(code, name, flag) {
-    code.textContent = "--";
-    name.textContent = "Global Terminal";
-    flag.src = "https://flagcdn.com/w40/un.png";
-}
+    function setFallbackLocation(code, name, flag) {
+        code.textContent = "--";
+        name.textContent = "Global Terminal";
+        flag.src = "https://flagcdn.com/w40/un.png";
+    }
 </script>
 </body>
 </html>
