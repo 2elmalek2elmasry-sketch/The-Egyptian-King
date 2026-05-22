@@ -152,10 +152,18 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
 .sun { flex: 1; background: var(--text-main); }
 .moon { flex: 1; background: transparent; }
 
-      .category-title {
-    display: block;
+/* This forces the container grid context to reset and break onto a new row */
+.row-break {
+    flex-basis: 100%;
     width: 100%;
+    height: 0;
     clear: both;
+}
+
+.category-title {
+    flex-basis: 100%;       /* Ensures it spans the entire container width */
+    width: 100%;
+    clear: both;            /* Prevents products from floating up next to it */
     font-family: var(--font-display);
     font-weight: 900;
     font-size: 3rem;
@@ -166,28 +174,6 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
     border-bottom: 2px solid var(--border-light);
     padding-bottom: 15px;
     color: var(--text-main);
-}
-
-/* This arranges your distinct product grid boxes horizontally underneath the title */
-.category-group-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 30px;
-    width: 100%;
-    margin-bottom: 40px;
-}
-
-/* Forces individual grid blocks to share the container space instead of staking claims over full rows */
-.category-group-container .product-grid {
-    flex: 1 1 calc(33.333% - 30px);
-    min-width: 300px;
-}
-
-/* Fixes display issues on smaller phones */
-@media (max-width: 600px) {
-    .category-group-container .product-grid {
-        flex: 1 1 100%;
-    }
 }
     </style>
 </head>
@@ -542,58 +528,57 @@ nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font
 
     </div>
 
-       <h2 class="category-title">T-SHIRTS</h2>
+<div class="row-break"></div>
 
-<div class="category-group-container">
+<h2 class="category-title">T-SHIRTS</h2>
 
-    <div class="product-grid">
-        <div class="product-card">
-            <div class="img-holder">
-                <img src="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" alt="EL DONYA RABY3">
+<div class="product-grid">
+    <div class="product-card">
+        <div class="img-holder">
+            <img src="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" alt="EL DONYA RABY3">
+        </div>
+        <div class="product-info">
+            <span class="category-tag">Collection: Dynasty</span>
+            <div class="details">
+                <span class="product-name">EL DONYA RABY3 T-SHIRT</span>
+                <span class="price price-text" data-base-price="900">EGP 600</span>
             </div>
-            <div class="product-info">
-                <span class="category-tag">Collection: Dynasty</span>
-                <div class="details">
-                    <span class="product-name">EL DONYA RABY3 T-SHIRT</span>
-                    <span class="price price-text" data-base-price="900">EGP 600</span>
-                </div>
-                <button class="buy-button" data-product-name="EL DONYA RABY3 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png">Quick Buy</button>
-            </div>
+            <button class="buy-button" data-product-name="EL DONYA RABY3 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png">Quick Buy</button>
         </div>
     </div>
+</div>
 
-    <div class="product-grid">
-        <div class="product-card">
-            <div class="img-holder">
-                <img src="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" alt="EL R7LA WL FEKR">
+<div class="product-grid">
+    <div class="product-card">
+        <div class="img-holder">
+            <img src="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" alt="EL R7LA WL FEKR">
+        </div>
+        <div class="product-info">
+            <span class="category-tag">Collection: Dynasty</span>
+            <div class="details">
+                <span class="product-name">EL R7LA WL FEKR T-SHIRT</span>
+                <span class="price price-text" data-base-price="900">EGP 600</span>
             </div>
-            <div class="product-info">
-                <span class="category-tag">Collection: Dynasty</span>
-                <div class="details">
-                    <span class="product-name">EL R7LA WL FEKR T-SHIRT</span>
-                    <span class="price price-text" data-base-price="900">EGP 600</span>
-                </div>
-                <button class="buy-button" data-product-name="EL R7LA WL FEKR T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png">Quick Buy</button>
-            </div>
+            <button class="buy-button" data-product-name="EL R7LA WL FEKR T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png">Quick Buy</button>
         </div>
     </div>
+</div>
 
-    <div class="product-grid">
-        <div class="product-card">
-            <div class="img-holder">
-                <img src="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" alt="ZKRAYAT 3310">
+<div class="product-grid">
+    <div class="product-card">
+        <div class="img-holder">
+            <img src="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" alt="ZKRAYAT 3310">
+        </div>
+        <div class="product-info">
+            <span class="category-tag">Collection: Dynasty</span>
+            <div class="details">
+                <span class="product-name">ZKRAYAT 3310 T-SHIRT</span>
+                <span class="price price-text" data-base-price="900">EGP 600</span>
             </div>
-            <div class="product-info">
-                <span class="category-tag">Collection: Dynasty</span>
-                <div class="details">
-                    <span class="product-name">ZKRAYAT 3310 T-SHIRT</span>
-                    <span class="price price-text" data-base-price="900">EGP 600</span>
-                </div>
-                <button class="buy-button" data-product-name="ZKRAYAT 3310 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png">Quick Buy</button>
-            </div>
+            <button class="buy-button" data-product-name="ZKRAYAT 3310 T-SHIRT" data-product-price="EGP 600" data-base-price="600" data-product-image="https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png">Quick Buy</button>
         </div>
     </div>
-
+</div>
 </div>
             
 </div>
