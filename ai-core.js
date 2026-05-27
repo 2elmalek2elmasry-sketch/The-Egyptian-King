@@ -22,7 +22,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <button class="ai-chat-btn" id="ai-btn">💬</button>
         <div class="ai-terminal" id="ai-box">
             <div class="ai-header">
-                <span><span style="color: #d1ff27;">●</span> SYSTEM CORE INTERFACE</span>
+                <span><span style="color: #d1ff27;">●</span> THE EGYPTIAN KING AI</span>
                 <span id="ai-close" style="cursor: pointer; opacity: 0.5;">✕</span>
             </div>
             <div class="ai-stream" id="ai-stream">
