@@ -1,32 +1,64 @@
-/* --- INTEGRATED SYSTEM STYLES --- */
+/* ==========================================================================
+   1. GLOBAL SYSTEM SETTINGS & VARIABLES
+   ========================================================================== */
 :root {
-    --accent: #d1ff27; /* Neon yellow */
+    /* --- Shop Design Variables --- */
+    --primary: #ffffff;
+    --bg-base: #000000;
+    --bg-surface: #0a0a0a;
+    --text-main: #ffffff;
+    --text-muted: #a1a1aa;
+    --border-light: rgba(255, 255, 255, 0.1);
+    --font-display: 'Outfit', sans-serif;
+    --font-body: 'Plus Jakarta Sans', sans-serif;
+    --neon-yellow: #d1ff27;
+
+    /* --- Homepage Design Variables --- */
+    --accent: #d1ff27; 
     --bg: #000000;
-    --stealth-grey: #333333;  /* Dark Grey (Barely visible on black) */
-    --standard-text: #ffffff; /* Dynamic Contrast Text */
+    --stealth-grey: #333333;  
+    --standard-text: #ffffff; 
     --font-main: 'Inter', sans-serif;
-    --transition-bounce: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
 [data-theme="light"] {
+    /* --- Shop Light Theme Overrides --- */
+    --bg-base: #ffffff;
+    --bg-surface: #f4f4f5;
+    --text-main: #000000;
+    --text-muted: #71717a;
+    --border-light: rgba(0, 0, 0, 0.1);
+    --primary: #000000;
+
+    /* --- Homepage Light Theme Overrides --- */
     --bg: #ffffff;
-    --stealth-grey: #cccccc;  /* Light Grey (Barely visible on white) */
+    --stealth-grey: #cccccc;  
     --standard-text: #000000;
 }
 
-* { margin: 0; padding: 0; box-sizing: border-box; }
+/* Universal Reset */
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box; 
+}
 
-body { 
-    background-color: var(--bg); 
-    color: var(--standard-text); 
+
+/* ==========================================================================
+   2. HOMEPAGE SPECIFIC SYSTEM (.home-page)
+   ========================================================================== */
+.home-page { 
+    background-color: var(--bg);  
+    color: var(--standard-text);  
     font-family: var(--font-main);
     line-height: 1.1;
     overflow-x: hidden;
     transition: background 0.5s ease, color 0.5s ease;
+    --transition-bounce: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
-/* --- FIXED NAVIGATION BAR --- */
-header {
+/* Homepage Navigation Setup */
+.home-page header {
     position: fixed; top: 0; width: 100%; z-index: 1000;
     display: flex; justify-content: space-between; align-items: center;
     padding: 25px 50px; background: var(--bg);
@@ -34,44 +66,42 @@ header {
     transition: background 0.5s ease;
 }
 
-.logo { 
+.home-page .logo { 
     font-weight: 900; font-size: 1.5rem; text-transform: uppercase; letter-spacing: -1px; 
     color: var(--standard-text) !important; text-decoration: none; 
 }
 
-nav { display: flex; gap: 40px; align-items: center; }
-nav a { color: var(--standard-text); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.home-page nav { display: flex; gap: 40px; align-items: center; }
+.home-page nav a { color: var(--standard-text); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.home-page .header-controls { display: flex; align-items: center; gap: 15px; }
 
-.header-controls { display: flex; align-items: center; gap: 15px; }
-
-/* --- GEOLOCATION BADGE --- */
-.country-indicator {
+/* Homepage Widgets */
+.home-page .country-indicator {
     display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
     background: transparent; border: 1px solid var(--standard-text); border-radius: 50px;
     font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--standard-text);
 }
-#countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
-#countryCode { color: var(--accent); font-weight: 900; }
+.home-page #countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
+.home-page #countryCode { color: var(--accent); font-weight: 900; }
 
-/* --- SYSTEM ORB TOGGLE --- */
-.theme-btn {
+.home-page .theme-btn {
     background: none; border: 2px solid var(--standard-text); cursor: pointer;
     border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
 }
-.orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--standard-text); }
-.sun { flex: 1; background: var(--standard-text); }
-.moon { flex: 1; background: transparent; }
+.home-page .orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--standard-text); }
+.home-page .sun { flex: 1; background: var(--standard-text); }
+.home-page .moon { flex: 1; background: transparent; }
 
-/* --- VIEWPORT SECTIONS --- */
+/* Homepage Content Layout Elements */
 .hero {
     height: 100vh; display: flex; align-items: center; justify-content: center;
     position: relative; overflow: hidden;
 }
 .hero-image {
-            width: 45%; height: 65%;
-            background: url('hero-img.jpg') center/cover no-repeat;
-            border-radius: 4px; z-index: 1;
-        }
+    width: 45%; height: 65%;
+    background: url('hero-img.jpg') center/cover no-repeat;
+    border-radius: 4px; z-index: 1;
+}
 .hero-title {
     position: absolute; font-size: 16vw; font-weight: 900; text-transform: uppercase;
     line-height: 0.8; letter-spacing: -6px; z-index: 2; color: var(--stealth-grey) !important;
@@ -132,16 +162,168 @@ nav a { color: var(--standard-text); text-decoration: none; font-size: 0.75rem; 
 }
 .shop-btn:hover { transform: scale(1.05); background-color: #fff; box-shadow: 0 0 40px rgba(255, 255, 255, 0.6); }
 
-footer {
+.home-page footer {
     padding: 80px 50px; display: flex; justify-content: space-between;
     border-top: 1px solid rgba(128,128,128,0.1); font-size: 0.8rem; color: #555; background: var(--bg);
 }
 
-/* --- RESPONSIVE STRUCTURAL OVERRIDES --- */
+
+/* ==========================================================================
+   3. SHOP PAGE SPECIFIC SYSTEM (.shop-page)
+   ========================================================================== */
+.shop-page { 
+    background: var(--bg-base); 
+    color: var(--text-main); 
+    font-family: var(--font-body); 
+    overflow-x: hidden;
+    transition: background 0.5s ease, color 0.5s ease;
+    --transition-bounce: all .45s cubic-bezier(.34, 1.56, .64, 1);
+}
+
+/* Shop Navigation Setup */
+.shop-page header {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 30px 5%; border-bottom: 1px solid var(--border-light);
+    position: sticky; top: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(15px); z-index: 1000;
+}
+
+.shop-page .logo { 
+    font-family: var(--font-display);
+    font-weight: 900; text-transform: uppercase; text-decoration: none; 
+    color: #fff; letter-spacing: 2px; font-size: 1.2rem;
+}
+
+.shop-page nav { display: flex; gap: 40px; align-items: center; }
+.shop-page nav a { color: var(--text-main); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; }
+.shop-page .header-controls { display: flex; align-items: center; gap: 15px; }
+
+/* Shop Widgets */
+.shop-page .country-indicator {
+    display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px;
+    background: transparent; border: 1px solid var(--text-main); border-radius: 50px;
+    font-family: monospace; font-size: 0.75rem; font-weight: 700; color: var(--text-main);
+}
+.shop-page #countryFlagIcon { width: 16px; height: 16px; border-radius: 50%; object-fit: cover; }
+.shop-page #countryCode { color: var(--neon-yellow); font-weight: 900; }
+
+.shop-page .theme-btn {
+    background: none; border: 2px solid var(--text-main); cursor: pointer;
+    border-radius: 50%; width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+}
+.shop-page .orb { display: flex; width: 18px; height: 18px; border-radius: 50%; overflow: hidden; border: 1px solid var(--text-main); }
+.shop-page .sun { flex: 1; background: var(--text-main); }
+.shop-page .moon { flex: 1; background: transparent; }
+
+/* Shop Content & Product Catalog Engine */
+.container { max-width: 1400px; margin: 0 auto; padding: 60px 5%; display: grid; gap: 20px; }
+        
+.product-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); 
+    gap: 40px 30px;
+    width: 100%;
+}
+
+.product-card {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-light);
+    border-radius: 24px;
+    overflow: hidden;
+    transition: var(--transition-bounce);
+    display: flex;
+    flex-direction: column;
+}
+
+.product-card:hover {
+    transform: translateY(-12px);
+    border-color: var(--primary);
+    box-shadow: 0 20px 50px rgba(255,255,255,0.05);
+}
+
+.img-holder {
+    width: 100%;
+    aspect-ratio: 4/3; 
+    overflow: hidden;
+    background: #111;
+}
+
+.img-holder img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.product-card:hover img { transform: scale(1.1); }
+
+.product-info { padding: 25px; }
+        
+.category-tag {
+    font-size: 10px; font-weight: 800; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 2px; margin-bottom: 12px; display: block;
+}
+
+.details { display: flex; justify-content: space-between; align-items: flex-end; }
+.product-name { font-family: var(--font-display); font-weight: 800; font-size: 1.1rem; }
+.price { font-family: var(--font-display); color: var(--primary); font-weight: 900; font-size: 1.2rem; }
+
+.buy-button {
+    display: block; width: 100%; background-color: var(--neon-yellow);
+    color: #000; text-align: center; padding: 15px; margin-top: 15px;
+    border-radius: 12px; font-family: var(--font-display); font-weight: 900;
+    text-transform: uppercase; border: none; cursor: pointer;
+    transition: var(--transition-bounce); box-shadow: 0 0 15px rgba(209, 255, 39, 0.3);
+}
+
+.buy-button:hover {
+    background-color: #fff; transform: scale(1.02);
+    box-shadow: 0 0 25px rgba(209, 255, 39, 0.6);
+}
+
+.modal-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.9);
+    backdrop-filter: blur(10px); display: none; justify-content: center;
+    align-items: center; z-index: 9999; padding: 20px;
+}
+
+.size-selector { display: flex; gap: 10px; margin-bottom: 20px; }
+.size-selector input { display: none; }
+.size-selector span {
+    display: block; padding: 10px 15px; border: 1px solid #333; 
+    background: #000; cursor: pointer; font-weight: 900; border-radius: 8px;
+}
+.size-selector input:checked + span { background: var(--neon-yellow); color: #000; }
+
+.shop-page footer { padding: 80px 5%; background: var(--bg-surface); border-top: 1px solid var(--border-light); margin-top: 60px; }
+
+.grid-breakout-row {
+    grid-column: 1 / -1 !important;
+    width: 100% !important;
+    clear: both !important;
+    margin-top: 50px !important;
+    margin-bottom: 20px !important;
+}
+
+.category-title {
+    font-family: var(--font-display);
+    font-weight: 900;
+    font-size: 3rem;
+    text-transform: uppercase;
+    letter-spacing: -1px;
+    border-bottom: 2px solid var(--border-light);
+    padding-bottom: 15px;
+    color: var(--text-main);
+    margin: 0 !important;
+    width: 100%;
+}
+
+
+/* ==========================================================================
+   4. RESPONSIVE MEDIA QUERIES (Mobile Engine Breakpoints)
+   ========================================================================== */
 @media (max-width: 768px) {
-    header { padding: 20px; flex-direction: column; gap: 15px; position: relative; }
-    nav { gap: 20px; width: 100%; justify-content: center; }
-    .header-controls { width: 100%; justify-content: space-between; }
+    /* --- Homepage Responsive Overrides --- */
+    .home-page header { padding: 20px; flex-direction: column; gap: 15px; position: relative; }
+    .home-page nav { gap: 20px; width: 100%; justify-content: center; }
+    .home-page .header-controls { width: 100%; justify-content: space-between; }
     .hero { height: auto; padding: 100px 20px 40px 20px; }
     .hero-image { width: 100%; height: 380px; }
     .hero-title { font-size: 18vw; position: relative; margin-top: -30px; }
@@ -154,5 +336,13 @@ footer {
     .look-img { height: 250px; }
     .newsletter h2 { font-size: 2rem; }
     .newsletter input { font-size: 1.3rem; }
-    footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 20px; align-items: center; }
+    .home-page footer { flex-direction: column; gap: 20px; text-align: center; padding: 40px 20px; align-items: center; }
+
+    /* --- Shop Page Responsive Overrides --- */
+    .category-title {
+        font-size: 2rem !important;
+    }
+    .grid-breakout-row {
+        margin-top: 30px !important;
+    }
 }
