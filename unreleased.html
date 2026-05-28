@@ -223,13 +223,13 @@
         <p>RESTRICTED PIPELINE // CONFIDENTIAL ACCESS GRANTED</p>
     </div>
 
-    <!-- MAIN WRAPPER & GRID FIXED TO MATCH CSS CLASSES -->
     <div class="vault-main-wrapper">
         <main class="vault-grid">
             
             <div class="vault-card">
+                <!-- GRID IMAGE LINK UPDATED -->
                 <div class="vault-img-box">
-                    <img src="https://kommodo.ai/i/fCJrXazE72rvUBG98yVe" alt="EID MUBARAK HOODIE (UNRELEASED)">
+                    <img src="https://i.postimg.cc/QC6Sy7Bq/Untitled-design-(15).png" alt="EID MUBARAK HOODIE (UNRELEASED)">
                 </div>
                 <div class="vault-meta-box">
                     <div>
@@ -238,17 +238,17 @@
                     </div>
                     <span class="vault-price">EGP 950</span>
                 </div>
-                <!-- Updated class to match your style parameters -->
+                <!-- MODAL DATA IMAGE LINK UPDATED -->
                 <button class="vault-buy-btn" 
                         data-product-name="EID MUBARAK HOODIE (UNRELEASED)" 
                         data-product-price="EGP 950" 
-                        data-product-image="https://kommodo.ai/i/fCJrXazE72rvUBG98yVe">Quick Buy</button>
+                        data-product-image="https://i.postimg.cc/QC6Sy7Bq/Untitled-design-(15).png">Quick Buy</button>
             </div>
 
         </main>
     </div>
 
-    <!-- MISSING CHECKOUT MODAL IMPLEMENTED HERE -->
+    <!-- CHECKOUT TERMINAL MODAL -->
     <div id="checkout-modal" class="modal-overlay">
         <div class="modal-content">
             <button class="close-modal" onclick="closeModal()">×</button>
@@ -343,7 +343,6 @@
         }
 
         document.addEventListener('click', (e) => {
-            // Target the correctly styled button class
             const btn = e.target.closest('.vault-buy-btn');
             if (btn && btn.dataset.productName) {
                 openModal(btn.dataset.productName, btn.dataset.productPrice, btn.dataset.productImage);
