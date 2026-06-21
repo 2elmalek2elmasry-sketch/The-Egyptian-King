@@ -6,7 +6,7 @@
     <title>THE EGYPTIAN KING™ | DROP RELAUNCH</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; }
         .neon-text { color: #ccff00; }
         .neon-bg { background-color: #ccff00; }
@@ -48,7 +48,7 @@
             <div class="flex justify-center mb-12">
                 <div class="bg-zinc-950 border border-zinc-900 rounded-xl px-5 py-2.5 flex items-center space-x-3 text-xs tracking-wider text-zinc-400">
                     <span>📅</span>
-                    <span>Estimated return: <strong class="text-white" id="return-date-string">Loading Date...</strong></span>
+                    <span>Estimated return: <strong class="text-white" id="return-date-string">July 11, 2026 at 11:40 PM</strong></span>
                 </div>
             </div>
 
@@ -82,10 +82,10 @@
                     <div class="mt-8 pt-6 border-t border-zinc-950">
                         <div class="flex justify-between text-xs font-semibold tracking-wider text-zinc-400 mb-2">
                             <span>Upgrade progress</span>
-                            <span class="neon-text font-bold" id="progress-percent">15% complete</span>
+                            <span class="neon-text font-bold" id="progress-percent">0% complete</span>
                         </div>
                         <div class="w-full bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-900">
-                            <div class="neon-bg h-full transition-all duration-500" style="width: 15%" id="progress-bar-fill"></div>
+                            <div class="neon-bg h-full transition-all duration-500" style="width: 0%" id="progress-bar-fill"></div>
                         </div>
                         <div class="flex items-center space-x-2 mt-4 text-[11px] font-bold tracking-wider text-zinc-500 uppercase">
                             <span>⚙️</span>
@@ -134,10 +134,10 @@
                     <a href="https://wa.me/201025002299" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
                         💬 WhatsApp
                     </a>
-                    <a href="https://www.instagram.com/the_egyptian_king10" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
+                    <a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
                         📸 Instagram
                     </a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
+                    <a href="https://www.facebook.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
                         📘 Facebook
                     </a>
                 </div>
@@ -155,19 +155,16 @@
     </footer>
 
     <script>
-        // Set dynamic launch target exactly 20 days forward from current initialization runtime
-        const totalDurationMs = 20 * 24 * 60 * 60 * 1000; 
-        const launchTargetDate = new Date(Date.now() + totalDurationMs);
-
-        // Render readable return timestamp format string
-        const configurationOptions = { month: 'long', day: 'numeric', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: true };
-        document.getElementById('return-date-string').innerText = launchTargetDate.toLocaleDateString('en-US', configurationOptions) + " PM";
+        // FIXED EXPLICIT RETAIL DROP TIMESTAMPS (Universal Epoch Coordinates)
+        const START_TIMESTAMP = 1782074345000; // June 21, 2026 11:39 PM
+        const END_TIMESTAMP = START_TIMESTAMP + (20 * 24 * 60 * 60 * 1000); // Exactly 20 Days Later
+        const TOTAL_DURATION_MS = END_TIMESTAMP - START_TIMESTAMP;
 
         function updateCountdownClock() {
             const currentMoment = new Date().getTime();
-            const distanceRemaining = launchTargetDate.getTime() - currentMoment;
+            const distanceRemaining = END_TIMESTAMP - currentMoment;
 
-            if (distanceRemaining < 0) {
+            if (distanceRemaining <= 0) {
                 document.getElementById('days').innerText = "00";
                 document.getElementById('hours').innerText = "00";
                 document.getElementById('minutes').innerText = "00";
@@ -177,20 +174,21 @@
                 return;
             }
 
-            // Calculations parsing absolute intervals
+            // Universal Calendar Computations
             const days = Math.floor(distanceRemaining / (1000 * 60 * 60 * 24));
             const hours = Math.floor((distanceRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const minutes = Math.floor((distanceRemaining % (1000 * 60 * 60)) / (1000 * 60));
             const seconds = Math.floor((distanceRemaining % (1000 * 60)) / 1000);
 
-            // Print values to standard DOM interface nodes
             document.getElementById('days').innerText = String(days).padStart(2, '0');
             document.getElementById('hours').innerText = String(hours).padStart(2, '0');
             document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
             document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
 
-            // Dynamic progress bar curve estimation scaling upwards across the remaining 20 days
-            const elapsedPercent = Math.min(100, Math.max(15, Math.floor(((totalDurationMs - distanceRemaining) / totalDurationMs) * 100)));
+            // Absolute progress computation locked against the initial start block 
+            const totalElapsedMs = currentMoment - START_TIMESTAMP;
+            const elapsedPercent = Math.min(100, Math.max(0, Math.floor((totalElapsedMs / TOTAL_DURATION_MS) * 100)));
+            
             document.getElementById('progress-percent').innerText = `${elapsedPercent}% complete`;
             document.getElementById('progress-bar-fill').style.width = `${elapsedPercent}%`;
         }
