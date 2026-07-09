@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>SECURE TERMINAL | CHECKOUT MATRIX</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
+        header { padding: 20px 40px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #000; z-index: 10; }
+        .secure-badge { color: var(--accent-neon); font-size: 0.8rem; border: 1px solid var(--accent-neon); padding: 4px 10px; text-transform: uppercase; }
+        .checkout-container { display: flex; flex: 1; height: calc(100vh - 65px); overflow: hidden; }
+        
+        /* INDEPENDENT INTERFACE SCROLL PANELS */
+        .input-panel { flex: 1.2; padding: 40px; overflow-y: auto; border-right: 1px solid var(--border-color); padding-bottom: 100px; }
+        .summary-panel { flex: 0.8; background-color: var(--panel-bg); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
+        .input-panel::-webkit-scrollbar, .summary-panel::-webkit-scrollbar { width: 6px; }
+        .input-panel::-webkit-scrollbar-thumb, .summary-panel::-webkit-scrollbar-thumb { background: var(--border-color); }
+        .input-panel::-webkit-scrollbar-thumb:hover, .summary-panel::-webkit-scrollbar-thumb:hover { background: var(--accent-neon); }
+
+        h3 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border-left: 3px solid var(--accent-neon); padding-left: 10px; }
+        .form-section { margin-bottom: 40px; }
+        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
+        .form-group { flex: 1; display: flex; flex-direction: column; }
+        label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
+        input[type="text"], input[type="email"], input[type="tel"], select { background-color: var(--input-bg); border: 1px solid var(--border-color); padding: 14px; color: var(--text-main); font-family: monospace; outline: none; }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus { border-color: var(--accent-neon); }
+
+        .payment-matrix { border: 1px solid var(--border-color); background: var(--input-bg); }
+        .payment-row { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
+        .payment-row.active { border-left: 3px solid var(--accent-neon); background: #111; }
+        .payment-left { display: flex; align-items: center; gap: 12px; }
+        .payment-matrix input[type="radio"] { accent-color: var(--accent-neon); transform: scale(1.2); }
+        
+        .product-item-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border-color); }
+        .product-meta-left { display: flex; align-items: center; gap: 15px; }
+        .product-img-wrapper { position: relative; width: 65px; height: 65px; background: #000; border: 1px solid var(--border-color); }
+        .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
+        .product-qty-badge { position: absolute; top: -8px; right: -8px; background: var(--accent-neon); color: #000; width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
+        .ledger-line { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-muted); }
+        .ledger-line.total-bold { border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; color: var(--text-main); font-size: 1.2rem; font-weight: bold; }
+        .submit-order-button { width: 100%; background: var(--accent-neon); color: #000; border: none; padding: 20px; font-family: monospace; font-weight: bold; font-size: 1rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 30px; }
+
+        @media (max-width: 900px) { body { overflow-y: auto; height: auto; } .checkout-container { flex-direction: column-reverse; height: auto; } .input-panel, .summary-panel { overflow: visible; flex: none; padding: 20px; } }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+        <div class="secure-badge"><i class="fas fa-lock"></i> Terminal Encrypted</div>
+    </header>
+
+    <div class="checkout-container">
+        <div class="input-panel">
+            <div class="form-section">
+                <h3>01 / Contact Data</h3>
+                <div class="form-group"><label>Email or Mobile</label><input type="text" placeholder="matrix@domain.com" required></div>
+            </div>
+
+            <div class="form-section">
+                <h3>02 / Delivery Coordinates</h3>
+                <div class="form-group" style="margin-bottom:15px;"><label>Country/Region</label><select><option>Egypt</option></select></div>
+                <div class="form-row">
+                    <div class="form-group"><label>First Name</label><input type="text" required></div>
+                    <div class="form-group"><label>Last Name</label><input type="text" required></div>
+                </div>
+                <div class="form-group" style="margin-bottom:15px;"><label>Address</label><input type="text" required></div>
+                <div class="form-row">
+                    <div class="form-group"><label>City</label><input type="text" required></div>
+                    <div class="form-group"><label>Governorate</label><input type="text" required></div>
+                </div>
+                <div class="form-group"><label>Phone Contact Connection</label><input type="tel" placeholder="+20..." required></div>
+            </div>
+
+            <div class="form-section">
+                <h3>03 / Payment Interface</h3>
+                <div class="payment-matrix">
+                    <label class="payment-row active" id="label-cod">
+                        <div class="payment-left"><input type="radio" name="checkout_payment" value="cod" checked onchange="togglePaymentUIVisual('cod')"><span class="payment-title">Cash on Delivery (COD)</span></div>
+                        <div><i class="fas fa-money-bill-wave"></i></div>
+                    </label>
+                    <label class="payment-row" id="label-card">
+                        <div class="payment-left"><input type="radio" name="checkout_payment" value="card" onchange="togglePaymentUIVisual('card')"><span class="payment-title">Pay with Card</span></div>
+                        <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i></div>
+                    </label>
+                    <label class="payment-row" id="label-paypal">
+                        <div class="payment-left"><input type="radio" name="checkout_payment" value="paypal" onchange="togglePaymentUIVisual('paypal')"><span class="payment-title">Pay with PayPal</span></div>
+                        <div><i class="fab fa-paypal"></i></div>
+                    </label>
+                </div>
+            </div>
+        </div>
+
+        <div class="summary-panel">
+            <div>
+                <h3>Order Intercept Summary</h3>
+                <div id="dynamic-checkout-items"><!-- Runtime stream injection --></div>
+            </div>
+
+            <div style="margin-top: 40px;">
+                <div class="ledger-line"><span>Subtotal Manifest</span><span id="subtotal-val">EGP 0.00</span></div>
+                <div class="ledger-line"><span>Shipping Freight</span><span style="color: var(--accent-neon);">FREE MATRIX</span></div>
+                <div class="ledger-line total-bold"><span>TOTAL MATRIX</span><span style="color: var(--accent-neon);" id="total-val">EGP 0.00</span></div>
+                <button class="submit-order-button" id="executeOrderBtn">Complete Order Execution</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function togglePaymentUIVisual(type) {
+            document.getElementById('label-cod').classList.remove('active');
+            document.getElementById('label-card').classList.remove('active');
+            document.getElementById('label-paypal').classList.remove('active');
+            document.getElementById(`label-${type}`).classList.add('active');
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeCart = JSON.parse(localStorage.getItem('terminal_cart')) || [];
+            const container = document.getElementById('dynamic-checkout-items');
+            let runningSubtotal = 0;
+
+            if(activeCart.length === 0) {
+                container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; padding:20px 0;">[SYSTEM ERROR]: Local Cart Buffer Empty.</p>`;
+            } else {
+                activeCart.forEach(item => {
+                    runningSubtotal += (item.price * item.qty);
+                    container.innerHTML += `
+                        <div class="product-item-row">
+                            <div class="product-meta-left">
+                                <div class="product-img-wrapper">
+                                    <img src="${item.image}">
+                                    <div class="product-qty-badge">${item.qty}</div>
+                                </div>
+                                <div style="display:flex; flex-direction:column; gap:4px;">
+                                    <span style="font-size:0.85rem; font-weight:bold;">${item.name}</span>
+                                    <span style="font-size:0.75rem; color:var(--text-muted);">${item.spec}</span>
+                                </div>
+                            </div>
+                            <span style="font-size:0.9rem; font-weight:bold;">EGP ${(item.price * item.qty).toFixed(2)}</span>
+                        </div>`;
+                });
+            }
+            document.getElementById('subtotal-val').textContent = `EGP ${runningSubtotal.toFixed(2)}`;
+            document.getElementById('total-val').textContent = `EGP ${runningSubtotal.toFixed(2)}`;
+        });
+    </script>
+</body>
+</html>
