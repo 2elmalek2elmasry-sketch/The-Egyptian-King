@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOODIES | MANIFEST DEPLOYMENT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+        <div class="nav-links">
+            <a href="index.html">Hub</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html" class="active">Hoodies</a>
+            <a href="zippers.html">Zippers</a>
+        </div>
+        <button class="cart-icon-btn" onclick="window.location.href='checkout.html'">
+            CART [<span class="cart-count">0</span>]
+        </button>
+    </nav>
+
+    <div class="catalog-container">
+        <h2 class="catalog-title">System // Folder: Hoodies</h2>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-image-frame">
+                    <img src="https://i.postimg.cc/rw0MS0qm/Capture-3.jpg" alt="Habib Albi">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">"Habib Albi Magazine" Grey Hoodie</span>
+                    <span class="product-price">EGP 950.00</span>
+                </div>
+                <button class="add-to-cart-btn" onclick="addProductToCart('hd-01', '\"Habib Albi Magazine\" Grey Hoodie', 950, 'https://i.postimg.cc/rw0MS0qm/Capture-3.jpg', 'Heavyweight Drop')">Inject Into Cart</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="cart-engine.js"></script>
+</body>
+</html>
