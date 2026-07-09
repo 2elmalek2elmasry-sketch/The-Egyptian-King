@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ZIPPERS | MANIFEST DEPLOYMENT</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <nav>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+        <div class="nav-links">
+            <a href="index.html">Hub</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="zippers.html" class="active">Zippers</a>
+        </div>
+        <button class="cart-icon-btn" onclick="window.location.href='checkout.html'">
+            CART [<span class="cart-count">0</span>]
+        </button>
+    </nav>
+
+    <div class="catalog-container">
+        <h2 class="catalog-title">System // Folder: Zippers</h2>
+        <div class="product-grid">
+            
+            <div class="product-card">
+                <div class="product-image-frame">
+                    <img src="https://via.placeholder.com/400x400/000000/ffffff?text=ZIPPER+01" alt="Zipper">
+                </div>
+                <div class="product-info">
+                    <span class="product-name">"Thermal Trace" Full-Zip</span>
+                    <span class="product-price">EGP 1100.00</span>
+                </div>
+                <button class="add-to-cart-btn" onclick="addProductToCart('zp-01', '\"Thermal Trace\" Full-Zip', 1100, 'https://via.placeholder.com/400x400/000000/ffffff?text=ZIPPER+01', '450GSM Fleece')">Inject Into Cart</button>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="cart-engine.js"></script>
+</body>
+</html>
