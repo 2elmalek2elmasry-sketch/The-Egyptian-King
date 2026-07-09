@@ -3,199 +3,37 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE EGYPTIAN KING™ | DROP RELAUNCH</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .neon-text { color: #ccff00; }
-        .neon-bg { background-color: #ccff00; }
-        .neon-border { border-color: #ccff00; }
-        .neon-ring:focus { --tw-ring-color: #ccff00; }
-    </style>
+    <title>THE EGYPTIAN KING™ | OFFICIAL HUB</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
-<body class="bg-[#000000] text-[#fafafa] antialiased min-h-screen flex flex-col justify-between selection:bg-[#ccff00] selection:text-black">
+<body>
 
-    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-        <div class="flex flex-col">
-            <span class="text-lg font-black tracking-[0.25em] uppercase text-white">The Egyptian King™</span>
+    <nav>
+        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
+        <div class="nav-links">
+            <a href="index.html" class="active">Hub</a>
+            <a href="tshirts.html">T-Shirts</a>
+            <a href="hoodies.html">Hoodies</a>
+            <a href="zippers.html">Zippers</a>
         </div>
-        <div class="flex items-center space-x-2 bg-[#0c0c0e] border border-zinc-900 px-3 py-1.5 rounded-full">
-            <span class="h-2 w-2 rounded-full neon-bg animate-pulse"></span>
-            <span class="text-[10px] tracking-[0.15em] uppercase font-bold text-zinc-400">MAINTENANCE DROPS MODE</span>
+        <button class="cart-icon-btn" onclick="window.location.href='checkout.html'">
+            <i class="fas fa-shopping-terminal"></i> CART [<span class="cart-count">0</span>]
+        </button>
+    </nav>
+
+    <div class="catalog-container" style="text-align: center; margin-top: 10vh;">
+        <h1 style="font-size: 3rem; letter-spacing: 5px; margin-bottom: 20px; text-transform: uppercase;">THE CODES OF APPAREL</h1>
+        <p style="color: var(--text-muted); max-width: 600px; margin: 0 auto 40px; font-size: 0.9rem; line-height: 1.6;">
+            A structural design layout deployment framework tailored for physical manifestations. Select your sub-system route folder below to interact with current drops.
+        </p>
+        <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap;">
+            <a href="tshirts.html" style="border: 1px solid var(--border-color); padding: 20px 40px; color: var(--text-main); text-decoration: none; text-transform: uppercase; font-weight: bold; background: var(--panel-bg);">// DIR_T_SHIRTS</a>
+            <a href="hoodies.html" style="border: 1px solid var(--border-color); padding: 20px 40px; color: var(--text-main); text-decoration: none; text-transform: uppercase; font-weight: bold; background: var(--panel-bg);">// DIR_HOODIES</a>
+            <a href="zippers.html" style="border: 1px solid var(--border-color); padding: 20px 40px; color: var(--text-main); text-decoration: none; text-transform: uppercase; font-weight: bold; background: var(--panel-bg);">// DIR_ZIPPERS</a>
         </div>
-    </header>
+    </div>
 
-    <main class="flex-1 flex items-center justify-center px-4 py-8">
-        <div class="w-full max-w-4xl bg-[#0c0c0e] border border-zinc-900 rounded-3xl p-8 md:p-12 shadow-2xl relative overflow-hidden">
-            
-            <div class="text-center mb-6">
-                <span class="inline-block bg-zinc-900/50 border border-zinc-800 text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full text-zinc-400">
-                    ⚡ SUMMER RELAUNCH IN PROGRESS
-                </span>
-            </div>
-
-            <h1 class="text-4xl md:text-6xl font-black tracking-tight text-center max-w-3xl mx-auto leading-[1.1] mb-6">
-                A Brighter, Faster <br>
-                <span class="neon-text">Egyptian King Layout</span> <br>
-                Is Almost Here.
-            </h1>
-
-            <p class="text-center text-zinc-400 text-sm md:text-base max-w-2xl mx-auto leading-relaxed mb-8">
-                We are restructuring our entire marketplace experience with seamless payment processing, localized EGP checkouts, robust customer accounts, and an exclusive summer collection rollout.
-            </p>
-
-            <div class="flex justify-center mb-12">
-                <div class="bg-zinc-950 border border-zinc-900 rounded-xl px-5 py-2.5 flex items-center space-x-3 text-xs tracking-wider text-zinc-400">
-                    <span>📅</span>
-                    <span>Estimated return: <strong class="text-white" id="return-date-string">******, 2026 at 11:40 PM</strong></span>
-                </div>
-            </div>
-
-            <div class="grid grid-cols-1 md:grid-cols-12 gap-6 items-stretch">
-                
-                <div class="md:col-span-7 bg-[#121214] border border-zinc-900 rounded-2xl p-6 flex flex-col justify-between">
-                    <div>
-                        <span class="text-[10px] font-bold tracking-[0.15em] text-zinc-500 uppercase block mb-4">Official Relaunch Countdown</span>
-                        <h3 class="text-sm font-bold tracking-wide text-white mb-6">The new experience launches in</h3>
-                        
-                        <div class="grid grid-cols-4 gap-2 text-center">
-                            <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3">
-                                <span class="block text-2xl md:text-3xl font-black text-white" id="days">20</span>
-                                <span class="text-[9px] tracking-widest text-zinc-500 uppercase font-bold mt-1 block">Days</span>
-                            </div>
-                            <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3">
-                                <span class="block text-2xl md:text-3xl font-black text-white" id="hours">00</span>
-                                <span class="text-[9px] tracking-widest text-zinc-500 uppercase font-bold mt-1 block">Hours</span>
-                            </div>
-                            <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3">
-                                <span class="block text-2xl md:text-3xl font-black text-white" id="minutes">00</span>
-                                <span class="text-[9px] tracking-widest text-zinc-500 uppercase font-bold mt-1 block">Mins</span>
-                            </div>
-                            <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3">
-                                <span class="block text-2xl md:text-3xl font-black text-white" id="seconds">00</span>
-                                <span class="text-[9px] tracking-widest text-zinc-500 uppercase font-bold mt-1 block">Secs</span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="mt-8 pt-6 border-t border-zinc-950">
-                        <div class="flex justify-between text-xs font-semibold tracking-wider text-zinc-400 mb-2">
-                            <span>Upgrade progress</span>
-                            <span class="neon-text font-bold" id="progress-percent">0% complete</span>
-                        </div>
-                        <div class="w-full bg-zinc-950 h-2 rounded-full overflow-hidden border border-zinc-900">
-                            <div class="neon-bg h-full transition-all duration-500" style="width: 0%" id="progress-bar-fill"></div>
-                        </div>
-                        <div class="flex items-center space-x-2 mt-4 text-[11px] font-bold tracking-wider text-zinc-500 uppercase">
-                            <span>⚙️</span>
-                            <span>Optimizing checkout nodes & EGP payment rules...</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="md:col-span-5 bg-[#121214] border border-zinc-900 rounded-2xl p-6 space-y-4">
-                    <div>
-                        <span class="text-[10px] font-bold tracking-[0.15em] text-zinc-500 uppercase block mb-1">Summer Upgrade</span>
-                        <h3 class="text-sm font-bold tracking-wide text-white mb-4">What we are improving</h3>
-                    </div>
-
-                    <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex items-start space-x-3">
-                        <div class="p-2 bg-zinc-900 rounded text-sm">🛍️</div>
-                        <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Cleaner Marketplace</h4>
-                            <p class="text-[11px] text-zinc-500 mt-0.5">Sleeker streetwear grids, faster item scaling, fluid cart mechanics.</p>
-                        </div>
-                    </div>
-                    <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex items-start space-x-3">
-                        <div class="p-2 bg-zinc-900 rounded text-sm">⚡</div>
-                        <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Faster Performance</h4>
-                            <p class="text-[11px] text-zinc-500 mt-0.5">Sub-second viewport navigation actions across all regions in Egypt.</p>
-                        </div>
-                    </div>
-                    <div class="bg-zinc-950 border border-zinc-900 rounded-xl p-3 flex items-start space-x-3">
-                        <div class="p-2 bg-zinc-900 rounded text-sm">🔒</div>
-                        <div>
-                            <h4 class="text-xs font-bold uppercase tracking-wider text-white">Improved Accounts</h4>
-                            <p class="text-[11px] text-zinc-500 mt-0.5">Instant secure tracking access for dispatch logs and COD records.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="mt-12 pt-8 border-t border-zinc-900 text-center">
-                <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-4">Follow The Egyptian King Updates</span>
-                
-                <div class="flex flex-wrap justify-center gap-3">
-                    <button onclick="window.location.reload()" class="bg-white text-black font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:bg-[#ccff00] hover:text-black transition duration-300">
-                        🔄 Refresh View
-                    </button>
-                    <a href="https://wa.me/201025002299" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        💬 WhatsApp
-                    </a>
-                    <a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        📸 Instagram
-                    </a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        📘 Facebook
-                    </a>
-                </div>
-                
-                <p class="text-[10px] text-zinc-600 mt-6 tracking-wide">
-                    Thank you for your patience. The Egyptian King™ will return with a premium operational standard. All sales are final.
-                </p>
-            </div>
-
-        </div>
-    </main>
-
-    <footer class="w-full text-center py-6 text-zinc-700 text-[10px] tracking-widest uppercase border-t border-zinc-950">
-        &copy; 2026 THE EGYPTIAN KING™. All Rights Reserved.
-    </footer>
-
-    <script>
-        // FIXED EXPLICIT RETAIL DROP TIMESTAMPS (Universal Epoch Coordinates)
-        const START_TIMESTAMP = 1782074345000; // June 21, 2026 11:39 PM
-        const END_TIMESTAMP = START_TIMESTAMP + (35 * 24 * 60 * 60 * 1000); // Exactly 35 Days Later
-        const TOTAL_DURATION_MS = END_TIMESTAMP - START_TIMESTAMP;
-
-        function updateCountdownClock() {
-            const currentMoment = new Date().getTime();
-            const distanceRemaining = END_TIMESTAMP - currentMoment;
-
-            if (distanceRemaining <= 0) {
-                document.getElementById('days').innerText = "00";
-                document.getElementById('hours').innerText = "00";
-                document.getElementById('minutes').innerText = "00";
-                document.getElementById('seconds').innerText = "00";
-                document.getElementById('progress-percent').innerText = "100% complete";
-                document.getElementById('progress-bar-fill').style.width = "100%";
-                return;
-            }
-
-            // Universal Calendar Computations
-            const days = Math.floor(distanceRemaining / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distanceRemaining % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distanceRemaining % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distanceRemaining % (1000 * 60)) / 1000);
-
-            document.getElementById('days').innerText = String(days).padStart(2, '0');
-            document.getElementById('hours').innerText = String(hours).padStart(2, '0');
-            document.getElementById('minutes').innerText = String(minutes).padStart(2, '0');
-            document.getElementById('seconds').innerText = String(seconds).padStart(2, '0');
-
-            // Absolute progress computation locked against the initial start block 
-            const totalElapsedMs = currentMoment - START_TIMESTAMP;
-            const elapsedPercent = Math.min(100, Math.max(0, Math.floor((totalElapsedMs / TOTAL_DURATION_MS) * 100)));
-            
-            document.getElementById('progress-percent').innerText = `${elapsedPercent}% complete`;
-            document.getElementById('progress-bar-fill').style.width = `${elapsedPercent}%`;
-        }
-
-        // Loop operational sequencing intervals
-        setInterval(updateCountdownClock, 1000);
-        updateCountdownClock();
-    </script>
+    <script src="cart-engine.js"></script>
 </body>
 </html>
