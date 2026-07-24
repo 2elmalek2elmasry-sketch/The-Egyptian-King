@@ -3,73 +3,639 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>THE EGYPTIAN KING™ | MAINTENANCE</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <title>THE EGYPTIAN KING — Official Site</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=400;600;700;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .neon-text { color: #ccff00; }
-        .neon-bg { background-color: #ccff00; }
+        :root {
+            --bg: #050508;
+            --card-bg: rgba(18, 18, 24, 0.75);
+            --border-glow: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --accent-primary: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.4);
+            --blob-1: #ffffff;
+            --blob-2: #333333;
+            --blob-3: #666666;
+        }
+
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --card-bg: rgba(24, 9, 43, 0.8);
+            --border-glow: rgba(236, 72, 153, 0.4);
+            --accent-primary: #ec4899;
+            --accent-glow: rgba(236, 72, 153, 0.6);
+            --blob-1: #ec4899;
+            --blob-2: #8b5cf6;
+            --blob-3: #06b6d4;
+        }
+
+        body[data-theme="ai"] {
+            --bg: #030712;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --border-glow: rgba(56, 189, 248, 0.35);
+            --accent-primary: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.5);
+            --blob-1: #0284c7;
+            --blob-2: #6366f1;
+            --blob-3: #0f172a;
+        }
+
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.35);
+            --accent-primary: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.5);
+            --blob-1: #ca8a04;
+            --blob-2: #854d0e;
+            --blob-3: #1e1b18;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.3;
+            animation: floatBlob 12s infinite alternate ease-in-out;
+            transition: background 0.8s ease;
+        }
+
+        .blob-1 { width: 500px; height: 500px; background: var(--blob-1); top: -100px; left: 20%; }
+        .blob-2 { width: 450px; height: 450px; background: var(--blob-2); bottom: 10%; right: 15%; animation-delay: -5s; }
+        .blob-3 { width: 350px; height: 350px; background: var(--blob-3); top: 40%; left: -50px; animation-delay: -8s; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, 80px) scale(1.1); }
+            100% { transform: translate(-40px, 40px) scale(0.95); }
+        }
+
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal-card {
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 580px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+        }
+
+        .modal-greeting {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .modal-sub {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 2.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 1.25rem 1rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-6px) scale(1.04);
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .badge-rec {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #ec4899;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.5);
+        }
+
+        header {
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.25rem 4rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        nav a:hover, nav a.active { color: #fff; }
+
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+
+        .btn-bag {
+            background: transparent;
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+        .btn-glow {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 0.75rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--accent-glow);
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 1.5rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(10px);
+            color: var(--accent-primary);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 6px;
+            line-height: 1.05;
+            margin-bottom: 1.8rem;
+            background: linear-gradient(180deg, #ffffff 40%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            max-width: 720px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2.8rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3.5rem;
+            margin-top: 3.5rem;
+            border-top: 1px solid var(--border-glow);
+            padding-top: 2.5rem;
+        }
+
+        .stat-item h4 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--accent-primary); }
+        .stat-item p { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
+
+        /* BRAND PILLARS / EXPANDED CONTENT */
+        .section-padding { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+        }
+
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent-primary);
+        }
+
+        .pillar-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        /* MANIFESTO / STORY BANNER */
+        .manifesto-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 4.5rem 3rem;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            margin: 4rem auto 6rem;
+            max-width: 1100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-box h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4rem;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .manifesto-box p {
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        /* SPECS TABLE */
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .spec-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .spec-item h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .spec-item div { font-size: 1.1rem; font-weight: 800; color: #fff; }
+
+        .theme-switch-trigger {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(18, 18, 24, 0.9);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            z-index: 90;
+            backdrop-filter: blur(10px);
+        }
+
+        footer {
+            background: rgba(5, 5, 8, 0.95);
+            border-top: 1px solid var(--border-glow);
+            padding: 4rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .copyright { color: #555; font-size: 0.8rem; margin-top: 2rem; }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .theme-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+        }
     </style>
 </head>
-<body class="bg-[#000000] text-[#fafafa] antialiased min-h-screen flex flex-col justify-between selection:bg-[#ccff00] selection:text-black">
+<body>
 
-    <!-- TOP HEADER UTILITY -->
-    <header class="w-full max-w-7xl mx-auto px-6 py-6 flex justify-between items-center">
-        <div class="flex flex-col">
-            <span class="text-lg font-black tracking-[0.25em] uppercase text-white">The Egyptian King™</span>
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
+    </div>
+
+    <!-- THEME MODAL POPUP -->
+    <div class="modal-overlay" id="themeModal">
+        <div class="modal-card">
+            <h2 class="modal-greeting">WELCOME TO THE KINGDOM</h2>
+            <p class="modal-sub">Pick a design for the shop</p>
+
+            <div class="theme-grid">
+                <button class="theme-btn" onclick="selectTheme('ai')">
+                    1: FUTURISTIC AI
+                </button>
+                
+                <button class="theme-btn" onclick="selectTheme('neon')">
+                    <span class="badge-rec">RECOMMENDED</span>
+                    2: NEON
+                </button>
+
+                <button class="theme-btn" onclick="selectTheme('basic')">
+                    3: BASIC B&W
+                </button>
+
+                <button class="theme-btn" onclick="selectTheme('royalty')">
+                    4: GOLD ROYALTY
+                </button>
+            </div>
         </div>
-        <div class="flex items-center space-x-2 bg-[#0c0c0e] border border-zinc-900 px-3 py-1.5 rounded-full">
-            <span class="h-2 w-2 rounded-full neon-bg animate-pulse"></span>
-            <span class="text-[10px] tracking-[0.15em] uppercase font-bold text-zinc-400">MAINTENANCE MODE</span>
+    </div>
+
+    <button class="theme-switch-trigger" onclick="openThemeModal()">🎨 CHANGE THEME</button>
+
+    <header>
+        <a href="index.html" class="brand-logo">The Egyptian King</a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="shop.html">Shop Collection</a></li>
+                <li><a href="terms.html">Terms & Policies</a></li>
+            </ul>
+        </nav>
+        <div class="nav-actions">
+            <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
+            <a href="shop.html" class="btn-glow">Enter Shop</a>
         </div>
     </header>
 
-    <!-- CORE NOTICE INTERFACE -->
-    <main class="flex-1 flex items-center justify-center px-4 py-8">
-        <div class="w-full max-w-3xl bg-[#0c0c0e] border border-zinc-900 rounded-3xl p-8 md:p-16 shadow-2xl relative overflow-hidden text-center">
-            
-            <!-- Context Indicator -->
-            <div class="mb-8">
-                <span class="inline-block bg-zinc-900/50 border border-zinc-800 text-[10px] font-bold tracking-[0.2em] uppercase px-4 py-1.5 rounded-full text-zinc-400">
-                    ⚠️ NOTICE
-                </span>
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-badge">Sovereign Culture & Streetwear</div>
+        <h1 class="hero-title">THE EGYPTIAN KING</h1>
+        <p class="hero-subtitle">High-end heavyweight apparel engineered with zero compromises. Bridging ancient majesty with futuristic modern street culture.</p>
+        <a href="shop.html" class="btn-glow">Explore Official Shop</a>
+
+        <div class="hero-stats">
+            <div class="stat-item">
+                <h4>500 GSM</h4>
+                <p>Heavyweight Fleece</p>
+            </div>
+            <div class="stat-item">
+                <h4>22 CAPSULES</h4>
+                <p>Exclusive Apparel</p>
+            </div>
+            <div class="stat-item">
+                <h4>100% COTTON</h4>
+                <p>Combed & Custom Knitted</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- BRAND PILLARS -->
+    <section class="section-padding">
+        <h2 class="section-title">The Standard of Craft</h2>
+        <p class="section-sub">Built to outlast trends and endure time</p>
+
+        <div class="grid-3">
+            <div class="pillar-card">
+                <div class="pillar-icon">🏛️</div>
+                <h3>Heritage & Iconography</h3>
+                <p>Each drop translates iconic cultural figures and historical motifs into cutting-edge graphic silhouettes tailored for the contemporary wardrobe.</p>
             </div>
 
-            <!-- Core Statement -->
-            <h1 class="text-4xl md:text-7xl font-black tracking-tight max-w-2xl mx-auto leading-[1.1] mb-8 uppercase">
-                WE WILL <br>
-                <span class="neon-text">BE BACK SOON</span>
-            </h1>
+            <div class="pillar-card">
+                <div class="pillar-icon">⚡</div>
+                <h3>Precision Fabrication</h3>
+                <p>Engineered with double-needle flatlock seams, oversized hoods, custom drop shoulders, and pre-shrunk fabrics designed for perfection.</p>
+            </div>
 
-            <p class="text-[#fafafa] text-base md:text-lg max-w-xl mx-auto leading-relaxed font-semibold tracking-wide">
-                THE EGYPTIAN KING ARE FACING SOME PROBLEMS AND WELL BE BACK AS SOON AS POSSIBLE
-            </p>
+            <div class="pillar-card">
+                <div class="pillar-icon">👑</div>
+                <h3>Strictly Limited</h3>
+                <p>We operate on limited batch releases. Once a capsule sells out globally, it enters the vault and will never be reproduced.</p>
+            </div>
+        </div>
+    </section>
 
-            <!-- CONNECTIONS NETWORK -->
-            <div class="mt-12 pt-8 border-t border-zinc-900">
-                <span class="text-[10px] font-bold tracking-[0.2em] text-zinc-500 uppercase block mb-4">Follow Official Channels For Updates</span>
-                
-                <div class="flex flex-wrap justify-center gap-3">
-                    <a href="https://wa.me/201025002299" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        💬 WhatsApp
-                    </a>
-                    <a href="https://www.instagram.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        📸 Instagram
-                    </a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" target="_blank" class="bg-zinc-950 border border-zinc-900 text-zinc-400 font-bold text-xs tracking-widest px-6 py-3 rounded-xl uppercase hover:text-white hover:border-zinc-700 transition duration-300">
-                        📘 Facebook
-                    </a>
+    <!-- MANIFESTO BOX -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="manifesto-box">
+            <h2>ROYALTY IS AN ATTITUDE</h2>
+            <p>From Cairo to the world stage, THE EGYPTIAN KING was born out of a desire to create heavy, structured, unyielding streetwear that commands respect in any room. Designed for leaders, creators, and legends.</p>
+            
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <h4>Fit Style</h4>
+                    <div>Oversized Boxy Fit</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Print Technique</h4>
+                    <div>High-Density Screenprint</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Fabric Weight</h4>
+                    <div>Heavy Fleece & 280 GSM Tees</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Worldwide Ship</h4>
+                    <div>Door-to-Door Delivery</div>
                 </div>
             </div>
-
         </div>
-    </main>
+    </section>
 
-    <!-- FOOTER SIGNATURE -->
-    <footer class="w-full text-center py-6 text-zinc-700 text-[10px] tracking-widest uppercase border-t border-zinc-950">
-        &copy; 2026 THE EGYPTIAN KING™. All Rights Reserved.
+    <footer>
+        <div class="brand-logo" style="margin-bottom: 1rem;">THE EGYPTIAN KING</div>
+        <div class="copyright">
+            © 2026 THE EGYPTIAN KING. All rights reserved.
+        </div>
     </footer>
 
+    <script>
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('nav-cart-count').innerText = totalCount;
+        }
+
+        function applyTheme(theme) {
+            if (theme === 'basic') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', theme);
+            }
+            localStorage.setItem('selectedTheme', theme);
+        }
+
+        function selectTheme(theme) {
+            applyTheme(theme);
+            document.getElementById('themeModal').classList.add('hidden');
+        }
+
+        function openThemeModal() {
+            document.getElementById('themeModal').classList.remove('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCartBadge();
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+                document.getElementById('themeModal').classList.add('hidden');
+            } else {
+                applyTheme('neon');
+            }
+        });
+    </script>
 </body>
 </html>
