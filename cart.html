@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE EGYPTIAN KING — Shopping Bag</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050508;
+            --card-bg: rgba(18, 18, 24, 0.75);
+            --border-glow: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --accent-primary: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.4);
+        }
+
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --card-bg: rgba(24, 9, 43, 0.8);
+            --border-glow: rgba(236, 72, 153, 0.4);
+            --accent-primary: #ec4899;
+            --accent-glow: rgba(236, 72, 153, 0.6);
+        }
+
+        body[data-theme="ai"] {
+            --bg: #030712;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --border-glow: rgba(56, 189, 248, 0.35);
+            --accent-primary: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.5);
+        }
+
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.35);
+            --accent-primary: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.5);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; }
+
+        header {
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.25rem 4rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; letter-spacing: 3px; color: #fff; text-decoration: none; text-transform: uppercase; }
+        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
+        nav a:hover, nav a.active { color: #fff; }
+
+        .container { max-width: 1000px; margin: 4rem auto 6rem; padding: 0 2rem; width: 100%; }
+        .page-title { font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 4px; text-transform: uppercase; margin-bottom: 2rem; border-bottom: 1px solid var(--border-glow); padding-bottom: 1rem; }
+
+        .cart-list { display: flex; flex-direction: column; gap: 1.5rem; }
+
+        .cart-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .cart-item-left { display: flex; align-items: center; gap: 1.5rem; }
+        .cart-img { width: 90px; height: 110px; border-radius: 12px; object-fit: cover; background: #111; }
+        .cart-info h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.3rem; }
+        .cart-info p { color: var(--accent-primary); font-weight: 700; font-size: 1.1rem; }
+
+        .cart-actions { display: flex; align-items: center; gap: 1.2rem; }
+        .qty-controls { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 30px; border: 1px solid var(--border-glow); }
+        .qty-btn { background: none; border: none; color: #fff; font-size: 1rem; font-weight: 800; cursor: pointer; }
+
+        .btn-buy-now {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 0.75rem 1.8rem;
+            border-radius: 12px;
+            font-weight: 800;
+            font-size: 0.8rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 0 15px var(--accent-glow);
+            transition: transform 0.2s ease;
+        }
+
+        .btn-buy-now:hover { transform: scale(1.05); }
+
+        .empty-state { text-align: center; padding: 5rem 1rem; color: var(--text-muted); }
+        .empty-state h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
+
+        footer { background: rgba(5, 5, 8, 0.95); border-top: 1px solid var(--border-glow); padding: 4rem 2rem 2rem; text-align: center; margin-top: auto; }
+        .copyright { color: #555; font-size: 0.8rem; margin-top: 1.5rem; }
+
+        @media (max-width: 768px) {
+            .cart-item { flex-direction: column; text-align: center; }
+            .cart-item-left { flex-direction: column; }
+            .cart-actions { flex-direction: column; width: 100%; }
+            .btn-buy-now { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="brand-logo">The Egyptian King</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop Collection</a></li>
+                <li><a href="terms.html">Terms & Policies</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h1 class="page-title">Your Shopping Bag</h1>
+        
+        <div id="cart-container" class="cart-list">
+            <!-- ITEMS LOADED VIA JS -->
+        </div>
+    </main>
+
+    <footer>
+        <div class="brand-logo">THE EGYPTIAN KING</div>
+        <div class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
+    </footer>
+
+    <script>
+        function renderCart() {
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const container = document.getElementById('cart-container');
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <h2>YOUR BAG IS EMPTY</h2>
+                        <p style="margin-bottom: 2rem;">Explore our collection to add exclusive apparel.</p>
+                        <a href="shop.html" class="btn-buy-now" style="display: inline-block;">GO TO SHOP</a>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = cart.map((item, index) => `
+                <div class="cart-item">
+                    <div class="cart-item-left">
+                        <img src="${item.img}" alt="${item.name}" class="cart-img">
+                        <div class="cart-info">
+                            <h3>${item.name}</h3>
+                            <p>E£${(item.price * item.qty).toFixed(2)}</p>
+                        </div>
+                    </div>
+                    
+                    <div class="cart-actions">
+                        <div class="qty-controls">
+                            <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
+                            <span>${item.qty}</span>
+                            <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
+                        </div>
+                        <button class="btn-buy-now" onclick="proceedToCheckout(${item.id})">BUY NOW</button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function changeQty(index, delta) {
+            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            cart[index].qty += delta;
+
+            if (cart[index].qty <= 0) {
+                cart.splice(index, 1);
+            }
+
+            localStorage.setItem('kingCart', JSON.stringify(cart));
+            renderCart();
+        }
+
+        function proceedToCheckout(productId) {
+            window.location.href = `checkout.html?buyId=${productId}`;
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            renderCart();
+            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
+            if (savedTheme !== 'basic') {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+        });
+    </script>
+</body>
+</html>
