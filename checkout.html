@@ -7,6 +7,31 @@
     
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
+    <!-- Firebase Initialization -->
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      const firebaseConfig = {
+        apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
+        authDomain: "the-egyptian-king-68e45.firebaseapp.com",
+        projectId: "the-egyptian-king-68e45",
+        storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
+        messagingSenderId: "94881816710",
+        appId: "1:94881816710:web:10fca569f1b43c583ab107",
+        measurementId: "G-ZR0FBN0PRV"
+      };
+
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+
     <style>
         :root {
             --bg: #08080c;
