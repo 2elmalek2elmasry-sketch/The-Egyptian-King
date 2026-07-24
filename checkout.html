@@ -2,148 +2,444 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>SECURE TERMINAL | CHECKOUT MATRIX</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout — THE EGYPTIAN KING</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
     <style>
-        body { height: 100vh; overflow: hidden; display: flex; flex-direction: column; }
-        header { padding: 20px 40px; border-bottom: 1px solid var(--border-color); display: flex; justify-content: space-between; align-items: center; background: #000; z-index: 10; }
-        .secure-badge { color: var(--accent-neon); font-size: 0.8rem; border: 1px solid var(--accent-neon); padding: 4px 10px; text-transform: uppercase; }
-        .checkout-container { display: flex; flex: 1; height: calc(100vh - 65px); overflow: hidden; }
-        
-        /* INDEPENDENT INTERFACE SCROLL PANELS */
-        .input-panel { flex: 1.2; padding: 40px; overflow-y: auto; border-right: 1px solid var(--border-color); padding-bottom: 100px; }
-        .summary-panel { flex: 0.8; background-color: var(--panel-bg); padding: 40px; overflow-y: auto; display: flex; flex-direction: column; justify-content: space-between; }
-        .input-panel::-webkit-scrollbar, .summary-panel::-webkit-scrollbar { width: 6px; }
-        .input-panel::-webkit-scrollbar-thumb, .summary-panel::-webkit-scrollbar-thumb { background: var(--border-color); }
-        .input-panel::-webkit-scrollbar-thumb:hover, .summary-panel::-webkit-scrollbar-thumb:hover { background: var(--accent-neon); }
+        :root {
+            --bg: #08080c;
+            --sidebar-bg: #0f0f17;
+            --card-bg: rgba(22, 22, 32, 0.8);
+            --border-glow: rgba(255, 255, 255, 0.12);
+            --text-main: #ffffff;
+            --text-muted: #8e8e9e;
+            --accent-primary: #38bdf8;
+            --input-bg: rgba(255, 255, 255, 0.04);
+        }
 
-        h3 { font-size: 1.1rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 20px; border-left: 3px solid var(--accent-neon); padding-left: 10px; }
-        .form-section { margin-bottom: 40px; }
-        .form-row { display: flex; gap: 15px; margin-bottom: 15px; }
-        .form-group { flex: 1; display: flex; flex-direction: column; }
-        label { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 5px; text-transform: uppercase; }
-        input[type="text"], input[type="email"], input[type="tel"], select { background-color: var(--input-bg); border: 1px solid var(--border-color); padding: 14px; color: var(--text-main); font-family: monospace; outline: none; }
-        input[type="text"]:focus, input[type="email"]:focus, input[type="tel"]:focus, select:focus { border-color: var(--accent-neon); }
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --sidebar-bg: #0e021e;
+            --card-bg: rgba(24, 9, 43, 0.85);
+            --border-glow: rgba(236, 72, 153, 0.3);
+            --accent-primary: #ec4899;
+        }
 
-        .payment-matrix { border: 1px solid var(--border-color); background: var(--input-bg); }
-        .payment-row { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--border-color); cursor: pointer; }
-        .payment-row.active { border-left: 3px solid var(--accent-neon); background: #111; }
-        .payment-left { display: flex; align-items: center; gap: 12px; }
-        .payment-matrix input[type="radio"] { accent-color: var(--accent-neon); transform: scale(1.2); }
-        
-        .product-item-row { display: flex; align-items: center; justify-content: space-between; padding: 15px 0; border-bottom: 1px solid var(--border-color); }
-        .product-meta-left { display: flex; align-items: center; gap: 15px; }
-        .product-img-wrapper { position: relative; width: 65px; height: 65px; background: #000; border: 1px solid var(--border-color); }
-        .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; }
-        .product-qty-badge { position: absolute; top: -8px; right: -8px; background: var(--accent-neon); color: #000; width: 20px; height: 20px; border-radius: 50%; font-size: 0.7rem; display: flex; align-items: center; justify-content: center; font-weight: bold; }
-        .ledger-line { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.85rem; color: var(--text-muted); }
-        .ledger-line.total-bold { border-top: 1px dashed var(--border-color); padding-top: 15px; margin-top: 15px; color: var(--text-main); font-size: 1.2rem; font-weight: bold; }
-        .submit-order-button { width: 100%; background: var(--accent-neon); color: #000; border: none; padding: 20px; font-family: monospace; font-weight: bold; font-size: 1rem; letter-spacing: 2px; cursor: pointer; text-transform: uppercase; margin-top: 30px; }
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --sidebar-bg: #120e04;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.3);
+            --accent-primary: #eab308;
+        }
 
-        @media (max-width: 900px) { body { overflow-y: auto; height: auto; } .checkout-container { flex-direction: column-reverse; height: auto; } .input-panel, .summary-panel { overflow: visible; flex: none; padding: 20px; } }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            min-height: 100vh;
+        }
+
+        /* LEFT FORM COLUMN */
+        .main-content {
+            padding: 3rem 5rem;
+            max-width: 750px;
+            margin-left: auto;
+            width: 100%;
+        }
+
+        .brand-header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-box { margin-bottom: 2.2rem; }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sign-in-link { font-size: 0.8rem; color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+
+        .form-group { margin-bottom: 0.9rem; position: relative; }
+
+        .input-field, .select-field {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus, .select-field:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            cursor: pointer;
+        }
+
+        .notice-box {
+            background: var(--input-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .payment-option-box {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-complete {
+            width: 100%;
+            background: var(--accent-primary);
+            color: #000;
+            border: none;
+            padding: 1.1rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-complete:hover { transform: translateY(-2px); }
+
+        .checkout-footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-glow);
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.75rem;
+        }
+
+        .checkout-footer a { color: var(--text-muted); text-decoration: none; }
+
+        /* RIGHT ORDER SUMMARY COLUMN */
+        .sidebar {
+            background: var(--sidebar-bg);
+            border-left: 1px solid var(--border-glow);
+            padding: 3rem 3rem 3rem 2.5rem;
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item-left { display: flex; align-items: center; gap: 1rem; position: relative; }
+
+        .item-img-wrapper {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            background: #1a1a24;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+        }
+
+        .item-img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+        .item-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--text-muted);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-details h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; }
+        .item-details p { font-size: 0.75rem; color: var(--text-muted); }
+
+        .item-price { font-weight: 700; font-size: 0.95rem; }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .cost-row.total {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-top: 1px solid var(--border-glow);
+            padding-top: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        @media (max-width: 900px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+            .main-content { padding: 2rem 1.5rem; }
+            .sidebar { padding: 2rem 1.5rem; order: -1; }
+        }
     </style>
 </head>
 <body>
 
-    <header>
-        <a href="index.html" class="logo">THE EGYPTIAN KING™</a>
-        <div class="secure-badge"><i class="fas fa-lock"></i> Terminal Encrypted</div>
-    </header>
-
-    <div class="checkout-container">
-        <div class="input-panel">
-            <div class="form-section">
-                <h3>01 / Contact Data</h3>
-                <div class="form-group"><label>Email or Mobile</label><input type="text" placeholder="matrix@domain.com" required></div>
+    <div class="checkout-layout">
+        
+        <!-- LEFT FORM SECTION -->
+        <main class="main-content">
+            <div class="brand-header">
+                <div class="brand-title">THE EGYPTIAN KING</div>
             </div>
 
-            <div class="form-section">
-                <h3>02 / Delivery Coordinates</h3>
-                <div class="form-group" style="margin-bottom:15px;"><label>Country/Region</label><select><option>Egypt</option></select></div>
-                <div class="form-row">
-                    <div class="form-group"><label>First Name</label><input type="text" required></div>
-                    <div class="form-group"><label>Last Name</label><input type="text" required></div>
+            <!-- CONTACT -->
+            <div class="section-box">
+                <div class="section-title">
+                    Contact
+                    <a href="#" class="sign-in-link">Sign in</a>
                 </div>
-                <div class="form-group" style="margin-bottom:15px;"><label>Address</label><input type="text" required></div>
-                <div class="form-row">
-                    <div class="form-group"><label>City</label><input type="text" required></div>
-                    <div class="form-group"><label>Governorate</label><input type="text" required></div>
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Email or mobile phone number">
                 </div>
-                <div class="form-group"><label>Phone Contact Connection</label><input type="tel" placeholder="+20..." required></div>
+                <label class="checkbox-label">
+                    <input type="checkbox" checked> Email me with news and offers
+                </label>
             </div>
 
-            <div class="form-section">
-                <h3>03 / Payment Interface</h3>
-                <div class="payment-matrix">
-                    <label class="payment-row active" id="label-cod">
-                        <div class="payment-left"><input type="radio" name="checkout_payment" value="cod" checked onchange="togglePaymentUIVisual('cod')"><span class="payment-title">Cash on Delivery (COD)</span></div>
-                        <div><i class="fas fa-money-bill-wave"></i></div>
-                    </label>
-                    <label class="payment-row" id="label-card">
-                        <div class="payment-left"><input type="radio" name="checkout_payment" value="card" onchange="togglePaymentUIVisual('card')"><span class="payment-title">Pay with Card</span></div>
-                        <div><i class="fab fa-cc-visa"></i> <i class="fab fa-cc-mastercard"></i></div>
-                    </label>
-                    <label class="payment-row" id="label-paypal">
-                        <div class="payment-left"><input type="radio" name="checkout_payment" value="paypal" onchange="togglePaymentUIVisual('paypal')"><span class="payment-title">Pay with PayPal</span></div>
-                        <div><i class="fab fa-paypal"></i></div>
-                    </label>
+            <!-- DELIVERY -->
+            <div class="section-box">
+                <div class="section-title">Delivery</div>
+                
+                <div class="form-group">
+                    <select class="select-field">
+                        <option value="Egypt">Egypt</option>
+                        <option value="UAE">United Arab Emirates</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Worldwide">Worldwide Delivery</option>
+                    </select>
+                </div>
+
+                <div class="form-row form-group">
+                    <input type="text" class="input-field" placeholder="First name">
+                    <input type="text" class="input-field" placeholder="Last name">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Address">
+                </div>
+
+                <div class="form-row-3 form-group">
+                    <input type="text" class="input-field" placeholder="City">
+                    <select class="select-field">
+                        <option value="">Governorate</option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Alexandria">Alexandria</option>
+                        <option value="Giza">Giza</option>
+                    </select>
+                    <input type="text" class="input-field" placeholder="Postal code (optional)">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Phone">
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox"> Save this information for next time
+                </label>
+            </div>
+
+            <!-- SHIPPING METHOD -->
+            <div class="section-box">
+                <div class="section-title">Shipping method</div>
+                <div class="notice-box">
+                    Enter your shipping address to view available shipping methods.
                 </div>
             </div>
-        </div>
 
-        <div class="summary-panel">
-            <div>
-                <h3>Order Intercept Summary</h3>
-                <div id="dynamic-checkout-items"><!-- Runtime stream injection --></div>
+            <!-- PAYMENT -->
+            <div class="section-box">
+                <div class="section-title">Payment</div>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.8rem;">All transactions are secure and encrypted.</p>
+                
+                <div class="payment-option-box">
+                    Cash on Delivery (COD)
+                </div>
             </div>
 
-            <div style="margin-top: 40px;">
-                <div class="ledger-line"><span>Subtotal Manifest</span><span id="subtotal-val">EGP 0.00</span></div>
-                <div class="ledger-line"><span>Shipping Freight</span><span style="color: var(--accent-neon);">FREE MATRIX</span></div>
-                <div class="ledger-line total-bold"><span>TOTAL MATRIX</span><span style="color: var(--accent-neon);" id="total-val">EGP 0.00</span></div>
-                <button class="submit-order-button" id="executeOrderBtn">Complete Order Execution</button>
+            <!-- BILLING ADDRESS -->
+            <div class="section-box">
+                <div class="section-title">Billing address</div>
+                <div class="payment-option-box" style="margin-bottom: 0.6rem;">
+                    🔴 Same as shipping address
+                </div>
+                <div class="notice-box">
+                    ⚪ Use a different billing address
+                </div>
             </div>
-        </div>
+
+            <button class="btn-complete" onclick="completeOrder()">Complete order</button>
+
+            <div class="checkout-footer">
+                <a href="terms.html">Refund policy</a>
+                <a href="terms.html">Shipping</a>
+                <a href="terms.html">Contact</a>
+            </div>
+        </main>
+
+        <!-- RIGHT SIDEBAR ORDER SUMMARY -->
+        <aside class="sidebar">
+            <div id="checkout-items-list">
+                <!-- LOADED DYNAMICALLY -->
+            </div>
+
+            <div style="border-top: 1px solid var(--border-glow); padding-top: 1.5rem; margin-top: 1.5rem;">
+                <div class="cost-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-val">E£0.00</span>
+                </div>
+                <div class="cost-row">
+                    <span>Shipping</span>
+                    <span>Enter shipping address</span>
+                </div>
+                <div class="cost-row total">
+                    <span>Total</span>
+                    <span id="total-val">E£0.00</span>
+                </div>
+            </div>
+        </aside>
+
     </div>
 
     <script>
-        function togglePaymentUIVisual(type) {
-            document.getElementById('label-cod').classList.remove('active');
-            document.getElementById('label-card').classList.remove('active');
-            document.getElementById('label-paypal').classList.remove('active');
-            document.getElementById(`label-${type}`).classList.add('active');
+        const products = [
+            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
+            { id: 2, name: "Khaby Lame Hoodie", price: 950, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
+            { id: 3, name: "LeBron James Hoodie", price: 950, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
+            { id: 4, name: "Dwayne Johnson Hoodie", price: 950, img: "https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" },
+            { id: 5, name: "Jude Bellingham Hoodie", price: 950, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" },
+            { id: 6, name: "Social Media Hoodie", price: 950, img: "https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" },
+            { id: 7, name: "Egyptian Rulers Hoodie", price: 950, img: "https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" },
+            { id: 8, name: "Egyptian Culture Hoodie", price: 950, img: "https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" },
+            { id: 9, name: "FIFA World Cup Hoodie", price: 980, img: "https://i.postimg.cc/qRHPBMmP/unnamed.png" },
+            { id: 10, name: "Algerian Culture Hoodie", price: 950, img: "https://i.postimg.cc/3rZnLTjD/IMG-5187.png" },
+            { id: 11, name: "Tunisia Culture Hoodie", price: 950, img: "https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" },
+            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
+            { id: 13, name: "El Donya Raby3 T-Shirt", price: 550, img: "https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" },
+            { id: 14, name: "El R7la Wl Fekr T-Shirt", price: 550, img: "https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" },
+            { id: 15, name: "Zkrayat 3310 T-Shirt", price: 550, img: "https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" },
+            { id: 16, name: "Sa7et El Syf T-Shirt", price: 550, img: "https://i.postimg.cc/XYJgrdmV/Untitled-design-(5).png" },
+            { id: 17, name: "2skndereya T-Shirt", price: 550, img: "https://i.postimg.cc/RVgJBSCq/Untitled-design-(7).png" },
+            { id: 18, name: "Basic Core — Black", price: 450, img: "https://i.postimg.cc/CxRFZDkV/Untitled-design-(9).png" },
+            { id: 19, name: "Basic Core — Grey", price: 450, img: "https://i.postimg.cc/MH3CxPsq/Untitled-design-(10).png" },
+            { id: 20, name: "Basic Core — Pink", price: 450, img: "https://i.postimg.cc/G2qNJgng/Untitled-design-(11).png" },
+            { id: 21, name: "Basic Core — Blue", price: 450, img: "https://i.postimg.cc/5tJRcW4f/Untitled-design-(13).png" },
+            { id: 22, name: "Basic Core — Brown", price: 450, img: "https://i.postimg.cc/ncQRChry/Untitled-design-(12).png" }
+        ];
+
+        function loadCheckout() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const buyId = parseInt(urlParams.get('buyId'));
+
+            let checkoutItems = [];
+
+            if (buyId) {
+                const singleItem = products.find(p => p.id === buyId);
+                if (singleItem) checkoutItems = [{ ...singleItem, qty: 1 }];
+            } else {
+                checkoutItems = JSON.parse(localStorage.getItem('kingCart')) || [];
+            }
+
+            const listContainer = document.getElementById('checkout-items-list');
+            let subtotal = 0;
+
+            if (checkoutItems.length === 0) {
+                listContainer.innerHTML = `<p style="color:var(--text-muted)">No items selected for checkout.</p>`;
+                return;
+            }
+
+            listContainer.innerHTML = checkoutItems.map(item => {
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                return `
+                    <div class="summary-item">
+                        <div class="summary-item-left">
+                            <div class="item-img-wrapper">
+                                <img src="${item.img}" alt="${item.name}">
+                                <div class="item-badge">${item.qty}</div>
+                            </div>
+                            <div class="item-details">
+                                <h4>"${item.name}"</h4>
+                                <p>Medium</p>
+                            </div>
+                        </div>
+                        <div class="item-price">E£${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
+            }).join('');
+
+            document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
+            document.getElementById('total-val').innerText = `EGP E£${subtotal.toFixed(2)}`;
         }
 
-        document.addEventListener('DOMContentLoaded', () => {
-            const activeCart = JSON.parse(localStorage.getItem('terminal_cart')) || [];
-            const container = document.getElementById('dynamic-checkout-items');
-            let runningSubtotal = 0;
+        function completeOrder() {
+            alert('Order placed successfully! Thank you for purchasing from THE EGYPTIAN KING.');
+            localStorage.removeItem('kingCart');
+            window.location.href = 'index.html';
+        }
 
-            if(activeCart.length === 0) {
-                container.innerHTML = `<p style="color:var(--text-muted); font-size:0.85rem; padding:20px 0;">[SYSTEM ERROR]: Local Cart Buffer Empty.</p>`;
-            } else {
-                activeCart.forEach(item => {
-                    runningSubtotal += (item.price * item.qty);
-                    container.innerHTML += `
-                        <div class="product-item-row">
-                            <div class="product-meta-left">
-                                <div class="product-img-wrapper">
-                                    <img src="${item.image}">
-                                    <div class="product-qty-badge">${item.qty}</div>
-                                </div>
-                                <div style="display:flex; flex-direction:column; gap:4px;">
-                                    <span style="font-size:0.85rem; font-weight:bold;">${item.name}</span>
-                                    <span style="font-size:0.75rem; color:var(--text-muted);">${item.spec}</span>
-                                </div>
-                            </div>
-                            <span style="font-size:0.9rem; font-weight:bold;">EGP ${(item.price * item.qty).toFixed(2)}</span>
-                        </div>`;
-                });
+        window.addEventListener('DOMContentLoaded', () => {
+            loadCheckout();
+            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
+            if (savedTheme !== 'basic') {
+                document.body.setAttribute('data-theme', savedTheme);
             }
-            document.getElementById('subtotal-val').textContent = `EGP ${runningSubtotal.toFixed(2)}`;
-            document.getElementById('total-val').textContent = `EGP ${runningSubtotal.toFixed(2)}`;
         });
     </script>
 </body>
