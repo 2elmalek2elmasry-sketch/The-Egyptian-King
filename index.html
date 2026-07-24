@@ -100,6 +100,7 @@
             100% { transform: translate(-40px, 40px) scale(0.95); }
         }
 
+        /* MODAL STYLING (THEMES & AUTH) */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -126,11 +127,24 @@
             border: 1px solid var(--border-glow);
             border-radius: 24px;
             padding: 3rem 2.5rem;
-            max-width: 580px;
+            max-width: 500px;
             width: 100%;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
         }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: #fff; }
 
         .modal-greeting {
             font-family: 'Cinzel', serif;
@@ -142,8 +156,8 @@
 
         .modal-sub {
             color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-bottom: 2.5rem;
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
             letter-spacing: 1px;
             text-transform: uppercase;
             font-weight: 600;
@@ -196,6 +210,92 @@
             box-shadow: 0 2px 10px rgba(236, 72, 153, 0.5);
         }
 
+        /* AUTHENTICATION UI STYLES */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .auth-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .auth-input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin: 1.2rem 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-glow);
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 800;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-google:hover {
+            background: #e5e5e5;
+            transform: translateY(-2px);
+        }
+
+        .auth-toggle-msg {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 1.2rem;
+        }
+
+        .auth-toggle-msg span {
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        #authError {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* HEADER & NAVIGATION */
         header {
             background: rgba(5, 5, 8, 0.8);
             backdrop-filter: blur(20px);
@@ -327,7 +427,7 @@
         .stat-item h4 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--accent-primary); }
         .stat-item p { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
 
-        /* BRAND PILLARS / EXPANDED CONTENT */
+        /* BRAND PILLARS */
         .section-padding { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
         .section-title {
             text-align: center;
@@ -385,7 +485,7 @@
             font-size: 0.9rem;
         }
 
-        /* MANIFESTO / STORY BANNER */
+        /* MANIFESTO BANNER */
         .manifesto-box {
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
@@ -414,7 +514,6 @@
             font-size: 1.05rem;
         }
 
-        /* SPECS TABLE */
         .specs-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -475,8 +574,9 @@
     </div>
 
     <!-- THEME MODAL POPUP -->
-    <div class="modal-overlay" id="themeModal">
+    <div class="modal-overlay hidden" id="themeModal">
         <div class="modal-card">
+            <button class="modal-close" onclick="closeThemeModal()">✕</button>
             <h2 class="modal-greeting">WELCOME TO THE KINGDOM</h2>
             <p class="modal-sub">Pick a design for the shop</p>
 
@@ -501,6 +601,34 @@
         </div>
     </div>
 
+    <!-- AUTHENTICATION MODAL -->
+    <div class="modal-overlay hidden" id="authModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            <h2 class="modal-greeting" id="authTitle">SIGN IN</h2>
+            <p class="modal-sub" id="authSubtitle">Access your exclusive order status & drops</p>
+
+            <div id="authError"></div>
+
+            <form class="auth-form" id="authForm" onsubmit="handleEmailAuth(event)">
+                <input type="email" id="authEmail" class="auth-input" placeholder="Email Address" required>
+                <input type="password" id="authPassword" class="auth-input" placeholder="Password" required>
+                <button type="submit" class="btn-glow" id="authSubmitBtn" style="width:100%;">Sign In</button>
+            </form>
+
+            <div class="auth-divider">or continue with</div>
+
+            <button class="btn-google" id="googleBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                Google
+            </button>
+
+            <div class="auth-toggle-msg">
+                <span id="authToggleText">Need an account? Sign Up</span>
+            </div>
+        </div>
+    </div>
+
     <button class="theme-switch-trigger" onclick="openThemeModal()">🎨 CHANGE THEME</button>
 
     <header>
@@ -514,6 +642,7 @@
         </nav>
         <div class="nav-actions">
             <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
+            <button class="btn-bag" id="authNavBtn" onclick="openAuthModal()">SIGN IN</button>
             <a href="shop.html" class="btn-glow">Enter Shop</a>
         </div>
     </header>
@@ -601,6 +730,113 @@
         </div>
     </footer>
 
+    <!-- FIREBASE MODULE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            GoogleAuthProvider, 
+            signInWithPopup, 
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
+
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
+            authDomain: "the-egyptian-king-68e45.firebaseapp.com",
+            projectId: "the-egyptian-king-68e45",
+            storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
+            messagingSenderId: "94881816710",
+            appId: "1:94881816710:web:10fca569f1b43c583ab107",
+            measurementId: "G-ZR0FBN0PRV"
+        };
+
+        // Initialize Firebase & Auth
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
+
+        let isSignUpMode = false;
+
+        // UI Auth Controls
+        const authNavBtn = document.getElementById('authNavBtn');
+        const authToggleText = document.getElementById('authToggleText');
+        const authTitle = document.getElementById('authTitle');
+        const authSubtitle = document.getElementById('authSubtitle');
+        const authSubmitBtn = document.getElementById('authSubmitBtn');
+        const authError = document.getElementById('authError');
+
+        // Toggle Sign In / Sign Up Mode
+        authToggleText.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                authTitle.innerText = "CREATE ACCOUNT";
+                authSubtitle.innerText = "Join the kingdom for exclusive drops";
+                authSubmitBtn.innerText = "Sign Up";
+                authToggleText.innerText = "Already have an account? Sign In";
+            } else {
+                authTitle.innerText = "SIGN IN";
+                authSubtitle.innerText = "Access your exclusive order status & drops";
+                authSubmitBtn.innerText = "Sign In";
+                authToggleText.innerText = "Need an account? Sign Up";
+            }
+        });
+
+        // Email & Password Auth Handler
+        window.handleEmailAuth = async function(e) {
+            e.preventDefault();
+            authError.style.display = 'none';
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+
+            try {
+                if (isSignUpMode) {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                closeAuthModal();
+            } catch (err) {
+                authError.innerText = err.message.replace('Firebase: ', '');
+                authError.style.display = 'block';
+            }
+        };
+
+        // Google Sign In
+        document.getElementById('googleBtn').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, googleProvider);
+                closeAuthModal();
+            } catch (err) {
+                authError.innerText = err.message.replace('Firebase: ', '');
+                authError.style.display = 'block';
+            }
+        });
+
+        // Global Auth Action (Sign In Trigger or Sign Out Execution)
+        window.openAuthModal = function() {
+            if (auth.currentUser) {
+                signOut(auth);
+            } else {
+                document.getElementById('authModal').classList.remove('hidden');
+            }
+        };
+
+        // Auth Observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authNavBtn.innerText = "LOGOUT";
+            } else {
+                authNavBtn.innerText = "SIGN IN";
+            }
+        });
+    </script>
+
     <script>
         function updateCartBadge() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
@@ -619,11 +855,19 @@
 
         function selectTheme(theme) {
             applyTheme(theme);
-            document.getElementById('themeModal').classList.add('hidden');
+            closeThemeModal();
         }
 
         function openThemeModal() {
             document.getElementById('themeModal').classList.remove('hidden');
+        }
+
+        function closeThemeModal() {
+            document.getElementById('themeModal').classList.add('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
         }
 
         window.addEventListener('DOMContentLoaded', () => {
@@ -631,9 +875,9 @@
             const savedTheme = localStorage.getItem('selectedTheme');
             if (savedTheme) {
                 applyTheme(savedTheme);
-                document.getElementById('themeModal').classList.add('hidden');
             } else {
                 applyTheme('neon');
+                openThemeModal();
             }
         });
     </script>
