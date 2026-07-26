@@ -1,1428 +1,1237 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="THE EGYPTIAN KING — Archival Streetwear Architecture & Heavyweight Apparel drops.">
-  <title>THE EGYPTIAN KING — Archival Apparel Architecture</title>
-
-  <style>
-    /* ==========================================================================
-       01. CSS CUSTOM PROPERTIES & DESIGN TOKENS
-       ========================================================================== */
-    :root {
-      /* Colors */
-      --color-bg-primary: #ffffff;
-      --color-bg-secondary: #fbfbfb;
-      --color-bg-tertiary: #f4f4f4;
-      --color-bg-alt: #111111;
-      
-      --color-text-primary: #111111;
-      --color-text-secondary: #555555;
-      --color-text-muted: #888888;
-      --color-text-light: #ffffff;
-      
-      --color-border-light: #eeeeee;
-      --color-border-medium: #e0e0e0;
-      --color-border-dark: #111111;
-      
-      --color-accent-gold: #c5a059;
-      --color-accent-hover: #333333;
-
-      /* Typography */
-      --font-family-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      --font-family-mono: SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-      
-      /* Spacing */
-      --spacing-xs: 8px;
-      --spacing-sm: 16px;
-      --spacing-md: 24px;
-      --spacing-lg: 40px;
-      --spacing-xl: 80px;
-      --spacing-xxl: 140px;
-
-      /* Layout */
-      --container-max-width: 1320px;
-      --header-height: 80px;
-
-      /* Transitions */
-      --transition-fast: 0.2s ease;
-      --transition-normal: 0.35s cubic-bezier(0.16, 1, 0.3, 1);
-      --transition-slow: 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    /* ==========================================================================
-       02. RESET & BASE STYLES
-       ========================================================================== */
-    *, *::before, *::after {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-      font-size: 16px;
-      background-color: var(--color-bg-primary);
-      color: var(--color-text-primary);
-    }
-
-    body {
-      font-family: var(--font-family-sans);
-      line-height: 1.6;
-      -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
-      overflow-x: hidden;
-    }
-
-    h1, h2, h3, h4, h5, h6 {
-      font-weight: 800;
-      letter-spacing: -0.02em;
-      line-height: 1.1;
-      color: var(--color-text-primary);
-    }
-
-    p {
-      color: var(--color-text-secondary);
-      margin-bottom: 1rem;
-    }
-
-    a {
-      color: inherit;
-      text-decoration: none;
-      transition: color var(--transition-fast);
-    }
-
-    button {
-      font-family: inherit;
-      cursor: pointer;
-      border: none;
-      background: none;
-    }
-
-    ul, ol {
-      list-style: none;
-    }
-
-    img {
-      max-width: 100%;
-      height: auto;
-      display: block;
-    }
-
-    /* ==========================================================================
-       03. REUSABLE UTILITY CLASSES
-       ========================================================================== */
-    .container {
-      width: 100%;
-      max-width: var(--container-max-width);
-      margin: 0 auto;
-      padding-left: var(--spacing-md);
-      padding-right: var(--spacing-md);
-    }
-
-    .section-padding {
-      padding-top: var(--spacing-xxl);
-      padding-bottom: var(--spacing-xxl);
-      border-bottom: 1px solid var(--color-border-light);
-    }
-
-    .section-tag {
-      display: inline-block;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 3px;
-      color: var(--color-text-muted);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .section-heading {
-      font-size: clamp(2rem, 4vw, 3.2rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-bottom: var(--spacing-lg);
-      letter-spacing: -1px;
-    }
-
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      padding: 18px 42px;
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 2.5px;
-      transition: all var(--transition-normal);
-      border: 1px solid var(--color-text-primary);
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .btn-dark {
-      background-color: var(--color-text-primary);
-      color: var(--color-bg-primary);
-    }
-
-    .btn-dark:hover {
-      background-color: var(--color-bg-primary);
-      color: var(--color-text-primary);
-    }
-
-    .btn-outline {
-      background-color: transparent;
-      color: var(--color-text-primary);
-    }
-
-    .btn-outline:hover {
-      background-color: var(--color-text-primary);
-      color: var(--color-bg-primary);
-    }
-
-    .badge {
-      display: inline-block;
-      padding: 4px 10px;
-      font-size: 0.65rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border: 1px solid var(--color-border-medium);
-      background-color: var(--color-bg-secondary);
-    }
-
-    /* ==========================================================================
-       04. ANNOUNCEMENT BAR & NAVIGATION BAR
-       ========================================================================== */
-    .announcement-bar {
-      background-color: var(--color-bg-alt);
-      color: var(--color-text-light);
-      font-size: 0.75rem;
-      font-weight: 600;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      text-align: center;
-      padding: 10px var(--spacing-sm);
-    }
-
-    .navbar {
-      position: sticky;
-      top: 0;
-      left: 0;
-      width: 100%;
-      background-color: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(10px);
-      border-bottom: 1px solid var(--color-border-light);
-      z-index: 1000;
-      height: var(--header-height);
-      display: flex;
-      align-items: center;
-    }
-
-    .nav-wrapper {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-    }
-
-    .brand-logo {
-      font-size: 1.2rem;
-      font-weight: 900;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 36px;
-    }
-
-    .nav-link {
-      font-size: 0.8rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      color: var(--color-text-secondary);
-      position: relative;
-    }
-
-    .nav-link::after {
-      content: '';
-      position: absolute;
-      bottom: -6px;
-      left: 0;
-      width: 0;
-      height: 2px;
-      background-color: var(--color-text-primary);
-      transition: width var(--transition-fast);
-    }
-
-    .nav-link:hover {
-      color: var(--color-text-primary);
-    }
-
-    .nav-link:hover::after {
-      width: 100%;
-    }
-
-    .mobile-toggle {
-      display: none;
-      flex-direction: column;
-      gap: 6px;
-      cursor: pointer;
-    }
-
-    .mobile-toggle span {
-      width: 25px;
-      height: 2px;
-      background-color: var(--color-text-primary);
-    }
-
-    /* ==========================================================================
-       05. SECTION 1 — HERO SECTION
-       ========================================================================== */
-    .hero {
-      min-height: calc(100vh - var(--header-height));
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      background-color: var(--color-bg-secondary);
-      position: relative;
-      padding: var(--spacing-xl) var(--spacing-md);
-      border-bottom: 1px solid var(--color-border-light);
-    }
-
-    .hero-content {
-      max-width: 900px;
-    }
-
-    .hero-subtitle {
-      font-size: 0.85rem;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      font-weight: 700;
-      color: var(--color-text-muted);
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .hero-title {
-      font-size: clamp(3rem, 6vw, 5.5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: -2px;
-      line-height: 0.95;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .hero-description {
-      font-size: clamp(1rem, 2vw, 1.25rem);
-      color: var(--color-text-secondary);
-      max-width: 650px;
-      margin: 0 auto var(--spacing-lg) auto;
-      font-weight: 400;
-    }
-
-    .hero-cta-group {
-      display: flex;
-      gap: 20px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    /* ==========================================================================
-       06. SECTION 2 — CATEGORIES & CAPSULE SHOWCASE
-       ========================================================================== */
-    .filter-tabs {
-      display: flex;
-      gap: 15px;
-      margin-bottom: var(--spacing-lg);
-      flex-wrap: wrap;
-    }
-
-    .filter-btn {
-      padding: 10px 24px;
-      font-size: 0.75rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-      border: 1px solid var(--color-border-medium);
-      background: var(--color-bg-primary);
-      transition: all var(--transition-fast);
-    }
-
-    .filter-btn.active, .filter-btn:hover {
-      background: var(--color-text-primary);
-      color: var(--color-bg-primary);
-      border-color: var(--color-text-primary);
-    }
-
-    .categories-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-md);
-    }
-
-    .category-card {
-      background-color: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-medium);
-      padding: 45px 35px;
-      min-height: 500px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      transition: all var(--transition-normal);
-      position: relative;
-    }
-
-    .category-card:hover {
-      border-color: var(--color-text-primary);
-      transform: translateY(-8px);
-      box-shadow: 0 25px 50px rgba(0,0,0,0.05);
-    }
-
-    .card-head {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .card-number {
-      font-size: 0.8rem;
-      font-weight: 800;
-      color: var(--color-text-muted);
-    }
-
-    .card-title {
-      font-size: 2rem;
-      font-weight: 900;
-      text-transform: uppercase;
-      margin-top: var(--spacing-md);
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .card-desc {
-      font-size: 0.95rem;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-    }
-
-    .card-footer {
-      margin-top: var(--spacing-lg);
-    }
-
-    .card-link {
-      font-size: 0.8rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      border-bottom: 2px solid var(--color-text-primary);
-      padding-bottom: 4px;
-      display: inline-block;
-    }
-
-    /* ==========================================================================
-       07. SECTION 3 — BRAND MANIFESTO
-       ========================================================================== */
-    .manifesto-wrapper {
-      max-width: 960px;
-      margin: 0 auto;
-      text-align: center;
-    }
-
-    .manifesto-quote {
-      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
-      font-weight: 300;
-      letter-spacing: -0.5px;
-      line-height: 1.3;
-      margin-bottom: var(--spacing-lg);
-      color: var(--color-text-primary);
-    }
-
-    .manifesto-quote strong {
-      font-weight: 800;
-    }
-
-    .manifesto-columns {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: var(--spacing-lg);
-      text-align: left;
-    }
-
-    .manifesto-col p {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      color: var(--color-text-secondary);
-    }
-
-    /* ==========================================================================
-       08. SECTION 4 — FABRIC & CRAFT EDITORIAL
-       ========================================================================== */
-    .editorial-grid {
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: var(--spacing-xl);
-      align-items: center;
-    }
-
-    .editorial-visual {
-      background-color: var(--color-bg-tertiary);
-      border: 1px solid var(--color-border-medium);
-      height: 550px;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: var(--spacing-lg);
-      position: relative;
-    }
-
-    .editorial-visual-inner {
-      border: 1px dashed var(--color-text-muted);
-      width: 100%;
-      height: 100%;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-    }
-
-    .visual-label {
-      font-size: 0.85rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-
-    .editorial-content h3 {
-      font-size: 2.2rem;
-      text-transform: uppercase;
-      margin-bottom: var(--spacing-sm);
-    }
-
-    .editorial-content p {
-      font-size: 1.05rem;
-      line-height: 1.8;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .spec-list {
-      margin-bottom: var(--spacing-lg);
-      border-top: 1px solid var(--color-border-light);
-    }
-
-    .spec-item {
-      display: flex;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px solid var(--color-border-light);
-      font-size: 0.85rem;
-    }
-
-    .spec-name {
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-    }
-
-    .spec-val {
-      color: var(--color-text-secondary);
-    }
-
-    /* ==========================================================================
-       09. SECTION 5 — LOOKBOOK GALLERY SHOWCASE
-       ========================================================================== */
-    .lookbook-header {
-      display: flex;
-      justify-content: space-between;
-      align-items: flex-end;
-      margin-bottom: var(--spacing-lg);
-    }
-
-    .lookbook-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--spacing-sm);
-    }
-
-    .lookbook-card {
-      height: 480px;
-      background-color: var(--color-bg-tertiary);
-      border: 1px solid var(--color-border-light);
-      position: relative;
-      display: flex;
-      flex-direction: column;
-      justify-content: flex-end;
-      padding: var(--spacing-md);
-      transition: all var(--transition-normal);
-      overflow: hidden;
-    }
-
-    .lookbook-card:hover {
-      border-color: var(--color-text-primary);
-    }
-
-    .lookbook-tag {
-      font-size: 0.7rem;
-      font-weight: 800;
-      letter-spacing: 1.5px;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-      margin-bottom: 4px;
-    }
-
-    .lookbook-title {
-      font-size: 1.1rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    /* ==========================================================================
-       10. SECTION 6 — INTERACTIVE SIZING MATRIX
-       ========================================================================== */
-    .size-matrix-box {
-      background-color: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-medium);
-      padding: var(--spacing-xl);
-    }
-
-    .matrix-controls {
-      display: flex;
-      gap: 20px;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .size-table {
-      width: 100%;
-      border-collapse: collapse;
-      text-align: left;
-      font-size: 0.9rem;
-    }
-
-    .size-table th, .size-table td {
-      padding: 16px var(--spacing-sm);
-      border-bottom: 1px solid var(--color-border-medium);
-    }
-
-    .size-table th {
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 1px;
-      background-color: var(--color-bg-tertiary);
-    }
-
-    .size-table tr:hover td {
-      background-color: var(--color-bg-primary);
-    }
-
-    /* ==========================================================================
-       11. SECTION 7 — TAILORING & CONSTRUCTION PROCESS
-       ========================================================================== */
-    .process-steps {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: var(--spacing-md);
-      position: relative;
-    }
-
-    .process-card {
-      border-left: 2px solid var(--color-border-medium);
-      padding-left: var(--spacing-md);
-    }
-
-    .process-card:hover {
-      border-left-color: var(--color-text-primary);
-    }
-
-    .process-step-num {
-      font-size: 0.8rem;
-      font-weight: 900;
-      color: var(--color-text-muted);
-      margin-bottom: 8px;
-    }
-
-    .process-title {
-      font-size: 1.2rem;
-      text-transform: uppercase;
-      margin-bottom: 10px;
-    }
-
-    .process-desc {
-      font-size: 0.9rem;
-      color: var(--color-text-secondary);
-      line-height: 1.6;
-    }
-
-    /* ==========================================================================
-       12. SECTION 8 — BRAND PILLARS / VALUES
-       ========================================================================== */
-    .pillars-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-lg);
-    }
-
-    .pillar-card {
-      padding: var(--spacing-md);
-      background-color: var(--color-bg-primary);
-      border: 1px solid var(--color-border-light);
-    }
-
-    .pillar-title {
-      font-size: 1.25rem;
-      text-transform: uppercase;
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .pillar-text {
-      font-size: 0.95rem;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-    }
-
-    /* ==========================================================================
-       13. SECTION 9 — PRESS & EDITORIAL QUOTES
-       ========================================================================== */
-    .press-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: var(--spacing-md);
-    }
-
-    .press-card {
-      background-color: var(--color-bg-secondary);
-      padding: var(--spacing-lg);
-      border: 1px solid var(--color-border-medium);
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-    }
-
-    .press-quote {
-      font-size: 1.1rem;
-      font-style: italic;
-      color: var(--color-text-primary);
-      margin-bottom: var(--spacing-md);
-    }
-
-    .press-source {
-      font-size: 0.75rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      color: var(--color-text-muted);
-    }
-
-    /* ==========================================================================
-       14. SECTION 10 — FAQ ACCORDION
-       ========================================================================== */
-    .faq-container {
-      max-width: 850px;
-      margin: 0 auto;
-    }
-
-    .faq-item {
-      border-bottom: 1px solid var(--color-border-medium);
-    }
-
-    .faq-trigger {
-      width: 100%;
-      text-align: left;
-      padding: 24px 0;
-      font-size: 1.15rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      letter-spacing: -0.5px;
-    }
-
-    .faq-icon {
-      font-size: 1.5rem;
-      font-weight: 300;
-      transition: transform var(--transition-fast);
-    }
-
-    .faq-content {
-      max-height: 0;
-      overflow: hidden;
-      transition: max-height var(--transition-normal);
-    }
-
-    .faq-content p {
-      padding-bottom: 24px;
-      font-size: 0.95rem;
-      color: var(--color-text-secondary);
-      line-height: 1.7;
-    }
-
-    .faq-item.active .faq-icon {
-      transform: rotate(45deg);
-    }
-
-    /* ==========================================================================
-       15. SECTION 11 — PRIVATE ACCESS NEWSLETTER
-       ========================================================================== */
-    .newsletter-box {
-      background-color: var(--color-bg-secondary);
-      border: 1px solid var(--color-border-dark);
-      padding: var(--spacing-xxl) var(--spacing-md);
-      text-align: center;
-      max-width: 900px;
-      margin: 0 auto;
-    }
-
-    .newsletter-form {
-      display: flex;
-      justify-content: center;
-      max-width: 550px;
-      margin: var(--spacing-md) auto 0 auto;
-    }
-
-    .newsletter-input {
-      width: 70%;
-      padding: 18px 24px;
-      border: 1px solid var(--color-text-primary);
-      border-right: none;
-      font-size: 0.85rem;
-      outline: none;
-      background: var(--color-bg-primary);
-    }
-
-    .newsletter-submit {
-      width: 30%;
-      background-color: var(--color-text-primary);
-      color: var(--color-bg-primary);
-      border: 1px solid var(--color-text-primary);
-      font-size: 0.8rem;
-      font-weight: 800;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      transition: background-color var(--transition-fast);
-    }
-
-    .newsletter-submit:hover {
-      background-color: var(--color-accent-hover);
-    }
-
-    /* ==========================================================================
-       16. SECTION 12 — FOOTER
-       ========================================================================== */
-    footer {
-      background-color: var(--color-bg-alt);
-      color: var(--color-text-light);
-      padding-top: var(--spacing-xxl);
-      padding-bottom: var(--spacing-lg);
-    }
-
-    .footer-grid {
-      display: grid;
-      grid-template-columns: 2fr 1fr 1fr 1fr;
-      gap: var(--spacing-xl);
-      margin-bottom: var(--spacing-xl);
-    }
-
-    .footer-brand h2 {
-      color: var(--color-text-light);
-      font-size: 1.5rem;
-      letter-spacing: 2px;
-      margin-bottom: var(--spacing-xs);
-    }
-
-    .footer-brand p {
-      color: #888888;
-      font-size: 0.9rem;
-      max-width: 320px;
-    }
-
-    .footer-col h4 {
-      color: var(--color-text-light);
-      font-size: 0.8rem;
-      text-transform: uppercase;
-      letter-spacing: 2px;
-      margin-bottom: var(--spacing-md);
-    }
-
-    .footer-col ul li {
-      margin-bottom: 12px;
-    }
-
-    .footer-col a {
-      color: #888888;
-      font-size: 0.85rem;
-      transition: color var(--transition-fast);
-    }
-
-    .footer-col a:hover {
-      color: var(--color-text-light);
-    }
-
-    .footer-bottom {
-      border-top: 1px solid #222222;
-      padding-top: var(--spacing-md);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      font-size: 0.75rem;
-      color: #666666;
-      text-transform: uppercase;
-      letter-spacing: 1.5px;
-    }
-
-    /* ==========================================================================
-       17. RESPONSIVE MEDIA QUERIES
-       ========================================================================== */
-    @media (max-width: 1024px) {
-      .categories-grid, .editorial-grid, .pillars-grid, .press-grid, .process-steps {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .lookbook-grid {
-        grid-template-columns: repeat(2, 1fr);
-      }
-      .footer-grid {
-        grid-template-columns: 1fr 1fr;
-      }
-    }
-
-    @media (max-width: 768px) {
-      .nav-links {
-        display: none;
-      }
-      .mobile-toggle {
-        display: flex;
-      }
-      .hero-title {
-        font-size: 3rem;
-      }
-      .categories-grid, .editorial-grid, .pillars-grid, .press-grid, .process-steps, .manifesto-columns, .lookbook-grid {
-        grid-template-columns: 1fr;
-      }
-      .footer-grid {
-        grid-template-columns: 1fr;
-      }
-      .newsletter-form {
-        flex-direction: column;
-      }
-      .newsletter-input, .newsletter-submit {
-        width: 100%;
-        border-right: 1px solid var(--color-text-primary);
-      }
-      .newsletter-submit {
-        padding: 16px;
-        margin-top: 10px;
-      }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="google-site-verification" content="Bv49-Vz2uN0iFvzMuLbp6VWUjabg3omytytGE0JPoa8" />
+    <title>THE EGYPTIAN KING — Official Site</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050508;
+            --card-bg: rgba(18, 18, 24, 0.75);
+            --border-glow: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --accent-primary: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.4);
+            --blob-1: #ffffff;
+            --blob-2: #333333;
+            --blob-3: #666666;
+        }
+
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --card-bg: rgba(24, 9, 43, 0.8);
+            --border-glow: rgba(236, 72, 153, 0.4);
+            --accent-primary: #ec4899;
+            --accent-glow: rgba(236, 72, 153, 0.6);
+            --blob-1: #ec4899;
+            --blob-2: #8b5cf6;
+            --blob-3: #06b6d4;
+        }
+
+        body[data-theme="ai"] {
+            --bg: #030712;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --border-glow: rgba(56, 189, 248, 0.35);
+            --accent-primary: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.5);
+            --blob-1: #0284c7;
+            --blob-2: #6366f1;
+            --blob-3: #0f172a;
+        }
+
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.35);
+            --accent-primary: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.5);
+            --blob-1: #ca8a04;
+            --blob-2: #854d0e;
+            --blob-3: #1e1b18;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            overflow-x: hidden;
+            position: relative;
+            min-height: 100vh;
+        }
+
+        .ambient-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: -1;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .blob {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(130px);
+            opacity: 0.3;
+            animation: floatBlob 12s infinite alternate ease-in-out;
+            transition: background 0.8s ease;
+        }
+
+        .blob-1 { width: 500px; height: 500px; background: var(--blob-1); top: -100px; left: 20%; }
+        .blob-2 { width: 450px; height: 450px; background: var(--blob-2); bottom: 10%; right: 15%; animation-delay: -5s; }
+        .blob-3 { width: 350px; height: 350px; background: var(--blob-3); top: 40%; left: -50px; animation-delay: -8s; }
+
+        @keyframes floatBlob {
+            0% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(60px, 80px) scale(1.1); }
+            100% { transform: translate(-40px, 40px) scale(0.95); }
+        }
+
+        /* MODAL STYLING (THEMES & AUTH) */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal-card {
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1.25rem;
+            right: 1.5rem;
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+        .modal-close:hover { color: #fff; }
+
+        .modal-greeting {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            letter-spacing: 3px;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .modal-sub {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            margin-bottom: 2rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .theme-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+
+        .theme-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            color: #fff;
+            padding: 1.25rem 1rem;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            text-transform: uppercase;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+
+        .theme-btn:hover {
+            transform: translateY(-6px) scale(1.04);
+            border-color: #fff;
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 12px 25px rgba(236, 72, 153, 0.3);
+        }
+
+        .badge-rec {
+            position: absolute;
+            top: -10px;
+            right: 10px;
+            background: #ec4899;
+            color: #fff;
+            font-size: 0.6rem;
+            font-weight: 900;
+            padding: 3px 8px;
+            border-radius: 20px;
+            letter-spacing: 1px;
+            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.5);
+        }
+
+        /* AUTHENTICATION UI STYLES */
+        .auth-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .auth-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            width: 100%;
+        }
+
+        .auth-input:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .auth-divider {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            margin: 1.2rem 0;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .auth-divider::before, .auth-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: var(--border-glow);
+        }
+
+        .btn-google {
+            background: #ffffff;
+            color: #000000;
+            font-weight: 800;
+            padding: 0.85rem 1.2rem;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .btn-google:hover {
+            background: #e5e5e5;
+            transform: translateY(-2px);
+        }
+
+        .auth-toggle-msg {
+            color: var(--text-muted);
+            font-size: 0.8rem;
+            margin-top: 1.2rem;
+        }
+
+        .auth-toggle-msg span {
+            color: var(--accent-primary);
+            cursor: pointer;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        #authError {
+            color: #ef4444;
+            font-size: 0.8rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        /* HEADER & NAVIGATION */
+        header {
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.25rem 4rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        nav a:hover, nav a.active { color: #fff; }
+
+        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+
+        .btn-bag {
+            background: transparent;
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
+
+        .btn-glow {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 0.75rem 1.8rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-decoration: none;
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px var(--accent-glow);
+            border: none;
+            cursor: pointer;
+            display: inline-block;
+        }
+
+        .btn-glow:hover {
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 0 30px var(--accent-glow);
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 85vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 5rem 1.5rem;
+            position: relative;
+        }
+
+        .hero-badge {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 2.5px;
+            text-transform: uppercase;
+            margin-bottom: 1.8rem;
+            backdrop-filter: blur(10px);
+            color: var(--accent-primary);
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 900;
+            letter-spacing: 6px;
+            line-height: 1.05;
+            margin-bottom: 1.8rem;
+            background: linear-gradient(180deg, #ffffff 40%, var(--text-muted) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-subtitle {
+            max-width: 720px;
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 2.8rem;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3.5rem;
+            margin-top: 3.5rem;
+            border-top: 1px solid var(--border-glow);
+            padding-top: 2.5rem;
+        }
+
+        .stat-item h4 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--accent-primary); }
+        .stat-item p { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
+
+        /* BRAND PILLARS */
+        .section-padding { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-title {
+            text-align: center;
+            font-family: 'Cinzel', serif;
+            font-size: 2.2rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+        }
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            margin-bottom: 4rem;
+            text-transform: uppercase;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .pillar-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 2.5rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .pillar-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--accent-primary);
+        }
+
+        .pillar-icon {
+            font-size: 2rem;
+            margin-bottom: 1.2rem;
+            color: var(--accent-primary);
+        }
+
+        .pillar-card h3 {
+            font-family: 'Cinzel', serif;
+            font-size: 1.3rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .pillar-card p {
+            color: var(--text-muted);
+            line-height: 1.7;
+            font-size: 0.9rem;
+        }
+
+        /* NEW SECTION: FEATURED DROPS SHOWCASE */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-primary);
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 4rem;
+            border: 1px dashed var(--border-glow);
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: var(--accent-primary);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        /* NEW SECTION: FABRIC & ARCHITECTURE */
+        .tech-banner {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            backdrop-filter: blur(15px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .tech-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tech-list li strong {
+            color: #fff;
+        }
+
+        /* NEW SECTION: REVIEWS & REPUTATION */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .review-stars {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-quote {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-author {
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* NEW SECTION: DROP ALARM / NEWSLETTER */
+        .drop-alarm {
+            text-align: center;
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(5,5,8,0.9) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .alarm-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        .alarm-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.9rem 1.2rem;
+            border-radius: 50px;
+            color: #fff;
+            outline: none;
+        }
+
+        /* MANIFESTO BANNER */
+        .manifesto-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 4.5rem 3rem;
+            text-align: center;
+            backdrop-filter: blur(15px);
+            margin: 4rem auto 6rem;
+            max-width: 1100px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .manifesto-box h2 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.4rem;
+            letter-spacing: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .manifesto-box p {
+            max-width: 800px;
+            margin: 0 auto 2.5rem;
+            color: var(--text-muted);
+            line-height: 1.9;
+            font-size: 1.05rem;
+        }
+
+        .specs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+
+        .spec-item {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid var(--border-glow);
+            border-radius: 16px;
+            padding: 1.8rem;
+            text-align: center;
+        }
+
+        .spec-item h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .spec-item div { font-size: 1.1rem; font-weight: 800; color: #fff; }
+
+        .theme-switch-trigger {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: rgba(18, 18, 24, 0.9);
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 1px;
+            cursor: pointer;
+            z-index: 90;
+            backdrop-filter: blur(10px);
+        }
+
+        /* ENHANCED FOOTER */
+        footer {
+            background: rgba(5, 5, 8, 0.95);
+            border-top: 1px solid var(--border-glow);
+            padding: 5rem 2rem 2rem;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            text-align: left;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+            max-width: 320px;
+        }
+
+        .footer-col h5 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            color: #fff;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-primary);
+        }
+
+        .copyright { color: #555; font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; }
+
+        @media (max-width: 900px) {
+            .tech-banner { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
+
+        @media (max-width: 768px) {
+            header { padding: 1rem 1.5rem; }
+            .theme-grid { grid-template-columns: 1fr; }
+            .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .alarm-form { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; }
+        }
+    </style>
 </head>
 <body>
 
-  <!-- ANNOUNCEMENT BAR -->
-  <div class="announcement-bar">
-    PRIVATE ARCHIVE DROPS — COMPLIMENTARY SHIPPING ACROSS EGYPT ON ALL CAPSULE ORDERS
-  </div>
-
-  <!-- NAVIGATION BAR -->
-  <nav class="navbar">
-    <div class="container nav-wrapper">
-      <a href="#" class="brand-logo">THE EGYPTIAN KING</a>
-      <div class="nav-links">
-        <a href="#capsules" class="nav-link">Capsules</a>
-        <a href="#manifesto" class="nav-link">Manifesto</a>
-        <a href="#craftsmanship" class="nav-link">Craftsmanship</a>
-        <a href="#lookbook" class="nav-link">Lookbook</a>
-        <a href="#sizing" class="nav-link">Sizing</a>
-        <a href="#pillars" class="nav-link">Pillars</a>
-        <a href="#faq" class="nav-link">FAQ</a>
-      </div>
-      <div class="mobile-toggle" onclick="toggleMobileNav()">
-        <span></span>
-        <span></span>
-        <span></span>
-      </div>
+    <div class="ambient-bg">
+        <div class="blob blob-1"></div>
+        <div class="blob blob-2"></div>
+        <div class="blob blob-3"></div>
     </div>
-  </nav>
 
-  <!-- 01. HERO SECTION -->
-  <header class="hero">
-    <div class="hero-content">
-      <span class="hero-subtitle">THE EGYPTIAN KING ARCHIVE</span>
-      <h1 class="hero-title">ARCHIVAL STREETWEAR ARCHITECTURE</h1>
-      <p class="hero-description">Ancient hieroglyphic motifs engineered into heavyweight, minimal silhouette frameworks. Designed in Cairo.</p>
-      <div class="hero-cta-group">
-        <a href="#capsules" class="btn btn-dark">EXPLORE CAPSULES</a>
-        <a href="#manifesto" class="btn btn-outline">OUR MANIFESTO</a>
-      </div>
-    </div>
-  </header>
+    <!-- THEME MODAL POPUP -->
+    <div class="modal-overlay hidden" id="themeModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeThemeModal()">✕</button>
+            <h2 class="modal-greeting">WELCOME TO THE KINGDOM</h2>
+            <p class="modal-sub">Pick a design for the shop</p>
 
-  <!-- 02. CAPSULE & CATEGORIES SHOWCASE -->
-  <section id="capsules" class="section-padding">
-    <div class="container">
-      <span class="section-tag">01 / CATEGORIES</span>
-      <h2 class="section-heading">CURRENT LINEUP</h2>
+            <div class="theme-grid">
+                <button class="theme-btn" onclick="selectTheme('ai')">
+                    1: FUTURISTIC AI
+                </button>
+                
+                <button class="theme-btn" onclick="selectTheme('neon')">
+                    <span class="badge-rec">RECOMMENDED</span>
+                    2: NEON
+                </button>
 
-      <!-- Interactive Filter Tabs -->
-      <div class="filter-tabs">
-        <button class="filter-btn active" onclick="filterCapsules('all')">ALL CATEGORIES</button>
-        <button class="filter-btn" onclick="filterCapsules('fleece')">HEAVY FLEECE</button>
-        <button class="filter-btn" onclick="filterCapsules('tees')">GRAPHIC TEES</button>
-        <button class="filter-btn" onclick="filterCapsules('vault')">VAULT ITEMS</button>
-      </div>
+                <button class="theme-btn" onclick="selectTheme('basic')">
+                    3: BASIC B&W
+                </button>
 
-      <div class="categories-grid">
-        <!-- Card 1 -->
-        <div class="category-card" data-category="fleece">
-          <div>
-            <div class="card-head">
-              <span class="card-number">CAPSULE // 01</span>
-              <span class="badge">500 GSM</span>
+                <button class="theme-btn" onclick="selectTheme('royalty')">
+                    4: GOLD ROYALTY
+                </button>
             </div>
-            <h3 class="card-title">HEAVY FLEECE</h3>
-            <p class="card-desc">Custom double-fleece zip-ups, heavy hoodies, and oversized crewnecks engineered with reinforced ribbed cuffs.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="card-link">EXPLORE FLEECE LINEUP</a>
-          </div>
         </div>
+    </div>
 
-        <!-- Card 2 -->
-        <div class="category-card" data-category="tees">
-          <div>
-            <div class="card-head">
-              <span class="card-number">CAPSULE // 02</span>
-              <span class="badge">280 GSM</span>
+    <!-- AUTHENTICATION MODAL -->
+    <div class="modal-overlay hidden" id="authModal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeAuthModal()">✕</button>
+            <h2 class="modal-greeting" id="authTitle">SIGN IN</h2>
+            <p class="modal-sub" id="authSubtitle">Access your exclusive order status & drops</p>
+
+            <div id="authError"></div>
+
+            <form class="auth-form" id="authForm" onsubmit="handleEmailAuth(event)">
+                <input type="email" id="authEmail" class="auth-input" placeholder="Email Address" required>
+                <input type="password" id="authPassword" class="auth-input" placeholder="Password" required>
+                <button type="submit" class="btn-glow" id="authSubmitBtn" style="width:100%;">Sign In</button>
+            </form>
+
+            <div class="auth-divider">or continue with</div>
+
+            <button class="btn-google" id="googleBtn">
+                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
+                Google
+            </button>
+
+            <div class="auth-toggle-msg">
+                <span id="authToggleText">Need an account? Sign Up</span>
             </div>
-            <h3 class="card-title">GRAPHIC TEES</h3>
-            <p class="card-desc">Heavyweight combed cotton featuring puff-printed pharaonic iconography, dropped shoulders, and vintage washes.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="card-link">EXPLORE TEE LINEUP</a>
-          </div>
         </div>
+    </div>
 
-        <!-- Card 3 -->
-        <div class="category-card" data-category="vault">
-          <div>
-            <div class="card-head">
-              <span class="card-number">CAPSULE // 03</span>
-              <span class="badge">LIMITED</span>
+    <button class="theme-switch-trigger" onclick="openThemeModal()">🎨 CHANGE THEME</button>
+
+    <header>
+        <a href="index.html" class="brand-logo">The Egyptian King</a>
+        <nav>
+            <ul>
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="shop.html">Shop Collection</a></li>
+                <li><a href="terms.html">Terms & Policies</a></li>
+            </ul>
+        </nav>
+        <div class="nav-actions">
+            <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
+            <button class="btn-bag" id="authNavBtn" onclick="openAuthModal()">SIGN IN</button>
+            <a href="shop.html" class="btn-glow">Enter Shop</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-badge">Sovereign Culture & Streetwear</div>
+        <h1 class="hero-title">THE EGYPTIAN KING</h1>
+        <p class="hero-subtitle">High-end heavyweight apparel engineered with zero compromises. Bridging ancient majesty with futuristic modern street culture.</p>
+        <a href="shop.html" class="btn-glow">Explore Official Shop</a>
+
+        <div class="hero-stats">
+            <div class="stat-item">
+                <h4>500 GSM</h4>
+                <p>Heavyweight Fleece</p>
             </div>
-            <h3 class="card-title">VAULT CARGOS</h3>
-            <p class="card-desc">Utility cargo pants and accessories crafted with custom embroidery detailing and high-density hardware.</p>
-          </div>
-          <div class="card-footer">
-            <a href="#" class="card-link">EXPLORE VAULT LINEUP</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 03. BRAND MANIFESTO -->
-  <section id="manifesto" class="section-padding" style="background-color: var(--color-bg-secondary);">
-    <div class="container manifesto-wrapper">
-      <span class="section-tag">02 / MANIFESTO</span>
-      <p class="manifesto-quote">"WE BRIDGED ANCIENT EGYPTIAN ICONOGRAPHY WITH MODERN STREETWEAR ARCHITECTURE."</p>
-      
-      <div class="manifesto-columns">
-        <div class="manifesto-col">
-          <p>THE EGYPTIAN KING was established to redefine local apparel production. Rather than following fast-fashion cycles, every drop is treated as an architectural study in fabric weight, silhouette, and symbol craftsmanship.</p>
-        </div>
-        <div class="manifesto-col">
-          <p>Our pieces feature clean lines, custom garment washes, and high-density cotton. Every release is produced in limited batches to guarantee meticulous attention to detail from the first stitch to the final garment bag.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 04. FABRIC & CRAFT EDITORIAL -->
-  <section id="craftsmanship" class="section-padding">
-    <div class="container">
-      <div class="editorial-grid">
-        <div class="editorial-visual">
-          <div class="editorial-visual-inner">
-            <span class="visual-label">[ HIGH-DENSITY FABRIC FOCUS ]</span>
-            <p style="margin-top: 15px; font-size: 0.8rem; color: #888;">500 GSM Double Fleece Texture Detail</p>
-          </div>
-        </div>
-
-        <div class="editorial-content">
-          <span class="section-tag">03 / CRAFTSMANSHIP</span>
-          <h3>CUSTOM GSM & HEAVYWEIGHT CUTS</h3>
-          <p>We custom knit our cotton blends to hit exact weight thresholds. The result is structural drape that maintains its shape through wear while delivering unmatched warmth and comfort.</p>
-
-          <div class="spec-list">
-            <div class="spec-item">
-              <span class="spec-name">Hoodie Weight</span>
-              <span class="spec-val">500 GSM Double Fleece</span>
+            <div class="stat-item">
+                <h4>22 CAPSULES</h4>
+                <p>Exclusive Apparel</p>
             </div>
-            <div class="spec-item">
-              <span class="spec-name">T-Shirt Weight</span>
-              <span class="spec-val">280 GSM Combed Cotton</span>
+            <div class="stat-item">
+                <h4>100% COTTON</h4>
+                <p>Combed & Custom Knitted</p>
             </div>
-            <div class="spec-item">
-              <span class="spec-name">Dye Technique</span>
-              <span class="spec-val">Vintage Acid Wash & Garment Pigment</span>
+        </div>
+    </section>
+
+    <!-- BRAND PILLARS -->
+    <section class="section-padding">
+        <h2 class="section-title">The Standard of Craft</h2>
+        <p class="section-sub">Built to outlast trends and endure time</p>
+
+        <div class="grid-3">
+            <div class="pillar-card">
+                <div class="pillar-icon">🏛️</div>
+                <h3>Heritage & Iconography</h3>
+                <p>Each drop translates iconic cultural figures and historical motifs into cutting-edge graphic silhouettes tailored for the contemporary wardrobe.</p>
             </div>
-            <div class="spec-item">
-              <span class="spec-name">Embroidery Thread</span>
-              <span class="spec-val">High-Density Metallic & Matte Cotton</span>
+
+            <div class="pillar-card">
+                <div class="pillar-icon">⚡</div>
+                <h3>Precision Fabrication</h3>
+                <p>Engineered with double-needle flatlock seams, oversized hoods, custom drop shoulders, and pre-shrunk fabrics designed for perfection.</p>
             </div>
-          </div>
 
-          <a href="#" class="btn btn-dark">READ FABRIC GUIDE</a>
+            <div class="pillar-card">
+                <div class="pillar-icon">👑</div>
+                <h3>Strictly Limited</h3>
+                <p>We operate on limited batch releases. Once a capsule sells out globally, it enters the vault and will never be reproduced.</p>
+            </div>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 05. LOOKBOOK GALLERY -->
-  <section id="lookbook" class="section-padding" style="background-color: var(--color-bg-secondary);">
-    <div class="container">
-      <div class="lookbook-header">
-        <div>
-          <span class="section-tag">04 / VISUAL ARCHIVE</span>
-          <h2 class="section-heading" style="margin-bottom: 0;">SPRING / SUMMER LOOKBOOK</h2>
+    <!-- NEW SECTION 1: FEATURED DROPS -->
+    <section class="section-padding" style="padding-top: 0;">
+        <h2 class="section-title">Featured Capsules</h2>
+        <p class="section-sub">Preview key drops from current and upcoming releases</p>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <span class="product-tag">Heavy Hoodie</span>
+                <div class="product-img-box">𓀀</div>
+                <h3 class="product-title">Pharaoh Heavy Zip-Up</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">500 GSM Double Fleece, Vintage Wash</p>
+                <div class="product-meta">
+                    <span class="product-price">1,850 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="product-tag">Tee Capsule</span>
+                <div class="product-img-box">𓃭</div>
+                <h3 class="product-title">Anubis Oversized Tee</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">280 GSM Heavy Cotton, Puff Print</p>
+                <div class="product-meta">
+                    <span class="product-price">950 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="product-tag">Vault Edition</span>
+                <div class="product-img-box">𓋹</div>
+                <h3 class="product-title">Hieroglyph Cargo Sweats</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Custom Knitted Ribbing & Embroidery</p>
+                <div class="product-meta">
+                    <span class="product-price">1,600 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
         </div>
-        <a href="#" class="btn btn-outline">FULL GALLERY</a>
-      </div>
+    </section>
 
-      <div class="lookbook-grid">
-        <div class="lookbook-card">
-          <span class="lookbook-tag">FRAME // 01</span>
-          <div class="lookbook-title">OVERSIZED FLEECE CUT</div>
+    <!-- NEW SECTION 2: GARMENT ARCHITECTURE / TECH SPEC -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="tech-banner">
+            <div>
+                <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">GARMENT ARCHITECTURE</h2>
+                <p style="color: var(--text-muted); line-height: 1.8;">Every garment is designed from raw yarn to final stitch in Cairo, taking inspiration from historical structures and modern industrial cuts.</p>
+                <ul class="tech-list">
+                    <li><span>✦</span> <div><strong>500 GSM Egyptian Cotton Fleece:</strong> Ultra-heavy structured draping that retains shape wear after wear.</div></li>
+                    <li><span>✦</span> <div><strong>Custom Boxy Fit:</strong> Widened chest measurements with lowered shoulder seams for a modern silhouette.</div></li>
+                    <li><span>✦</span> <div><strong>High-Density Screenprint:</strong> Multi-pass ink layering to ensure prints resist cracking or fading over time.</div></li>
+                </ul>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2.5rem; text-align: center;">
+                <div style="font-size: 5rem; margin-bottom: 1rem;">📏</div>
+                <h3 style="font-family: 'Cinzel', serif; letter-spacing: 2px; margin-bottom: 0.5rem;">SIGNATURE FIT GUIDE</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">All tops are cut with a true oversized drape. Take your regular size for an oversized look or size down for a standard cut.</p>
+                <a href="shop.html" class="btn-glow">Explore Sizing</a>
+            </div>
         </div>
-        <div class="lookbook-card">
-          <span class="lookbook-tag">FRAME // 02</span>
-          <div class="lookbook-title">HIEROGLYPH EMBROIDERY</div>
+    </section>
+
+    <!-- MANIFESTO BOX -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="manifesto-box">
+            <h2>ROYALTY IS AN ATTITUDE</h2>
+            <p>From Cairo to the world stage, THE EGYPTIAN KING was born out of a desire to create heavy, structured, unyielding streetwear that commands respect in any room. Designed for leaders, creators, and legends.</p>
+            
+            <div class="specs-grid">
+                <div class="spec-item">
+                    <h4>Fit Style</h4>
+                    <div>Oversized Boxy Fit</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Print Technique</h4>
+                    <div>High-Density Screenprint</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Fabric Weight</h4>
+                    <div>Heavy Fleece & 280 GSM Tees</div>
+                </div>
+                <div class="spec-item">
+                    <h4>Worldwide Ship</h4>
+                    <div>Door-to-Door Delivery</div>
+                </div>
+            </div>
         </div>
-        <div class="lookbook-card">
-          <span class="lookbook-tag">FRAME // 03</span>
-          <div class="lookbook-title">VINTAGE WASH TEES</div>
+    </section>
+
+    <!-- NEW SECTION 3: COMMUNITY REVIEWS -->
+    <section class="section-padding" style="padding-top: 0;">
+        <h2 class="section-title">Verified Feedback</h2>
+        <p class="section-sub">Directly from our global community</p>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The 500 GSM weight is unreal. Easily one of the most solid hoodies in my closet. Hood holds its shape perfectly."</p>
+                <div class="review-author">Youssef A. — Cairo</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The embroidery detail and puff printing on the back were way beyond expectations. Rapid delivery as well."</p>
+                <div class="review-author">Karim M. — Alexandria</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"Fits boxy exactly how I wanted. You can tell they put real thought into fabric selection instead of off-the-shelf blanks."</p>
+                <div class="review-author">Omar H. — Dubai</div>
+            </div>
         </div>
-        <div class="lookbook-card">
-          <span class="lookbook-tag">FRAME // 04</span>
-          <div class="lookbook-title">CARGO STRUCTURE</div>
+    </section>
+
+    <!-- NEW SECTION 4: DROP ALARM SIGNUP -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="drop-alarm">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 3px; margin-bottom: 0.8rem;">NEVER MISS A DROP</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Our capsules sell out fast. Subscribe to receive early access passwords 15 minutes before public release.</p>
+            <form class="alarm-form" onsubmit="event.preventDefault(); alert('You are on the priority list.');">
+                <input type="email" class="alarm-input" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-glow">Join Priority List</button>
+            </form>
         </div>
-      </div>
-    </div>
-  </section>
+    </section>
 
-  <!-- 06. INTERACTIVE SIZING MATRIX -->
-  <section id="sizing" class="section-padding">
-    <div class="container">
-      <span class="section-tag">05 / FIT GUIDE</span>
-      <h2 class="section-heading">SIZING MATRIX</h2>
-
-      <div class="size-matrix-box">
-        <p style="margin-bottom: 20px;">All garments are engineered with an oversized, boxy streetwear fit. Refer to the table below for exact measurements in centimeters.</p>
-
-        <table class="size-table">
-          <thead>
-            <tr>
-              <th>SIZE</th>
-              <th>CHEST WIDTH (CM)</th>
-              <th>BODY LENGTH (CM)</th>
-              <th>SHOULDER DROP (CM)</th>
-              <th>RECOMMENDED HEIGHT</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td><strong>SMALL</strong></td>
-              <td>58 cm</td>
-              <td>70 cm</td>
-              <td>54 cm</td>
-              <td>165 – 173 cm</td>
-            </tr>
-            <tr>
-              <td><strong>MEDIUM</strong></td>
-              <td>61 cm</td>
-              <td>72 cm</td>
-              <td>56 cm</td>
-              <td>174 – 180 cm</td>
-            </tr>
-            <tr>
-              <td><strong>LARGE</strong></td>
-              <td>64 cm</td>
-              <td>74 cm</td>
-              <td>58 cm</td>
-              <td>181 – 187 cm</td>
-            </tr>
-            <tr>
-              <td><strong>X-LARGE</strong></td>
-              <td>67 cm</td>
-              <td>76 cm</td>
-              <td>60 cm</td>
-              <td>188 cm+</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- 07. TAILORING & CONSTRUCTION PROCESS -->
-  <section class="section-padding" style="background-color: var(--color-bg-secondary);">
-    <div class="container">
-      <span class="section-tag">06 / PROCESS</span>
-      <h2 class="section-heading">DEVELOPMENT PHASES</h2>
-
-      <div class="process-steps">
-        <div class="process-card">
-          <div class="process-step-num">PHASE 01</div>
-          <h4 class="process-title">PATTERN DRAFTING</h4>
-          <p class="process-desc">Custom proportion drafting to create relaxed shoulders and structured boxy torsos.</p>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">THE EGYPTIAN KING</div>
+                <p>Sovereign culture meets high-end modern streetwear. Designed and crafted for the bold.</p>
+            </div>
+            <div class="footer-col">
+                <h5>NAVIGATION</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop Collection</a></li>
+                    <li><a href="cart.html">Cart & Checkout</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>LEGAL & POLICIES</h5>
+                <ul>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="terms.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Shipping & Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>CONNECT</h5>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
         </div>
-        <div class="process-card">
-          <div class="process-step-num">PHASE 02</div>
-          <h4 class="process-title">FABRIC KNITTING</h4>
-          <p class="process-desc">Mill sourcing for custom weight cotton, ensuring thickness without losing breathability.</p>
+        <div class="copyright">
+            © 2026 THE EGYPTIAN KING. All rights reserved.
         </div>
-        <div class="process-card">
-          <div class="process-step-num">PHASE 03</div>
-          <h4 class="process-title">SYMBOL EMBOSSING</h4>
-          <p class="process-desc">Puff printing and high-density thread embroidery applied with precise registration.</p>
-        </div>
-        <div class="process-card">
-          <div class="process-step-num">PHASE 04</div>
-          <h4 class="process-title">QUALITY CONTROL</h4>
-          <p class="process-desc">Individual garment inspections for seam strength, dye uniformity, and wash durability.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+    </footer>
 
-  <!-- 08. BRAND PILLARS -->
-  <section id="pillars" class="section-padding">
-    <div class="container">
-      <span class="section-tag">07 / PHILOSOPHY</span>
-      <h2 class="section-heading">BRAND PILLARS</h2>
+    <!-- FIREBASE MODULE SCRIPT -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+        import { 
+            getAuth, 
+            signInWithEmailAndPassword, 
+            createUserWithEmailAndPassword, 
+            GoogleAuthProvider, 
+            signInWithPopup, 
+            signOut, 
+            onAuthStateChanged 
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-      <div class="pillars-grid">
-        <div class="pillar-card">
-          <h3 class="pillar-title">UNCOMPROMISING WEIGHT</h3>
-          <p class="pillar-text">We never cut corners on GSM. Every fleece and tee is built with heavy density for a premium feel.</p>
-        </div>
-        <div class="pillar-card">
-          <h3 class="pillar-title">HERITAGE ACCENTS</h3>
-          <p class="pillar-text">Iconography inspired by classical Egyptian monuments rendered into minimalist, contemporary graphics.</p>
-        </div>
-        <div class="pillar-card">
-          <h3 class="pillar-title">EXCLUSIVE QUANTITIES</h3>
-          <p class="pillar-text">Each capsule is limited in production run to ensure high craftsmanship and exclusivity for owners.</p>
-        </div>
-      </div>
-    </div>
-  </section>
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
+            authDomain: "the-egyptian-king-68e45.firebaseapp.com",
+            projectId: "the-egyptian-king-68e45",
+            storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
+            messagingSenderId: "94881816710",
+            appId: "1:94881816710:web:10fca569f1b43c583ab107",
+            measurementId: "G-ZR0FBN0PRV"
+        };
 
-  <!-- 09. PRESS & QUOTES -->
-  <section class="section-padding" style="background-color: var(--color-bg-secondary);">
-    <div class="container">
-      <span class="section-tag">08 / PRESS</span>
-      <h2 class="section-heading">EDITORIAL RECOGNITION</h2>
+        // Initialize Firebase & Auth
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+        const auth = getAuth(app);
+        const googleProvider = new GoogleAuthProvider();
 
-      <div class="press-grid">
-        <div class="press-card">
-          <p class="press-quote">"THE EGYPTIAN KING is modernizing Cairo's streetwear identity through heavy fabrics and clean lines."</p>
-          <span class="press-source">STREETWEAR ARCHIVE REVIEW</span>
-        </div>
-        <div class="press-card">
-          <p class="press-quote">"The 500 GSM fleece drop sets a new standard for local heavy apparel construction."</p>
-          <span class="press-source">CAIRO DESIGN JOURNAL</span>
-        </div>
-        <div class="press-card">
-          <p class="press-quote">"Minimalism meets historical symbolism in a collection designed to last."</p>
-          <span class="press-source">MODERN APPAREL INSIDER</span>
-        </div>
-      </div>
-    </div>
-  </section>
+        let isSignUpMode = false;
 
-  <!-- 10. FAQ ACCORDION -->
-  <section id="faq" class="section-padding">
-    <div class="container">
-      <span class="section-tag">09 / HELP CENTER</span>
-      <h2 class="section-heading" style="text-align: center;">FREQUENTLY ASKED QUESTIONS</h2>
+        // UI Auth Controls
+        const authNavBtn = document.getElementById('authNavBtn');
+        const authToggleText = document.getElementById('authToggleText');
+        const authTitle = document.getElementById('authTitle');
+        const authSubtitle = document.getElementById('authSubtitle');
+        const authSubmitBtn = document.getElementById('authSubmitBtn');
+        const authError = document.getElementById('authError');
 
-      <div class="faq-container">
-        <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
-            <span>When is the next capsule release?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>Capsule drop dates are announced exclusively to VIP Private List members 48 hours before public release.</p>
-          </div>
-        </div>
+        // Toggle Sign In / Sign Up Mode
+        authToggleText.addEventListener('click', () => {
+            isSignUpMode = !isSignUpMode;
+            if (isSignUpMode) {
+                authTitle.innerText = "CREATE ACCOUNT";
+                authSubtitle.innerText = "Join the kingdom for exclusive drops";
+                authSubmitBtn.innerText = "Sign Up";
+                authToggleText.innerText = "Already have an account? Sign In";
+            } else {
+                authTitle.innerText = "SIGN IN";
+                authSubtitle.innerText = "Access your exclusive order status & drops";
+                authSubmitBtn.innerText = "Sign In";
+                authToggleText.innerText = "Need an account? Sign Up";
+            }
+        });
 
-        <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
-            <span>What payment methods do you support?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>We accept Cash on Delivery (COD), Visa/Mastercard credit cards, and PayPal, processed in Egyptian Pounds (EGP).</p>
-          </div>
-        </div>
+        // Email & Password Auth Handler
+        window.handleEmailAuth = async function(e) {
+            e.preventDefault();
+            authError.style.display = 'none';
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
 
-        <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
-            <span>How long does delivery take?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>Standard delivery across Greater Cairo takes 2-3 business days. Other governorates take 3-5 business days.</p>
-          </div>
-        </div>
+            try {
+                if (isSignUpMode) {
+                    await createUserWithEmailAndPassword(auth, email, password);
+                } else {
+                    await signInWithEmailAndPassword(auth, email, password);
+                }
+                closeAuthModal();
+            } catch (err) {
+                authError.innerText = err.message.replace('Firebase: ', '');
+                authError.style.display = 'block';
+            }
+        };
 
-        <div class="faq-item">
-          <button class="faq-trigger" onclick="toggleFaq(this)">
-            <span>What is your return and exchange policy?</span>
-            <span class="faq-icon">+</span>
-          </button>
-          <div class="faq-content">
-            <p>Exchanges are accepted within 14 days of delivery provided items are unworn with original tag attachments.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
+        // Google Sign In
+        document.getElementById('googleBtn').addEventListener('click', async () => {
+            try {
+                await signInWithPopup(auth, googleProvider);
+                closeAuthModal();
+            } catch (err) {
+                authError.innerText = err.message.replace('Firebase: ', '');
+                authError.style.display = 'block';
+            }
+        });
 
-  <!-- 11. PRIVATE ACCESS NEWSLETTER -->
-  <section class="section-padding" style="background-color: var(--color-bg-secondary);">
-    <div class="container">
-      <div class="newsletter-box">
-        <span class="section-tag">10 / PRIVATE ACCESS</span>
-        <h2 class="section-heading" style="margin-bottom: 10px;">JOIN THE PRIVATE LIST</h2>
-        <p style="color: var(--color-text-secondary);">Receive private drop passwords, early release links, and invitation codes.</p>
+        // Global Auth Action (Sign In Trigger or Sign Out Execution)
+        window.openAuthModal = function() {
+            if (auth.currentUser) {
+                signOut(auth);
+            } else {
+                document.getElementById('authModal').classList.remove('hidden');
+            }
+        };
 
-        <form class="newsletter-form" onsubmit="handleSubscribe(event)">
-          <input type="email" class="newsletter-input" placeholder="ENTER YOUR EMAIL..." required>
-          <button type="submit" class="newsletter-submit">SUBSCRIBE</button>
-        </form>
-      </div>
-    </div>
-  </section>
+        // Auth Observer
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                authNavBtn.innerText = "LOGOUT";
+            } else {
+                authNavBtn.innerText = "SIGN IN";
+            }
+        });
+    </script>
 
-  <!-- 12. FOOTER -->
-  <footer>
-    <div class="container">
-      <div class="footer-grid">
-        <div class="footer-brand">
-          <h2>THE EGYPTIAN KING</h2>
-          <p>Archival Streetwear Architecture designed and engineered in Cairo, Egypt.</p>
-        </div>
-
-        <div class="footer-col">
-          <h4>CAPSULES</h4>
-          <ul>
-            <li><a href="#">Heavy Fleece</a></li>
-            <li><a href="#">Graphic Tees</a></li>
-            <li><a href="#">Vault Cargos</a></li>
-            <li><a href="#">Accessories</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>EXPLORE</h4>
-          <ul>
-            <li><a href="#manifesto">Manifesto</a></li>
-            <li><a href="#craftsmanship">Craftsmanship</a></li>
-            <li><a href="#lookbook">Lookbook</a></li>
-            <li><a href="#sizing">Size Guide</a></li>
-          </ul>
-        </div>
-
-        <div class="footer-col">
-          <h4>SUPPORT</h4>
-          <ul>
-            <li><a href="#faq">FAQ</a></li>
-            <li><a href="#">Shipping Policy</a></li>
-            <li><a href="#">Returns & Exchanges</a></li>
-            <li><a href="#">Contact Us</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="footer-bottom">
-        <div>&copy; 2026 THE EGYPTIAN KING. ALL RIGHTS RESERVED.</div>
-        <div>MINIMALIST WHITE EDITION</div>
-      </div>
-    </div>
-  </footer>
-
-  <!-- ==========================================================================
-     18. INTERACTIVE JAVASCRIPT LOGIC
-     ========================================================================== -->
-  <script>
-    // FAQ Accordion Toggle Logic
-    function toggleFaq(button) {
-      const faqItem = button.parentElement;
-      const content = faqItem.querySelector('.faq-content');
-      const isActive = faqItem.classList.contains('active');
-
-      // Close all active items
-      document.querySelectorAll('.faq-item').forEach(item => {
-        item.classList.remove('active');
-        item.querySelector('.faq-content').style.maxHeight = null;
-      });
-
-      // Open clicked item if it wasn't active
-      if (!isActive) {
-        faqItem.classList.add('active');
-        content.style.maxHeight = content.scrollHeight + "px";
-      }
-    }
-
-    // Category Filter Logic
-    function filterCapsules(category) {
-      const cards = document.querySelectorAll('.category-card');
-      const buttons = document.querySelectorAll('.filter-btn');
-
-      // Update active button state
-      buttons.forEach(btn => btn.classList.remove('active'));
-      event.target.classList.add('active');
-
-      // Filter grid cards
-      cards.forEach(card => {
-        if (category === 'all' || card.getAttribute('data-category') === category) {
-          card.style.display = 'flex';
-        } else {
-          card.style.display = 'none';
+    <script>
+        function updateCartBadge() {
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            document.getElementById('nav-cart-count').innerText = totalCount;
         }
-      });
-    }
 
-    // Newsletter Submit Handling
-    function handleSubscribe(event) {
-      event.preventDefault();
-      alert('Thank you for joining the VIP list. You will receive private access links prior to the next drop.');
-      event.target.reset();
-    }
+        function applyTheme(theme) {
+            if (theme === 'basic') {
+                document.body.removeAttribute('data-theme');
+            } else {
+                document.body.setAttribute('data-theme', theme);
+            }
+            localStorage.setItem('selectedTheme', theme);
+        }
 
-    // Mobile Navigation Toggle
-    function toggleMobileNav() {
-      const navLinks = document.querySelector('.nav-links');
-      if (navLinks.style.display === 'flex') {
-        navLinks.style.display = 'none';
-      } else {
-        navLinks.style.display = 'flex';
-        navLinks.style.flexDirection = 'column';
-        navLinks.style.position = 'absolute';
-        navLinks.style.top = '80px';
-        navLinks.style.left = '0';
-        navLinks.style.width = '100%';
-        navLinks.style.backgroundColor = '#ffffff';
-        navLinks.style.padding = '20px';
-        navLinks.style.borderBottom = '1px solid #eeeeee';
-      }
-    }
-  </script>
+        function selectTheme(theme) {
+            applyTheme(theme);
+            closeThemeModal();
+        }
+
+        function openThemeModal() {
+            document.getElementById('themeModal').classList.remove('hidden');
+        }
+
+        function closeThemeModal() {
+            document.getElementById('themeModal').classList.add('hidden');
+        }
+
+        function closeAuthModal() {
+            document.getElementById('authModal').classList.add('hidden');
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCartBadge();
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme) {
+                applyTheme(savedTheme);
+            } else {
+                applyTheme('neon');
+                openThemeModal();
+            }
+        });
+    </script>
 </body>
 </html>
