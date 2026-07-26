@@ -364,6 +364,7 @@
             box-shadow: 0 0 20px var(--accent-glow);
             border: none;
             cursor: pointer;
+            display: inline-block;
         }
 
         .btn-glow:hover {
@@ -486,6 +487,176 @@
             font-size: 0.9rem;
         }
 
+        /* NEW SECTION: FEATURED DROPS SHOWCASE */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .product-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+        }
+
+        .product-card:hover {
+            transform: translateY(-6px);
+            border-color: var(--accent-primary);
+        }
+
+        .product-img-box {
+            width: 100%;
+            height: 320px;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 4rem;
+            border: 1px dashed var(--border-glow);
+        }
+
+        .product-tag {
+            position: absolute;
+            top: 2rem;
+            left: 2rem;
+            background: var(--accent-primary);
+            color: #000;
+            font-size: 0.65rem;
+            font-weight: 900;
+            padding: 4px 10px;
+            border-radius: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .product-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.15rem;
+            letter-spacing: 1.5px;
+            margin-bottom: 0.5rem;
+        }
+
+        .product-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 1rem;
+        }
+
+        .product-price {
+            font-size: 1.1rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+        }
+
+        /* NEW SECTION: FABRIC & ARCHITECTURE */
+        .tech-banner {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 4rem 3rem;
+            backdrop-filter: blur(15px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .tech-list {
+            list-style: none;
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+        }
+
+        .tech-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .tech-list li strong {
+            color: #fff;
+        }
+
+        /* NEW SECTION: REVIEWS & REPUTATION */
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .review-stars {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-quote {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            font-style: italic;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-author {
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* NEW SECTION: DROP ALARM / NEWSLETTER */
+        .drop-alarm {
+            text-align: center;
+            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(5,5,8,0.9) 100%);
+            border: 1px solid var(--border-glow);
+            border-radius: 28px;
+            padding: 4rem 2rem;
+            max-width: 800px;
+            margin: 4rem auto;
+        }
+
+        .alarm-form {
+            display: flex;
+            gap: 1rem;
+            max-width: 500px;
+            margin: 2rem auto 0;
+        }
+
+        .alarm-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.9rem 1.2rem;
+            border-radius: 50px;
+            color: #fff;
+            outline: none;
+        }
+
         /* MANIFESTO BANNER */
         .manifesto-box {
             background: var(--card-bg);
@@ -550,19 +721,70 @@
             backdrop-filter: blur(10px);
         }
 
+        /* ENHANCED FOOTER */
         footer {
             background: rgba(5, 5, 8, 0.95);
             border-top: 1px solid var(--border-glow);
-            padding: 4rem 2rem 2rem;
+            padding: 5rem 2rem 2rem;
             text-align: center;
         }
 
-        .copyright { color: #555; font-size: 0.8rem; margin-top: 2rem; }
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto 4rem;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: 3rem;
+            text-align: left;
+        }
+
+        .footer-brand p {
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            line-height: 1.7;
+            margin-top: 1rem;
+            max-width: 320px;
+        }
+
+        .footer-col h5 {
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            letter-spacing: 2px;
+            margin-bottom: 1.2rem;
+            color: #fff;
+        }
+
+        .footer-col ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+        }
+
+        .footer-col a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            transition: color 0.3s;
+        }
+
+        .footer-col a:hover {
+            color: var(--accent-primary);
+        }
+
+        .copyright { color: #555; font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; }
+
+        @media (max-width: 900px) {
+            .tech-banner { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr 1fr; }
+        }
 
         @media (max-width: 768px) {
             header { padding: 1rem 1.5rem; }
             .theme-grid { grid-template-columns: 1fr; }
             .hero-stats { flex-direction: column; gap: 1.5rem; }
+            .alarm-form { flex-direction: column; }
+            .footer-content { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -697,6 +919,68 @@
         </div>
     </section>
 
+    <!-- NEW SECTION 1: FEATURED DROPS -->
+    <section class="section-padding" style="padding-top: 0;">
+        <h2 class="section-title">Featured Capsules</h2>
+        <p class="section-sub">Preview key drops from current and upcoming releases</p>
+
+        <div class="products-grid">
+            <div class="product-card">
+                <span class="product-tag">Heavy Hoodie</span>
+                <div class="product-img-box">𓀀</div>
+                <h3 class="product-title">Pharaoh Heavy Zip-Up</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">500 GSM Double Fleece, Vintage Wash</p>
+                <div class="product-meta">
+                    <span class="product-price">1,850 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="product-tag">Tee Capsule</span>
+                <div class="product-img-box">𓃭</div>
+                <h3 class="product-title">Anubis Oversized Tee</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">280 GSM Heavy Cotton, Puff Print</p>
+                <div class="product-meta">
+                    <span class="product-price">950 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
+
+            <div class="product-card">
+                <span class="product-tag">Vault Edition</span>
+                <div class="product-img-box">𓋹</div>
+                <h3 class="product-title">Hieroglyph Cargo Sweats</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem;">Custom Knitted Ribbing & Embroidery</p>
+                <div class="product-meta">
+                    <span class="product-price">1,600 EGP</span>
+                    <a href="shop.html" class="btn-bag">View Details</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 2: GARMENT ARCHITECTURE / TECH SPEC -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="tech-banner">
+            <div>
+                <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">GARMENT ARCHITECTURE</h2>
+                <p style="color: var(--text-muted); line-height: 1.8;">Every garment is designed from raw yarn to final stitch in Cairo, taking inspiration from historical structures and modern industrial cuts.</p>
+                <ul class="tech-list">
+                    <li><span>✦</span> <div><strong>500 GSM Egyptian Cotton Fleece:</strong> Ultra-heavy structured draping that retains shape wear after wear.</div></li>
+                    <li><span>✦</span> <div><strong>Custom Boxy Fit:</strong> Widened chest measurements with lowered shoulder seams for a modern silhouette.</div></li>
+                    <li><span>✦</span> <div><strong>High-Density Screenprint:</strong> Multi-pass ink layering to ensure prints resist cracking or fading over time.</div></li>
+                </ul>
+            </div>
+            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2.5rem; text-align: center;">
+                <div style="font-size: 5rem; margin-bottom: 1rem;">📏</div>
+                <h3 style="font-family: 'Cinzel', serif; letter-spacing: 2px; margin-bottom: 0.5rem;">SIGNATURE FIT GUIDE</h3>
+                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">All tops are cut with a true oversized drape. Take your regular size for an oversized look or size down for a standard cut.</p>
+                <a href="shop.html" class="btn-glow">Explore Sizing</a>
+            </div>
+        </div>
+    </section>
+
     <!-- MANIFESTO BOX -->
     <section class="section-padding" style="padding-top: 0;">
         <div class="manifesto-box">
@@ -724,8 +1008,75 @@
         </div>
     </section>
 
+    <!-- NEW SECTION 3: COMMUNITY REVIEWS -->
+    <section class="section-padding" style="padding-top: 0;">
+        <h2 class="section-title">Verified Feedback</h2>
+        <p class="section-sub">Directly from our global community</p>
+
+        <div class="reviews-grid">
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The 500 GSM weight is unreal. Easily one of the most solid hoodies in my closet. Hood holds its shape perfectly."</p>
+                <div class="review-author">Youssef A. — Cairo</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"The embroidery detail and puff printing on the back were way beyond expectations. Rapid delivery as well."</p>
+                <div class="review-author">Karim M. — Alexandria</div>
+            </div>
+
+            <div class="review-card">
+                <div class="review-stars">★★★★★</div>
+                <p class="review-quote">"Fits boxy exactly how I wanted. You can tell they put real thought into fabric selection instead of off-the-shelf blanks."</p>
+                <div class="review-author">Omar H. — Dubai</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- NEW SECTION 4: DROP ALARM SIGNUP -->
+    <section class="section-padding" style="padding-top: 0;">
+        <div class="drop-alarm">
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 3px; margin-bottom: 0.8rem;">NEVER MISS A DROP</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Our capsules sell out fast. Subscribe to receive early access passwords 15 minutes before public release.</p>
+            <form class="alarm-form" onsubmit="event.preventDefault(); alert('You are on the priority list.');">
+                <input type="email" class="alarm-input" placeholder="Enter your email address" required>
+                <button type="submit" class="btn-glow">Join Priority List</button>
+            </form>
+        </div>
+    </section>
+
     <footer>
-        <div class="brand-logo" style="margin-bottom: 1rem;">THE EGYPTIAN KING</div>
+        <div class="footer-content">
+            <div class="footer-brand">
+                <div class="brand-logo">THE EGYPTIAN KING</div>
+                <p>Sovereign culture meets high-end modern streetwear. Designed and crafted for the bold.</p>
+            </div>
+            <div class="footer-col">
+                <h5>NAVIGATION</h5>
+                <ul>
+                    <li><a href="index.html">Home</a></li>
+                    <li><a href="shop.html">Shop Collection</a></li>
+                    <li><a href="cart.html">Cart & Checkout</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>LEGAL & POLICIES</h5>
+                <ul>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="terms.html">Privacy Policy</a></li>
+                    <li><a href="terms.html">Shipping & Returns</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h5>CONNECT</h5>
+                <ul>
+                    <li><a href="#">Instagram</a></li>
+                    <li><a href="#">TikTok</a></li>
+                    <li><a href="#">Support Center</a></li>
+                </ul>
+            </div>
+        </div>
         <div class="copyright">
             © 2026 THE EGYPTIAN KING. All rights reserved.
         </div>
