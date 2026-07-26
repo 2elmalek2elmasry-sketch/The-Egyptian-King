@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>THE EGYPTIAN KING — Community Reviews</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #050508;
+            --card-bg: rgba(18, 18, 24, 0.75);
+            --border-glow: rgba(255, 255, 255, 0.15);
+            --text-main: #ffffff;
+            --text-muted: #a0a0b0;
+            --accent-primary: #ffffff;
+            --accent-glow: rgba(255, 255, 255, 0.4);
+        }
+
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --card-bg: rgba(24, 9, 43, 0.8);
+            --border-glow: rgba(236, 72, 153, 0.4);
+            --accent-primary: #ec4899;
+            --accent-glow: rgba(236, 72, 153, 0.6);
+        }
+
+        body[data-theme="ai"] {
+            --bg: #030712;
+            --card-bg: rgba(15, 23, 42, 0.8);
+            --border-glow: rgba(56, 189, 248, 0.35);
+            --accent-primary: #38bdf8;
+            --accent-glow: rgba(56, 189, 248, 0.5);
+        }
+
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.35);
+            --accent-primary: #eab308;
+            --accent-glow: rgba(234, 179, 8, 0.5);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        body {
+            background-color: var(--bg);
+            color: var(--text-main);
+            min-height: 100vh;
+        }
+
+        header {
+            background: rgba(5, 5, 8, 0.8);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-glow);
+            padding: 1.25rem 4rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.4rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: #fff;
+            text-decoration: none;
+            text-transform: uppercase;
+        }
+
+        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            transition: all 0.3s;
+        }
+        nav a:hover, nav a.active { color: #fff; }
+
+        .btn-bag {
+            background: transparent;
+            border: 1px solid var(--border-glow);
+            color: #fff;
+            padding: 0.6rem 1.4rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            font-weight: 800;
+            cursor: pointer;
+            letter-spacing: 1.5px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-glow {
+            background: var(--accent-primary);
+            color: #000;
+            padding: 0.8rem 2rem;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            box-shadow: 0 0 20px var(--accent-glow);
+            border: none;
+            cursor: pointer;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 4rem auto;
+            padding: 0 2rem;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 2.8rem;
+            letter-spacing: 4px;
+            margin-bottom: 1rem;
+        }
+
+        .reviews-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .review-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 18px;
+            padding: 2rem;
+            backdrop-filter: blur(10px);
+        }
+
+        .review-stars {
+            color: var(--accent-primary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            letter-spacing: 2px;
+        }
+
+        .review-quote {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .review-author {
+            font-weight: 800;
+            font-size: 0.85rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            color: #fff;
+        }
+
+        /* MODAL */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.88);
+            backdrop-filter: blur(16px);
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 1.5rem;
+            opacity: 1;
+            visibility: visible;
+            transition: all 0.4s ease;
+        }
+
+        .modal-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+
+        .modal-card {
+            background: rgba(18, 18, 24, 0.95);
+            border: 1px solid var(--border-glow);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 0.5rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+
+        .form-input {
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid var(--border-glow);
+            padding: 0.85rem;
+            border-radius: 12px;
+            color: #fff;
+            outline: none;
+        }
+
+        select.form-input option {
+            background: #121218;
+            color: #fff;
+        }
+
+        footer {
+            background: rgba(5, 5, 8, 0.95);
+            border-top: 1px solid var(--border-glow);
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 6rem;
+        }
+
+        .copyright { 
+            color: #777; 
+            font-size: 0.8rem; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .copyright a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <a href="index.html" class="brand-logo">The Egyptian King</a>
+        <nav>
+            <ul>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop Collection</a></li>
+                <li><a href="reviews.html" class="active">Reviews</a></li>
+            </ul>
+        </nav>
+        <div class="nav-actions">
+            <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
+            <a href="shop.html" class="btn-glow">Enter Shop</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="page-header">
+            <h1>COMMUNITY REVIEWS</h1>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">Real feedback from verified collectors around the globe.</p>
+            <button class="btn-glow" onclick="openReviewModal()">+ ADD REVIEW</button>
+        </div>
+
+        <div class="reviews-grid" id="reviewsContainer">
+            <!-- REVIEWS WILL BE GENERATED DYNAMICALLY HERE -->
+        </div>
+    </div>
+
+    <!-- ADD REVIEW MODAL -->
+    <div class="modal-overlay hidden" id="reviewModal">
+        <div class="modal-card">
+            <button class="modal-close" style="position: absolute; top: 1rem; right: 1.5rem; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;" onclick="closeReviewModal()">✕</button>
+            <h2 style="font-family: 'Cinzel', serif; letter-spacing: 2px; margin-bottom: 1.5rem;">WRITE A REVIEW</h2>
+            
+            <form onsubmit="submitReview(event)">
+                <div class="form-group">
+                    <label>Your Name</label>
+                    <input type="text" id="authorName" class="form-input" placeholder="e.g. Youssef K." required>
+                </div>
+
+                <div class="form-group">
+                    <label>Rating</label>
+                    <select id="starRating" class="form-input" required>
+                        <option value="5">★★★★★ (5/5 Excellent)</option>
+                        <option value="4">★★★★☆ (4/5 Great)</option>
+                        <option value="3">★★★☆☆ (3/5 Average)</option>
+                        <option value="2">★★☆☆☆ (2/5 Poor)</option>
+                        <option value="1">★☆☆☆☆ (1/5 Terrible)</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Your Review</label>
+                    <textarea id="reviewComment" class="form-input" rows="4" placeholder="Share details about fit, quality, and style..." required></textarea>
+                </div>
+
+                <button type="submit" class="btn-glow" style="width: 100%; margin-top: 1rem;">Publish Review</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <div class="copyright">
+            <span>&copy; 2026 THE EGYPTIAN KING. All rights reserved.</span>
+            <span>•</span>
+            <a href="terms.html">Terms & Policies</a>
+        </div>
+    </footer>
+
+    <script>
+        const initialReviews = [
+            { name: "Youssef K.", stars: 5, text: "The weight of the 500 GSM hoodie is unmatched. Fits perfectly boxy without feeling overly baggy. Worth every pound." },
+            { name: "Omar M.", stars: 5, text: "Puff print quality on the Anubis tee is insane. Washed it multiple times and it still looks brand new." },
+            { name: "Sarah T.", stars: 5, text: "Fast shipping and elite packaging. The brand vision and presentation are top tier." }
+        ];
+
+        function loadReviews() {
+            const stored = JSON.parse(localStorage.getItem('publicReviews')) || initialReviews;
+            const container = document.getElementById('reviewsContainer');
+            container.innerHTML = '';
+
+            stored.forEach(item => {
+                const starStr = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
+                const card = document.createElement('div');
+                card.className = 'review-card';
+                card.innerHTML = `
+                    <div class="review-stars">${starStr}</div>
+                    <p class="review-quote">"${item.text}"</p>
+                    <div class="review-author">— ${item.name}</div>
+                `;
+                container.appendChild(card);
+            });
+        }
+
+        function openReviewModal() {
+            document.getElementById('reviewModal').classList.remove('hidden');
+        }
+
+        function closeReviewModal() {
+            document.getElementById('reviewModal').classList.add('hidden');
+        }
+
+        function submitReview(e) {
+            e.preventDefault();
+            const name = document.getElementById('authorName').value.trim();
+            const stars = parseInt(document.getElementById('starRating').value);
+            const text = document.getElementById('reviewComment').value.trim();
+
+            if (stars >= 4) {
+                // Publicly displayed
+                const stored = JSON.parse(localStorage.getItem('publicReviews')) || initialReviews;
+                stored.unshift({ name, stars, text });
+                localStorage.setItem('publicReviews', JSON.stringify(stored));
+                loadReviews();
+                alert('Thank you! Your review has been added to the community page.');
+            } else {
+                // Stored privately / hidden from public
+                const internalLogs = JSON.parse(localStorage.getItem('privateFeedback')) || [];
+                internalLogs.push({ name, stars, text, date: new Date().toISOString() });
+                localStorage.setItem('privateFeedback', JSON.stringify(internalLogs));
+                alert('Thank you for your feedback! Our support team has received your comments.');
+            }
+
+            closeReviewModal();
+            e.target.reset();
+        }
+
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedTheme = localStorage.getItem('selectedTheme');
+            if (savedTheme && savedTheme !== 'basic') {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
+            loadReviews();
+        });
+    </script>
+</body>
+</html>
