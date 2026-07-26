@@ -173,7 +173,6 @@
             color: #fff;
         }
 
-        /* MODAL */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -285,17 +284,16 @@
         </div>
 
         <div class="reviews-grid" id="reviewsContainer">
-            <!-- REVIEWS WILL BE GENERATED DYNAMICALLY HERE -->
+            <p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">Loading reviews live from database...</p>
         </div>
     </div>
 
-    <!-- ADD REVIEW MODAL -->
     <div class="modal-overlay hidden" id="reviewModal">
         <div class="modal-card">
             <button class="modal-close" style="position: absolute; top: 1rem; right: 1.5rem; background: transparent; border: none; color: #fff; font-size: 1.5rem; cursor: pointer;" onclick="closeReviewModal()">✕</button>
             <h2 style="font-family: 'Cinzel', serif; letter-spacing: 2px; margin-bottom: 1.5rem;">WRITE A REVIEW</h2>
             
-            <form onsubmit="submitReview(event)">
+            <form id="reviewForm">
                 <div class="form-group">
                     <label>Your Name</label>
                     <input type="text" id="authorName" class="form-input" placeholder="e.g. Youssef K." required>
@@ -317,7 +315,7 @@
                     <textarea id="reviewComment" class="form-input" rows="4" placeholder="Share details about fit, quality, and style..." required></textarea>
                 </div>
 
-                <button type="submit" class="btn-glow" style="width: 100%; margin-top: 1rem;">Publish Review</button>
+                <button type="submit" class="btn-glow" id="submitReviewBtn" style="width: 100%; margin-top: 1rem;">Publish Review</button>
             </form>
         </div>
     </div>
@@ -330,19 +328,46 @@
         </div>
     </footer>
 
-    <script>
-        const initialReviews = [
-            { name: "Youssef K.", stars: 5, text: "The weight of the 500 GSM hoodie is unmatched. Fits perfectly boxy without feeling overly baggy. Worth every pound." },
-            { name: "Omar M.", stars: 5, text: "Puff print quality on the Anubis tee is insane. Washed it multiple times and it still looks brand new." },
-            { name: "Sarah T.", stars: 5, text: "Fast shipping and elite packaging. The brand vision and presentation are top tier." }
-        ];
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+        import { 
+            getFirestore, 
+            collection, 
+            addDoc, 
+            query, 
+            where, 
+            orderBy, 
+            onSnapshot, 
+            serverTimestamp 
+        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-firestore.js";
 
-        function loadReviews() {
-            const stored = JSON.parse(localStorage.getItem('publicReviews')) || initialReviews;
+        const firebaseConfig = {
+            apiKey: "AIzaSyDc9kcqdWxZ7nwdoFpCMdM_48mTdoHvYg8",
+            authDomain: "the-egyptian-king-2.firebaseapp.com",
+            projectId: "the-egyptian-king-2",
+            storageBucket: "the-egyptian-king-2.firebasestorage.app",
+            messagingSenderId: "173856439118",
+            appId: "1:173856439118:web:981d1daaf0a135c2f0fc1f",
+            measurementId: "G-15LPR401B6"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const reviewsRef = collection(db, "reviews");
+        const publicQuery = query(reviewsRef, where("stars", ">=", 4), orderBy("stars", "desc"));
+
+        onSnapshot(publicQuery, (snapshot) => {
             const container = document.getElementById('reviewsContainer');
             container.innerHTML = '';
 
-            stored.forEach(item => {
+            if (snapshot.empty) {
+                container.innerHTML = `<p style="color: var(--text-muted); text-align: center; grid-column: 1/-1;">No reviews published yet. Be the first!</p>`;
+                return;
+            }
+
+            snapshot.forEach((doc) => {
+                const item = doc.data();
                 const starStr = '★'.repeat(item.stars) + '☆'.repeat(5 - item.stars);
                 const card = document.createElement('div');
                 card.className = 'review-card';
@@ -353,8 +378,47 @@
                 `;
                 container.appendChild(card);
             });
-        }
+        }, (error) => {
+            console.error("Firestore Error:", error);
+            document.getElementById('reviewsContainer').innerHTML = `<p style="color: #ef4444; text-align: center; grid-column: 1/-1;">Error loading live database reviews.</p>`;
+        });
 
+        document.getElementById('reviewForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const submitBtn = document.getElementById('submitReviewBtn');
+            submitBtn.innerText = "Saving...";
+            submitBtn.disabled = true;
+
+            const name = document.getElementById('authorName').value.trim();
+            const stars = parseInt(document.getElementById('starRating').value);
+            const text = document.getElementById('reviewComment').value.trim();
+
+            try {
+                await addDoc(reviewsRef, {
+                    name: name,
+                    stars: stars,
+                    text: text,
+                    createdAt: serverTimestamp()
+                });
+
+                if (stars >= 4) {
+                    alert('Thank you! Your review is permanently published worldwide.');
+                } else {
+                    alert('Thank you! Your feedback was received and sent directly to management.');
+                }
+
+                closeReviewModal();
+                e.target.reset();
+            } catch (err) {
+                alert('Error submitting review: ' + err.message);
+            } finally {
+                submitBtn.innerText = "Publish Review";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+
+    <script>
         function openReviewModal() {
             document.getElementById('reviewModal').classList.remove('hidden');
         }
@@ -363,37 +427,11 @@
             document.getElementById('reviewModal').classList.add('hidden');
         }
 
-        function submitReview(e) {
-            e.preventDefault();
-            const name = document.getElementById('authorName').value.trim();
-            const stars = parseInt(document.getElementById('starRating').value);
-            const text = document.getElementById('reviewComment').value.trim();
-
-            if (stars >= 4) {
-                // Publicly displayed
-                const stored = JSON.parse(localStorage.getItem('publicReviews')) || initialReviews;
-                stored.unshift({ name, stars, text });
-                localStorage.setItem('publicReviews', JSON.stringify(stored));
-                loadReviews();
-                alert('Thank you! Your review has been added to the community page.');
-            } else {
-                // Stored privately / hidden from public
-                const internalLogs = JSON.parse(localStorage.getItem('privateFeedback')) || [];
-                internalLogs.push({ name, stars, text, date: new Date().toISOString() });
-                localStorage.setItem('privateFeedback', JSON.stringify(internalLogs));
-                alert('Thank you for your feedback! Our support team has received your comments.');
-            }
-
-            closeReviewModal();
-            e.target.reset();
-        }
-
         window.addEventListener('DOMContentLoaded', () => {
             const savedTheme = localStorage.getItem('selectedTheme');
             if (savedTheme && savedTheme !== 'basic') {
                 document.body.setAttribute('data-theme', savedTheme);
             }
-            loadReviews();
         });
     </script>
 </body>
