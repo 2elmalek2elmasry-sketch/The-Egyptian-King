@@ -63,6 +63,10 @@
             transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             background-color: var(--bg);
             color: var(--text-main);
@@ -101,7 +105,7 @@
             100% { transform: translate(-40px, 40px) scale(0.95); }
         }
 
-        /* MODAL STYLING (THEMES & AUTH) */
+        /* MODAL STYLING */
         .modal-overlay {
             position: fixed;
             inset: 0;
@@ -487,7 +491,7 @@
             font-size: 0.9rem;
         }
 
-        /* NEW SECTION: FEATURED DROPS SHOWCASE */
+        /* FEATURED DROPS SHOWCASE */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -558,7 +562,7 @@
             color: var(--accent-primary);
         }
 
-        /* NEW SECTION: FABRIC & ARCHITECTURE */
+        /* FABRIC & ARCHITECTURE */
         .tech-banner {
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
@@ -592,44 +596,7 @@
             color: #fff;
         }
 
-        /* NEW SECTION: REVIEWS & REPUTATION */
-        .reviews-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-        }
-
-        .review-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 18px;
-            padding: 2rem;
-            backdrop-filter: blur(10px);
-        }
-
-        .review-stars {
-            color: var(--accent-primary);
-            margin-bottom: 1rem;
-            letter-spacing: 2px;
-        }
-
-        .review-quote {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.7;
-            font-style: italic;
-            margin-bottom: 1.5rem;
-        }
-
-        .review-author {
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            color: #fff;
-        }
-
-        /* NEW SECTION: DROP ALARM / NEWSLETTER */
+        /* DROP ALARM / NEWSLETTER */
         .drop-alarm {
             text-align: center;
             background: linear-gradient(180deg, var(--card-bg) 0%, rgba(5,5,8,0.9) 100%);
@@ -721,7 +688,7 @@
             backdrop-filter: blur(10px);
         }
 
-        /* ENHANCED FOOTER */
+        /* FOOTER */
         footer {
             background: rgba(5, 5, 8, 0.95);
             border-top: 1px solid var(--border-glow);
@@ -733,7 +700,7 @@
             max-width: 1200px;
             margin: 0 auto 4rem;
             display: grid;
-            grid-template-columns: 2fr 1fr 1fr 1fr;
+            grid-template-columns: 2fr 1fr 1fr;
             gap: 3rem;
             text-align: left;
         }
@@ -772,7 +739,29 @@
             color: var(--accent-primary);
         }
 
-        .copyright { color: #555; font-size: 0.8rem; margin-top: 2rem; border-top: 1px solid rgba(255,255,255,0.05); padding-top: 2rem; }
+        .copyright { 
+            color: #777; 
+            font-size: 0.8rem; 
+            margin-top: 2rem; 
+            border-top: 1px solid rgba(255,255,255,0.05); 
+            padding-top: 2rem; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .copyright a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 700;
+            transition: color 0.3s;
+        }
+
+        .copyright a:hover {
+            color: #fff;
+        }
 
         @media (max-width: 900px) {
             .tech-banner { grid-template-columns: 1fr; }
@@ -860,10 +849,11 @@
             <ul>
                 <li><a href="index.html" class="active">Home</a></li>
                 <li><a href="shop.html">Shop Collection</a></li>
-                <li><a href="terms.html">Terms & Policies</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
             </ul>
         </nav>
         <div class="nav-actions">
+            <a href="reviews.html" class="btn-bag">REVIEWS ★</a>
             <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
             <button class="btn-bag" id="authNavBtn" onclick="openAuthModal()">SIGN IN</button>
             <a href="shop.html" class="btn-glow">Enter Shop</a>
@@ -919,7 +909,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION 1: FEATURED DROPS -->
+    <!-- FEATURED DROPS -->
     <section class="section-padding" style="padding-top: 0;">
         <h2 class="section-title">Featured Capsules</h2>
         <p class="section-sub">Preview key drops from current and upcoming releases</p>
@@ -960,7 +950,7 @@
         </div>
     </section>
 
-    <!-- NEW SECTION 2: GARMENT ARCHITECTURE / TECH SPEC -->
+    <!-- GARMENT ARCHITECTURE / TECH SPEC -->
     <section class="section-padding" style="padding-top: 0;">
         <div class="tech-banner">
             <div>
@@ -969,103 +959,63 @@
                 <ul class="tech-list">
                     <li><span>✦</span> <div><strong>500 GSM Egyptian Cotton Fleece:</strong> Ultra-heavy structured draping that retains shape wear after wear.</div></li>
                     <li><span>✦</span> <div><strong>Custom Boxy Fit:</strong> Widened chest measurements with lowered shoulder seams for a modern silhouette.</div></li>
-                    <li><span>✦</span> <div><strong>High-Density Screenprint:</strong> Multi-pass ink layering to ensure prints resist cracking or fading over time.</div></li>
+                    <li><span>✦</span> <div><strong>High-Density Screenprint:</strong> Multi-pass ink application ensuring graphics never fade, crack, or peel.</div></li>
                 </ul>
             </div>
-            <div style="background: rgba(255,255,255,0.02); border: 1px solid var(--border-glow); border-radius: 20px; padding: 2.5rem; text-align: center;">
-                <div style="font-size: 5rem; margin-bottom: 1rem;">📏</div>
-                <h3 style="font-family: 'Cinzel', serif; letter-spacing: 2px; margin-bottom: 0.5rem;">SIGNATURE FIT GUIDE</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem; margin-bottom: 1.5rem;">All tops are cut with a true oversized drape. Take your regular size for an oversized look or size down for a standard cut.</p>
-                <a href="shop.html" class="btn-glow">Explore Sizing</a>
-            </div>
-        </div>
-    </section>
-
-    <!-- MANIFESTO BOX -->
-    <section class="section-padding" style="padding-top: 0;">
-        <div class="manifesto-box">
-            <h2>ROYALTY IS AN ATTITUDE</h2>
-            <p>From Cairo to the world stage, THE EGYPTIAN KING was born out of a desire to create heavy, structured, unyielding streetwear that commands respect in any room. Designed for leaders, creators, and legends.</p>
-            
-            <div class="specs-grid">
+            <div class="specs-grid" style="margin-top: 0;">
                 <div class="spec-item">
-                    <h4>Fit Style</h4>
-                    <div>Oversized Boxy Fit</div>
+                    <h4>CRAFT LOCATION</h4>
+                    <div>CAIRO, EGYPT</div>
                 </div>
                 <div class="spec-item">
-                    <h4>Print Technique</h4>
-                    <div>High-Density Screenprint</div>
+                    <h4>THREAD COUNT</h4>
+                    <div>40s SINGLE COMBED</div>
                 </div>
                 <div class="spec-item">
-                    <h4>Fabric Weight</h4>
-                    <div>Heavy Fleece & 280 GSM Tees</div>
+                    <h4>SHRINKAGE</h4>
+                    <div>PRE-SHRUNK (&lt;1%)</div>
                 </div>
                 <div class="spec-item">
-                    <h4>Worldwide Ship</h4>
-                    <div>Door-to-Door Delivery</div>
+                    <h4>SEAM STITCH</h4>
+                    <div>DOUBLE FLATLOCK</div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- NEW SECTION 3: COMMUNITY REVIEWS -->
-    <section class="section-padding" style="padding-top: 0;">
-        <h2 class="section-title">Verified Feedback</h2>
-        <p class="section-sub">Directly from our global community</p>
-
-        <div class="reviews-grid">
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">"The 500 GSM weight is unreal. Easily one of the most solid hoodies in my closet. Hood holds its shape perfectly."</p>
-                <div class="review-author">Youssef A. — Cairo</div>
-            </div>
-
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">"The embroidery detail and puff printing on the back were way beyond expectations. Rapid delivery as well."</p>
-                <div class="review-author">Karim M. — Alexandria</div>
-            </div>
-
-            <div class="review-card">
-                <div class="review-stars">★★★★★</div>
-                <p class="review-quote">"Fits boxy exactly how I wanted. You can tell they put real thought into fabric selection instead of off-the-shelf blanks."</p>
-                <div class="review-author">Omar H. — Dubai</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- NEW SECTION 4: DROP ALARM SIGNUP -->
+    <!-- DROP ALARM / NEWSLETTER -->
     <section class="section-padding" style="padding-top: 0;">
         <div class="drop-alarm">
-            <h2 style="font-family: 'Cinzel', serif; font-size: 2.2rem; letter-spacing: 3px; margin-bottom: 0.8rem;">NEVER MISS A DROP</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Our capsules sell out fast. Subscribe to receive early access passwords 15 minutes before public release.</p>
-            <form class="alarm-form" onsubmit="event.preventDefault(); alert('You are on the priority list.');">
-                <input type="email" class="alarm-input" placeholder="Enter your email address" required>
-                <button type="submit" class="btn-glow">Join Priority List</button>
+            <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">NEVER MISS A DROP</h2>
+            <p style="color: var(--text-muted); font-size: 0.95rem;">Capsules are released in ultra-limited numbers. Join the priority list for early access passwords.</p>
+            <form class="alarm-form" onsubmit="event.preventDefault(); alert('Subscribed to drop alerts!');">
+                <input type="email" placeholder="Enter your email" class="alarm-input" required>
+                <button type="submit" class="btn-glow">Get Notified</button>
             </form>
         </div>
     </section>
 
+    <!-- MANIFESTO BANNER -->
+    <div class="manifesto-box">
+        <h2>SOVEREIGN DESIGN MANIFESTO</h2>
+        <p>We reject fast fashion and mass manufacturing. Every collection represents a unified narrative of power, history, and raw luxury. Designed with intent, crafted for longevity.</p>
+        <a href="shop.html" class="btn-glow">Shop The Latest Capsule</a>
+    </div>
+
+    <!-- FOOTER -->
     <footer>
         <div class="footer-content">
             <div class="footer-brand">
-                <div class="brand-logo">THE EGYPTIAN KING</div>
-                <p>Sovereign culture meets high-end modern streetwear. Designed and crafted for the bold.</p>
+                <a href="index.html" class="brand-logo">THE EGYPTIAN KING</a>
+                <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
             </div>
             <div class="footer-col">
                 <h5>NAVIGATION</h5>
                 <ul>
                     <li><a href="index.html">Home</a></li>
                     <li><a href="shop.html">Shop Collection</a></li>
-                    <li><a href="cart.html">Cart & Checkout</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>LEGAL & POLICIES</h5>
-                <ul>
-                    <li><a href="terms.html">Terms of Service</a></li>
-                    <li><a href="terms.html">Privacy Policy</a></li>
-                    <li><a href="terms.html">Shipping & Returns</a></li>
+                    <li><a href="reviews.html">Reviews</a></li>
+                    <li><a href="cart.html">View Bag</a></li>
                 </ul>
             </div>
             <div class="footer-col">
@@ -1073,12 +1023,14 @@
                 <ul>
                     <li><a href="#">Instagram</a></li>
                     <li><a href="#">TikTok</a></li>
-                    <li><a href="#">Support Center</a></li>
+                    <li><a href="#">Discord</a></li>
                 </ul>
             </div>
         </div>
         <div class="copyright">
-            © 2026 THE EGYPTIAN KING. All rights reserved.
+            <span>&copy; 2026 THE EGYPTIAN KING. All rights reserved.</span>
+            <span>•</span>
+            <a href="terms.html">Terms & Policies</a>
         </div>
     </footer>
 
@@ -1096,7 +1048,6 @@
             onAuthStateChanged 
         } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
 
-        // Your web app's Firebase configuration
         const firebaseConfig = {
             apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
             authDomain: "the-egyptian-king-68e45.firebaseapp.com",
@@ -1107,7 +1058,6 @@
             measurementId: "G-ZR0FBN0PRV"
         };
 
-        // Initialize Firebase & Auth
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
         const auth = getAuth(app);
@@ -1115,7 +1065,6 @@
 
         let isSignUpMode = false;
 
-        // UI Auth Controls
         const authNavBtn = document.getElementById('authNavBtn');
         const authToggleText = document.getElementById('authToggleText');
         const authTitle = document.getElementById('authTitle');
@@ -1123,7 +1072,6 @@
         const authSubmitBtn = document.getElementById('authSubmitBtn');
         const authError = document.getElementById('authError');
 
-        // Toggle Sign In / Sign Up Mode
         authToggleText.addEventListener('click', () => {
             isSignUpMode = !isSignUpMode;
             if (isSignUpMode) {
@@ -1139,7 +1087,6 @@
             }
         });
 
-        // Email & Password Auth Handler
         window.handleEmailAuth = async function(e) {
             e.preventDefault();
             authError.style.display = 'none';
@@ -1159,7 +1106,6 @@
             }
         };
 
-        // Google Sign In
         document.getElementById('googleBtn').addEventListener('click', async () => {
             try {
                 await signInWithPopup(auth, googleProvider);
@@ -1170,7 +1116,6 @@
             }
         });
 
-        // Global Auth Action (Sign In Trigger or Sign Out Execution)
         window.openAuthModal = function() {
             if (auth.currentUser) {
                 signOut(auth);
@@ -1179,7 +1124,6 @@
             }
         };
 
-        // Auth Observer
         onAuthStateChanged(auth, (user) => {
             if (user) {
                 authNavBtn.innerText = "LOGOUT";
@@ -1189,6 +1133,7 @@
         });
     </script>
 
+    <!-- GENERAL APP LOGIC -->
     <script>
         function updateCartBadge() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
