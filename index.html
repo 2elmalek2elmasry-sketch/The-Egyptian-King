@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="google-site-verification" content="Bv49-Vz2uN0iFvzMuLbp6VWUjabg3omytytGE0JPoa8" />
     <title>THE EGYPTIAN KING — Official Site</title>
     
@@ -73,6 +73,7 @@
             overflow-x: hidden;
             position: relative;
             min-height: 100vh;
+            width: 100%;
         }
 
         .ambient-bg {
@@ -119,6 +120,7 @@
             opacity: 1;
             visibility: visible;
             transition: all 0.4s ease;
+            overflow-y: auto;
         }
 
         .modal-overlay.hidden {
@@ -131,12 +133,13 @@
             background: rgba(18, 18, 24, 0.95);
             border: 1px solid var(--border-glow);
             border-radius: 24px;
-            padding: 3rem 2.5rem;
+            padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
             max-width: 500px;
             width: 100%;
             text-align: center;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
             position: relative;
+            margin: auto;
         }
 
         .modal-close {
@@ -153,7 +156,7 @@
 
         .modal-greeting {
             font-family: 'Cinzel', serif;
-            font-size: 1.8rem;
+            font-size: clamp(1.4rem, 4vw, 1.8rem);
             letter-spacing: 3px;
             margin-bottom: 0.5rem;
             color: #fff;
@@ -305,18 +308,20 @@
             background: rgba(5, 5, 8, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem 4rem;
+            padding: 1.25rem clamp(1rem, 5vw, 4rem);
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .brand-logo {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 4vw, 1.4rem);
             font-weight: 900;
             letter-spacing: 3px;
             color: #fff;
@@ -324,7 +329,7 @@
             text-transform: uppercase;
         }
 
-        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav ul { display: flex; list-style: none; gap: clamp(1rem, 3vw, 2.5rem); flex-wrap: wrap; }
         nav a {
             color: var(--text-muted);
             text-decoration: none;
@@ -336,7 +341,7 @@
         }
         nav a:hover, nav a.active { color: #fff; }
 
-        .nav-actions { display: flex; gap: 1rem; align-items: center; }
+        .nav-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
 
         .btn-bag {
             background: transparent;
@@ -350,6 +355,7 @@
             letter-spacing: 1.5px;
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
@@ -369,6 +375,7 @@
             border: none;
             cursor: pointer;
             display: inline-block;
+            text-align: center;
         }
 
         .btn-glow:hover {
@@ -384,7 +391,7 @@
             justify-content: center;
             align-items: center;
             text-align: center;
-            padding: 5rem 1.5rem;
+            padding: clamp(3rem, 10vw, 5rem) 1.5rem;
             position: relative;
         }
 
@@ -404,42 +411,46 @@
 
         .hero-title {
             font-family: 'Cinzel', serif;
-            font-size: clamp(3rem, 8vw, 6rem);
+            font-size: clamp(2.5rem, 10vw, 6rem);
             font-weight: 900;
-            letter-spacing: 6px;
+            letter-spacing: clamp(2px, 1vw, 6px);
             line-height: 1.05;
             margin-bottom: 1.8rem;
             background: linear-gradient(180deg, #ffffff 40%, var(--text-muted) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            word-wrap: break-word;
+            width: 100%;
         }
 
         .hero-subtitle {
             max-width: 720px;
             color: var(--text-muted);
-            font-size: 1.1rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             line-height: 1.8;
             margin-bottom: 2.8rem;
         }
 
         .hero-stats {
             display: flex;
-            gap: 3.5rem;
+            gap: clamp(1.5rem, 5vw, 3.5rem);
             margin-top: 3.5rem;
             border-top: 1px solid var(--border-glow);
             padding-top: 2.5rem;
+            flex-wrap: wrap;
+            justify-content: center;
         }
 
-        .stat-item h4 { font-family: 'Cinzel', serif; font-size: 2rem; color: var(--accent-primary); }
+        .stat-item h4 { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); color: var(--accent-primary); }
         .stat-item p { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
 
         /* BRAND PILLARS */
-        .section-padding { padding: 6rem 2rem; max-width: 1200px; margin: 0 auto; }
+        .section-padding { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem); max-width: 1200px; margin: 0 auto; }
         .section-title {
             text-align: center;
             font-family: 'Cinzel', serif;
-            font-size: 2.2rem;
-            letter-spacing: 4px;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            letter-spacing: clamp(2px, 1vw, 4px);
             margin-bottom: 1rem;
             text-transform: uppercase;
         }
@@ -454,7 +465,7 @@
 
         .grid-3 {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
             gap: 2rem;
         }
 
@@ -465,6 +476,8 @@
             padding: 2.5rem;
             backdrop-filter: blur(12px);
             transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .pillar-card:hover {
@@ -494,7 +507,7 @@
         /* FEATURED DROPS SHOWCASE */
         .products-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
             gap: 2rem;
         }
 
@@ -508,6 +521,8 @@
             overflow: hidden;
             backdrop-filter: blur(12px);
             transition: all 0.3s ease;
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .product-card:hover {
@@ -554,6 +569,8 @@
             justify-content: space-between;
             align-items: center;
             margin-top: 1rem;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .product-price {
@@ -567,7 +584,7 @@
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
             border-radius: 24px;
-            padding: 4rem 3rem;
+            padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
             backdrop-filter: blur(15px);
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -602,9 +619,10 @@
             background: linear-gradient(180deg, var(--card-bg) 0%, rgba(5,5,8,0.9) 100%);
             border: 1px solid var(--border-glow);
             border-radius: 28px;
-            padding: 4rem 2rem;
+            padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2rem);
             max-width: 800px;
             margin: 4rem auto;
+            word-wrap: break-word;
         }
 
         .alarm-form {
@@ -612,10 +630,11 @@
             gap: 1rem;
             max-width: 500px;
             margin: 2rem auto 0;
+            flex-wrap: wrap;
         }
 
         .alarm-input {
-            flex: 1;
+            flex: 1 1 250px;
             background: rgba(255,255,255,0.05);
             border: 1px solid var(--border-glow);
             padding: 0.9rem 1.2rem;
@@ -629,18 +648,19 @@
             background: var(--card-bg);
             border: 1px solid var(--border-glow);
             border-radius: 28px;
-            padding: 4.5rem 3rem;
+            padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3rem);
             text-align: center;
             backdrop-filter: blur(15px);
             margin: 4rem auto 6rem;
             max-width: 1100px;
             position: relative;
             overflow: hidden;
+            word-wrap: break-word;
         }
 
         .manifesto-box h2 {
             font-family: 'Cinzel', serif;
-            font-size: 2.4rem;
+            font-size: clamp(1.8rem, 5vw, 2.4rem);
             letter-spacing: 4px;
             margin-bottom: 1.5rem;
         }
@@ -655,7 +675,7 @@
 
         .specs-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
             gap: 1.5rem;
             margin-top: 3rem;
         }
@@ -692,7 +712,7 @@
         footer {
             background: rgba(5, 5, 8, 0.95);
             border-top: 1px solid var(--border-glow);
-            padding: 5rem 2rem 2rem;
+            padding: clamp(3rem, 8vw, 5rem) 1.5rem 2rem;
             text-align: center;
         }
 
@@ -773,7 +793,8 @@
             .theme-grid { grid-template-columns: 1fr; }
             .hero-stats { flex-direction: column; gap: 1.5rem; }
             .alarm-form { flex-direction: column; }
-            .footer-content { grid-template-columns: 1fr; }
+            .footer-content { grid-template-columns: 1fr; text-align: center; }
+            .footer-brand p { margin-left: auto; margin-right: auto; }
         }
     </style>
 </head>
@@ -954,7 +975,7 @@
     <section class="section-padding" style="padding-top: 0;">
         <div class="tech-banner">
             <div>
-                <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">GARMENT ARCHITECTURE</h2>
+                <h2 style="font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 3px; margin-bottom: 1rem;">GARMENT ARCHITECTURE</h2>
                 <p style="color: var(--text-muted); line-height: 1.8;">Every garment is designed from raw yarn to final stitch in Cairo, taking inspiration from historical structures and modern industrial cuts.</p>
                 <ul class="tech-list">
                     <li><span>✦</span> <div><strong>500 GSM Egyptian Cotton Fleece:</strong> Ultra-heavy structured draping that retains shape wear after wear.</div></li>
@@ -986,7 +1007,7 @@
     <!-- DROP ALARM / NEWSLETTER -->
     <section class="section-padding" style="padding-top: 0;">
         <div class="drop-alarm">
-            <h2 style="font-family: 'Cinzel', serif; font-size: 2rem; letter-spacing: 3px; margin-bottom: 1rem;">NEVER MISS A DROP</h2>
+            <h2 style="font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 3px; margin-bottom: 1rem;">NEVER MISS A DROP</h2>
             <p style="color: var(--text-muted); font-size: 0.95rem;">Capsules are released in ultra-limited numbers. Join the priority list for early access passwords.</p>
             <form class="alarm-form" onsubmit="event.preventDefault(); alert('Subscribed to drop alerts!');">
                 <input type="email" placeholder="Enter your email" class="alarm-input" required>
