@@ -63,9 +63,7 @@
             transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
         }
 
-        html {
-            scroll-behavior: smooth;
-        }
+        html { scroll-behavior: smooth; }
 
         body {
             background-color: var(--bg);
@@ -78,10 +76,8 @@
 
         .ambient-bg {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100vw;
-            height: 100vh;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
             z-index: -1;
             overflow: hidden;
             pointer-events: none;
@@ -104,6 +100,44 @@
             0% { transform: translate(0, 0) scale(1); }
             50% { transform: translate(60px, 80px) scale(1.1); }
             100% { transform: translate(-40px, 40px) scale(0.95); }
+        }
+
+        /* TOAST NOTIFICATION */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            pointer-events: none;
+            width: auto;
+            max-width: 90%;
+        }
+        .toast-message {
+            background: rgba(18, 18, 24, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--accent-primary);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: 0 0 25px var(--accent-glow);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            pointer-events: auto;
+            word-wrap: break-word;
+        }
+        .toast-message.show {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* MODAL STYLING */
@@ -237,9 +271,7 @@
             width: 100%;
         }
 
-        .auth-input:focus {
-            border-color: var(--accent-primary);
-        }
+        .auth-input:focus { border-color: var(--accent-primary); }
 
         .auth-divider {
             display: flex;
@@ -609,9 +641,7 @@
             line-height: 1.6;
         }
 
-        .tech-list li strong {
-            color: #fff;
-        }
+        .tech-list li strong { color: #fff; }
 
         /* DROP ALARM / NEWSLETTER */
         .drop-alarm {
@@ -755,9 +785,7 @@
             transition: color 0.3s;
         }
 
-        .footer-col a:hover {
-            color: var(--accent-primary);
-        }
+        .footer-col a:hover { color: var(--accent-primary); }
 
         .copyright { 
             color: #777; 
@@ -779,9 +807,7 @@
             transition: color 0.3s;
         }
 
-        .copyright a:hover {
-            color: #fff;
-        }
+        .copyright a:hover { color: #fff; }
 
         @media (max-width: 900px) {
             .tech-banner { grid-template-columns: 1fr; }
@@ -814,22 +840,13 @@
             <p class="modal-sub">Pick a design for the shop</p>
 
             <div class="theme-grid">
-                <button class="theme-btn" onclick="selectTheme('ai')">
-                    1: FUTURISTIC AI
-                </button>
-                
+                <button class="theme-btn" onclick="selectTheme('ai')">1: FUTURISTIC AI</button>
                 <button class="theme-btn" onclick="selectTheme('neon')">
                     <span class="badge-rec">RECOMMENDED</span>
                     2: NEON
                 </button>
-
-                <button class="theme-btn" onclick="selectTheme('basic')">
-                    3: BASIC B&W
-                </button>
-
-                <button class="theme-btn" onclick="selectTheme('royalty')">
-                    4: GOLD ROYALTY
-                </button>
+                <button class="theme-btn" onclick="selectTheme('basic')">3: BASIC B&W</button>
+                <button class="theme-btn" onclick="selectTheme('royalty')">4: GOLD ROYALTY</button>
             </div>
         </div>
     </div>
@@ -1009,7 +1026,7 @@
         <div class="drop-alarm">
             <h2 style="font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 3px; margin-bottom: 1rem;">NEVER MISS A DROP</h2>
             <p style="color: var(--text-muted); font-size: 0.95rem;">Capsules are released in ultra-limited numbers. Join the priority list for early access passwords.</p>
-            <form class="alarm-form" onsubmit="event.preventDefault(); alert('Subscribed to drop alerts!');">
+            <form class="alarm-form" onsubmit="event.preventDefault(); showToast('Subscribed to drop alerts!');">
                 <input type="email" placeholder="Enter your email" class="alarm-input" required>
                 <button type="submit" class="btn-glow">Get Notified</button>
             </form>
@@ -1117,8 +1134,10 @@
             try {
                 if (isSignUpMode) {
                     await createUserWithEmailAndPassword(auth, email, password);
+                    showToast('Account created successfully!');
                 } else {
                     await signInWithEmailAndPassword(auth, email, password);
+                    showToast('Signed in successfully!');
                 }
                 closeAuthModal();
             } catch (err) {
@@ -1130,6 +1149,7 @@
         document.getElementById('googleBtn').addEventListener('click', async () => {
             try {
                 await signInWithPopup(auth, googleProvider);
+                showToast('Google sign-in successful!');
                 closeAuthModal();
             } catch (err) {
                 authError.innerText = err.message.replace('Firebase: ', '');
@@ -1139,7 +1159,9 @@
 
         window.openAuthModal = function() {
             if (auth.currentUser) {
-                signOut(auth);
+                signOut(auth).then(() => {
+                    showToast('Logged out successfully.');
+                });
             } else {
                 document.getElementById('authModal').classList.remove('hidden');
             }
@@ -1156,6 +1178,33 @@
 
     <!-- GENERAL APP LOGIC -->
     <script>
+        // Toast Notification Function
+        function showToast(message) {
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = message;
+            container.appendChild(toast);
+            
+            // Trigger reflow
+            void toast.offsetWidth;
+            
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+        window.showToast = showToast; // Expose globally
+
         function updateCartBadge() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
@@ -1174,6 +1223,7 @@
         function selectTheme(theme) {
             applyTheme(theme);
             closeThemeModal();
+            showToast(`Theme switched to ${theme.toUpperCase()}`);
         }
 
         function openThemeModal() {
