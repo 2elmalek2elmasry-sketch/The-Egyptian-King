@@ -45,6 +45,44 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; width: 100%; }
 
+        /* TOAST NOTIFICATION */
+        .toast-container {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            align-items: center;
+            pointer-events: none;
+            width: auto;
+            max-width: 90%;
+        }
+        .toast-message {
+            background: rgba(18, 18, 24, 0.95);
+            backdrop-filter: blur(15px);
+            border: 1px solid var(--accent-primary);
+            color: #fff;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.9rem;
+            letter-spacing: 1px;
+            box-shadow: 0 0 25px var(--accent-glow);
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-align: center;
+            pointer-events: auto;
+            word-wrap: break-word;
+        }
+        .toast-message.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
         header {
             background: rgba(5, 5, 8, 0.8);
             backdrop-filter: blur(20px);
@@ -67,26 +105,6 @@
 
         .header-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
 
-        .btn-auth {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 0.6rem 1.2rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            text-decoration: none;
-        }
-
-        .btn-auth:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
-
         .btn-bag {
             background: transparent;
             border: 1px solid var(--border-glow);
@@ -99,6 +117,7 @@
             letter-spacing: 1.5px;
             text-decoration: none;
             transition: all 0.3s ease;
+            display: inline-block;
         }
 
         .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
@@ -109,7 +128,6 @@
 
         .product-grid {
             display: grid;
-            /* Prevents horizontal scrolling by ensuring items never exceed 100% width */
             grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
             gap: clamp(1rem, 4vw, 2.5rem);
         }
@@ -195,6 +213,30 @@
     </footer>
 
     <script>
+        // Toast Notification Function
+        function showToast(message) {
+            let container = document.querySelector('.toast-container');
+            if (!container) {
+                container = document.createElement('div');
+                container.className = 'toast-container';
+                document.body.appendChild(container);
+            }
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = message;
+            container.appendChild(toast);
+            
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            
+            setTimeout(() => {
+                toast.classList.remove('show');
+                setTimeout(() => {
+                    toast.remove();
+                }, 400);
+            }, 3000);
+        }
+
         const products = [
             { id: 1, name: "Queen Nefertiti Hoodie", price: 950, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
             { id: 2, name: "Khaby Lame Hoodie", price: 950, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
@@ -249,7 +291,7 @@
 
             localStorage.setItem('kingCart', JSON.stringify(cart));
             updateCartCount();
-            alert(`${product.name} added to bag!`);
+            showToast(`${product.name} added to bag!`);
         }
 
         function updateCartCount() {
