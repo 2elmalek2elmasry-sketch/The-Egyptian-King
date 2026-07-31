@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>THE EGYPTIAN KING — Community Reviews</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
 
@@ -53,24 +53,28 @@
             background-color: var(--bg);
             color: var(--text-main);
             min-height: 100vh;
+            overflow-x: hidden; /* Prevents horizontal scroll */
+            width: 100%;
         }
 
         header {
             background: rgba(5, 5, 8, 0.8);
             backdrop-filter: blur(20px);
             border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem 4rem;
+            padding: 1rem clamp(1rem, 5vw, 4rem); /* Fluid padding */
             position: sticky;
             top: 0;
             z-index: 100;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
         }
 
         .brand-logo {
             font-family: 'Cinzel', serif;
-            font-size: 1.4rem;
+            font-size: clamp(1rem, 4vw, 1.4rem);
             font-weight: 900;
             letter-spacing: 3px;
             color: #fff;
@@ -78,7 +82,7 @@
             text-transform: uppercase;
         }
 
-        nav ul { display: flex; list-style: none; gap: 2.5rem; }
+        nav ul { display: flex; list-style: none; gap: clamp(1rem, 3vw, 2.5rem); flex-wrap: wrap; }
         nav a {
             color: var(--text-muted);
             text-decoration: none;
@@ -89,6 +93,8 @@
             transition: all 0.3s;
         }
         nav a:hover, nav a.active { color: #fff; }
+
+        .nav-actions { display: flex; gap: 0.5rem; flex-wrap: wrap; }
 
         .btn-bag {
             background: transparent;
@@ -121,7 +127,8 @@
         .container {
             max-width: 1100px;
             margin: 4rem auto;
-            padding: 0 2rem;
+            padding: 0 clamp(1rem, 5vw, 2rem);
+            width: 100%;
         }
 
         .page-header {
@@ -131,14 +138,14 @@
 
         .page-header h1 {
             font-family: 'Cinzel', serif;
-            font-size: 2.8rem;
+            font-size: clamp(1.8rem, 6vw, 2.8rem);
             letter-spacing: 4px;
             margin-bottom: 1rem;
         }
 
         .reviews-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
             gap: 2rem;
             margin-top: 3rem;
         }
@@ -149,6 +156,8 @@
             border-radius: 18px;
             padding: 2rem;
             backdrop-filter: blur(10px);
+            word-wrap: break-word;
+            overflow-wrap: break-word;
         }
 
         .review-stars {
@@ -186,6 +195,7 @@
             opacity: 1;
             visibility: visible;
             transition: all 0.4s ease;
+            overflow-y: auto;
         }
 
         .modal-overlay.hidden {
@@ -203,6 +213,7 @@
             width: 100%;
             text-align: center;
             position: relative;
+            margin: auto;
         }
 
         .form-group {
@@ -237,7 +248,7 @@
         footer {
             background: rgba(5, 5, 8, 0.95);
             border-top: 1px solid var(--border-glow);
-            padding: 3rem 2rem;
+            padding: 3rem 1rem;
             text-align: center;
             margin-top: 6rem;
         }
@@ -256,6 +267,10 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 700;
+        }
+
+        @media (max-width: 480px) {
+            .modal-card { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
