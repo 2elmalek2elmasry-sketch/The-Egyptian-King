@@ -4,523 +4,116 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Checkout — THE EGYPTIAN KING</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <script type="module">
-      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
-
-      const firebaseConfig = {
-        apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
-        authDomain: "the-egyptian-king-68e45.firebaseapp.com",
-        projectId: "the-egyptian-king-68e45",
-        storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
-        messagingSenderId: "94881816710",
-        appId: "1:94881816710:web:10fca569f1b43c583ab107",
-        measurementId: "G-ZR0FBN0PRV"
-      };
-
-      const app = initializeApp(firebaseConfig);
-      const analytics = getAnalytics(app);
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #08080c;
-            --sidebar-bg: #0f0f17;
-            --card-bg: rgba(22, 22, 32, 0.8);
-            --border-glow: rgba(255, 255, 255, 0.12);
-            --text-main: #ffffff;
-            --text-muted: #8e8e9e;
-            --accent-primary: #38bdf8;
-            --input-bg: rgba(255, 255, 255, 0.04);
-        }
-
-        body[data-theme="neon"] {
-            --bg: #090014;
-            --sidebar-bg: #0e021e;
-            --card-bg: rgba(24, 9, 43, 0.85);
-            --border-glow: rgba(236, 72, 153, 0.3);
-            --accent-primary: #ec4899;
-        }
-
-        body[data-theme="royalty"] {
-            --bg: #0a0802;
-            --sidebar-bg: #120e04;
-            --card-bg: rgba(28, 23, 13, 0.85);
-            --border-glow: rgba(234, 179, 8, 0.3);
-            --accent-primary: #eab308;
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; width: 100%; }
-
-        /* TOAST NOTIFICATION */
-        .toast-container {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-            pointer-events: none;
-            width: auto;
-            max-width: 90%;
-        }
-        .toast-message {
-            background: rgba(18, 18, 24, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--accent-primary);
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            box-shadow: 0 0 25px rgba(56, 189, 248, 0.4);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            pointer-events: auto;
-            word-wrap: break-word;
-        }
-        .toast-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        .checkout-layout {
-            display: grid;
-            grid-template-columns: 1fr 450px;
-            min-height: 100vh;
-        }
-
-        .main-content {
-            padding: 3rem clamp(1rem, 5vw, 5rem);
-            max-width: 750px;
-            margin-left: auto;
-            width: 100%;
-        }
-
-        .brand-header {
-            margin-bottom: 2.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .brand-title {
-            font-size: 1.3rem;
-            font-weight: 900;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-        }
-
-        .section-box { margin-bottom: 2.2rem; }
-
-        .section-title {
-            font-size: 1.1rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .sign-in-link { font-size: 0.8rem; color: var(--accent-primary); text-decoration: none; font-weight: 600; }
-
-        .form-group { margin-bottom: 0.9rem; position: relative; }
-
-        .input-field, .select-field {
-            width: 100%;
-            background: var(--input-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 8px;
-            padding: 0.85rem 1rem;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .input-field:focus, .select-field:focus {
-            border-color: var(--accent-primary);
-        }
-
-        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
-        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; }
-
-        .checkbox-label {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
-            color: var(--text-muted);
-            margin-top: 0.8rem;
-            cursor: pointer;
-        }
-
-        .notice-box {
-            background: var(--input-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 8px;
-            padding: 1rem;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-        }
-
-        .payment-option-box {
-            background: var(--card-bg);
-            border: 1px solid var(--accent-primary);
-            border-radius: 8px;
-            padding: 1rem;
-            font-weight: 600;
-            font-size: 0.9rem;
-        }
-
-        .btn-complete {
-            width: 100%;
-            background: var(--accent-primary);
-            color: #000;
-            border: none;
-            padding: 1.1rem;
-            border-radius: 8px;
-            font-weight: 800;
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            cursor: pointer;
-            margin-top: 1.5rem;
-            transition: transform 0.2s ease;
-        }
-
-        .btn-complete:hover { transform: translateY(-2px); }
-
-        .checkout-footer {
-            margin-top: 4rem;
-            padding-top: 1.5rem;
-            border-top: 1px solid var(--border-glow);
-            display: flex;
-            gap: 1.5rem;
-            font-size: 0.75rem;
-            flex-wrap: wrap;
-        }
-
-        .checkout-footer a { color: var(--text-muted); text-decoration: none; }
-
-        .sidebar {
-            background: var(--sidebar-bg);
-            border-left: 1px solid var(--border-glow);
-            padding: 3rem clamp(1rem, 4vw, 3rem) 3rem clamp(1rem, 4vw, 2.5rem);
-        }
-
-        .summary-item {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
-
-        .summary-item-left { display: flex; align-items: center; gap: 1rem; position: relative; min-width: 0; }
-
-        .item-img-wrapper {
-            position: relative;
-            width: 64px;
-            height: 64px;
-            background: #1a1a24;
-            border-radius: 8px;
-            border: 1px solid var(--border-glow);
-            flex-shrink: 0;
-        }
-
-        .item-img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
-
-        .item-badge {
-            position: absolute;
-            top: -8px;
-            right: -8px;
-            background: var(--text-muted);
-            color: #000;
-            font-size: 0.7rem;
-            font-weight: 900;
-            width: 20px;
-            height: 20px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .item-details { min-width: 0; }
-        .item-details h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; word-wrap: break-word; }
-        .item-details p { font-size: 0.75rem; color: var(--text-muted); }
-
-        .item-price { font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
-
-        .cost-row {
-            display: flex;
-            justify-content: space-between;
-            color: var(--text-muted);
-            font-size: 0.88rem;
-            margin-bottom: 0.8rem;
-            gap: 1rem;
-        }
-
-        .cost-row.total {
-            color: #fff;
-            font-size: 1.2rem;
-            font-weight: 800;
-            border-top: 1px solid var(--border-glow);
-            padding-top: 1.2rem;
-            margin-top: 1.2rem;
-        }
-
-        @media (max-width: 900px) {
-            .checkout-layout { grid-template-columns: 1fr; }
-            .main-content { padding: 2rem 1.5rem; }
-            .sidebar { padding: 2rem 1.5rem; order: -1; border-left: none; border-bottom: 1px solid var(--border-glow); }
-            .form-row, .form-row-3 { grid-template-columns: 1fr; }
-        }
+        :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
+        .toast-message.show { opacity:1; transform:translateY(0); }
+        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:center; align-items:center; }
+        .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
+        .checkout-layout { display:grid; grid-template-columns:1fr 400px; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
+        .section-box { margin-bottom:2rem; }
+        .section-title { font-size:1.2rem; font-weight:800; margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:1px; }
+        .form-group { margin-bottom:1rem; }
+        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+        .input-field { width:100%; background:#fff; border:1px solid var(--border); border-radius:4px; padding:0.9rem 1rem; color:#0a0a0a; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
+        .input-field:focus { border-color:#0a0a0a; }
+        .btn-complete { width:100%; background:#0a0a0a; color:#fff; padding:1.2rem; border:none; border-radius:4px; font-weight:800; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px; cursor:pointer; margin-top:1rem; transition:background 0.3s; }
+        .btn-complete:hover { background:var(--accent); }
+        .sidebar { background:#fafafa; padding:2rem; border-radius:8px; border:1px solid var(--border); height:fit-content; }
+        .summary-item { display:flex; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+        .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:4px; }
+        .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
+        .summary-item p { font-size:0.8rem; color:var(--text-muted); }
+        .cost-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
+        .cost-row.total { font-size:1.2rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
+        @media (max-width:900px) { .checkout-layout { grid-template-columns:1fr; } .form-row { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
-
+    <div class="toast-container"></div>
+    <header><a href="index.html" class="brand-logo">The Egyptian King</a></header>
     <div class="checkout-layout">
-        
-        <main class="main-content">
-            <div class="brand-header">
-                <div class="brand-title">THE EGYPTIAN KING</div>
-            </div>
-
+        <div>
             <div class="section-box">
-                <div class="section-title">
-                    Contact
-                    <a href="#" class="sign-in-link">Sign in</a>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="input-field" placeholder="Email or mobile phone number">
-                </div>
-                <label class="checkbox-label">
-                    <input type="checkbox" checked> Email me with news and offers
-                </label>
+                <h2 class="section-title">Contact Information</h2>
+                <div class="form-group"><input type="email" class="input-field" placeholder="Email address" required></div>
             </div>
-
             <div class="section-box">
-                <div class="section-title">Delivery</div>
-                
-                <div class="form-group">
-                    <select class="select-field">
-                        <option value="Egypt">Egypt</option>
-                        <option value="UAE">United Arab Emirates</option>
-                        <option value="Saudi Arabia">Saudi Arabia</option>
-                        <option value="Worldwide">Worldwide Delivery</option>
-                    </select>
+                <h2 class="section-title">Shipping Address</h2>
+                <div class="form-row">
+                    <div class="form-group"><input type="text" class="input-field" placeholder="First name" required></div>
+                    <div class="form-group"><input type="text" class="input-field" placeholder="Last name" required></div>
                 </div>
-
-                <div class="form-row form-group">
-                    <input type="text" class="input-field" placeholder="First name">
-                    <input type="text" class="input-field" placeholder="Last name">
+                <div class="form-group"><input type="text" class="input-field" placeholder="Address" required></div>
+                <div class="form-row">
+                    <div class="form-group"><input type="text" class="input-field" placeholder="City" required></div>
+                    <div class="form-group"><input type="text" class="input-field" placeholder="Postal code (optional)"></div>
                 </div>
-
-                <div class="form-group">
-                    <input type="text" class="input-field" placeholder="Address">
-                </div>
-
-                <div class="form-row-3 form-group">
-                    <input type="text" class="input-field" placeholder="City">
-                    <select class="select-field">
-                        <option value="">Governorate</option>
-                        <option value="Cairo">Cairo</option>
-                        <option value="Alexandria">Alexandria</option>
-                        <option value="Giza">Giza</option>
-                    </select>
-                    <input type="text" class="input-field" placeholder="Postal code (optional)">
-                </div>
-
-                <div class="form-group">
-                    <input type="text" class="input-field" placeholder="Phone">
-                </div>
-
-                <label class="checkbox-label">
-                    <input type="checkbox"> Save this information for next time
-                </label>
+                <div class="form-group"><input type="text" class="input-field" placeholder="Phone number" required></div>
             </div>
-
             <div class="section-box">
-                <div class="section-title">Shipping method</div>
-                <div class="notice-box">
-                    Enter your shipping address to view available shipping methods.
+                <h2 class="section-title">Payment</h2>
+                <div style="border:1px solid var(--border); padding:1.5rem; border-radius:4px; background:#fff;">
+                    <p style="font-weight:700; margin-bottom:1rem;">Cash on Delivery (COD)</p>
+                    <p style="font-size:0.85rem; color:var(--text-muted);">Pay with cash upon delivery.</p>
                 </div>
             </div>
-
-            <div class="section-box">
-                <div class="section-title">Payment</div>
-                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.8rem;">All transactions are secure and encrypted.</p>
-                
-                <div class="payment-option-box">
-                    Cash on Delivery (COD)
-                </div>
-            </div>
-
-            <div class="section-box">
-                <div class="section-title">Billing address</div>
-                <div class="payment-option-box" style="margin-bottom: 0.6rem;">
-                    🔴 Same as shipping address
-                </div>
-                <div class="notice-box">
-                    ⚪ Use a different billing address
-                </div>
-            </div>
-
-            <button class="btn-complete" onclick="completeOrder()">Complete order</button>
-
-            <div class="checkout-footer">
-                <a href="terms.html">Refund policy</a>
-                <a href="terms.html">Shipping</a>
-                <a href="terms.html">Contact</a>
-            </div>
-        </main>
-
-        <aside class="sidebar">
-            <div id="checkout-items-list">
-                <!-- LOADED DYNAMICALLY -->
-            </div>
-
-            <div style="border-top: 1px solid var(--border-glow); padding-top: 1.5rem; margin-top: 1.5rem;">
-                <div class="cost-row">
-                    <span>Subtotal</span>
-                    <span id="subtotal-val">E£0.00</span>
-                </div>
-                <div class="cost-row">
-                    <span>Shipping</span>
-                    <span>Enter shipping address</span>
-                </div>
-                <div class="cost-row.total">
-                    <span>Total</span>
-                    <span id="total-val">E£0.00</span>
-                </div>
-            </div>
-        </aside>
-
+            <button class="btn-complete" onclick="completeOrder()">Place Order</button>
+        </div>
+        <div class="sidebar">
+            <h2 class="section-title">Order Summary</h2>
+            <div id="checkout-items-list"></div>
+            <div class="cost-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
+            <div class="cost-row"><span>Shipping</span><span>Free</span></div>
+            <div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
+        </div>
     </div>
-
     <script>
-        // Toast Notification Function
         function showToast(message) {
             let container = document.querySelector('.toast-container');
-            if (!container) {
-                container = document.createElement('div');
-                container.className = 'toast-container';
-                document.body.appendChild(container);
-            }
             const toast = document.createElement('div');
             toast.className = 'toast-message';
             toast.innerText = message;
             container.appendChild(toast);
-            
             void toast.offsetWidth;
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 400);
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
-
-        const products = [
-            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
-            { id: 2, name: "Khaby Lame Hoodie", price: 950, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
-            { id: 3, name: "LeBron James Hoodie", price: 950, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
-            { id: 4, name: "Dwayne Johnson Hoodie", price: 950, img: "https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" },
-            { id: 5, name: "Jude Bellingham Hoodie", price: 950, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" },
-            { id: 6, name: "Social Media Hoodie", price: 950, img: "https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" },
-            { id: 7, name: "Egyptian Rulers Hoodie", price: 950, img: "https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" },
-            { id: 8, name: "Egyptian Culture Hoodie", price: 950, img: "https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" },
-            { id: 9, name: "FIFA World Cup Hoodie", price: 980, img: "https://i.postimg.cc/qRHPBMmP/unnamed.png" },
-            { id: 10, name: "Algerian Culture Hoodie", price: 950, img: "https://i.postimg.cc/3rZnLTjD/IMG-5187.png" },
-            { id: 11, name: "Tunisia Culture Hoodie", price: 950, img: "https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" },
-            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
-            { id: 13, name: "El Donya Raby3 T-Shirt", price: 550, img: "https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" },
-            { id: 14, name: "El R7la Wl Fekr T-Shirt", price: 550, img: "https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" },
-            { id: 15, name: "Zkrayat 3310 T-Shirt", price: 550, img: "https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" },
-            { id: 16, name: "Sa7et El Syf T-Shirt", price: 550, img: "https://i.postimg.cc/XYJgrdmV/Untitled-design-(5).png" },
-            { id: 17, name: "2skndereya T-Shirt", price: 550, img: "https://i.postimg.cc/RVgJBSCq/Untitled-design-(7).png" },
-            { id: 18, name: "Basic Core — Black", price: 450, img: "https://i.postimg.cc/CxRFZDkV/Untitled-design-(9).png" },
-            { id: 19, name: "Basic Core — Grey", price: 450, img: "https://i.postimg.cc/MH3CxPsq/Untitled-design-(10).png" },
-            { id: 20, name: "Basic Core — Pink", price: 450, img: "https://i.postimg.cc/G2qNJgng/Untitled-design-(11).png" },
-            { id: 21, name: "Basic Core — Blue", price: 450, img: "https://i.postimg.cc/5tJRcW4f/Untitled-design-(13).png" },
-            { id: 22, name: "Basic Core — Brown", price: 450, img: "https://i.postimg.cc/ncQRChry/Untitled-design-(12).png" }
-        ];
-
         function loadCheckout() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const buyId = parseInt(urlParams.get('buyId'));
-
-            let checkoutItems = [];
-
-            if (buyId) {
-                const singleItem = products.find(p => p.id === buyId);
-                if (singleItem) checkoutItems = [{ ...singleItem, qty: 1 }];
-            } else {
-                checkoutItems = JSON.parse(localStorage.getItem('kingCart')) || [];
-            }
-
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const listContainer = document.getElementById('checkout-items-list');
             let subtotal = 0;
-
-            if (checkoutItems.length === 0) {
-                listContainer.innerHTML = `<p style="color:var(--text-muted)">No items selected for checkout.</p>`;
+            if (cart.length === 0) {
+                listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">No items selected for checkout.</p>`;
                 return;
             }
-
-            listContainer.innerHTML = checkoutItems.map(item => {
+            listContainer.innerHTML = cart.map(item => {
                 const itemTotal = item.price * item.qty;
                 subtotal += itemTotal;
                 return `
                     <div class="summary-item">
-                        <div class="summary-item-left">
-                            <div class="item-img-wrapper">
-                                <img src="${item.img}" alt="${item.name}">
-                                <div class="item-badge">${item.qty}</div>
-                            </div>
-                            <div class="item-details">
-                                <h4>"${item.name}"</h4>
-                                <p>Medium</p>
-                            </div>
+                        <img src="${item.img}" alt="${item.name}">
+                        <div style="flex:1;">
+                            <h4>${item.name}</h4>
+                            <p>Qty: ${item.qty}</p>
+                            <p style="color:#0a0a0a; font-weight:700; margin-top:4px;">E£${itemTotal.toFixed(2)}</p>
                         </div>
-                        <div class="item-price">E£${itemTotal.toFixed(2)}</div>
                     </div>
                 `;
             }).join('');
-
             document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
-            document.getElementById('total-val').innerText = `EGP E£${subtotal.toFixed(2)}`;
+            document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
         }
-
         function completeOrder() {
-            showToast('Order placed successfully! Thank you for purchasing.');
+            showToast('Order placed successfully! Thank you.');
             localStorage.removeItem('kingCart');
-            setTimeout(() => {
-                window.location.href = 'index.html';
-            }, 2000);
+            setTimeout(() => { window.location.href = 'index.html'; }, 2000);
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            loadCheckout();
-            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
-            if (savedTheme !== 'basic') {
-                document.body.setAttribute('data-theme', savedTheme);
-            }
-        });
+        window.addEventListener('DOMContentLoaded', () => { loadCheckout(); });
     </script>
 </body>
 </html>
