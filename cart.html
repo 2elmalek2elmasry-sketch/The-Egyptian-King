@@ -3,251 +3,149 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THE EGYPTIAN KING — Shopping Bag</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    <title>Shopping Bag — THE EGYPTIAN KING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050508;
-            --card-bg: rgba(18, 18, 24, 0.75);
-            --border-glow: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #a0a0b0;
-            --accent-primary: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.4);
-        }
-
-        body[data-theme="neon"] {
-            --bg: #090014;
-            --card-bg: rgba(24, 9, 43, 0.8);
-            --border-glow: rgba(236, 72, 153, 0.4);
-            --accent-primary: #ec4899;
-            --accent-glow: rgba(236, 72, 153, 0.6);
-        }
-
-        body[data-theme="ai"] {
-            --bg: #030712;
-            --card-bg: rgba(15, 23, 42, 0.8);
-            --border-glow: rgba(56, 189, 248, 0.35);
-            --accent-primary: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.5);
-        }
-
-        body[data-theme="royalty"] {
-            --bg: #0a0802;
-            --card-bg: rgba(28, 23, 13, 0.85);
-            --border-glow: rgba(234, 179, 8, 0.35);
-            --accent-primary: #eab308;
-            --accent-glow: rgba(234, 179, 8, 0.5);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; width: 100%; }
-
-        header {
-            background: rgba(5, 5, 8, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem clamp(1rem, 5vw, 4rem);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .brand-logo { font-family: 'Cinzel', serif; font-size: clamp(1rem, 4vw, 1.4rem); font-weight: 900; letter-spacing: 3px; color: #fff; text-decoration: none; text-transform: uppercase; }
-        nav ul { display: flex; list-style: none; gap: clamp(1rem, 3vw, 2.5rem); flex-wrap: wrap; }
-        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
-        nav a:hover, nav a.active { color: #fff; }
-
-        .container { max-width: 1000px; margin: 4rem auto 6rem; padding: 0 clamp(1rem, 5vw, 2rem); width: 100%; }
-        .page-title { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 5vw, 2.2rem); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 2rem; border-bottom: 1px solid var(--border-glow); padding-bottom: 1rem; }
-
-        .cart-list { display: flex; flex-direction: column; gap: 1.5rem; }
-
-        .cart-item {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 1.5rem clamp(1rem, 3vw, 2rem);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 2rem;
-            backdrop-filter: blur(10px);
-            position: relative;
-        }
-
-        .cart-item-left { display: flex; align-items: center; gap: 1.5rem; min-width: 0; }
-        .cart-img { width: 90px; height: 110px; border-radius: 12px; object-fit: cover; background: #111; flex-shrink: 0; }
-        .cart-info { min-width: 0; }
-        .cart-info h3 { font-size: 1.05rem; font-weight: 800; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 0.3rem; word-wrap: break-word; }
-        .cart-info p { color: var(--accent-primary); font-weight: 700; font-size: 1.1rem; }
-
-        .cart-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
-        .qty-controls { display: flex; align-items: center; gap: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.4rem 0.8rem; border-radius: 30px; border: 1px solid var(--border-glow); }
-        .qty-btn { background: none; border: none; color: #fff; font-size: 1rem; font-weight: 800; cursor: pointer; padding: 0 4px; }
-
-        .btn-remove {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            color: #ef4444;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 0.9rem;
-            font-weight: 800;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        .btn-remove:hover {
-            background: #ef4444;
-            color: #fff;
-            border-color: #ef4444;
-        }
-
-        .btn-buy-now {
-            background: var(--accent-primary);
-            color: #000;
-            padding: 0.75rem 1.8rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            text-decoration: none;
-            border: none;
-            cursor: pointer;
-            box-shadow: 0 0 15px var(--accent-glow);
-            transition: transform 0.2s ease;
-            display: inline-block;
-        }
-        .btn-buy-now:hover { transform: scale(1.05); }
-
-        .empty-state { text-align: center; padding: 5rem 1rem; color: var(--text-muted); }
-        .empty-state h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 1rem; color: #fff; }
-
-        footer { background: rgba(5, 5, 8, 0.95); border-top: 1px solid var(--border-glow); padding: 4rem 2rem 2rem; text-align: center; margin-top: auto; }
-        .copyright { color: #555; font-size: 0.8rem; margin-top: 1.5rem; }
-
-        @media (max-width: 768px) {
-            .cart-item { flex-direction: column; text-align: center; align-items: center; }
-            .cart-item-left { flex-direction: column; }
-            .cart-actions { flex-direction: column; width: 100%; justify-content: center; }
-            .btn-buy-now { width: 100%; text-align: center; }
-        }
+        :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
+        .toast-message.show { opacity:1; transform:translateY(0); }
+        .announce-bar { background:#0a0a0a; color:#fff; padding:10px 0; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
+        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+        .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
+        nav ul { display:flex; list-style:none; gap:clamp(1rem,3vw,2.5rem); flex-wrap:wrap; }
+        nav a { color:var(--text-main); text-decoration:none; font-size:0.85rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.3s; }
+        nav a:hover, nav a.active { color:var(--accent); }
+        .nav-actions { display:flex; gap:1.5rem; align-items:center; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; }
+        .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .cart-layout { display:grid; grid-template-columns:2fr 1fr; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
+        .page-title { font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,2.5rem); margin-bottom:2rem; border-bottom:1px solid var(--border); padding-bottom:1rem; }
+        .cart-item { display:flex; gap:1.5rem; padding:1.5rem 0; border-bottom:1px solid var(--border); }
+        .cart-img { width:100px; height:120px; border-radius:6px; object-fit:cover; background:#f5f5f5; }
+        .cart-info { flex:1; }
+        .cart-info h3 { font-size:1rem; font-weight:700; margin-bottom:0.5rem; }
+        .cart-price { font-size:0.9rem; color:var(--text-muted); font-weight:600; margin-bottom:1rem; }
+        .qty-controls { display:inline-flex; align-items:center; gap:1rem; border:1px solid var(--border); border-radius:4px; padding:0.2rem 0.8rem; }
+        .qty-btn { background:none; border:none; font-size:1rem; font-weight:800; cursor:pointer; color:#0a0a0a; }
+        .btn-remove { background:none; border:none; color:#ff0000; font-size:0.8rem; font-weight:600; cursor:pointer; margin-top:1rem; text-transform:uppercase; letter-spacing:1px; }
+        .cart-summary { background:#fafafa; padding:2rem; border-radius:8px; border:1px solid var(--border); height:fit-content; }
+        .summary-row { display:flex; justify-content:space-between; margin-bottom:1rem; font-size:0.9rem; }
+        .summary-row.total { font-size:1.5rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
+        .btn-checkout { width:100%; background:#0a0a0a; color:#fff; padding:1rem; border:none; border-radius:4px; font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:1px; cursor:pointer; margin-top:1.5rem; transition:background 0.3s; }
+        .btn-checkout:hover { background:var(--accent); }
+        .empty-state { text-align:center; padding:4rem 1rem; }
+        .empty-state h2 { font-family:'Cinzel',serif; font-size:1.5rem; margin-bottom:1rem; }
+        .empty-state a { display:inline-block; margin-top:1rem; background:#0a0a0a; color:#fff; padding:1rem 2rem; text-decoration:none; font-weight:700; font-size:0.85rem; text-transform:uppercase; border-radius:4px; }
+        footer { background:#0a0a0a; color:#fff; padding:2rem; text-align:center; margin-top:4rem; }
+        .footer-bottom { color:#666; font-size:0.8rem; }
+        @media (max-width:768px) { .cart-layout { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
+    <div class="toast-container"></div>
+    <div class="announce-bar">🚚 FREE WORLDWIDE SHIPPING ON ORDERS OVER $100 • NEW PHARAOH DROP LIVE NOW</div>
     <header>
         <a href="index.html" class="brand-logo">The Egyptian King</a>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop Collection</a></li>
-                <li><a href="terms.html">Terms & Policies</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="reviews.html">Reviews</a></li>
             </ul>
         </nav>
-    </header>
-
-    <main class="container">
-        <h1 class="page-title">Your Shopping Bag</h1>
-        <div id="cart-container" class="cart-list">
-            <!-- ITEMS LOADED VIA JS -->
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="cart-count">0</span></a>
         </div>
-    </main>
-
-    <footer>
-        <div class="brand-logo">THE EGYPTIAN KING</div>
-        <div class="copyright">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div>
-    </footer>
-
+    </header>
+    <div class="cart-layout">
+        <div>
+            <h1 class="page-title">Your Shopping Bag</h1>
+            <div id="cart-container"></div>
+        </div>
+        <div>
+            <div class="cart-summary" id="summary-box" style="display:none;">
+                <div class="summary-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
+                <div class="summary-row"><span>Shipping</span><span>Calculated at checkout</span></div>
+                <div class="summary-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
+                <button class="btn-checkout" onclick="checkout()">Proceed to Checkout</button>
+            </div>
+        </div>
+    </div>
+    <footer><div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div></footer>
     <script>
+        function showToast(message) {
+            let container = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = message;
+            container.appendChild(toast);
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
+        }
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const container = document.getElementById('cart-container');
-
+            const summaryBox = document.getElementById('summary-box');
             if (!cart || cart.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <h2>YOUR BAG IS EMPTY</h2>
-                        <p style="margin-bottom: 2rem;">Explore our collection to add exclusive apparel.</p>
-                        <a href="shop.html" class="btn-buy-now" style="display: inline-block;">GO TO SHOP</a>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><h2>Your bag is empty</h2><p>Explore our collection to add exclusive apparel.</p><a href="shop.html">Continue Shopping</a></div>`;
+                summaryBox.style.display = 'none';
                 return;
             }
-
+            summaryBox.style.display = 'block';
+            let subtotal = 0;
             container.innerHTML = cart.map((item, index) => {
                 const itemPrice = Number(item.price) || 0;
                 const itemQty = Number(item.qty) || 1;
-                const totalPrice = (itemPrice * itemQty).toFixed(2);
-                const itemImg = item.img ? `<img src="${item.img}" alt="${item.name}" class="cart-img">` : `<div class="cart-img" style="display:flex;align-items:center;justify-content:center;font-size:2rem;">𓀀</div>`;
-
+                subtotal += itemPrice * itemQty;
                 return `
                     <div class="cart-item">
-                        <div class="cart-item-left">
-                            ${itemImg}
-                            <div class="cart-info">
-                                <h3>${item.name || 'Custom Garment'}</h3>
-                                <p>E£${totalPrice}</p>
-                            </div>
-                        </div>
-                        
-                        <div class="cart-actions">
+                        <img src="${item.img}" alt="${item.name}" class="cart-img">
+                        <div class="cart-info">
+                            <h3>${item.name}</h3>
+                            <p class="cart-price">E£${itemPrice.toFixed(2)}</p>
                             <div class="qty-controls">
                                 <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
                                 <span>${itemQty}</span>
                                 <button class="qty-btn" onclick="changeQty(${index}, 1)">+</button>
                             </div>
-                            <button class="btn-remove" onclick="removeItem(${index})" title="Remove Item">✕</button>
-                            <button class="btn-buy-now" onclick="proceedToCheckout(${item.id})">BUY NOW</button>
+                            <br>
+                            <button class="btn-remove" onclick="removeItem(${index})">Remove</button>
                         </div>
                     </div>
                 `;
             }).join('');
+            document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
+            document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
         }
-
         function changeQty(index, delta) {
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             if (!cart[index]) return;
-
             cart[index].qty = (cart[index].qty || 1) + delta;
-
-            if (cart[index].qty <= 0) {
-                cart.splice(index, 1);
-            }
-
+            if (cart[index].qty <= 0) { cart.splice(index, 1); showToast('Item removed from bag.'); }
             localStorage.setItem('kingCart', JSON.stringify(cart));
-            renderCart();
+            renderCart(); updateCartCount();
         }
-
         function removeItem(index) {
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             cart.splice(index, 1);
             localStorage.setItem('kingCart', JSON.stringify(cart));
-            renderCart();
+            renderCart(); updateCartCount();
+            showToast('Item removed from bag.');
         }
-
-        function proceedToCheckout(productId) {
-            window.location.href = `checkout.html?buyId=${productId}`;
+        function checkout() {
+            showToast('Redirecting to secure checkout...');
+            setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderCart();
-            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
-            if (savedTheme !== 'basic') {
-                document.body.setAttribute('data-theme', savedTheme);
-            }
-        });
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+            document.getElementById('cart-count').innerText = count;
+        }
+        window.addEventListener('DOMContentLoaded', () => { renderCart(); updateCartCount(); });
     </script>
 </body>
 </html>
