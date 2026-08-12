@@ -4,1250 +4,180 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="google-site-verification" content="Bv49-Vz2uN0iFvzMuLbp6VWUjabg3omytytGE0JPoa8" />
-    <title>THE EGYPTIAN KING — Official Site</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    <title>THE EGYPTIAN KING — Premium Streetwear</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050508;
-            --card-bg: rgba(18, 18, 24, 0.75);
-            --border-glow: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #a0a0b0; 
-            --accent-primary: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.4);
-            --blob-1: #ffffff;
-            --blob-2: #333333;
-            --blob-3: #666666;
-        }
-
-        body[data-theme="neon"] {
-            --bg: #090014;
-            --card-bg: rgba(24, 9, 43, 0.8);
-            --border-glow: rgba(236, 72, 153, 0.4);
-            --accent-primary: #ec4899;
-            --accent-glow: rgba(236, 72, 153, 0.6);
-            --blob-1: #ec4899;
-            --blob-2: #8b5cf6;
-            --blob-3: #06b6d4;
-        }
-
-        body[data-theme="ai"] {
-            --bg: #030712;
-            --card-bg: rgba(15, 23, 42, 0.8);
-            --border-glow: rgba(56, 189, 248, 0.35);
-            --accent-primary: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.5);
-            --blob-1: #0284c7;
-            --blob-2: #6366f1;
-            --blob-3: #0f172a;
-        }
-
-        body[data-theme="royalty"] {
-            --bg: #0a0802;
-            --card-bg: rgba(28, 23, 13, 0.85);
-            --border-glow: rgba(234, 179, 8, 0.35);
-            --accent-primary: #eab308;
-            --accent-glow: rgba(234, 179, 8, 0.5);
-            --blob-1: #ca8a04;
-            --blob-2: #854d0e;
-            --blob-3: #1e1b18;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            transition: background-color 0.4s ease, border-color 0.4s ease, box-shadow 0.4s ease;
-        }
-
-        html { scroll-behavior: smooth; }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text-main);
-            overflow-x: hidden;
-            position: relative;
-            min-height: 100vh;
-            width: 100%;
-        }
-
-        .ambient-bg {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100vw; height: 100vh;
-            z-index: -1;
-            overflow: hidden;
-            pointer-events: none;
-        }
-
-        .blob {
-            position: absolute;
-            border-radius: 50%;
-            filter: blur(130px);
-            opacity: 0.3;
-            animation: floatBlob 12s infinite alternate ease-in-out;
-            transition: background 0.8s ease;
-        }
-
-        .blob-1 { width: 500px; height: 500px; background: var(--blob-1); top: -100px; left: 20%; }
-        .blob-2 { width: 450px; height: 450px; background: var(--blob-2); bottom: 10%; right: 15%; animation-delay: -5s; }
-        .blob-3 { width: 350px; height: 350px; background: var(--blob-3); top: 40%; left: -50px; animation-delay: -8s; }
-
-        @keyframes floatBlob {
-            0% { transform: translate(0, 0) scale(1); }
-            50% { transform: translate(60px, 80px) scale(1.1); }
-            100% { transform: translate(-40px, 40px) scale(0.95); }
-        }
-
-        /* TOAST NOTIFICATION */
-        .toast-container {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-            pointer-events: none;
-            width: auto;
-            max-width: 90%;
-        }
-        .toast-message {
-            background: rgba(18, 18, 24, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--accent-primary);
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            box-shadow: 0 0 25px var(--accent-glow);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            pointer-events: auto;
-            word-wrap: break-word;
-        }
-        .toast-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* MODAL STYLING */
-        .modal-overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0, 0, 0, 0.88);
-            backdrop-filter: blur(16px);
-            z-index: 9999;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 1.5rem;
-            opacity: 1;
-            visibility: visible;
-            transition: all 0.4s ease;
-            overflow-y: auto;
-        }
-
-        .modal-overlay.hidden {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
-
-        .modal-card {
-            background: rgba(18, 18, 24, 0.95);
-            border: 1px solid var(--border-glow);
-            border-radius: 24px;
-            padding: clamp(2rem, 5vw, 3rem) clamp(1.5rem, 4vw, 2.5rem);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.8);
-            position: relative;
-            margin: auto;
-        }
-
-        .modal-close {
-            position: absolute;
-            top: 1.25rem;
-            right: 1.5rem;
-            background: transparent;
-            border: none;
-            color: var(--text-muted);
-            font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .modal-close:hover { color: #fff; }
-
-        .modal-greeting {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.4rem, 4vw, 1.8rem);
-            letter-spacing: 3px;
-            margin-bottom: 0.5rem;
-            color: #fff;
-        }
-
-        .modal-sub {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            margin-bottom: 2rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            font-weight: 600;
-        }
-
-        .theme-grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 1.25rem;
-        }
-
-        .theme-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.15);
-            color: #fff;
-            padding: 1.25rem 1rem;
-            border-radius: 16px;
-            font-weight: 700;
-            font-size: 0.85rem;
-            letter-spacing: 1.5px;
-            cursor: pointer;
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            gap: 6px;
-            text-transform: uppercase;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .theme-btn:hover {
-            transform: translateY(-6px) scale(1.04);
-            border-color: #fff;
-            background: rgba(255, 255, 255, 0.15);
-            box-shadow: 0 12px 25px rgba(236, 72, 153, 0.3);
-        }
-
-        .badge-rec {
-            position: absolute;
-            top: -10px;
-            right: 10px;
-            background: #ec4899;
-            color: #fff;
-            font-size: 0.6rem;
-            font-weight: 900;
-            padding: 3px 8px;
-            border-radius: 20px;
-            letter-spacing: 1px;
-            box-shadow: 0 2px 10px rgba(236, 72, 153, 0.5);
-        }
-
-        /* AUTHENTICATION UI STYLES */
-        .auth-form {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .auth-input {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            padding: 0.85rem 1.2rem;
-            border-radius: 12px;
-            color: #fff;
-            font-size: 0.9rem;
-            outline: none;
-            width: 100%;
-        }
-
-        .auth-input:focus { border-color: var(--accent-primary); }
-
-        .auth-divider {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            margin: 1.2rem 0;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-
-        .auth-divider::before, .auth-divider::after {
-            content: '';
-            flex: 1;
-            height: 1px;
-            background: var(--border-glow);
-        }
-
-        .btn-google {
-            background: #ffffff;
-            color: #000000;
-            font-weight: 800;
-            padding: 0.85rem 1.2rem;
-            border-radius: 12px;
-            border: none;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 0.5rem;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            width: 100%;
-            transition: all 0.3s ease;
-        }
-
-        .btn-google:hover {
-            background: #e5e5e5;
-            transform: translateY(-2px);
-        }
-
-        .auth-toggle-msg {
-            color: var(--text-muted);
-            font-size: 0.8rem;
-            margin-top: 1.2rem;
-        }
-
-        .auth-toggle-msg span {
-            color: var(--accent-primary);
-            cursor: pointer;
-            font-weight: 700;
-            text-decoration: underline;
-        }
-
-        #authError {
-            color: #ef4444;
-            font-size: 0.8rem;
-            margin-top: 0.5rem;
-            display: none;
-        }
-
-        /* HEADER & NAVIGATION */
-        header {
-            background: rgba(5, 5, 8, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem clamp(1rem, 5vw, 4rem);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .brand-logo {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1rem, 4vw, 1.4rem);
-            font-weight: 900;
-            letter-spacing: 3px;
-            color: #fff;
-            text-decoration: none;
-            text-transform: uppercase;
-        }
-
-        nav ul { display: flex; list-style: none; gap: clamp(1rem, 3vw, 2.5rem); flex-wrap: wrap; }
-        nav a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            font-weight: 700;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            transition: all 0.3s;
-        }
-        nav a:hover, nav a.active { color: #fff; }
-
-        .nav-actions { display: flex; gap: 1rem; align-items: center; flex-wrap: wrap; }
-
-        .btn-bag {
-            background: transparent;
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 0.6rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            letter-spacing: 1.5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
-
-        .btn-glow {
-            background: var(--accent-primary);
-            color: #000;
-            padding: 0.75rem 1.8rem;
-            border-radius: 50px;
-            font-weight: 800;
-            font-size: 0.85rem;
-            letter-spacing: 1px;
-            text-decoration: none;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            box-shadow: 0 0 20px var(--accent-glow);
-            border: none;
-            cursor: pointer;
-            display: inline-block;
-            text-align: center;
-        }
-
-        .btn-glow:hover {
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 0 30px var(--accent-glow);
-        }
-
-        /* HERO SECTION */
-        .hero {
-            min-height: 85vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: clamp(3rem, 10vw, 5rem) 1.5rem;
-            position: relative;
-        }
-
-        .hero-badge {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            padding: 0.6rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 2.5px;
-            text-transform: uppercase;
-            margin-bottom: 1.8rem;
-            backdrop-filter: blur(10px);
-            color: var(--accent-primary);
-        }
-
-        .hero-title {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 10vw, 6rem);
-            font-weight: 900;
-            letter-spacing: clamp(2px, 1vw, 6px);
-            line-height: 1.05;
-            margin-bottom: 1.8rem;
-            background: linear-gradient(180deg, #ffffff 40%, var(--text-muted) 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            word-wrap: break-word;
-            width: 100%;
-        }
-
-        .hero-subtitle {
-            max-width: 720px;
-            color: var(--text-muted);
-            font-size: clamp(0.9rem, 2vw, 1.1rem);
-            line-height: 1.8;
-            margin-bottom: 2.8rem;
-        }
-
-        .hero-stats {
-            display: flex;
-            gap: clamp(1.5rem, 5vw, 3.5rem);
-            margin-top: 3.5rem;
-            border-top: 1px solid var(--border-glow);
-            padding-top: 2.5rem;
-            flex-wrap: wrap;
-            justify-content: center;
-        }
-
-        .stat-item h4 { font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); color: var(--accent-primary); }
-        .stat-item p { font-size: 0.75rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); font-weight: 700; margin-top: 4px; }
-
-        /* BRAND PILLARS */
-        .section-padding { padding: clamp(3rem, 8vw, 6rem) clamp(1rem, 5vw, 2rem); max-width: 1200px; margin: 0 auto; }
-        .section-title {
-            text-align: center;
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.8rem, 5vw, 2.2rem);
-            letter-spacing: clamp(2px, 1vw, 4px);
-            margin-bottom: 1rem;
-            text-transform: uppercase;
-        }
-        .section-sub {
-            text-align: center;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            letter-spacing: 1px;
-            margin-bottom: 4rem;
-            text-transform: uppercase;
-        }
-
-        .grid-3 {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
-            gap: 2rem;
-        }
-
-        .pillar-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 2.5rem;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .pillar-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--accent-primary);
-        }
-
-        .pillar-icon {
-            font-size: 2rem;
-            margin-bottom: 1.2rem;
-            color: var(--accent-primary);
-        }
-
-        .pillar-card h3 {
-            font-family: 'Cinzel', serif;
-            font-size: 1.3rem;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .pillar-card p {
-            color: var(--text-muted);
-            line-height: 1.7;
-            font-size: 0.9rem;
-        }
-
-        /* FEATURED DROPS SHOWCASE */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
-            gap: 2rem;
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            padding: 1.5rem;
-            text-align: left;
-            position: relative;
-            overflow: hidden;
-            backdrop-filter: blur(12px);
-            transition: all 0.3s ease;
-            word-wrap: break-word;
-            overflow-wrap: break-word;
-        }
-
-        .product-card:hover {
-            transform: translateY(-6px);
-            border-color: var(--accent-primary);
-        }
-
-        .product-img-box {
-            width: 100%;
-            height: 320px;
-            background: rgba(255, 255, 255, 0.03);
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 1.5rem;
-            font-size: 4rem;
-            border: 1px dashed var(--border-glow);
-        }
-
-        .product-tag {
-            position: absolute;
-            top: 2rem;
-            left: 2rem;
-            background: var(--accent-primary);
-            color: #000;
-            font-size: 0.65rem;
-            font-weight: 900;
-            padding: 4px 10px;
-            border-radius: 12px;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-        }
-
-        .product-title {
-            font-family: 'Cinzel', serif;
-            font-size: 1.15rem;
-            letter-spacing: 1.5px;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-meta {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .product-price {
-            font-size: 1.1rem;
-            font-weight: 800;
-            color: var(--accent-primary);
-        }
-
-        /* FABRIC & ARCHITECTURE */
-        .tech-banner {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 24px;
-            padding: clamp(2rem, 5vw, 4rem) clamp(1.5rem, 4vw, 3rem);
-            backdrop-filter: blur(15px);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
-        }
-
-        .tech-list {
-            list-style: none;
-            margin-top: 1.5rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.2rem;
-        }
-
-        .tech-list li {
-            display: flex;
-            align-items: flex-start;
-            gap: 1rem;
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            line-height: 1.6;
-        }
-
-        .tech-list li strong { color: #fff; }
-
-        /* DROP ALARM / NEWSLETTER */
-        .drop-alarm {
-            text-align: center;
-            background: linear-gradient(180deg, var(--card-bg) 0%, rgba(5,5,8,0.9) 100%);
-            border: 1px solid var(--border-glow);
-            border-radius: 28px;
-            padding: clamp(2.5rem, 6vw, 4rem) clamp(1.5rem, 4vw, 2rem);
-            max-width: 800px;
-            margin: 4rem auto;
-            word-wrap: break-word;
-        }
-
-        .alarm-form {
-            display: flex;
-            gap: 1rem;
-            max-width: 500px;
-            margin: 2rem auto 0;
-            flex-wrap: wrap;
-        }
-
-        .alarm-input {
-            flex: 1 1 250px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--border-glow);
-            padding: 0.9rem 1.2rem;
-            border-radius: 50px;
-            color: #fff;
-            outline: none;
-        }
-
-        /* MANIFESTO BANNER */
-        .manifesto-box {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 28px;
-            padding: clamp(2.5rem, 6vw, 4.5rem) clamp(1.5rem, 4vw, 3rem);
-            text-align: center;
-            backdrop-filter: blur(15px);
-            margin: 4rem auto 6rem;
-            max-width: 1100px;
-            position: relative;
-            overflow: hidden;
-            word-wrap: break-word;
-        }
-
-        .manifesto-box h2 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(1.8rem, 5vw, 2.4rem);
-            letter-spacing: 4px;
-            margin-bottom: 1.5rem;
-        }
-
-        .manifesto-box p {
-            max-width: 800px;
-            margin: 0 auto 2.5rem;
-            color: var(--text-muted);
-            line-height: 1.9;
-            font-size: 1.05rem;
-        }
-
-        .specs-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
-            gap: 1.5rem;
-            margin-top: 3rem;
-        }
-
-        .spec-item {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid var(--border-glow);
-            border-radius: 16px;
-            padding: 1.8rem;
-            text-align: center;
-        }
-
-        .spec-item h4 { font-size: 0.8rem; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 0.5rem; }
-        .spec-item div { font-size: 1.1rem; font-weight: 800; color: #fff; }
-
-        .theme-switch-trigger {
-            position: fixed;
-            bottom: 2rem;
-            right: 2rem;
-            background: rgba(18, 18, 24, 0.9);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 0.8rem 1.2rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 800;
-            letter-spacing: 1px;
-            cursor: pointer;
-            z-index: 90;
-            backdrop-filter: blur(10px);
-        }
-
-        /* FOOTER */
-        footer {
-            background: rgba(5, 5, 8, 0.95);
-            border-top: 1px solid var(--border-glow);
-            padding: clamp(3rem, 8vw, 5rem) 1.5rem 2rem;
-            text-align: center;
-        }
-
-        .footer-content {
-            max-width: 1200px;
-            margin: 0 auto 4rem;
-            display: grid;
-            grid-template-columns: 2fr 1fr 1fr;
-            gap: 3rem;
-            text-align: left;
-        }
-
-        .footer-brand p {
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            line-height: 1.7;
-            margin-top: 1rem;
-            max-width: 320px;
-        }
-
-        .footer-col h5 {
-            font-family: 'Cinzel', serif;
-            font-size: 0.95rem;
-            letter-spacing: 2px;
-            margin-bottom: 1.2rem;
-            color: #fff;
-        }
-
-        .footer-col ul {
-            list-style: none;
-            display: flex;
-            flex-direction: column;
-            gap: 0.8rem;
-        }
-
-        .footer-col a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-size: 0.85rem;
-            transition: color 0.3s;
-        }
-
-        .footer-col a:hover { color: var(--accent-primary); }
-
-        .copyright { 
-            color: #777; 
-            font-size: 0.8rem; 
-            margin-top: 2rem; 
-            border-top: 1px solid rgba(255,255,255,0.05); 
-            padding-top: 2rem; 
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 1.5rem;
-            flex-wrap: wrap;
-        }
-
-        .copyright a {
-            color: var(--text-muted);
-            text-decoration: none;
-            font-weight: 700;
-            transition: color 0.3s;
-        }
-
-        .copyright a:hover { color: #fff; }
-
-        @media (max-width: 900px) {
-            .tech-banner { grid-template-columns: 1fr; }
-            .footer-content { grid-template-columns: 1fr 1fr; }
-        }
-
-        @media (max-width: 768px) {
-            header { padding: 1rem 1.5rem; }
-            .theme-grid { grid-template-columns: 1fr; }
-            .hero-stats { flex-direction: column; gap: 1.5rem; }
-            .alarm-form { flex-direction: column; }
-            .footer-content { grid-template-columns: 1fr; text-align: center; }
-            .footer-brand p { margin-left: auto; margin-right: auto; }
-        }
+        :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; --btn-bg:#0a0a0a; --btn-text:#fff; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        html { scroll-behavior:smooth; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
+        .toast-message.show { opacity:1; transform:translateY(0); }
+        .announce-bar { background:#0a0a0a; color:#fff; padding:10px 0; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
+        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+        .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
+        nav ul { display:flex; list-style:none; gap:clamp(1rem,3vw,2.5rem); flex-wrap:wrap; }
+        nav a { color:var(--text-main); text-decoration:none; font-size:0.85rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.3s; }
+        nav a:hover, nav a.active { color:var(--accent); }
+        .nav-actions { display:flex; gap:1.5rem; align-items:center; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; }
+        .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .hero { display:grid; grid-template-columns:1fr 1fr; min-height:80vh; align-items:center; padding:4rem clamp(1rem,5vw,4rem); gap:3rem; }
+        .hero-text h1 { font-family:'Cinzel',serif; font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1; margin-bottom:1.5rem; }
+        .hero-text p { color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-bottom:2.5rem; max-width:500px; }
+        .btn-primary { background:var(--btn-bg); color:var(--btn-text); padding:1rem 2.5rem; border:none; border-radius:4px; font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.3s ease; }
+        .btn-primary:hover { background:var(--accent); transform:translateY(-2px); }
+        .hero-img { width:100%; height:100%; max-height:600px; background:#f5f5f5; border-radius:8px; overflow:hidden; }
+        .hero-img img { width:100%; height:100%; object-fit:cover; }
+        .trust-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; padding:2rem clamp(1rem,5vw,4rem); border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:#fafafa; }
+        .trust-item { display:flex; align-items:center; gap:1rem; justify-content:center; }
+        .trust-icon { font-size:1.5rem; color:var(--accent); }
+        .trust-item h4 { font-size:0.8rem; font-weight:700; text-transform:uppercase; letter-spacing:1px; }
+        .trust-item p { font-size:0.75rem; color:var(--text-muted); }
+        .section { padding:4rem clamp(1rem,5vw,4rem); }
+        .section-header { text-align:center; margin-bottom:3rem; }
+        .section-header h2 { font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,2.5rem); margin-bottom:0.5rem; }
+        .section-header p { color:var(--text-muted); font-size:0.9rem; text-transform:uppercase; letter-spacing:2px; }
+        .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:2.5rem; max-width:1300px; margin:0 auto; }
+        .product-card { text-decoration:none; color:inherit; display:flex; flex-direction:column; cursor:pointer; }
+        .product-img-wrapper { position:relative; width:100%; aspect-ratio:1/1.2; background:#f5f5f5; border-radius:6px; overflow:hidden; margin-bottom:1rem; }
+        .product-img-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; }
+        .product-card:hover .product-img-wrapper img { transform:scale(1.05); }
+        .quick-add { position:absolute; bottom:0; left:0; right:0; background:rgba(255,255,255,0.95); backdrop-filter:blur(5px); padding:1rem; text-align:center; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; transform:translateY(100%); transition:transform 0.3s ease; border-top:1px solid var(--border); }
+        .product-card:hover .quick-add { transform:translateY(0); }
+        .product-info { padding:0 0.5rem; }
+        .product-title { font-size:0.95rem; font-weight:700; margin-bottom:0.3rem; }
+        .product-price { font-size:0.9rem; color:var(--text-main); font-weight:600; }
+        .star-rating { font-size:0.75rem; margin-bottom:0.3rem; color:#0a0a0a; }
+        .star-rating span { color:var(--text-muted); margin-left:4px; }
+        .manifesto { background:#0a0a0a; color:#fff; text-align:center; padding:6rem 2rem; margin:4rem 0; }
+        .manifesto h2 { font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,3rem); margin-bottom:1.5rem; }
+        .manifesto p { max-width:600px; margin:0 auto 2.5rem; color:#ccc; line-height:1.8; }
+        footer { background:#0a0a0a; color:#fff; padding:4rem 2rem 2rem; }
+        .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3rem; }
+        .footer-grid h5 { font-size:0.85rem; font-weight:700; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:1px; }
+        .footer-grid ul { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+        .footer-grid a { color:#aaa; text-decoration:none; font-size:0.9rem; transition:color 0.3s; }
+        .footer-grid a:hover { color:var(--accent); }
+        .footer-bottom { border-top:1px solid #333; padding-top:2rem; text-align:center; color:#666; font-size:0.8rem; }
+        @media (max-width:900px) { .hero { grid-template-columns:1fr; text-align:center; } .hero-text p { margin-left:auto; margin-right:auto; } .trust-bar { grid-template-columns:1fr 1fr; gap:1.5rem; } .footer-grid { grid-template-columns:1fr 1fr; } }
+        @media (max-width:500px) { .trust-bar { grid-template-columns:1fr; } }
     </style>
 </head>
 <body>
-
-    <div class="ambient-bg">
-        <div class="blob blob-1"></div>
-        <div class="blob blob-2"></div>
-        <div class="blob blob-3"></div>
-    </div>
-
-    <!-- THEME MODAL POPUP -->
-    <div class="modal-overlay hidden" id="themeModal">
-        <div class="modal-card">
-            <button class="modal-close" onclick="closeThemeModal()">✕</button>
-            <h2 class="modal-greeting">WELCOME TO THE KINGDOM</h2>
-            <p class="modal-sub">Pick a design for the shop</p>
-
-            <div class="theme-grid">
-                <button class="theme-btn" onclick="selectTheme('ai')">1: FUTURISTIC AI</button>
-                <button class="theme-btn" onclick="selectTheme('neon')">
-                    <span class="badge-rec">RECOMMENDED</span>
-                    2: NEON
-                </button>
-                <button class="theme-btn" onclick="selectTheme('basic')">3: BASIC B&W</button>
-                <button class="theme-btn" onclick="selectTheme('royalty')">4: GOLD ROYALTY</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- AUTHENTICATION MODAL -->
-    <div class="modal-overlay hidden" id="authModal">
-        <div class="modal-card">
-            <button class="modal-close" onclick="closeAuthModal()">✕</button>
-            <h2 class="modal-greeting" id="authTitle">SIGN IN</h2>
-            <p class="modal-sub" id="authSubtitle">Access your exclusive order status & drops</p>
-
-            <div id="authError"></div>
-
-            <form class="auth-form" id="authForm" onsubmit="handleEmailAuth(event)">
-                <input type="email" id="authEmail" class="auth-input" placeholder="Email Address" required>
-                <input type="password" id="authPassword" class="auth-input" placeholder="Password" required>
-                <button type="submit" class="btn-glow" id="authSubmitBtn" style="width:100%;">Sign In</button>
-            </form>
-
-            <div class="auth-divider">or continue with</div>
-
-            <button class="btn-google" id="googleBtn">
-                <svg width="18" height="18" viewBox="0 0 24 24"><path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.06H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.94l2.85-2.22.81-.63z"/><path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.06l3.66 2.84c.87-2.6 3.3-4.52 6.16-4.52z"/></svg>
-                Google
-            </button>
-
-            <div class="auth-toggle-msg">
-                <span id="authToggleText">Need an account? Sign Up</span>
-            </div>
-        </div>
-    </div>
-
-    <button class="theme-switch-trigger" onclick="openThemeModal()">🎨 CHANGE THEME</button>
-
+    <div class="toast-container"></div>
+    <div class="announce-bar">🚚 FREE WORLDWIDE SHIPPING ON ORDERS OVER $100 • NEW PHARAOH DROP LIVE NOW</div>
     <header>
         <a href="index.html" class="brand-logo">The Egyptian King</a>
         <nav>
             <ul>
                 <li><a href="index.html" class="active">Home</a></li>
-                <li><a href="shop.html">Shop Collection</a></li>
+                <li><a href="shop.html">Shop</a></li>
                 <li><a href="reviews.html">Reviews</a></li>
             </ul>
         </nav>
         <div class="nav-actions">
-            <a href="reviews.html" class="btn-bag">REVIEWS ★</a>
-            <a href="cart.html" class="btn-bag">BAG (<span id="nav-cart-count">0</span>)</a>
-            <button class="btn-bag" id="authNavBtn" onclick="openAuthModal()">SIGN IN</button>
-            <a href="shop.html" class="btn-glow">Enter Shop</a>
+            <button class="icon-btn">🔍</button>
+            <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="nav-cart-count">0</span></a>
         </div>
     </header>
-
-    <!-- HERO SECTION -->
     <section class="hero">
-        <div class="hero-badge">Sovereign Culture & Streetwear</div>
-        <h1 class="hero-title">THE EGYPTIAN KING</h1>
-        <p class="hero-subtitle">High-end heavyweight apparel engineered with zero compromises. Bridging ancient majesty with futuristic modern street culture.</p>
-        <a href="shop.html" class="btn-glow">Explore Official Shop</a>
-
-        <div class="hero-stats">
-            <div class="stat-item">
-                <h4>500 GSM</h4>
-                <p>Heavyweight Fleece</p>
-            </div>
-            <div class="stat-item">
-                <h4>22 CAPSULES</h4>
-                <p>Exclusive Apparel</p>
-            </div>
-            <div class="stat-item">
-                <h4>100% COTTON</h4>
-                <p>Combed & Custom Knitted</p>
-            </div>
+        <div class="hero-text">
+            <h1>WEAR THE CROWN.<br>RULE THE STREETS.</h1>
+            <p>Premium 500 GSM heavyweight apparel engineered for the modern pharaoh. Bridging ancient majesty with futuristic street culture.</p>
+            <a href="shop.html" class="btn-primary">Shop The Collection</a>
+        </div>
+        <div class="hero-img">
+            <img src="https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" alt="Egyptian King Hoodie">
         </div>
     </section>
-
-    <!-- BRAND PILLARS -->
-    <section class="section-padding">
-        <h2 class="section-title">The Standard of Craft</h2>
-        <p class="section-sub">Built to outlast trends and endure time</p>
-
-        <div class="grid-3">
-            <div class="pillar-card">
-                <div class="pillar-icon">🏛️</div>
-                <h3>Heritage & Iconography</h3>
-                <p>Each drop translates iconic cultural figures and historical motifs into cutting-edge graphic silhouettes tailored for the contemporary wardrobe.</p>
-            </div>
-
-            <div class="pillar-card">
-                <div class="pillar-icon">⚡</div>
-                <h3>Precision Fabrication</h3>
-                <p>Engineered with double-needle flatlock seams, oversized hoods, custom drop shoulders, and pre-shrunk fabrics designed for perfection.</p>
-            </div>
-
-            <div class="pillar-card">
-                <div class="pillar-icon">👑</div>
-                <h3>Strictly Limited</h3>
-                <p>We operate on limited batch releases. Once a capsule sells out globally, it enters the vault and will never be reproduced.</p>
-            </div>
-        </div>
-    </section>
-
-    <!-- FEATURED DROPS -->
-    <section class="section-padding" style="padding-top: 0;">
-        <h2 class="section-title">Featured Capsules</h2>
-        <p class="section-sub">Preview key drops from current and upcoming releases</p>
-
-        <div class="products-grid">
-            <div class="product-card">
-                <span class="product-tag">Heavy Hoodie</span>
-                <div class="product-img-box">𓀀</div>
-                <h3 class="product-title">Pharaoh Heavy Zip-Up</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">500 GSM Double Fleece, Vintage Wash</p>
-                <div class="product-meta">
-                    <span class="product-price">1,850 EGP</span>
-                    <a href="shop.html" class="btn-bag">View Details</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <span class="product-tag">Tee Capsule</span>
-                <div class="product-img-box">𓃭</div>
-                <h3 class="product-title">Anubis Oversized Tee</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">280 GSM Heavy Cotton, Puff Print</p>
-                <div class="product-meta">
-                    <span class="product-price">950 EGP</span>
-                    <a href="shop.html" class="btn-bag">View Details</a>
-                </div>
-            </div>
-
-            <div class="product-card">
-                <span class="product-tag">Vault Edition</span>
-                <div class="product-img-box">𓋹</div>
-                <h3 class="product-title">Hieroglyph Cargo Sweats</h3>
-                <p style="color: var(--text-muted); font-size: 0.85rem;">Custom Knitted Ribbing & Embroidery</p>
-                <div class="product-meta">
-                    <span class="product-price">1,600 EGP</span>
-                    <a href="shop.html" class="btn-bag">View Details</a>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- GARMENT ARCHITECTURE / TECH SPEC -->
-    <section class="section-padding" style="padding-top: 0;">
-        <div class="tech-banner">
-            <div>
-                <h2 style="font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 3px; margin-bottom: 1rem;">GARMENT ARCHITECTURE</h2>
-                <p style="color: var(--text-muted); line-height: 1.8;">Every garment is designed from raw yarn to final stitch in Cairo, taking inspiration from historical structures and modern industrial cuts.</p>
-                <ul class="tech-list">
-                    <li><span>✦</span> <div><strong>500 GSM Egyptian Cotton Fleece:</strong> Ultra-heavy structured draping that retains shape wear after wear.</div></li>
-                    <li><span>✦</span> <div><strong>Custom Boxy Fit:</strong> Widened chest measurements with lowered shoulder seams for a modern silhouette.</div></li>
-                    <li><span>✦</span> <div><strong>High-Density Screenprint:</strong> Multi-pass ink application ensuring graphics never fade, crack, or peel.</div></li>
-                </ul>
-            </div>
-            <div class="specs-grid" style="margin-top: 0;">
-                <div class="spec-item">
-                    <h4>CRAFT LOCATION</h4>
-                    <div>CAIRO, EGYPT</div>
-                </div>
-                <div class="spec-item">
-                    <h4>THREAD COUNT</h4>
-                    <div>40s SINGLE COMBED</div>
-                </div>
-                <div class="spec-item">
-                    <h4>SHRINKAGE</h4>
-                    <div>PRE-SHRUNK (&lt;1%)</div>
-                </div>
-                <div class="spec-item">
-                    <h4>SEAM STITCH</h4>
-                    <div>DOUBLE FLATLOCK</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- DROP ALARM / NEWSLETTER -->
-    <section class="section-padding" style="padding-top: 0;">
-        <div class="drop-alarm">
-            <h2 style="font-family: 'Cinzel', serif; font-size: clamp(1.5rem, 4vw, 2rem); letter-spacing: 3px; margin-bottom: 1rem;">NEVER MISS A DROP</h2>
-            <p style="color: var(--text-muted); font-size: 0.95rem;">Capsules are released in ultra-limited numbers. Join the priority list for early access passwords.</p>
-            <form class="alarm-form" onsubmit="event.preventDefault(); showToast('Subscribed to drop alerts!');">
-                <input type="email" placeholder="Enter your email" class="alarm-input" required>
-                <button type="submit" class="btn-glow">Get Notified</button>
-            </form>
-        </div>
-    </section>
-
-    <!-- MANIFESTO BANNER -->
-    <div class="manifesto-box">
-        <h2>SOVEREIGN DESIGN MANIFESTO</h2>
-        <p>We reject fast fashion and mass manufacturing. Every collection represents a unified narrative of power, history, and raw luxury. Designed with intent, crafted for longevity.</p>
-        <a href="shop.html" class="btn-glow">Shop The Latest Capsule</a>
+    <div class="trust-bar">
+        <div class="trust-item"><span class="trust-icon">🚚</span><div><h4>Fast Shipping</h4><p>Worldwide delivery</p></div></div>
+        <div class="trust-item"><span class="trust-icon">🔒</span><div><h4>Secure Checkout</h4><p>100% protected</p></div></div>
+        <div class="trust-item"><span class="trust-icon">🧵</span><div><h4>Premium Cotton</h4><p>500 GSM Fleece</p></div></div>
+        <div class="trust-item"><span class="trust-icon">↩️</span><div><h4>Easy Returns</h4><p>14-day policy</p></div></div>
     </div>
-
-    <!-- FOOTER -->
+    <section class="section">
+        <div class="section-header">
+            <h2>BEST SELLERS</h2>
+            <p>The King's Favorites</p>
+        </div>
+        <div class="product-grid" id="featured-grid"></div>
+    </section>
+    <div class="manifesto">
+        <h2>SOVEREIGN DESIGN MANIFESTO</h2>
+        <p>We reject fast fashion. Every collection represents a unified narrative of power, history, and raw luxury. Designed with intent in Cairo, crafted for longevity.</p>
+        <a href="shop.html" class="btn-primary" style="background:var(--accent);">Explore Full Catalog</a>
+    </div>
     <footer>
-        <div class="footer-content">
-            <div class="footer-brand">
-                <a href="index.html" class="brand-logo">THE EGYPTIAN KING</a>
-                <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
-            </div>
-            <div class="footer-col">
-                <h5>NAVIGATION</h5>
-                <ul>
-                    <li><a href="index.html">Home</a></li>
-                    <li><a href="shop.html">Shop Collection</a></li>
-                    <li><a href="reviews.html">Reviews</a></li>
-                    <li><a href="cart.html">View Bag</a></li>
-                </ul>
-            </div>
-            <div class="footer-col">
-                <h5>CONNECT</h5>
-                <ul>
-                    <li><a href="#">Instagram</a></li>
-                    <li><a href="#">TikTok</a></li>
-                    <li><a href="#">Discord</a></li>
-                </ul>
-            </div>
+        <div class="footer-grid">
+            <div><h5>THE EGYPTIAN KING</h5><p style="color:#aaa; font-size:0.9rem; line-height:1.6; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
+            <div><h5>SHOP</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="shop.html">Hoodies</a></li><li><a href="shop.html">T-Shirts</a></li><li><a href="shop.html">New Arrivals</a></li></ul></div>
+            <div><h5>SUPPORT</h5><ul><li><a href="terms.html">Shipping Info</a></li><li><a href="terms.html">Returns</a></li><li><a href="terms.html">FAQ</a></li><li><a href="terms.html">Contact Us</a></li></ul></div>
+            <div><h5>CONNECT</h5><ul><li><a href="#">Instagram</a></li><li><a href="#">TikTok</a></li><li><a href="#">Discord</a></li></ul></div>
         </div>
-        <div class="copyright">
-            <span>&copy; 2026 THE EGYPTIAN KING. All rights reserved.</span>
-            <span>•</span>
-            <a href="terms.html">Terms & Policies</a>
-        </div>
+        <div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div>
     </footer>
-
-    <!-- FIREBASE MODULE SCRIPT -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
-        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
-        import { 
-            getAuth, 
-            signInWithEmailAndPassword, 
-            createUserWithEmailAndPassword, 
-            GoogleAuthProvider, 
-            signInWithPopup, 
-            signOut, 
-            onAuthStateChanged 
-        } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-auth.js";
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
-            authDomain: "the-egyptian-king-68e45.firebaseapp.com",
-            projectId: "the-egyptian-king-68e45",
-            storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
-            messagingSenderId: "94881816710",
-            appId: "1:94881816710:web:10fca569f1b43c583ab107",
-            measurementId: "G-ZR0FBN0PRV"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const analytics = getAnalytics(app);
-        const auth = getAuth(app);
-        const googleProvider = new GoogleAuthProvider();
-
-        let isSignUpMode = false;
-
-        const authNavBtn = document.getElementById('authNavBtn');
-        const authToggleText = document.getElementById('authToggleText');
-        const authTitle = document.getElementById('authTitle');
-        const authSubtitle = document.getElementById('authSubtitle');
-        const authSubmitBtn = document.getElementById('authSubmitBtn');
-        const authError = document.getElementById('authError');
-
-        authToggleText.addEventListener('click', () => {
-            isSignUpMode = !isSignUpMode;
-            if (isSignUpMode) {
-                authTitle.innerText = "CREATE ACCOUNT";
-                authSubtitle.innerText = "Join the kingdom for exclusive drops";
-                authSubmitBtn.innerText = "Sign Up";
-                authToggleText.innerText = "Already have an account? Sign In";
-            } else {
-                authTitle.innerText = "SIGN IN";
-                authSubtitle.innerText = "Access your exclusive order status & drops";
-                authSubmitBtn.innerText = "Sign In";
-                authToggleText.innerText = "Need an account? Sign Up";
-            }
-        });
-
-        window.handleEmailAuth = async function(e) {
-            e.preventDefault();
-            authError.style.display = 'none';
-            const email = document.getElementById('authEmail').value;
-            const password = document.getElementById('authPassword').value;
-
-            try {
-                if (isSignUpMode) {
-                    await createUserWithEmailAndPassword(auth, email, password);
-                    showToast('Account created successfully!');
-                } else {
-                    await signInWithEmailAndPassword(auth, email, password);
-                    showToast('Signed in successfully!');
-                }
-                closeAuthModal();
-            } catch (err) {
-                authError.innerText = err.message.replace('Firebase: ', '');
-                authError.style.display = 'block';
-            }
-        };
-
-        document.getElementById('googleBtn').addEventListener('click', async () => {
-            try {
-                await signInWithPopup(auth, googleProvider);
-                showToast('Google sign-in successful!');
-                closeAuthModal();
-            } catch (err) {
-                authError.innerText = err.message.replace('Firebase: ', '');
-                authError.style.display = 'block';
-            }
-        });
-
-        window.openAuthModal = function() {
-            if (auth.currentUser) {
-                signOut(auth).then(() => {
-                    showToast('Logged out successfully.');
-                });
-            } else {
-                document.getElementById('authModal').classList.remove('hidden');
-            }
-        };
-
-        onAuthStateChanged(auth, (user) => {
-            if (user) {
-                authNavBtn.innerText = "LOGOUT";
-            } else {
-                authNavBtn.innerText = "SIGN IN";
-            }
-        });
-    </script>
-
-    <!-- GENERAL APP LOGIC -->
     <script>
-        // Toast Notification Function
         function showToast(message) {
             let container = document.querySelector('.toast-container');
-            if (!container) {
-                container = document.createElement('div');
-                container.className = 'toast-container';
-                document.body.appendChild(container);
-            }
             const toast = document.createElement('div');
             toast.className = 'toast-message';
             toast.innerText = message;
             container.appendChild(toast);
-            
-            // Trigger reflow
             void toast.offsetWidth;
-            
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 400);
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
-        window.showToast = showToast; // Expose globally
+        window.showToast = showToast;
 
-        function updateCartBadge() {
+        const products = [
+            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, rating: 4.8, reviews: 124, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
+            { id: 2, name: "Khaby Lame Hoodie", price: 950, rating: 4.6, reviews: 89, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
+            { id: 3, name: "LeBron James Hoodie", price: 950, rating: 4.9, reviews: 201, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
+            { id: 4, name: "Jude Bellingham Hoodie", price: 950, rating: 4.7, reviews: 55, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" }
+        ];
+
+        function getStars(rating) {
+            let r = Math.round(rating);
+            return '★'.repeat(r) + '☆'.repeat(5 - r);
+        }
+
+        function renderFeatured() {
+            const grid = document.getElementById('featured-grid');
+            grid.innerHTML = products.map(p => `
+                <div class="product-card" onclick="quickAdd(${p.id})">
+                    <div class="product-img-wrapper">
+                        <img src="${p.img}" alt="${p.name}">
+                        <div class="quick-add">+ Quick Add</div>
+                    </div>
+                    <div class="product-info">
+                        <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <p class="product-price">E£${p.price}.00 EGP</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        function quickAdd(id) {
+            const product = products.find(p => p.id === id);
+            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const existing = cart.find(item => item.id === id);
+            if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({ ...product, qty: 1 }); }
+            localStorage.setItem('kingCart', JSON.stringify(cart));
+            updateCartCount();
+            showToast(`${product.name} added to bag!`);
+        }
+
+        function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const totalCount = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
             document.getElementById('nav-cart-count').innerText = totalCount;
         }
 
-        function applyTheme(theme) {
-            if (theme === 'basic') {
-                document.body.removeAttribute('data-theme');
-            } else {
-                document.body.setAttribute('data-theme', theme);
-            }
-            localStorage.setItem('selectedTheme', theme);
-        }
-
-        function selectTheme(theme) {
-            applyTheme(theme);
-            closeThemeModal();
-            showToast(`Theme switched to ${theme.toUpperCase()}`);
-        }
-
-        function openThemeModal() {
-            document.getElementById('themeModal').classList.remove('hidden');
-        }
-
-        function closeThemeModal() {
-            document.getElementById('themeModal').classList.add('hidden');
-        }
-
-        function closeAuthModal() {
-            document.getElementById('authModal').classList.add('hidden');
-        }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            updateCartBadge();
-            const savedTheme = localStorage.getItem('selectedTheme');
-            if (savedTheme) {
-                applyTheme(savedTheme);
-            } else {
-                applyTheme('neon');
-                openThemeModal();
-            }
-        });
+        window.addEventListener('DOMContentLoaded', () => { renderFeatured(); updateCartCount(); });
     </script>
 </body>
 </html>
