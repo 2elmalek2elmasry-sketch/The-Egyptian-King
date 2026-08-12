@@ -3,312 +3,146 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>THE EGYPTIAN KING — Shop Collection</title>
-    
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
-
+    <title>Shop All — THE EGYPTIAN KING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #050508;
-            --card-bg: rgba(18, 18, 24, 0.75);
-            --border-glow: rgba(255, 255, 255, 0.15);
-            --text-main: #ffffff;
-            --text-muted: #a0a0b0;
-            --accent-primary: #ffffff;
-            --accent-glow: rgba(255, 255, 255, 0.4);
-        }
-
-        body[data-theme="neon"] {
-            --bg: #090014;
-            --card-bg: rgba(24, 9, 43, 0.8);
-            --border-glow: rgba(236, 72, 153, 0.4);
-            --accent-primary: #ec4899;
-            --accent-glow: rgba(236, 72, 153, 0.6);
-        }
-
-        body[data-theme="ai"] {
-            --bg: #030712;
-            --card-bg: rgba(15, 23, 42, 0.8);
-            --border-glow: rgba(56, 189, 248, 0.35);
-            --accent-primary: #38bdf8;
-            --accent-glow: rgba(56, 189, 248, 0.5);
-        }
-
-        body[data-theme="royalty"] {
-            --bg: #0a0802;
-            --card-bg: rgba(28, 23, 13, 0.85);
-            --border-glow: rgba(234, 179, 8, 0.35);
-            --accent-primary: #eab308;
-            --accent-glow: rgba(234, 179, 8, 0.5);
-        }
-
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
-        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; display: flex; flex-direction: column; overflow-x: hidden; width: 100%; }
-
-        /* TOAST NOTIFICATION */
-        .toast-container {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 10000;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            align-items: center;
-            pointer-events: none;
-            width: auto;
-            max-width: 90%;
-        }
-        .toast-message {
-            background: rgba(18, 18, 24, 0.95);
-            backdrop-filter: blur(15px);
-            border: 1px solid var(--accent-primary);
-            color: #fff;
-            padding: 1rem 2rem;
-            border-radius: 50px;
-            font-weight: 700;
-            font-size: 0.9rem;
-            letter-spacing: 1px;
-            box-shadow: 0 0 25px var(--accent-glow);
-            opacity: 0;
-            transform: translateY(20px);
-            transition: all 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-            text-align: center;
-            pointer-events: auto;
-            word-wrap: break-word;
-        }
-        .toast-message.show {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        header {
-            background: rgba(5, 5, 8, 0.8);
-            backdrop-filter: blur(20px);
-            border-bottom: 1px solid var(--border-glow);
-            padding: 1.25rem clamp(1rem, 5vw, 4rem);
-            position: sticky;
-            top: 0;
-            z-index: 100;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .brand-logo { font-family: 'Cinzel', serif; font-size: clamp(1rem, 4vw, 1.4rem); font-weight: 900; letter-spacing: 3px; color: #fff; text-decoration: none; text-transform: uppercase; }
-        nav ul { display: flex; list-style: none; gap: clamp(1rem, 3vw, 2.5rem); align-items: center; flex-wrap: wrap; }
-        nav a { color: var(--text-muted); text-decoration: none; font-size: 0.85rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; }
-        nav a:hover, nav a.active { color: #fff; }
-
-        .header-actions { display: flex; align-items: center; gap: 1rem; flex-wrap: wrap; }
-
-        .btn-bag {
-            background: transparent;
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 0.6rem 1.4rem;
-            border-radius: 30px;
-            font-size: 0.8rem;
-            font-weight: 800;
-            cursor: pointer;
-            letter-spacing: 1.5px;
-            text-decoration: none;
-            transition: all 0.3s ease;
-            display: inline-block;
-        }
-
-        .btn-bag:hover { border-color: var(--accent-primary); color: var(--accent-primary); }
-
-        .container { max-width: 1300px; margin: 3rem auto 6rem; padding: 0 clamp(1rem, 5vw, 2rem); width: 100%; }
-        .page-header { border-bottom: 1px solid var(--border-glow); padding-bottom: 1.5rem; margin-bottom: 3rem; }
-        .page-title { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 6vw, 2.5rem); letter-spacing: 4px; text-transform: uppercase; }
-
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-            gap: clamp(1rem, 4vw, 2.5rem);
-        }
-
-        .product-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border-glow);
-            border-radius: 20px;
-            overflow: hidden;
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .product-card:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
-            border-color: var(--accent-primary);
-        }
-
-        .product-img-box { width: 100%; aspect-ratio: 1 / 1.2; background: #111; overflow: hidden; }
-        .product-img-box img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
-        .product-card:hover .product-img-box img { transform: scale(1.06); }
-
-        .product-details { padding: 1.5rem; display: flex; flex-direction: column; gap: 0.5rem; flex-grow: 1; }
-        .product-name { font-size: 0.95rem; font-weight: 800; letter-spacing: 1px; margin-bottom: 0.5rem; text-transform: uppercase; word-wrap: break-word; }
-        .product-price { font-size: 1.1rem; font-weight: 700; color: var(--accent-primary); margin-bottom: 1rem; }
-        
-        .btn-add-cart {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid var(--border-glow);
-            color: #fff;
-            padding: 0.8rem;
-            border-radius: 12px;
-            font-weight: 800;
-            font-size: 0.8rem;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-top: auto;
-        }
-        .btn-add-cart:hover {
-            background: var(--accent-primary);
-            color: #000;
-            border-color: var(--accent-primary);
-        }
-
-        footer { background: rgba(5, 5, 8, 0.95); border-top: 1px solid var(--border-glow); padding: 4rem 2rem 2rem; text-align: center; margin-top: auto; }
-        .copyright { color: #555; font-size: 0.8rem; margin-top: 1.5rem; }
+        :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
+        .toast-message.show { opacity:1; transform:translateY(0); }
+        .announce-bar { background:#0a0a0a; color:#fff; padding:10px 0; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
+        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+        .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
+        nav ul { display:flex; list-style:none; gap:clamp(1rem,3vw,2.5rem); flex-wrap:wrap; }
+        nav a { color:var(--text-main); text-decoration:none; font-size:0.85rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.3s; }
+        nav a:hover, nav a.active { color:var(--accent); }
+        .nav-actions { display:flex; gap:1.5rem; align-items:center; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; }
+        .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .page-header { padding:4rem 2rem 2rem; text-align:center; border-bottom:1px solid var(--border); }
+        .page-header h1 { font-family:'Cinzel',serif; font-size:clamp(2rem,5vw,3.5rem); margin-bottom:1rem; }
+        .breadcrumb { font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
+        .breadcrumb a { color:var(--text-muted); text-decoration:none; }
+        .toolbar { display:flex; justify-content:space-between; align-items:center; padding:2rem clamp(1rem,5vw,4rem); border-bottom:1px solid var(--border); }
+        .filter-btn { background:none; border:1px solid var(--border); padding:0.6rem 1.2rem; border-radius:4px; font-weight:600; cursor:pointer; font-size:0.85rem; }
+        .product-count { color:var(--text-muted); font-size:0.85rem; font-weight:500; }
+        .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:2.5rem; padding:3rem clamp(1rem,5vw,4rem); max-width:1400px; margin:0 auto; }
+        .product-card { text-decoration:none; color:inherit; display:flex; flex-direction:column; cursor:pointer; }
+        .product-img-wrapper { position:relative; width:100%; aspect-ratio:1/1.2; background:#f5f5f5; border-radius:6px; overflow:hidden; margin-bottom:1rem; }
+        .product-img-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.5s ease; }
+        .product-card:hover .product-img-wrapper img { transform:scale(1.05); }
+        .quick-add { position:absolute; bottom:0; left:0; right:0; background:rgba(255,255,255,0.95); backdrop-filter:blur(5px); padding:1rem; text-align:center; font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; transform:translateY(100%); transition:transform 0.3s ease; border-top:1px solid var(--border); }
+        .product-card:hover .quick-add { transform:translateY(0); }
+        .product-info { padding:0 0.5rem; }
+        .product-title { font-size:0.95rem; font-weight:700; margin-bottom:0.3rem; }
+        .product-price { font-size:0.9rem; color:var(--text-main); font-weight:600; }
+        .star-rating { font-size:0.75rem; margin-bottom:0.3rem; color:#0a0a0a; }
+        .star-rating span { color:var(--text-muted); margin-left:4px; }
+        footer { background:#0a0a0a; color:#fff; padding:4rem 2rem 2rem; margin-top:4rem; }
+        .footer-bottom { border-top:1px solid #333; padding-top:2rem; text-align:center; color:#666; font-size:0.8rem; }
+        @media (max-width:768px) { .toolbar { flex-direction:column; gap:1rem; } }
     </style>
 </head>
 <body>
+    <div class="toast-container"></div>
+    <div class="announce-bar">🚚 FREE WORLDWIDE SHIPPING ON ORDERS OVER $100 • NEW PHARAOH DROP LIVE NOW</div>
     <header>
         <a href="index.html" class="brand-logo">The Egyptian King</a>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html" class="active">Shop Collection</a></li>
+                <li><a href="shop.html" class="active">Shop</a></li>
                 <li><a href="reviews.html">Reviews</a></li>
             </ul>
         </nav>
-        <div class="header-actions">
-            <a href="cart.html" class="btn-bag">BAG (<span id="cart-count">0</span>)</a>
+        <div class="nav-actions">
+            <button class="icon-btn">🔍</button>
+            <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="cart-count">0</span></a>
         </div>
     </header>
-
-    <main class="container">
-        <div class="page-header">
-            <h1 class="page-title">Shop Collection</h1>
-        </div>
-        
-        <div class="product-grid" id="product-grid">
-            <!-- Products rendered dynamically -->
-        </div>
-    </main>
-
-    <footer>
-        <div class="brand-logo">THE EGYPTIAN KING</div>
-        <div class="copyright">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div>
-    </footer>
-
+    <div class="page-header">
+        <h1>SHOP ALL PRODUCTS</h1>
+        <div class="breadcrumb"><a href="index.html">Home</a> / Shop</div>
+    </div>
+    <div class="toolbar">
+        <button class="filter-btn">⚙️ Filters & Sorting</button>
+        <div class="product-count" id="product-count">0 Products</div>
+    </div>
+    <div class="product-grid" id="product-grid"></div>
+    <footer><div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div></footer>
     <script>
-        // Toast Notification Function
         function showToast(message) {
             let container = document.querySelector('.toast-container');
-            if (!container) {
-                container = document.createElement('div');
-                container.className = 'toast-container';
-                document.body.appendChild(container);
-            }
             const toast = document.createElement('div');
             toast.className = 'toast-message';
             toast.innerText = message;
             container.appendChild(toast);
-            
             void toast.offsetWidth;
             toast.classList.add('show');
-            
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => {
-                    toast.remove();
-                }, 400);
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
-
         const products = [
-            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
-            { id: 2, name: "Khaby Lame Hoodie", price: 950, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
-            { id: 3, name: "LeBron James Hoodie", price: 950, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
-            { id: 4, name: "Dwayne Johnson Hoodie", price: 950, img: "https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" },
-            { id: 5, name: "Jude Bellingham Hoodie", price: 950, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" },
-            { id: 6, name: "Social Media Hoodie", price: 950, img: "https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" },
-            { id: 7, name: "Egyptian Rulers Hoodie", price: 950, img: "https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" },
-            { id: 8, name: "Egyptian Culture Hoodie", price: 950, img: "https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" },
-            { id: 9, name: "FIFA World Cup Hoodie", price: 980, img: "https://i.postimg.cc/qRHPBMmP/unnamed.png" },
-            { id: 10, name: "Algerian Culture Hoodie", price: 950, img: "https://i.postimg.cc/3rZnLTjD/IMG-5187.png" },
-            { id: 11, name: "Tunisia Culture Hoodie", price: 950, img: "https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" },
-            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
-            { id: 13, name: "El Donya Raby3 T-Shirt", price: 550, img: "https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" },
-            { id: 14, name: "El R7la Wl Fekr T-Shirt", price: 550, img: "https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" },
-            { id: 15, name: "Zkrayat 3310 T-Shirt", price: 550, img: "https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" },
-            { id: 16, name: "Sa7et El Syf T-Shirt", price: 550, img: "https://i.postimg.cc/XYJgrdmV/Untitled-design-(5).png" },
-            { id: 17, name: "2skndereya T-Shirt", price: 550, img: "https://i.postimg.cc/RVgJBSCq/Untitled-design-(7).png" },
-            { id: 18, name: "Basic Core — Black", price: 450, img: "https://i.postimg.cc/CxRFZDkV/Untitled-design-(9).png" },
-            { id: 19, name: "Basic Core — Grey", price: 450, img: "https://i.postimg.cc/MH3CxPsq/Untitled-design-(10).png" },
-            { id: 20, name: "Basic Core — Pink", price: 450, img: "https://i.postimg.cc/G2qNJgng/Untitled-design-(11).png" },
-            { id: 21, name: "Basic Core — Blue", price: 450, img: "https://i.postimg.cc/5tJRcW4f/Untitled-design-(13).png" },
-            { id: 22, name: "Basic Core — Brown", price: 450, img: "https://i.postimg.cc/ncQRChry/Untitled-design-(12).png" }
+            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, rating: 4.8, reviews: 124, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
+            { id: 2, name: "Khaby Lame Hoodie", price: 950, rating: 4.6, reviews: 89, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
+            { id: 3, name: "LeBron James Hoodie", price: 950, rating: 4.9, reviews: 201, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
+            { id: 4, name: "Dwayne Johnson Hoodie", price: 950, rating: 4.3, reviews: 45, img: "https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" },
+            { id: 5, name: "Jude Bellingham Hoodie", price: 950, rating: 4.7, reviews: 155, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" },
+            { id: 6, name: "Social Media Hoodie", price: 950, rating: 4.2, reviews: 32, img: "https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" },
+            { id: 7, name: "Egyptian Rulers Hoodie", price: 950, rating: 4.5, reviews: 78, img: "https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" },
+            { id: 8, name: "Egyptian Culture Hoodie", price: 950, rating: 4.8, reviews: 110, img: "https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" },
+            { id: 9, name: "FIFA World Cup Hoodie", price: 980, rating: 5.0, reviews: 312, img: "https://i.postimg.cc/qRHPBMmP/unnamed.png" },
+            { id: 10, name: "Algerian Culture Hoodie", price: 950, rating: 4.6, reviews: 65, img: "https://i.postimg.cc/3rZnLTjD/IMG-5187.png" },
+            { id: 11, name: "Tunisia Culture Hoodie", price: 950, rating: 4.4, reviews: 29, img: "https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" },
+            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, rating: 4.9, reviews: 140, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
+            { id: 13, name: "El Donya Raby3 T-Shirt", price: 550, rating: 4.5, reviews: 22, img: "https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" },
+            { id: 14, name: "El R7la Wl Fekr T-Shirt", price: 550, rating: 4.3, reviews: 18, img: "https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" },
+            { id: 15, name: "Zkrayat 3310 T-Shirt", price: 550, rating: 4.7, reviews: 45, img: "https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" },
+            { id: 16, name: "Sa7et El Syf T-Shirt", price: 550, rating: 4.1, reviews: 12, img: "https://i.postimg.cc/XYJgrdmV/Untitled-design-(5).png" },
+            { id: 17, name: "2skndereya T-Shirt", price: 550, rating: 4.6, reviews: 29, img: "https://i.postimg.cc/RVgJBSCq/Untitled-design-(7).png" },
+            { id: 18, name: "Basic Core — Black", price: 450, rating: 4.8, reviews: 88, img: "https://i.postimg.cc/CxRFZDkV/Untitled-design-(9).png" },
+            { id: 19, name: "Basic Core — Grey", price: 450, rating: 4.5, reviews: 54, img: "https://i.postimg.cc/MH3CxPsq/Untitled-design-(10).png" },
+            { id: 20, name: "Basic Core — Pink", price: 450, rating: 4.4, reviews: 21, img: "https://i.postimg.cc/G2qNJgng/Untitled-design-(11).png" },
+            { id: 21, name: "Basic Core — Blue", price: 450, rating: 4.2, reviews: 15, img: "https://i.postimg.cc/5tJRcW4f/Untitled-design-(13).png" },
+            { id: 22, name: "Basic Core — Brown", price: 450, rating: 4.7, reviews: 34, img: "https://i.postimg.cc/ncQRChry/Untitled-design-(12).png" }
         ];
-
+        function getStars(rating) {
+            let r = Math.round(rating);
+            return '★'.repeat(r) + '☆'.repeat(5 - r);
+        }
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             grid.innerHTML = products.map(p => `
-                <div class="product-card">
-                    <div class="product-img-box">
+                <div class="product-card" onclick="addToCart(${p.id})">
+                    <div class="product-img-wrapper">
                         <img src="${p.img}" alt="${p.name}">
+                        <div class="quick-add">+ Quick Add to Bag</div>
                     </div>
-                    <div class="product-details">
-                        <h3 class="product-name">${p.name}</h3>
-                        <p class="product-price">E£${p.price}</p>
-                        <button class="btn-add-cart" onclick="addToCart(${p.id})">Add to Bag</button>
+                    <div class="product-info">
+                        <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
+                        <h3 class="product-title">${p.name}</h3>
+                        <p class="product-price">E£${p.price}.00 EGP</p>
                     </div>
                 </div>
             `).join('');
+            document.getElementById('product-count').innerText = `${products.length} Products`;
         }
-
         function addToCart(id) {
             const product = products.find(p => p.id === id);
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const existing = cart.find(item => item.id === id);
-
-            if (existing) {
-                existing.qty = (existing.qty || 1) + 1;
-            } else {
-                cart.push({ ...product, qty: 1 });
-            }
-
+            if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({ ...product, qty: 1 }); }
             localStorage.setItem('kingCart', JSON.stringify(cart));
             updateCartCount();
             showToast(`${product.name} added to bag!`);
         }
-
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            const countEl = document.getElementById('cart-count');
-            if (countEl) countEl.innerText = count;
+            document.getElementById('cart-count').innerText = count;
         }
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartCount();
-            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
-            if (savedTheme !== 'basic') {
-                document.body.setAttribute('data-theme', savedTheme);
-            }
-        });
+        window.addEventListener('DOMContentLoaded', () => { renderProducts(); updateCartCount(); });
     </script>
 </body>
 </html>
