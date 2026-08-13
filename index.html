@@ -6,6 +6,7 @@
     <meta name="google-site-verification" content="Bv49-Vz2uN0iFvzMuLbp6VWUjabg3omytytGE0JPoa8" />
     <title>THE EGYPTIAN KING — Premium Streetwear</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; --btn-bg:#0a0a0a; --btn-text:#fff; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -177,5 +178,202 @@
 
         window.addEventListener('DOMContentLoaded', () => { renderFeatured(); updateCartCount(); });
     </script>
+    <!-- Receipt Modal Structure -->
+<div id="receipt-modal-overlay" class="receipt-overlay">
+    <div class="receipt-modal-card">
+        <!-- Loader State -->
+        <div id="receipt-loader" class="receipt-loader-box">
+            <div class="spinner"></div>
+            <h3>LOADING YOUR RECEIPT...</h3>
+            <p>Generating your official order confirmation image.</p>
+        </div>
+
+        <!-- Generated Receipt Content State -->
+        <div id="receipt-content-box" class="receipt-content-box" style="display: none;">
+            <div class="receipt-preview-wrapper">
+                <img id="generated-receipt-img" src="" alt="Order Receipt">
+            </div>
+
+            <div class="receipt-actions">
+                <button id="btn-save-receipt" class="btn-receipt primary">Save Receipt</button>
+                <button id="btn-copy-receipt" class="btn-receipt secondary">Copy Receipt</button>
+                <button onclick="closeReceiptModal()" class="btn-receipt close">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Hidden Clean Receipt Template for Image Canvas Capture -->
+<div id="receipt-capture-node" class="receipt-node">
+    <div class="watermark-bg">THE EGYPTIAN KING</div>
+    
+    <div class="node-header">
+        <h2>THE EGYPTIAN KING</h2>
+        <p class="node-tagline">OFFICIAL ORDER RECEIPT</p>
+    </div>
+
+    <hr class="node-divider">
+
+    <div class="node-meta">
+        <div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div>
+        <div><strong>Date:</strong> <span id="node-order-date">---</span></div>
+    </div>
+
+    <div class="node-customer">
+        <p><strong>Customer:</strong> <span id="node-customer-name">---</span></p>
+        <p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p>
+        <p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p>
+    </div>
+
+    <hr class="node-divider">
+
+    <div id="node-items-list" class="node-items"></div>
+
+    <hr class="node-divider">
+
+    <div class="node-total">
+        <span>TOTAL PAID:</span>
+        <span id="node-total-price">E£0.00</span>
+    </div>
+
+    <div class="node-footer">
+        <p>Thank you for shopping with THE EGYPTIAN KING.</p>
+        <p>Keep this receipt image for delivery verification.</p>
+    </div>
+</div>
+
+<style>
+/* Modal Overlay & Styling */
+.receipt-overlay {
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
+    display: none; justify-content: center; align-items: center; z-index: 99999;
+}
+.receipt-overlay.active { display: flex; }
+
+.receipt-modal-card {
+    background: #fff; width: 90%; max-width: 480px; border-radius: 12px;
+    padding: 2rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center;
+    max-height: 90vh; overflow-y: auto;
+}
+
+.receipt-loader-box { display: flex; flex-direction: column; align-items: center; gap: 1rem; padding: 2rem 0; }
+.spinner {
+    width: 48px; height: 48px; border: 4px solid #e5e5e5;
+    border-top: 4px solid #0a0a0a; border-radius: 50%;
+    animation: spin 0.9s linear infinite;
+}
+@keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+.receipt-preview-wrapper img {
+    width: 100%; border-radius: 8px; border: 1px solid #e5e5e5;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1); margin-bottom: 1.5rem;
+}
+
+.receipt-actions { display: flex; flex-direction: column; gap: 0.75rem; }
+.btn-receipt {
+    width: 100%; padding: 0.9rem; border-radius: 6px; font-weight: 800;
+    font-size: 0.85rem; text-transform: uppercase; cursor: pointer; border: none; transition: 0.2s;
+}
+.btn-receipt.primary { background: #0a0a0a; color: #fff; }
+.btn-receipt.secondary { background: #f0f0f0; color: #0a0a0a; border: 1px solid #ccc; }
+.btn-receipt.close { background: transparent; color: #666; text-decoration: underline; }
+
+/* Off-Screen Receipt Capture Element */
+.receipt-node {
+    position: absolute; left: -9999px; top: -9999px; width: 420px;
+    background: #ffffff; color: #0a0a0a; padding: 2.5rem; font-family: 'Inter', sans-serif;
+    border: 2px solid #0a0a0a; box-sizing: border-box; overflow: hidden;
+}
+.watermark-bg {
+    position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-30deg);
+    font-size: 3.2rem; font-weight: 900; color: rgba(0, 0, 0, 0.04);
+    white-space: nowrap; pointer-events: none; font-family: 'Cinzel', serif; letter-spacing: 4px;
+}
+.node-header h2 { font-family: 'Cinzel', serif; font-size: 1.5rem; font-weight: 900; letter-spacing: 2px; }
+.node-tagline { font-size: 0.75rem; letter-spacing: 1.5px; color: #666; font-weight: 700; margin-top: 4px; }
+.node-divider { border: 0; border-top: 1px dashed #ccc; margin: 1rem 0; }
+.node-meta, .node-customer { font-size: 0.85rem; text-align: left; line-height: 1.6; }
+.node-items { text-align: left; font-size: 0.85rem; }
+.node-item-row { display: flex; justify-content: space-between; margin-bottom: 0.4rem; font-weight: 600; }
+.node-total { display: flex; justify-content: space-between; font-size: 1.2rem; font-weight: 900; margin-top: 0.5rem; }
+.node-footer { margin-top: 1.5rem; font-size: 0.75rem; color: #777; text-align: center; line-height: 1.4; }
+</style>
+<script>
+    function checkAndRenderOrderReceipt() {
+    const urlParams = new URLSearchParams(window.location.search);
+    if (!urlParams.has('orderSuccess')) return;
+
+    const lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
+    if (!lastOrder) return;
+
+    // Show Overlay & Loader
+    const overlay = document.getElementById('receipt-modal-overlay');
+    overlay.classList.add('active');
+
+    // Populate Hidden Template Node
+    document.getElementById('node-order-id').innerText = lastOrder.orderId;
+    document.getElementById('node-order-date').innerText = lastOrder.date;
+    document.getElementById('node-customer-name').innerText = lastOrder.customer.name;
+    document.getElementById('node-customer-phone').innerText = lastOrder.customer.phone;
+    document.getElementById('node-customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city}`;
+    document.getElementById('node-total-price').innerText = lastOrder.total;
+
+    const itemsContainer = document.getElementById('node-items-list');
+    itemsContainer.innerHTML = lastOrder.items.map(item => `
+        <div class="node-item-row">
+            <span>${item.name} (x${item.qty})</span>
+            <span>E£${(item.price * item.qty).toFixed(2)}</span>
+        </div>
+    `).join('');
+
+    // Generate Image using html2canvas after short delay
+    setTimeout(() => {
+        const receiptNode = document.getElementById('receipt-capture-node');
+        
+        html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
+            const imageDataUrl = canvas.toDataURL('image/png');
+            
+            // Render Image into Modal
+            const imgElement = document.getElementById('generated-receipt-img');
+            imgElement.src = imageDataUrl;
+
+            // Hide Loader & Display Content
+            document.getElementById('receipt-loader').style.display = 'none';
+            document.getElementById('receipt-content-box').style.display = 'block';
+
+            // Configure Download Button
+            document.getElementById('btn-save-receipt').onclick = function() {
+                const a = document.createElement('a');
+                a.href = imageDataUrl;
+                a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`;
+                a.click();
+            };
+
+            // Configure Copy Button
+            document.getElementById('btn-copy-receipt').onclick = function() {
+                canvas.toBlob(blob => {
+                    if (navigator.clipboard && window.ClipboardItem) {
+                        const item = new ClipboardItem({ 'image/png': blob });
+                        navigator.clipboard.write([item]).then(() => {
+                            alert('Receipt image copied to clipboard!');
+                        });
+                    } else {
+                        alert('Copy to clipboard is not supported on this browser.');
+                    }
+                });
+            };
+        });
+    }, 1200);
+}
+
+function closeReceiptModal() {
+    document.getElementById('receipt-modal-overlay').classList.remove('active');
+    // Clean up URL parameter
+    window.history.replaceState({}, document.title, window.location.pathname);
+}
+
+window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
+</script>
 </body>
 </html>
