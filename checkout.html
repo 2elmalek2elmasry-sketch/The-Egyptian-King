@@ -6,7 +6,7 @@
     <title>Checkout — THE EGYPTIAN KING</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- PayPal & Card Payment SDK Integration (Live Mode with Card Field Support) -->
+    <!-- PayPal & Card Payment SDK Integration -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons,card-fields"></script>
 
     <style>
@@ -42,13 +42,9 @@
             border-color:#0a0a0a; 
             box-shadow:0 0 0 1px #0a0a0a; 
         }
-        .payment-tab.disabled-tab {
-            opacity:0.6;
-            cursor:not-allowed;
-            background:#f9f9f9;
-        }
+        .payment-tab.disabled-tab { opacity:0.6; cursor:not-allowed; background:#f9f9f9; }
         
-        /* The Radio Dot */
+        /* Radio Dot */
         .radio-dot { 
             width:20px; height:20px; border:2px solid #ccc; border-radius:50%; 
             display:flex; align-items:center; justify-content:center; flex-shrink:0; 
@@ -72,7 +68,7 @@
         .card-input-container { width:100%; background:#fff; border:1px solid var(--border); padding:0.2rem 0.5rem; border-radius:4px; margin-bottom:1rem; font-size:0.9rem; min-height: 45px; display: flex; align-items: center; }
         .card-input-container iframe { width: 100% !important; min-height: 40px !important; }
         
-        /* Payment Buttons */
+        /* Buttons */
         .btn-pay { 
             width:100%; padding:1.2rem; border:none; border-radius:4px; 
             font-weight:800; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px; 
@@ -92,7 +88,7 @@
         .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:4px; }
         .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
         .summary-item p { font-size:0.8rem; color:var(--text-muted); }
-        .cost-row { display:flex; justify-space-between; margin-bottom:0.5rem; font-size:0.9rem; }
+        .cost-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
         .cost-row.total { font-size:1.2rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
         
         @media (max-width:900px) { 
@@ -108,20 +104,20 @@
         <div>
             <div class="section-box">
                 <h2 class="section-title">Contact Information</h2>
-                <div class="form-group"><input type="email" class="input-field" placeholder="Email address" required></div>
+                <div class="form-group"><input type="email" id="email" class="input-field" placeholder="Email address" required></div>
             </div>
             <div class="section-box">
                 <h2 class="section-title">Shipping Address</h2>
                 <div class="form-row">
-                    <div class="form-group"><input type="text" class="input-field" placeholder="First name" required></div>
-                    <div class="form-group"><input type="text" class="input-field" placeholder="Last name" required></div>
+                    <div class="form-group"><input type="text" id="first-name" class="input-field" placeholder="First name" required></div>
+                    <div class="form-group"><input type="text" id="last-name" class="input-field" placeholder="Last name" required></div>
                 </div>
-                <div class="form-group"><input type="text" class="input-field" placeholder="Address" required></div>
+                <div class="form-group"><input type="text" id="address" class="input-field" placeholder="Address" required></div>
                 <div class="form-row">
-                    <div class="form-group"><input type="text" class="input-field" placeholder="City" required></div>
-                    <div class="form-group"><input type="text" class="input-field" placeholder="Postal code (optional)"></div>
+                    <div class="form-group"><input type="text" id="city" class="input-field" placeholder="City" required></div>
+                    <div class="form-group"><input type="text" id="postal-code" class="input-field" placeholder="Postal code (optional)"></div>
                 </div>
-                <div class="form-group"><input type="text" class="input-field" placeholder="Phone number" required></div>
+                <div class="form-group"><input type="text" id="phone" class="input-field" placeholder="Phone number" required></div>
             </div>
             
             <div class="section-box">
@@ -134,14 +130,11 @@
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">Credit / Debit Card</span>
                         <div class="brand-logos">
-                            <!-- Visa SVG -->
                             <svg width="36" height="12" viewBox="0 0 48 16"><path fill="#1434CB" d="M21.2 0l-3.2 16h-4.8L16.4 0h4.8zm16.4 10.2l2.6-7.2 1.5 7.2h-4.1zM43 16h4L43.6 0h-3.6c-.8 0-1.5.5-1.8 1.2L32.4 16h5l1-2.7h6.1l.5 2.7zM32 10.8c0-4.8-6.6-5.1-6.6-7.2 0-.6.6-1.3 2-1.5.7-.1 2.5-.2 4.6 1l.8-3.8C31.4.9 29.8.5 28 .5c-4.8 0-8.2 2.5-8.2 6.1 0 2.7 2.4 4.2 4.2 5.1 1.9.9 2.5 1.5 2.5 2.3 0 1.2-1.5 1.8-2.9 1.8-2.4 0-3.8-.7-4.9-1.2l-.9 3.9c1.1.5 3.1 1 5.2 1 5.1 0 8.4-2.5 8.4-6.3M13.4 0L9.3 5.4 7.5 2.7C6.8 1.6 5.6 1 4.2 1H0L6.8 9.8 0 16h4.2c1.4 0 2.7-.6 3.5-1.7L20.2 0h-6.8z"/></svg>
-                            <!-- Mastercard SVG -->
                             <svg width="36" height="22" viewBox="0 0 36 22"><circle cx="13" cy="11" r="11" fill="#EB001B"/><circle cx="23" cy="11" r="11" fill="#F79E1B"/><path d="M18 2.5a10.9 10.9 0 000 17 10.9 10.9 0 000-17z" fill="#FF5F00"/></svg>
                         </div>
                     </div>
                     <div class="payment-content active" id="content-card">
-                        <!-- Secure SDK Card Inputs Container -->
                         <div id="card-number-field" class="card-input-container"></div>
                         <div class="form-row" style="margin-bottom:1rem;">
                             <div id="card-expiry-field" class="card-input-container" style="margin-bottom:0;"></div>
@@ -158,7 +151,6 @@
                         <span class="payment-tab-label">Apple Pay</span>
                         <span class="badge-coming-soon">Coming Soon</span>
                         <div class="brand-logos" style="margin-left:8px;">
-                            <!-- Apple Pay SVG -->
                             <svg width="48" height="20" viewBox="0 0 48 20"><path fill="#000" d="M10.1 3.1c.4-.5.7-1.2.6-1.9-.6 0-1.3.4-1.8.9-.4.4-.7 1.1-.6 1.8.7.1 1.4-.3 1.8-.8m1.9 9.2c-.1 2.2 1.9 3.3 2 3.4-.1.2-.3 1-1 2-.6.8-1.2 1.6-2.2 1.6s-1.2-.5-2.3-.5-1.4.5-2.2.5c-.9 0-1.6-.8-2.2-1.6-1.1-1.6-2-4.4-.8-6.3.6-1 1.6-1.6 2.7-1.6s1.5.5 2.2.5 1.2-.5 2.3-.5c1 0 2 .6 2.6 1.5-.1 0-1.8.9-1.8 2.5m5.7-6.1v9.4h1.5v-3.2h2.1c1.9 0 3.2-1.3 3.2-3.1s-1.3-3.1-3.2-3.1h-3.6zm1.5 1.3h1.7c1.3 0 2.1.7 2.1 1.8s-.8 1.8-2.1 1.8h-1.7V6.5zm9.3 8.2c1.2 0 2.3-.6 2.8-1.6h.1v1.5h1.4v-6h-1.4v1.5h-.1c-.5-1-1.5-1.6-2.8-1.6-2.3 0-3.7 1.8-3.7 4.6 0 2.8 1.4 4.6 3.7 4.6m.4-7.5c1.5 0 2.5 1.2 2.5 3s-1 3-2.5 3-2.5-1.2-2.5-3 1-3 2.5-3m9.4 7.5c1.2 0 2.3-.6 2.8-1.6h.1v1.5h1.4v-6h-1.4v1.5h-.1c-.5-1-1.5-1.6-2.8-1.6-2.3 0-3.7 1.8-3.7 4.6 0 2.8 1.4 4.6 3.7 4.6m.4-7.5c1.5 0 2.5 1.2 2.5 3s-1 3-2.5 3-2.5-1.2-2.5-3 1-3 2.5-3z"/></svg>
                         </div>
                     </div>
@@ -171,12 +163,10 @@
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">PayPal</span>
                         <div class="brand-logos">
-                            <!-- PayPal SVG -->
                             <svg width="56" height="14" viewBox="0 0 56 14"><path fill="#003087" d="M8.5 1H4.2c-.3 0-.6.2-.6.5L1.8 9.8c0 .2.1.4.3.4h2.1c.3 0 .6-.2.6-.5l.5-3.1c.1-.3.3-.5.6-.5h1.4c2.8 0 4.4-1.4 4.8-4 .2-1.2 0-2.1-.5-2.7C11.1 1.3 10 1 8.5 1m.8 4c-.2 1.4-1.3 1.4-2.3 1.4h-.6l.4-2.5c0-.2.2-.3.4-.3h.3c.7 0 1.4 0 1.7.4.2.2.2.6.1 1"/><path fill="#009cde" d="M21.5 4.9h-2.1c-.2 0-.3.1-.4.3l-.1.5-.1-.2c-.3-.5-1-.6-1.7-.6-1.6 0-2.9 1.2-3.2 3-.2 1.2.1 2.3.7 2.8.6.5 1.3.6 2 .6 1.3 0 2-.8 2-.8l-.1.5c0 .2.1.4.3.4h1.9c.3 0 .6-.2.6-.5l1.1-7c0-.2-.1-.4-.3-.4m-2.5 3c-.2 1.1-1.1 1.9-2.2 1.9-.5 0-.9-.2-1.2-.5-.3-.3-.4-.7-.3-1.2.2-1.1 1.1-1.9 2.2-1.9.5 0 .9.2 1.1.5.3.3.4.7.4 1.2"/><path fill="#003087" d="M33.5 4.9h-2.1c-.2 0-.3.1-.4.3l-2.9 4.3-1.2-4.1c-.1-.2-.3-.4-.5-.4h-2.1c-.2 0-.4.2-.3.5l2.3 6.8-2.2 3.1c-.2.2 0 .5.2.5h2.1c.2 0 .3-.1.4-.3l6.7-9.6c.1-.3-.1-.6-.3-.6"/><path fill="#009cde" d="M40.5 1h-4.3c-.3 0-.6.2-.6.5l-1.8 11.3c0 .2.1.4.3.4h2.2c.2 0 .4-.2.4-.3l.5-3.1c.1-.3.3-.5.6-.5h1.4c2.8 0 4.4-1.4 4.8-4 .2-1.2 0-2.1-.5-2.7-.8-.6-1.9-1-3.5-1m.8 4c-.2 1.4-1.3 1.4-2.3 1.4h-.6l.4-2.5c0-.2.2-.3.4-.3h.3c.7 0 1.4 0 1.7.4.2.2.2.6.1 1"/><path fill="#009cde" d="M53.5 4.9h-2.1c-.2 0-.3.1-.4.3l-.1.5-.1-.2c-.3-.5-1-.6-1.7-.6-1.6 0-2.9 1.2-3.2 3-.2 1.2.1 2.3.7 2.8.6.5 1.3.6 2 .6 1.3 0 2-.8 2-.8l-.1.5c0 .2.1.4.3.4h1.9c.3 0 .6-.2.6-.5l1.1-7c0-.2-.1-.4-.3-.4m-2.5 3c-.2 1.1-1.1 1.9-2.2 1.9-.5 0-.9-.2-1.2-.5-.3-.3-.4-.7-.3-1.2.2-1.1 1.1-1.9 2.2-1.9.5 0 .9.2 1.1.5.3.3.4.7.4 1.2"/><path fill="#009cde" d="M55.5 1.3L53.6 13c0 .2.1.4.3.4h1.9c.3 0 .6-.2.6-.5L58.3 1.4c0-.2-.1-.4-.3-.4h-2.2c-.1 0-.3.1-.3.3"/></svg>
                         </div>
                     </div>
                     <div class="payment-content" id="content-paypal">
-                        <!-- PayPal Smart Button Container -->
                         <div id="paypal-button-container" style="min-height:50px;"></div>
                     </div>
 
@@ -185,7 +175,6 @@
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">Cash on Delivery (COD)</span>
                         <div class="brand-logos">
-                            <!-- Cash SVG -->
                             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
                         </div>
                     </div>
@@ -259,13 +248,11 @@
             document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
             currentTotal = subtotal;
             
-            // Update button texts
             document.querySelector('#btn-card').innerText = `Pay E£${currentTotal.toFixed(2)}`;
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
-            // Initialize Official PayPal & Card SDKs
+            // PayPal SDK Initialization
             if (window.paypal) {
-                // 1. PayPal Buttons
                 paypal.Buttons({
                     style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
                     createOrder: function(data, actions) {
@@ -274,9 +261,7 @@
                     },
                     onApprove: function(data, actions) {
                         return actions.order.capture().then(function(details) {
-                            showToast(`Payment successful! Thank you, ${details.payer.name.given_name}!`);
-                            localStorage.removeItem('kingCart');
-                            setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                            processPayment('PayPal');
                         });
                     },
                     onError: function(err) {
@@ -284,7 +269,6 @@
                     }
                 }).render('#paypal-button-container');
 
-                // 2. Real Credit/Debit Card Fields
                 if (paypal.CardFields) {
                     cardFieldsInstance = paypal.CardFields({
                         createOrder: function(data, actions) {
@@ -293,9 +277,7 @@
                         },
                         onApprove: function(data, actions) {
                             return actions.order.capture().then(function(details) {
-                                showToast(`Card Payment Successful! Thank you!`);
-                                localStorage.removeItem('kingCart');
-                                setTimeout(() => { window.location.href = 'index.html'; }, 2000);
+                                processPayment('Card');
                             });
                         },
                         onError: function(err) {
@@ -341,16 +323,47 @@
         }
 
         function processPayment(method) {
-            const btn = document.getElementById(`btn-${method === 'Cash on Delivery' ? 'cod' : method.toLowerCase()}`);
-            if(!btn) return;
-            btn.disabled = true;
-            btn.innerHTML = "Processing...";
+            // Get form inputs
+            const email = document.getElementById('email').value.trim();
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+
+            // Simple validation check
+            if (!email || !firstName || !lastName || !address || !city || !phone) {
+                showToast("Please fill in all required contact & address fields.");
+                return;
+            }
+
+            // Construct WhatsApp Message
+            const targetPhoneNumber = "2130698756936";
             
+            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n\n`;
+            message += `*Customer:* ${firstName} ${lastName}\n`;
+            message += `*Phone:* ${phone}\n`;
+            message += `*Email:* ${email}\n`;
+            message += `*Address:* ${address}, ${city}\n`;
+            message += `*Payment Method:* ${method}\n`;
+            message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n\n`;
+            message += `📦 *ORDER ITEMS:*\n`;
+
+            cart.forEach((item, index) => {
+                message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}\n`;
+            });
+
+            const encodedMessage = encodeURIComponent(message);
+            const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
+
+            showToast("Order submitted! Opening WhatsApp...");
+
             setTimeout(() => {
-                showToast(`Order placed successfully via ${method}!`);
                 localStorage.removeItem('kingCart');
-                setTimeout(() => { window.location.href = 'index.html'; }, 1500);
-            }, 1500);
+                window.open(whatsappURL, '_blank');
+                window.location.href = 'index.html';
+            }, 1000);
         }
 
         window.addEventListener('DOMContentLoaded', () => { loadCheckout(); });
