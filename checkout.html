@@ -6,8 +6,8 @@
     <title>Checkout — THE EGYPTIAN KING</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- PayPal & Card Payment SDK Integration -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons,card-fields"></script>
+    <!-- PayPal SDK Integration (Buttons Component) -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons"></script>
 
     <style>
         :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
@@ -64,10 +64,6 @@
         .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
         @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
         
-        /* Card Inputs */
-        .card-input-container { width:100%; background:#fff; border:1px solid var(--border); padding:0.2rem 0.5rem; border-radius:4px; margin-bottom:1rem; font-size:0.9rem; min-height: 45px; display: flex; align-items: center; }
-        .card-input-container iframe { width: 100% !important; min-height: 40px !important; }
-        
         /* Buttons */
         .btn-pay { 
             width:100%; padding:1.2rem; border:none; border-radius:4px; 
@@ -75,9 +71,6 @@
             cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:0.5rem;
         }
         .btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
-        
-        .btn-card { background:#0a0a0a; color:#fff; }
-        .btn-card:hover { background:#333; }
         
         .btn-cod { background:#fff; color:#0a0a0a; border:2px solid #0a0a0a; }
         .btn-cod:hover { background:#0a0a0a; color:#fff; }
@@ -135,14 +128,11 @@
                         </div>
                     </div>
                     <div class="payment-content active" id="content-card">
-                        <div id="card-number-field" class="card-input-container"></div>
-                        <div class="form-row" style="margin-bottom:1rem;">
-                            <div id="card-expiry-field" class="card-input-container" style="margin-bottom:0;"></div>
-                            <div id="card-cvv-field" class="card-input-container" style="margin-bottom:0;"></div>
-                        </div>
-                        <button class="btn-pay btn-card" id="btn-card" onclick="processCardPayment()">
-                            Pay Now
-                        </button>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
+                            Pay securely with your Visa, Mastercard, or Debit card. Bank verification (3DS OTP) is processed securely by PayPal.
+                        </p>
+                        <!-- Container for ONLY the Black Debit/Credit Card Button -->
+                        <div id="card-button-container" style="min-height:50px;"></div>
                     </div>
 
                     <!-- 2. Apple Pay (Coming Soon) -->
@@ -167,6 +157,7 @@
                         </div>
                     </div>
                     <div class="payment-content" id="content-paypal">
+                        <!-- Container for ONLY the Yellow PayPal Button -->
                         <div id="paypal-button-container" style="min-height:50px;"></div>
                     </div>
 
@@ -199,7 +190,6 @@
 
     <script>
         let currentTotal = 0;
-        let cardFieldsInstance = null;
 
         function showToast(message) {
             let container = document.querySelector('.toast-container');
@@ -225,15 +215,6 @@
                 return false;
             }
             return true;
-        }
-
-        function renderFallbackCardInputs() {
-            document.getElementById('card-number-field').style.padding = '0';
-            document.getElementById('card-number-field').innerHTML = `<input type="text" class="input-field" placeholder="Card Number" required style="border:none;">`;
-            document.getElementById('card-expiry-field').style.padding = '0';
-            document.getElementById('card-expiry-field').innerHTML = `<input type="text" class="input-field" placeholder="MM / YY" required style="border:none;">`;
-            document.getElementById('card-cvv-field').style.padding = '0';
-            document.getElementById('card-cvv-field').innerHTML = `<input type="text" class="input-field" placeholder="CVC" required style="border:none;">`;
         }
 
         function loadCheckout() {
@@ -263,58 +244,64 @@
             document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
             currentTotal = subtotal;
             
-            document.querySelector('#btn-card').innerText = `Pay E£${currentTotal.toFixed(2)}`;
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
             // PayPal SDK Initialization
             if (window.paypal) {
-                paypal.Buttons({
-                    style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) {
-                            return Promise.reject(new Error("Form validation failed"));
-                        }
-                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('PayPal');
-                        });
-                    },
-                    onError: function(err) {
-                        showToast("PayPal transaction error. Please try again.");
-                    }
-                }).render('#paypal-button-container');
-
-                if (paypal.CardFields) {
-                    cardFieldsInstance = paypal.CardFields({
+                // 1. RENDER ONLY CREDIT/DEBIT CARD BUTTON (Black) in Card Container
+                if (paypal.FUNDING && paypal.FUNDING.CARD) {
+                    paypal.Buttons({
+                        fundingSource: paypal.FUNDING.CARD,
+                        style: {
+                            layout: 'vertical',
+                            color: 'black',
+                            shape: 'rect',
+                            label: 'pay'
+                        },
                         createOrder: function(data, actions) {
+                            if (!validateAddressForm()) {
+                                return Promise.reject(new Error("Form validation failed"));
+                            }
                             const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
                             return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
                         },
                         onApprove: function(data, actions) {
                             return actions.order.capture().then(function(details) {
-                                processPayment('Card');
+                                processPayment('Credit/Debit Card');
                             });
                         },
                         onError: function(err) {
-                            showToast("Card payment failed. Please check your card details.");
+                            showToast("Card transaction cancelled or failed.");
                         }
-                    });
-
-                    if (cardFieldsInstance.isEligible()) {
-                        cardFieldsInstance.NumberField({ placeholder: "Card Number" }).render("#card-number-field");
-                        cardFieldsInstance.ExpiryField({ placeholder: "MM / YY" }).render("#card-expiry-field");
-                        cardFieldsInstance.CVVField({ placeholder: "CVC" }).render("#card-cvv-field");
-                    } else {
-                        renderFallbackCardInputs();
-                    }
-                } else {
-                    renderFallbackCardInputs();
+                    }).render('#card-button-container');
                 }
-            } else {
-                renderFallbackCardInputs();
+
+                // 2. RENDER ONLY PAYPAL BUTTON (Yellow) in PayPal Container
+                if (paypal.FUNDING && paypal.FUNDING.PAYPAL) {
+                    paypal.Buttons({
+                        fundingSource: paypal.FUNDING.PAYPAL,
+                        style: {
+                            layout: 'vertical',
+                            color: 'gold',
+                            shape: 'rect'
+                        },
+                        createOrder: function(data, actions) {
+                            if (!validateAddressForm()) {
+                                return Promise.reject(new Error("Form validation failed"));
+                            }
+                            const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+                            return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+                        },
+                        onApprove: function(data, actions) {
+                            return actions.order.capture().then(function(details) {
+                                processPayment('PayPal');
+                            });
+                        },
+                        onError: function(err) {
+                            showToast("PayPal transaction error. Please try again.");
+                        }
+                    }).render('#paypal-button-container');
+                }
             }
         }
 
@@ -324,22 +311,6 @@
             
             document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
             document.getElementById(`content-${method}`).classList.add('active');
-        }
-
-        function processCardPayment() {
-            if (!validateAddressForm()) return;
-
-            if (cardFieldsInstance && cardFieldsInstance.isEligible()) {
-                const btn = document.getElementById('btn-card');
-                btn.disabled = true;
-                btn.innerText = "Processing Card...";
-                cardFieldsInstance.submit().catch(() => {
-                    btn.disabled = false;
-                    btn.innerText = `Pay E£${currentTotal.toFixed(2)}`;
-                });
-            } else {
-                processPayment('Card');
-            }
         }
 
         function processPayment(method) {
@@ -353,19 +324,21 @@
             const phone = document.getElementById('phone').value.trim();
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
 
-            // 1. Create Order Record for Receipt Generator on index.html
+            // 1. Create Order Record
+            const generatedOrderId = `#EK-${Math.floor(10000 + Math.random() * 90000)}`;
             const lastOrder = {
-                orderId: `#EK-${Math.floor(10000 + Math.random() * 90000)}`,
+                orderId: generatedOrderId,
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city },
                 items: cart,
                 total: `E£${currentTotal.toFixed(2)}`
             };
 
-            // 2. Construct Detailed WhatsApp Message
+            // 2. Construct Detailed WhatsApp Message with Order ID
             const targetPhoneNumber = "213698756936";
             
-            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n\n`;
+            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n`;
+            message += `*Order ID:* ${generatedOrderId}\n\n`;
             message += `*Customer:* ${firstName} ${lastName}\n`;
             message += `*Phone:* ${phone}\n`;
             message += `*Email:* ${email}\n`;
