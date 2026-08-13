@@ -129,7 +129,7 @@
                     </div>
                     <div class="payment-content active" id="content-card">
                         <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
-                            Pay securely with your Visa, Mastercard, or Debit card. Bank verification (3DS OTP) is processed securely by PayPal.
+                            Pay securely with your Visa, Mastercard, or Debit card.
                         </p>
                         <!-- Container for ONLY the Black Debit/Credit Card Button -->
                         <div id="card-button-container" style="min-height:50px;"></div>
@@ -157,7 +157,7 @@
                         </div>
                     </div>
                     <div class="payment-content" id="content-paypal">
-                        <!-- Container for ONLY the Yellow PayPal Button -->
+                        <!-- Container for BOTH PayPal (Yellow) & Card (Grey) Buttons -->
                         <div id="paypal-button-container" style="min-height:50px;"></div>
                     </div>
 
@@ -248,7 +248,7 @@
 
             // PayPal SDK Initialization
             if (window.paypal) {
-                // 1. RENDER ONLY CREDIT/DEBIT CARD BUTTON (Black) in Card Container
+                // 1. CREDIT/DEBIT CARD TAB: Render ONLY the Card Button (Black/Grey)
                 if (paypal.FUNDING && paypal.FUNDING.CARD) {
                     paypal.Buttons({
                         fundingSource: paypal.FUNDING.CARD,
@@ -276,32 +276,29 @@
                     }).render('#card-button-container');
                 }
 
-                // 2. RENDER ONLY PAYPAL BUTTON (Yellow) in PayPal Container
-                if (paypal.FUNDING && paypal.FUNDING.PAYPAL) {
-                    paypal.Buttons({
-                        fundingSource: paypal.FUNDING.PAYPAL,
-                        style: {
-                            layout: 'vertical',
-                            color: 'gold',
-                            shape: 'rect'
-                        },
-                        createOrder: function(data, actions) {
-                            if (!validateAddressForm()) {
-                                return Promise.reject(new Error("Form validation failed"));
-                            }
-                            const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                            return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                        },
-                        onApprove: function(data, actions) {
-                            return actions.order.capture().then(function(details) {
-                                processPayment('PayPal');
-                            });
-                        },
-                        onError: function(err) {
-                            showToast("PayPal transaction error. Please try again.");
+                // 2. PAYPAL TAB: Render BOTH Buttons (Yellow PayPal + Grey Card)
+                paypal.Buttons({
+                    style: {
+                        layout: 'vertical',
+                        color: 'gold',
+                        shape: 'rect'
+                    },
+                    createOrder: function(data, actions) {
+                        if (!validateAddressForm()) {
+                            return Promise.reject(new Error("Form validation failed"));
                         }
-                    }).render('#paypal-button-container');
-                }
+                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            processPayment('PayPal');
+                        });
+                    },
+                    onError: function(err) {
+                        showToast("PayPal transaction error. Please try again.");
+                    }
+                }).render('#paypal-button-container');
             }
         }
 
