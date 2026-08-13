@@ -212,6 +212,21 @@
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
 
+        function validateAddressForm() {
+            const email = document.getElementById('email').value.trim();
+            const firstName = document.getElementById('first-name').value.trim();
+            const lastName = document.getElementById('last-name').value.trim();
+            const address = document.getElementById('address').value.trim();
+            const city = document.getElementById('city').value.trim();
+            const phone = document.getElementById('phone').value.trim();
+
+            if (!email || !firstName || !lastName || !address || !city || !phone) {
+                showToast("Please fill in all required contact & address fields.");
+                return false;
+            }
+            return true;
+        }
+
         function renderFallbackCardInputs() {
             document.getElementById('card-number-field').style.padding = '0';
             document.getElementById('card-number-field').innerHTML = `<input type="text" class="input-field" placeholder="Card Number" required style="border:none;">`;
@@ -256,6 +271,9 @@
                 paypal.Buttons({
                     style: { layout: 'vertical', color: 'gold', shape: 'rect', label: 'paypal' },
                     createOrder: function(data, actions) {
+                        if (!validateAddressForm()) {
+                            return Promise.reject(new Error("Form validation failed"));
+                        }
                         const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
                         return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
                     },
@@ -309,6 +327,8 @@
         }
 
         function processCardPayment() {
+            if (!validateAddressForm()) return;
+
             if (cardFieldsInstance && cardFieldsInstance.isEligible()) {
                 const btn = document.getElementById('btn-card');
                 btn.disabled = true;
@@ -323,7 +343,8 @@
         }
 
         function processPayment(method) {
-            // Get form inputs
+            if (!validateAddressForm()) return;
+
             const email = document.getElementById('email').value.trim();
             const firstName = document.getElementById('first-name').value.trim();
             const lastName = document.getElementById('last-name').value.trim();
@@ -331,12 +352,6 @@
             const city = document.getElementById('city').value.trim();
             const phone = document.getElementById('phone').value.trim();
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-
-            // Validation check
-            if (!email || !firstName || !lastName || !address || !city || !phone) {
-                showToast("Please fill in all required contact & address fields.");
-                return;
-            }
 
             // 1. Create Order Record for Receipt Generator on index.html
             const lastOrder = {
@@ -347,11 +362,8 @@
                 total: `E£${currentTotal.toFixed(2)}`
             };
 
-            localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
-            localStorage.removeItem('kingCart');
-
             // 2. Construct Detailed WhatsApp Message
-            const targetPhoneNumber = "2130698756936";
+            const targetPhoneNumber = "213698756936";
             
             let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n\n`;
             message += `*Customer:* ${firstName} ${lastName}\n`;
@@ -365,6 +377,10 @@
             cart.forEach((item, index) => {
                 message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}\n`;
             });
+
+            // Wiping localStorage after message construction
+            localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
+            localStorage.removeItem('kingCart');
 
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
