@@ -332,13 +332,25 @@
             const phone = document.getElementById('phone').value.trim();
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
 
-            // Simple validation check
+            // Validation check
             if (!email || !firstName || !lastName || !address || !city || !phone) {
                 showToast("Please fill in all required contact & address fields.");
                 return;
             }
 
-            // Construct WhatsApp Message
+            // 1. Create Order Record for Receipt Generator on index.html
+            const lastOrder = {
+                orderId: `#EK-${Math.floor(10000 + Math.random() * 90000)}`,
+                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+                customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city },
+                items: cart,
+                total: `E£${currentTotal.toFixed(2)}`
+            };
+
+            localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
+            localStorage.removeItem('kingCart');
+
+            // 2. Construct Detailed WhatsApp Message
             const targetPhoneNumber = "2130698756936";
             
             let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n\n`;
@@ -357,50 +369,16 @@
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-            showToast("Order submitted! Opening WhatsApp...");
+            showToast("Order placed! Generating receipt...");
 
+            // 3. Open WhatsApp and redirect home after a short delay
             setTimeout(() => {
-                localStorage.removeItem('kingCart');
                 window.open(whatsappURL, '_blank');
-                window.location.href = 'index.html';
+                window.location.href = 'index.html?orderSuccess=true';
             }, 1000);
         }
 
         window.addEventListener('DOMContentLoaded', () => { loadCheckout(); });
     </script>
-<script>
-    function processPayment(method) {
-    const firstName = document.getElementById('first-name').value.trim();
-    const lastName = document.getElementById('last-name').value.trim();
-    const phone = document.getElementById('phone').value.trim();
-    const address = document.getElementById('address').value.trim();
-    const city = document.getElementById('city').value.trim();
-    const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-
-    if (!firstName || !phone || !address) {
-        showToast("Please fill in required fields.");
-        return;
-    }
-
-    // Create Order Record for Receipt Generation
-    const lastOrder = {
-        orderId: `#EK-${Math.floor(10000 + Math.random() * 90000)}`,
-        date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-        customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city },
-        items: cart,
-        total: `E£${currentTotal.toFixed(2)}`
-    };
-
-    localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
-    localStorage.removeItem('kingCart');
-
-    // Send WhatsApp Alert in Background & Redirect
-    const whatsappURL = `https://wa.me/2130698756936?text=${encodeURIComponent('New order placed!')}`;
-    window.open(whatsappURL, '_blank');
-
-    // Redirect to index.html with query parameter
-    window.location.href = 'index.html?orderSuccess=true';
-}
-</script>
 </body>
 </html>
