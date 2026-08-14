@@ -184,13 +184,18 @@
             <h2 class="section-title">Order Summary</h2>
             <div id="checkout-items-list"></div>
             <div class="cost-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
-            <div class="cost-row"><span>Shipping</span><span>Free</span></div>
+            <div class="cost-row">
+                <span>Shipping <small id="shipping-reason" style="color:var(--text-muted); font-size:0.75rem; display:block;"></small></span>
+                <span id="shipping-val">E£0.00</span>
+            </div>
             <div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
         </div>
     </div>
 
     <script>
         let currentTotal = 0;
+        let shippingFee = 0;
+        let shippingReason = "";
 
         function showToast(message) {
             let container = document.querySelector('.toast-container');
@@ -218,6 +223,25 @@
             return true;
         }
 
+        function calculateShipping(cart) {
+            if (!cart || cart.length === 0) {
+                shippingFee = 0;
+                shippingReason = "";
+                return;
+            }
+
+            // Check if cart contains any hoodie items
+            const hasHoodie = cart.some(item => item.name && item.name.toLowerCase().includes('hoodie'));
+
+            if (hasHoodie) {
+                shippingFee = 50;
+                shippingReason = "Hoodie Flat Rate";
+            } else {
+                shippingFee = 150;
+                shippingReason = "Standard T-Shirt Rate";
+            }
+        }
+
         function loadCheckout() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const listContainer = document.getElementById('checkout-items-list');
@@ -242,9 +266,13 @@
                 }).join('');
             }
 
+            calculateShipping(cart);
+            currentTotal = subtotal + shippingFee;
+
             document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
-            document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
-            currentTotal = subtotal;
+            document.getElementById('shipping-val').innerText = `E£${shippingFee.toFixed(2)}`;
+            document.getElementById('shipping-reason').innerText = shippingReason ? `(${shippingReason})` : '';
+            document.getElementById('total-val').innerText = `E£${currentTotal.toFixed(2)}`;
             
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
@@ -276,7 +304,7 @@
                     }
                 }).render('#card-button-container');
 
-                // PayPal Smart Buttons inside PayPal Tab (renders Yellow PayPal + Grey Debit/Credit Card)
+                // PayPal Smart Buttons inside PayPal Tab
                 paypal.Buttons({
                     style: {
                         layout: 'vertical',
@@ -328,6 +356,8 @@
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
                 customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city },
                 items: cart,
+                shippingFee: `E£${shippingFee.toFixed(2)}`,
+                shippingReason: shippingReason,
                 total: `E£${currentTotal.toFixed(2)}`
             };
 
@@ -339,13 +369,19 @@
             message += `*Phone:* ${phone}\n`;
             message += `*Email:* ${email}\n`;
             message += `*Address:* ${address}, ${city}\n`;
-            message += `*Payment Method:* ${method}\n`;
-            message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n\n`;
+            message += `*Payment Method:* ${method}\n\n`;
             message += `📦 *ORDER ITEMS:*\n`;
 
+            let subtotal = 0;
             cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}\n`;
+                const itemTotal = item.price * item.qty;
+                subtotal += itemTotal;
+                message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
             });
+
+            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n`;
+            message += `*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
+            message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n`;
 
             localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
             localStorage.removeItem('kingCart');
