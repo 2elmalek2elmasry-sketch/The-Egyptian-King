@@ -250,7 +250,7 @@
 
             // PayPal SDK Initialization
             if (window.paypal) {
-                // Render strictly Card Button in the Credit/Debit container
+                // Strictly Card Button in Credit/Debit container
                 paypal.Buttons({
                     fundingSource: paypal.FUNDING.CARD,
                     style: {
@@ -276,9 +276,8 @@
                     }
                 }).render('#card-button-container');
 
-                // Standard PayPal Button inside the PayPal Tab
+                // PayPal Smart Buttons inside PayPal Tab (renders Yellow PayPal + Grey Debit/Credit Card)
                 paypal.Buttons({
-                    fundingSource: paypal.FUNDING.PAYPAL,
                     style: {
                         layout: 'vertical',
                         color: 'gold',
