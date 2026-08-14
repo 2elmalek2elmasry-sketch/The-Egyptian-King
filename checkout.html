@@ -75,6 +75,9 @@
         }
         .btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
         
+        .btn-card { background:#0a0a0a; color:#fff; margin-top:1rem; }
+        .btn-card:hover { background:#333; }
+
         .btn-cod { background:#fff; color:#0a0a0a; border:2px solid #0a0a0a; }
         .btn-cod:hover { background:#0a0a0a; color:#fff; }
 
@@ -131,10 +134,23 @@
                         </div>
                     </div>
                     <div class="payment-content active" id="content-card">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
-                            Pay securely with your Visa, Mastercard, or Debit card.
-                        </p>
-                        <div id="card-button-container" style="min-height:50px;"></div>
+                        <div class="form-group">
+                            <input type="text" id="card-number" class="input-field" placeholder="Card number" maxlength="19">
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <input type="text" id="card-exp" class="input-field" placeholder="Expiration date (MM / YY)">
+                            </div>
+                            <div class="form-group">
+                                <input type="text" id="card-cvc" class="input-field" placeholder="Security code (CVC)" maxlength="4">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" id="card-holder" class="input-field" placeholder="Name on card">
+                        </div>
+                        <button class="btn-pay btn-card" id="btn-card" onclick="processCardPayment()">
+                            Pay Now
+                        </button>
                     </div>
 
                     <!-- 2. Apple Pay -->
@@ -246,35 +262,11 @@
             document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
             currentTotal = subtotal;
             
+            document.querySelector('#btn-card').innerText = `Pay Now (E£${currentTotal.toFixed(2)})`;
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
-            // PayPal SDK Initialization
+            // PayPal SDK Initialization (Only rendered inside PayPal tab)
             if (window.paypal) {
-                // Render Standard PayPal Smart Buttons
-                paypal.Buttons({
-                    style: {
-                        layout: 'vertical',
-                        color: 'black',
-                        shape: 'rect',
-                        label: 'pay'
-                    },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) {
-                            return Promise.reject(new Error("Form validation failed"));
-                        }
-                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('Credit/Debit Card');
-                        });
-                    },
-                    onError: function(err) {
-                        showToast("Card transaction cancelled or failed.");
-                    }
-                }).render('#card-button-container');
-
                 paypal.Buttons({
                     style: {
                         layout: 'vertical',
@@ -307,6 +299,19 @@
             
             document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
             document.getElementById(`content-${method}`).classList.add('active');
+        }
+
+        function processCardPayment() {
+            const cardNumber = document.getElementById('card-number').value.trim();
+            const cardExp = document.getElementById('card-exp').value.trim();
+            const cardCvc = document.getElementById('card-cvc').value.trim();
+            const cardHolder = document.getElementById('card-holder').value.trim();
+
+            if (!cardNumber || !cardExp || !cardCvc || !cardHolder) {
+                showToast("Please enter complete card details.");
+                return;
+            }
+            processPayment('Credit / Debit Card');
         }
 
         function processPayment(method) {
