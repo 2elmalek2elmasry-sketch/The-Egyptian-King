@@ -19,7 +19,7 @@
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
         .toast-message.show { opacity:1; transform:translateY(0); }
         
-        /* Layout */
+        /* Header & Layout */
         header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:center; align-items:center; }
         .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
         .checkout-layout { display:grid; grid-template-columns:1fr 400px; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
@@ -73,8 +73,6 @@
             font-weight:800; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px; 
             cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:0.5rem;
         }
-        .btn-pay:disabled { opacity:0.6; cursor:not-allowed; }
-        
         .btn-cod { background:#fff; color:#0a0a0a; border:2px solid #0a0a0a; }
         .btn-cod:hover { background:#0a0a0a; color:#fff; }
 
@@ -84,9 +82,23 @@
         .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:4px; }
         .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
         .summary-item p { font-size:0.8rem; color:var(--text-muted); }
-        .cost-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
+        .cost-row { display:flex; justify-space-between:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
         .cost-row.total { font-size:1.2rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
-        
+
+        /* Receipt Card Modal */
+        .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:9999; display:none; justify-content:center; align-items:center; padding:1rem; }
+        .receipt-card { background:#fff; border-radius:8px; width:100%; max-width:480px; padding:2rem; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:1px solid var(--border); max-height:90vh; overflow-y:auto; }
+        .receipt-header { text-align:center; padding-bottom:1rem; border-bottom:2px dashed var(--border); margin-bottom:1.5rem; }
+        .receipt-header h3 { font-family:'Cinzel',serif; font-size:1.4rem; font-weight:900; margin-bottom:0.2rem; }
+        .receipt-header p { font-size:0.8rem; color:var(--text-muted); }
+        .receipt-details { font-size:0.85rem; margin-bottom:1.5rem; color:#333; line-height:1.5; }
+        .receipt-table { width:100%; border-collapse:collapse; margin-bottom:1rem; font-size:0.85rem; }
+        .receipt-table th { text-align:left; padding-bottom:0.5rem; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:700; }
+        .receipt-table td { padding:0.6rem 0; border-bottom:1px solid #f0f0f0; }
+        .receipt-summary-line { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; }
+        .receipt-summary-line.total-line { font-weight:900; font-size:1.1rem; border-top:2px solid #0a0a0a; margin-top:0.5rem; padding-top:0.75rem; }
+        .receipt-footer { text-align:center; margin-top:1.5rem; font-size:0.8rem; color:var(--text-muted); border-top:1px dashed var(--border); padding-top:1rem; }
+
         @media (max-width:900px) { 
             .checkout-layout { grid-template-columns:1fr; } 
             .form-row { grid-template-columns:1fr; } 
@@ -96,7 +108,8 @@
 <body>
     <div class="toast-container"></div>
     <header><a href="index.html" class="brand-logo">The Egyptian King</a></header>
-    <div class="checkout-layout">
+    
+    <div class="checkout-layout" id="checkout-container">
         <div>
             <div class="section-box">
                 <h2 class="section-title">Contact Information</h2>
@@ -131,9 +144,7 @@
                         </div>
                     </div>
                     <div class="payment-content active" id="content-card">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">
-                            Pay securely with your Visa, Mastercard, or Debit card.
-                        </p>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay securely with your Visa, Mastercard, or Debit card.</p>
                         <div id="card-button-container" style="min-height:50px;"></div>
                     </div>
 
@@ -147,7 +158,7 @@
                         </div>
                     </div>
                     <div class="payment-content" id="content-applepay">
-                        <p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development and coming soon.</p>
+                        <p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development.</p>
                     </div>
 
                     <!-- 3. PayPal -->
@@ -171,10 +182,8 @@
                         </div>
                     </div>
                     <div class="payment-content" id="content-cod">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay with cash directly to the courier upon delivery. Please have the exact amount ready.</p>
-                        <button class="btn-pay btn-cod" id="btn-cod" onclick="processPayment('Cash on Delivery')">
-                            Place Order
-                        </button>
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay with cash directly to the courier upon delivery.</p>
+                        <button class="btn-pay btn-cod" id="btn-cod" onclick="processPayment('Cash on Delivery')">Place Order</button>
                     </div>
                 </div>
             </div>
@@ -189,6 +198,47 @@
                 <span id="shipping-val">E£0.00</span>
             </div>
             <div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
+        </div>
+    </div>
+
+    <!-- RECEIPT MODAL DISPLAY -->
+    <div class="receipt-overlay" id="receipt-modal">
+        <div class="receipt-card">
+            <div class="receipt-header">
+                <h3>THE EGYPTIAN KING</h3>
+                <p>Official Purchase Receipt</p>
+            </div>
+            <div class="receipt-details" id="receipt-details-body"></div>
+            
+            <table class="receipt-table">
+                <thead>
+                    <tr>
+                        <th>Item</th>
+                        <th style="text-align:center;">Qty</th>
+                        <th style="text-align:right;">Price</th>
+                    </tr>
+                </thead>
+                <tbody id="receipt-items-tbody"></tbody>
+            </table>
+
+            <div class="receipt-summary-line">
+                <span>Subtotal</span>
+                <span id="receipt-subtotal">E£0.00</span>
+            </div>
+            <!-- Dynamic Explicit Shipping Fee Line -->
+            <div class="receipt-summary-line" style="color:#0a0a0a; font-weight:600;">
+                <span>Shipping <small id="receipt-shipping-reason" style="color:var(--text-muted); display:inline; font-weight:400;"></small></span>
+                <span id="receipt-shipping-fee">E£0.00</span>
+            </div>
+            <div class="receipt-summary-line total-line">
+                <span>Total Paid</span>
+                <span id="receipt-grand-total">E£0.00</span>
+            </div>
+
+            <div class="receipt-footer">
+                <p>Thank you for shopping with us!</p>
+                <p style="margin-top:0.5rem;"><button onclick="closeReceiptModal()" class="btn-pay btn-cod" style="padding:0.6rem 1rem; margin-top:0.5rem;">Close Receipt</button></p>
+            </div>
         </div>
     </div>
 
@@ -230,7 +280,6 @@
                 return;
             }
 
-            // Check if cart contains any hoodie items
             const hasHoodie = cart.some(item => item.name && item.name.toLowerCase().includes('hoodie'));
 
             if (hasHoodie) {
@@ -276,56 +325,32 @@
             
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
-            // PayPal SDK Initialization
             if (window.paypal) {
-                // Strictly Card Button in Credit/Debit container
                 paypal.Buttons({
                     fundingSource: paypal.FUNDING.CARD,
-                    style: {
-                        layout: 'vertical',
-                        color: 'black',
-                        shape: 'rect',
-                        label: 'pay'
-                    },
+                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
                     createOrder: function(data, actions) {
-                        if (!validateAddressForm()) {
-                            return Promise.reject(new Error("Form validation failed"));
-                        }
+                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
                         const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
                         return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
                     },
                     onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('Credit/Debit Card');
-                        });
+                        return actions.order.capture().then(function(details) { processPayment('Credit/Debit Card'); });
                     },
-                    onError: function(err) {
-                        showToast("Card transaction cancelled or failed.");
-                    }
+                    onError: function(err) { showToast("Card transaction cancelled or failed."); }
                 }).render('#card-button-container');
 
-                // PayPal Smart Buttons inside PayPal Tab
                 paypal.Buttons({
-                    style: {
-                        layout: 'vertical',
-                        color: 'gold',
-                        shape: 'rect'
-                    },
+                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
                     createOrder: function(data, actions) {
-                        if (!validateAddressForm()) {
-                            return Promise.reject(new Error("Form validation failed"));
-                        }
+                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
                         const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
                         return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
                     },
                     onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('PayPal');
-                        });
+                        return actions.order.capture().then(function(details) { processPayment('PayPal'); });
                     },
-                    onError: function(err) {
-                        showToast("PayPal transaction error. Please try again.");
-                    }
+                    onError: function(err) { showToast("PayPal transaction error."); }
                 }).render('#paypal-button-container');
             }
         }
@@ -350,12 +375,17 @@
             const phone = document.getElementById('phone').value.trim();
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
 
+            let subtotal = 0;
+            cart.forEach(item => subtotal += (item.price * item.qty));
+
             const generatedOrderId = `#EK-${Math.floor(10000 + Math.random() * 90000)}`;
             const lastOrder = {
                 orderId: generatedOrderId,
                 date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city },
+                customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city, email: email },
+                paymentMethod: method,
                 items: cart,
+                subtotal: `E£${subtotal.toFixed(2)}`,
                 shippingFee: `E£${shippingFee.toFixed(2)}`,
                 shippingReason: shippingReason,
                 total: `E£${currentTotal.toFixed(2)}`
@@ -372,10 +402,8 @@
             message += `*Payment Method:* ${method}\n\n`;
             message += `📦 *ORDER ITEMS:*\n`;
 
-            let subtotal = 0;
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.qty;
-                subtotal += itemTotal;
                 message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
             });
 
@@ -389,15 +417,56 @@
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-            showToast("Order placed! Generating receipt...");
+            showToast("Order placed! Displaying receipt...");
 
             setTimeout(() => {
                 window.open(whatsappURL, '_blank');
-                window.location.href = 'index.html?orderSuccess=true';
-            }, 1000);
+                renderReceiptModal(lastOrder);
+            }, 800);
         }
 
-        window.addEventListener('DOMContentLoaded', () => { loadCheckout(); });
+        function renderReceiptModal(orderData) {
+            const detailsBox = document.getElementById('receipt-details-body');
+            detailsBox.innerHTML = `
+                <strong>Order ID:</strong> ${orderData.orderId}<br>
+                <strong>Date:</strong> ${orderData.date}<br>
+                <strong>Customer:</strong> ${orderData.customer.name}<br>
+                <strong>Address:</strong> ${orderData.customer.address}, ${orderData.customer.city}<br>
+                <strong>Payment Method:</strong> ${orderData.paymentMethod}
+            `;
+
+            const tbody = document.getElementById('receipt-items-tbody');
+            tbody.innerHTML = orderData.items.map(item => `
+                <tr>
+                    <td>${item.name}</td>
+                    <td style="text-align:center;">${item.qty}</td>
+                    <td style="text-align:right;">E£${(item.price * item.qty).toFixed(2)}</td>
+                </tr>
+            `).join('');
+
+            document.getElementById('receipt-subtotal').innerText = orderData.subtotal;
+            document.getElementById('receipt-shipping-fee').innerText = orderData.shippingFee;
+            document.getElementById('receipt-shipping-reason').innerText = orderData.shippingReason ? `(${orderData.shippingReason})` : '';
+            document.getElementById('receipt-grand-total').innerText = orderData.total;
+
+            document.getElementById('receipt-modal').style.display = 'flex';
+        }
+
+        function closeReceiptModal() {
+            document.getElementById('receipt-modal').style.display = 'none';
+            window.location.href = 'index.html';
+        }
+
+        window.addEventListener('DOMContentLoaded', () => { 
+            loadCheckout();
+            
+            // Auto open receipt if redirected with success parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('orderSuccess') === 'true') {
+                const savedOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
+                if (savedOrder) renderReceiptModal(savedOrder);
+            }
+        });
     </script>
 </body>
 </html>
