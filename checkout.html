@@ -6,8 +6,8 @@
     <title>Checkout — THE EGYPTIAN KING</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
     
-    <!-- PayPal SDK Integration -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons"></script>
+    <!-- PayPal SDK Integration (including googlepay component) -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons,googlepay"></script>
 
     <style>
         :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
@@ -148,7 +148,20 @@
                         <div id="card-button-container" style="min-height:50px;"></div>
                     </div>
 
-                    <!-- 2. Apple Pay -->
+                    <!-- 2. Google Pay -->
+                    <div class="payment-tab" onclick="selectPayment('googlepay')">
+                        <div class="radio-dot"></div>
+                        <span class="payment-tab-label">Google Pay</span>
+                        <div class="brand-logos">
+                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#FFF" d="M18.3 11.2h-3.4v2.1h2c-.2 1-1 1.7-2 1.7-1.2 0-2.2-1-2.2-2.2s1-2.2 2.2-2.2c.5 0 1 .2 1.4.5l1.6-1.6c-0.8-.7-1.8-1.2-3-1.2-2.7 0-4.8 2.1-4.8 4.8s2.1 4.8 4.8 4.8c2.8 0 4.6-2 4.6-4.6 0-.3 0-.6-.1-.9z"/></svg>
+                        </div>
+                    </div>
+                    <div class="payment-content" id="content-googlepay">
+                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay fast and securely using Google Pay.</p>
+                        <div id="googlepay-button-container" style="min-height:50px;"></div>
+                    </div>
+
+                    <!-- 3. Apple Pay -->
                     <div class="payment-tab disabled-tab" onclick="selectPayment('applepay')">
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">Apple Pay</span>
@@ -161,7 +174,7 @@
                         <p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development.</p>
                     </div>
 
-                    <!-- 3. PayPal -->
+                    <!-- 4. PayPal -->
                     <div class="payment-tab" onclick="selectPayment('paypal')">
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">PayPal</span>
@@ -173,7 +186,7 @@
                         <div id="paypal-button-container" style="min-height:50px;"></div>
                     </div>
 
-                    <!-- 4. Cash on Delivery (COD) -->
+                    <!-- 5. Cash on Delivery (COD) -->
                     <div class="payment-tab" onclick="selectPayment('cod')">
                         <div class="radio-dot"></div>
                         <span class="payment-tab-label">Cash on Delivery (COD)</span>
@@ -326,6 +339,7 @@
             document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
             if (window.paypal) {
+                // 1. Credit / Debit Card Render
                 paypal.Buttons({
                     fundingSource: paypal.FUNDING.CARD,
                     style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
@@ -340,6 +354,22 @@
                     onError: function(err) { showToast("Card transaction cancelled or failed."); }
                 }).render('#card-button-container');
 
+                // 2. Google Pay Render
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.GOOGLEPAY,
+                    style: { layout: 'vertical', color: 'black', shape: 'rect' },
+                    createOrder: function(data, actions) {
+                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
+                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) { processPayment('Google Pay'); });
+                    },
+                    onError: function(err) { showToast("Google Pay transaction cancelled or failed."); }
+                }).render('#googlepay-button-container');
+
+                // 3. PayPal Render
                 paypal.Buttons({
                     style: { layout: 'vertical', color: 'gold', shape: 'rect' },
                     createOrder: function(data, actions) {
