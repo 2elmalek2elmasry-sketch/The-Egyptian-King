@@ -5,8 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 <title>Checkout — THE EGYPTIAN KING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<!-- PayPal SDK Integration -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons"></script>
+<!-- Live PayPal SDK Integration -->
+<script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons"></script>
 <!-- Google Pay SDK Integration -->
 <script src="https://pay.google.com/gp/p/js/pay.js"></script>
 
@@ -293,13 +293,13 @@ shippingReason = "Standard T-Shirt Rate";
 }
 }
 
-// Google Pay Client Initialization
+// Google Pay Client Initialization (Production Mode)
 function getGooglePaymentsClient() {
 if (paymentsClient === null) {
 paymentsClient = new google.payments.api.PaymentsClient({
-environment: 'TEST', // Change to 'PRODUCTION' when going live
+environment: 'PRODUCTION', // Set to PRODUCTION for live money transfers
 merchantInfo: {
-merchantId: '01234567890123456789', // Replace with your Google Merchant ID in production
+merchantId: '01234567890123456789', // Replace with your live Google Merchant ID if needed
 merchantName: 'THE EGYPTIAN KING'
 }
 });
@@ -321,7 +321,7 @@ allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
 tokenizationSpecification: {
 type: 'PAYMENT_GATEWAY',
 parameters: {
-gateway: 'example', // Replace with your gateway processor (e.g., stripe, braintree)
+gateway: 'paypal', // or your live gateway processor
 gatewayMerchantId: 'exampleGatewayMerchantId'
 }
 }
@@ -363,7 +363,7 @@ allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
 tokenizationSpecification: {
 type: 'PAYMENT_GATEWAY',
 parameters: {
-gateway: 'example',
+gateway: 'paypal',
 gatewayMerchantId: 'exampleGatewayMerchantId'
 }
 }
@@ -383,7 +383,6 @@ countryCode: 'US'
 const paymentsClient = getGooglePaymentsClient();
 paymentsClient.loadPaymentData(paymentDataRequest)
 .then(function(paymentData) {
-// Token received successfully from Google Pay interface
 processPayment('Google Pay');
 })
 .catch(function(err) {
@@ -427,7 +426,6 @@ document.getElementById('shipping-reason').innerText = shippingReason ? `(${ship
 document.getElementById('total-val').innerText = `E£${currentTotal.toFixed(2)}`;
 document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
-// Initialize Google Pay Button
 if (window.google && window.google.payments) {
 onGooglePayLoaded();
 }
@@ -522,7 +520,7 @@ localStorage.removeItem('kingCart');
 const encodedMessage = encodeURIComponent(message);
 const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-showToast("Order placed! Displaying receipt...");
+showToast("Order placed successfully! Displaying receipt...");
 
 setTimeout(() => {
 window.open(whatsappURL, '_blank');
