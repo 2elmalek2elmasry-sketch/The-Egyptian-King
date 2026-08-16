@@ -1,502 +1,575 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Checkout — THE EGYPTIAN KING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- PayPal SDK Integration (including googlepay component) -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons,googlepay"></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Checkout — THE EGYPTIAN KING</title>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<!-- PayPal SDK Integration -->
+<script src="https://www.paypal.com/sdk/js?client-id=BAARU_UhERIM3T0FAaPH6bC5Hv2CSyLgWkIrk5Y1VNAfCyxxD4rNc50gs6vIIrO2snzuCjR6gC2HT4fVFY&currency=USD&components=buttons"></script>
+<!-- Google Pay SDK Integration -->
+<script src="https://pay.google.com/gp/p/js/pay.js"></script>
 
-    <style>
-        :root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
-        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
-        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
-        
-        /* Toast */
-        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
-        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
-        .toast-message.show { opacity:1; transform:translateY(0); }
-        
-        /* Header & Layout */
-        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:center; align-items:center; }
-        .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
-        .checkout-layout { display:grid; grid-template-columns:1fr 400px; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
-        .section-box { margin-bottom:2rem; }
-        .section-title { font-size:1.2rem; font-weight:800; margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:1px; }
-        .form-group { margin-bottom:1rem; }
-        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-        .input-field { width:100%; background:#fff; border:1px solid var(--border); border-radius:4px; padding:0.9rem 1rem; color:#0a0a0a; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
-        .input-field:focus { border-color:#0a0a0a; }
-        
-        /* Payment Options UI */
-        .payment-options { display:flex; flex-direction:column; gap:0.8rem; }
-        .payment-tab { 
-            display:flex; align-items:center; gap:0.75rem; padding:1.2rem; 
-            border:1px solid var(--border); border-radius:6px; cursor:pointer; 
-            transition:all 0.2s; background:#fff;
-        }
-        .payment-tab:hover { border-color:#999; }
-        .payment-tab.active { 
-            border-color:#0a0a0a; 
-            box-shadow:0 0 0 1px #0a0a0a; 
-        }
-        .payment-tab.disabled-tab { opacity:0.6; cursor:not-allowed; background:#f9f9f9; }
-        
-        /* Radio Dot */
-        .radio-dot { 
-            width:20px; height:20px; border:2px solid #ccc; border-radius:50%; 
-            display:flex; align-items:center; justify-content:center; flex-shrink:0; 
-            transition:all 0.2s;
-        }
-        .payment-tab.active .radio-dot { 
-            border-color:#0a0a0a; 
-            background:#0a0a0a; 
-            box-shadow:inset 0 0 0 4px #fff;
-        }
-        
-        .payment-tab-label { font-weight:700; font-size:0.95rem; color:#0a0a0a; }
-        .badge-coming-soon { background:#eee; color:#666; font-size:0.75rem; font-weight:800; padding:4px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; flex-shrink:0; }
-        
-        /* Brand Logos Styling */
-        .brand-logos { display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left:auto; }
-        .brand-logos svg { display:block; height:20px; width:auto; }
+<style>
+:root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
+* { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+/* Toast */
+.toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+.toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
+.toast-message.show { opacity:1; transform:translateY(0); }
+/* Header & Layout */
+header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:center; align-items:center; }
+.brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
+.checkout-layout { display:grid; grid-template-columns:1fr 400px; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
+.section-box { margin-bottom:2rem; }
+.section-title { font-size:1.2rem; font-weight:800; margin-bottom:1.5rem; text-transform:uppercase; letter-spacing:1px; }
+.form-group { margin-bottom:1rem; }
+.form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
+.input-field { width:100%; background:#fff; border:1px solid var(--border); border-radius:4px; padding:0.9rem 1rem; color:#0a0a0a; font-size:0.9rem; outline:none; transition:border-color 0.2s; }
+.input-field:focus { border-color:#0a0a0a; }
+/* Payment Options UI */
+.payment-options { display:flex; flex-direction:column; gap:0.8rem; }
+.payment-tab {
+display:flex; align-items:center; gap:0.75rem; padding:1.2rem;
+border:1px solid var(--border); border-radius:6px; cursor:pointer;
+transition:all 0.2s; background:#fff;
+}
+.payment-tab:hover { border-color:#999; }
+.payment-tab.active {
+border-color:#0a0a0a;
+box-shadow:0 0 0 1px #0a0a0a;
+}
+.payment-tab.disabled-tab { opacity:0.6; cursor:not-allowed; background:#f9f9f9; }
+/* Radio Dot */
+.radio-dot {
+width:20px; height:20px; border:2px solid #ccc; border-radius:50%;
+display:flex; align-items:center; justify-content:center; flex-shrink:0;
+transition:all 0.2s;
+}
+.payment-tab.active .radio-dot {
+border-color:#0a0a0a;
+background:#0a0a0a;
+box-shadow:inset 0 0 0 4px #fff;
+}
+.payment-tab-label { font-weight:700; font-size:0.95rem; color:#0a0a0a; }
+.badge-coming-soon { background:#eee; color:#666; font-size:0.75rem; font-weight:800; padding:4px 8px; border-radius:4px; text-transform:uppercase; letter-spacing:0.5px; flex-shrink:0; }
+/* Brand Logos Styling */
+.brand-logos { display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left:auto; }
+.brand-logos svg { display:block; height:20px; width:auto; }
 
-        .payment-content { display:none; margin-top:1.2rem; padding:1.5rem; background:#fafafa; border:1px solid var(--border); border-radius:6px; }
-        .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
-        
-        /* Buttons */
-        .btn-pay { 
-            width:100%; padding:1.2rem; border:none; border-radius:4px; 
-            font-weight:800; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px; 
-            cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:0.5rem;
-        }
-        .btn-cod { background:#fff; color:#0a0a0a; border:2px solid #0a0a0a; }
-        .btn-cod:hover { background:#0a0a0a; color:#fff; }
+.payment-content { display:none; margin-top:1.2rem; padding:1.5rem; background:#fafafa; border:1px solid var(--border); border-radius:6px; }
+.payment-content.active { display:block; animation:fadeIn 0.3s ease; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
+/* Buttons */
+.btn-pay {
+width:100%; padding:1.2rem; border:none; border-radius:4px;
+font-weight:800; font-size:0.9rem; text-transform:uppercase; letter-spacing:1px;
+cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-content:center; gap:0.5rem;
+}
+.btn-cod { background:#fff; color:#0a0a0a; border:2px solid #0a0a0a; }
+.btn-cod:hover { background:#0a0a0a; color:#fff; }
 
-        /* Sidebar */
-        .sidebar { background:#fafafa; padding:2rem; border-radius:8px; border:1px solid var(--border); height:fit-content; }
-        .summary-item { display:flex; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
-        .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:4px; }
-        .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
-        .summary-item p { font-size:0.8rem; color:var(--text-muted); }
-        .cost-row { display:flex; justify-space-between:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
-        .cost-row.total { font-size:1.2rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
+/* Sidebar */
+.sidebar { background:#fafafa; padding:2rem; border-radius:8px; border:1px solid var(--border); height:fit-content; }
+.summary-item { display:flex; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
+.summary-item img { width:60px; height:70px; object-fit:cover; border-radius:4px; }
+.summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
+.summary-item p { font-size:0.8rem; color:var(--text-muted); }
+.cost-row { display:flex; justify-content:space-between; margin-bottom:0.5rem; font-size:0.9rem; }
+.cost-row.total { font-size:1.2rem; font-weight:800; color:#0a0a0a; border-top:1px solid var(--border); padding-top:1rem; margin-top:1rem; }
 
-        /* Receipt Card Modal */
-        .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:9999; display:none; justify-content:center; align-items:center; padding:1rem; }
-        .receipt-card { background:#fff; border-radius:8px; width:100%; max-width:480px; padding:2rem; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:1px solid var(--border); max-height:90vh; overflow-y:auto; }
-        .receipt-header { text-align:center; padding-bottom:1rem; border-bottom:2px dashed var(--border); margin-bottom:1.5rem; }
-        .receipt-header h3 { font-family:'Cinzel',serif; font-size:1.4rem; font-weight:900; margin-bottom:0.2rem; }
-        .receipt-header p { font-size:0.8rem; color:var(--text-muted); }
-        .receipt-details { font-size:0.85rem; margin-bottom:1.5rem; color:#333; line-height:1.5; }
-        .receipt-table { width:100%; border-collapse:collapse; margin-bottom:1rem; font-size:0.85rem; }
-        .receipt-table th { text-align:left; padding-bottom:0.5rem; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:700; }
-        .receipt-table td { padding:0.6rem 0; border-bottom:1px solid #f0f0f0; }
-        .receipt-summary-line { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; }
-        .receipt-summary-line.total-line { font-weight:900; font-size:1.1rem; border-top:2px solid #0a0a0a; margin-top:0.5rem; padding-top:0.75rem; }
-        .receipt-footer { text-align:center; margin-top:1.5rem; font-size:0.8rem; color:var(--text-muted); border-top:1px dashed var(--border); padding-top:1rem; }
+/* Receipt Card Modal */
+.receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.7); backdrop-filter:blur(5px); z-index:9999; display:none; justify-content:center; align-items:center; padding:1rem; }
+.receipt-card { background:#fff; border-radius:8px; width:100%; max-width:480px; padding:2rem; box-shadow:0 20px 40px rgba(0,0,0,0.3); border:1px solid var(--border); max-height:90vh; overflow-y:auto; }
+.receipt-header { text-align:center; padding-bottom:1rem; border-bottom:2px dashed var(--border); margin-bottom:1.5rem; }
+.receipt-header h3 { font-family:'Cinzel',serif; font-size:1.4rem; font-weight:900; margin-bottom:0.2rem; }
+.receipt-header p { font-size:0.8rem; color:var(--text-muted); }
+.receipt-details { font-size:0.85rem; margin-bottom:1.5rem; color:#333; line-height:1.5; }
+.receipt-table { width:100%; border-collapse:collapse; margin-bottom:1rem; font-size:0.85rem; }
+.receipt-table th { text-align:left; padding-bottom:0.5rem; border-bottom:1px solid var(--border); color:var(--text-muted); font-weight:700; }
+.receipt-table td { padding:0.6rem 0; border-bottom:1px solid #f0f0f0; }
+.receipt-summary-line { display:flex; justify-content:space-between; font-size:0.9rem; padding:0.4rem 0; }
+.receipt-summary-line.total-line { font-weight:900; font-size:1.1rem; border-top:2px solid #0a0a0a; margin-top:0.5rem; padding-top:0.75rem; }
+.receipt-footer { text-align:center; margin-top:1.5rem; font-size:0.8rem; color:var(--text-muted); border-top:1px dashed var(--border); padding-top:1rem; }
 
-        @media (max-width:900px) { 
-            .checkout-layout { grid-template-columns:1fr; } 
-            .form-row { grid-template-columns:1fr; } 
-        }
-    </style>
+@media (max-width:900px) {
+.checkout-layout { grid-template-columns:1fr; }
+.form-row { grid-template-columns:1fr; }
+}
+</style>
 </head>
 <body>
-    <div class="toast-container"></div>
-    <header><a href="index.html" class="brand-logo">The Egyptian King</a></header>
-    
-    <div class="checkout-layout" id="checkout-container">
-        <div>
-            <div class="section-box">
-                <h2 class="section-title">Contact Information</h2>
-                <div class="form-group"><input type="email" id="email" class="input-field" placeholder="Email address" required></div>
-            </div>
-            <div class="section-box">
-                <h2 class="section-title">Shipping Address</h2>
-                <div class="form-row">
-                    <div class="form-group"><input type="text" id="first-name" class="input-field" placeholder="First name" required></div>
-                    <div class="form-group"><input type="text" id="last-name" class="input-field" placeholder="Last name" required></div>
-                </div>
-                <div class="form-group"><input type="text" id="address" class="input-field" placeholder="Address" required></div>
-                <div class="form-row">
-                    <div class="form-group"><input type="text" id="city" class="input-field" placeholder="City" required></div>
-                    <div class="form-group"><input type="text" id="postal-code" class="input-field" placeholder="Postal code (optional)"></div>
-                </div>
-                <div class="form-group"><input type="text" id="phone" class="input-field" placeholder="Phone number" required></div>
-            </div>
-            
-            <div class="section-box">
-                <h2 class="section-title">Payment</h2>
-                <p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">All transactions are secure and encrypted.</p>
-                
-                <div class="payment-options">
-                    <!-- 1. Credit / Debit Card -->
-                    <div class="payment-tab active" onclick="selectPayment('card')">
-                        <div class="radio-dot"></div>
-                        <span class="payment-tab-label">Credit / Debit Card</span>
-                        <div class="brand-logos">
-                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><path fill="#FFF" d="M13.8 16.5l1.6-9.6h2.6l-1.6 9.6h-2.6zm8.8-9.4c-.5-.2-1.4-.4-2.4-.4-2.7 0-4.6 1.4-4.6 3.4 0 1.5 1.3 2.3 2.3 2.8 1 .5 1.4.8 1.4 1.3 0 .7-.9 1-1.7 1-.1 0-1.7-.1-2.6-.5l-.4-.2-.4 2.4c.7.3 2 .6 3.3.6 3 0 4.9-1.4 4.9-3.6 0-1.2-.7-2.1-2.3-2.9-.9-.5-1.5-.8-1.5-1.3 0-.4.5-.9 1.5-.9.9 0 1.6.2 2.1.4l.3.1.5-2.2zm6.2-.2h-2c-.6 0-1.1.2-1.3.8l-3.7 8.8h2.8l.6-1.5h3.4l.3 1.5h2.5l-2.2-9.6zm-2.4 6.2l1.1-2.9.6 2.9h-1.7zM11.9 6.9L9.4 13.5l-.3-1.4c-.5-1.7-2-3.5-3.7-4.4l2.4 8.8h2.8l4.1-9.6h-2.8z"/></svg>
-                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><circle cx="13" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M18 6.6a6.9 6.9 0 000 10.8 6.9 6.9 0 000-10.8z" fill="#FF5F00"/></svg>
-                        </div>
-                    </div>
-                    <div class="payment-content active" id="content-card">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay securely with your Visa, Mastercard, or Debit card.</p>
-                        <div id="card-button-container" style="min-height:50px;"></div>
-                    </div>
+<div class="toast-container"></div>
+<header><a href="index.html" class="brand-logo">The Egyptian King</a></header>
+<div class="checkout-layout" id="checkout-container">
+<div>
+<div class="section-box">
+<h2 class="section-title">Contact Information</h2>
+<div class="form-group"><input type="email" id="email" class="input-field" placeholder="Email address" required></div>
+</div>
+<div class="section-box">
+<h2 class="section-title">Shipping Address</h2>
+<div class="form-row">
+<div class="form-group"><input type="text" id="first-name" class="input-field" placeholder="First name" required></div>
+<div class="form-group"><input type="text" id="last-name" class="input-field" placeholder="Last name" required></div>
+</div>
+<div class="form-group"><input type="text" id="address" class="input-field" placeholder="Address" required></div>
+<div class="form-row">
+<div class="form-group"><input type="text" id="city" class="input-field" placeholder="City" required></div>
+<div class="form-group"><input type="text" id="postal-code" class="input-field" placeholder="Postal code (optional)"></div>
+</div>
+<div class="form-group"><input type="text" id="phone" class="input-field" placeholder="Phone number" required></div>
+</div>
+<div class="section-box">
+<h2 class="section-title">Payment</h2>
+<p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">All transactions are secure and encrypted.</p>
+<div class="payment-options">
+<!-- 1. Credit / Debit Card -->
+<div class="payment-tab active" onclick="selectPayment('card')">
+<div class="radio-dot"></div>
+<span class="payment-tab-label">Credit / Debit Card</span>
+<div class="brand-logos">
+<svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><path fill="#FFF" d="M13.8 16.5l1.6-9.6h2.6l-1.6 9.6h-2.6zm8.8-9.4c-.5-.2-1.4-.4-2.4-.4-2.7 0-4.6 1.4-4.6 3.4 0 1.5 1.3 2.3 2.3 2.8 1 .5 1.4.8 1.4 1.3 0 .7-.9 1-1.7 1-.1 0-1.7-.1-2.6-.5l-.4-.2-.4 2.4c.7.3 2 .6 3.3.6 3 0 4.9-1.4 4.9-3.6 0-1.2-.7-2.1-2.3-2.9-.9-.5-1.5-.8-1.5-1.3 0-.4.5-.9 1.5-.9.9 0 1.6.2 2.1.4l.3.1.5-2.2zm6.2-.2h-2c-.6 0-1.1.2-1.3.8l-3.7 8.8h2.8l.6-1.5h3.4l.3 1.5h2.5l-2.2-9.6zm-2.4 6.2l1.1-2.9.6 2.9h-1.7zM11.9 6.9L9.4 13.5l-.3-1.4c-.5-1.7-2-3.5-3.7-4.4l2.4 8.8h2.8l4.1-9.6h-2.8z"/></svg>
+<svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><circle cx="13" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M18 6.6a6.9 6.9 0 000 10.8 6.9 6.9 0 000-10.8z" fill="#FF5F00"/></svg>
+</div>
+</div>
+<div class="payment-content active" id="content-card">
+<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay securely with your Visa, Mastercard, or Debit card.</p>
+<div id="card-button-container" style="min-height:50px;"></div>
+</div>
 
-                    <!-- 2. Google Pay -->
-                    <div class="payment-tab" onclick="selectPayment('googlepay')">
-                        <div class="radio-dot"></div>
-                        <span class="payment-tab-label">Google Pay</span>
-                        <div class="brand-logos">
-                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#FFF" d="M18.3 11.2h-3.4v2.1h2c-.2 1-1 1.7-2 1.7-1.2 0-2.2-1-2.2-2.2s1-2.2 2.2-2.2c.5 0 1 .2 1.4.5l1.6-1.6c-0.8-.7-1.8-1.2-3-1.2-2.7 0-4.8 2.1-4.8 4.8s2.1 4.8 4.8 4.8c2.8 0 4.6-2 4.6-4.6 0-.3 0-.6-.1-.9z"/></svg>
-                        </div>
-                    </div>
-                    <div class="payment-content" id="content-googlepay">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay fast and securely using Google Pay.</p>
-                        <div id="googlepay-button-container" style="min-height:50px;"></div>
-                    </div>
+<!-- 2. Google Pay -->
+<div class="payment-tab" onclick="selectPayment('googlepay')">
+<div class="radio-dot"></div>
+<span class="payment-tab-label">Google Pay</span>
+<div class="brand-logos">
+<svg viewBox="0 0 36 24" fill="none"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#fff" d="M11.5 15.2v-6.4h1.9v6.4h-1.9zm4.7-.1c-.4 0-.8-.1-1.1-.3-.3-.2-.5-.5-.7-.8-.2-.3-.3-.7-.3-1.1s.1-.8.3-1.1c.2-.3.4-.6.7-.8.3-.2.7-.3 1.1-.3.4 0 .8.1 1.1.3.3.2.5.5.7.8.2.3.3.7.3 1.1s-.1.8-.3 1.1c-.2.3-.4.6-.7.8-.3.2-.7.3-1.1.3zm0-1.4c.2 0 .4-.1.6-.2.2-.1.3-.3.4-.5.1-.2.2-.5.2-.8 0-.3-.1-.6-.2-.8-.1-.2-.2-.4-.4-.5-.2-.1-.4-.2-.6-.2s-.4.1-.6.2c-.2.1-.3.3-.4.5-.1.2-.2.5-.2.8 0 .3.1.6.2.8.1.2.2.4.4.5.2.1.4.2.6.2zm4.2 1.5l-.2-1h-.1c-.2.4-.5.7-.9.9-.4.2-.8.3-1.2.3-.5 0-.9-.1-1.3-.3-.4-.2-.7-.5-.9-.9-.2-.4-.3-.9-.3-1.4 0-.5.1-1 .3-1.4.2-.4.5-.7.9-.9.4-.2.8-.3 1.3-.3.4 0 .8.1 1.1.3.3.2.6.5.7.8h.1l-.1-1v-2.3h1.8v8.3h-1.6zm-1.2-1.4c.2 0 .4-.1.6-.2.2-.1.3-.3.4-.5.1-.2.2-.5.2-.8 0-.4-.1-.7-.3-.9-.2-.2-.4-.3-.7-.3-.3 0-.6.1-.8.3-.2.2-.3.5-.3.9 0 .3.1.6.3.8.2.2.4.3.8.3zm7.3 1.5c-.5 0-.9-.1-1.3-.3-.4-.2-.7-.5-.9-.9-.2-.4-.3-.9-.3-1.4 0-.5.1-1 .3-1.4.2-.4.5-.7.9-.9.4-.2.8-.3 1.3-.3.5 0 .9.1 1.2.3.3.2.6.5.8.8l-1.2.7c-.1-.2-.3-.4-.5-.5-.2-.1-.4-.2-.7-.2-.3 0-.6.1-.8.3-.2.2-.3.5-.4.8h3.3c0 .2.0.4.0.5 0 .8-.2 1.4-.6 1.8-.4.4-1 .6-1.7.6zm-.1-4c-.3 0-.6.1-.8.3-.2.2-.3.4-.4.7h2.4c0-.3-.1-.5-.3-.7-.2-.2-.5-.3-.9-.3z"/></svg>
+</div>
+</div>
+<div class="payment-content" id="content-googlepay">
+<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay fast and securely using native Google Pay.</p>
+<div id="gpay-button-container" style="min-height:50px;"></div>
+</div>
 
-                    <!-- 3. Apple Pay -->
-                    <div class="payment-tab disabled-tab" onclick="selectPayment('applepay')">
-                        <div class="radio-dot"></div>
-                        <span class="payment-tab-label">Apple Pay</span>
-                        <span class="badge-coming-soon">Coming Soon</span>
-                        <div class="brand-logos">
-                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#FFF" d="M12.9 8.2c.3-.4.5-.9.4-1.4-.4 0-.9.3-1.2.7-.3.3-.5.8-.4 1.3.5.1 1-.2 1.2-.6m1.3 6.6c-.1 1.6 1.4 2.4 1.4 2.4-.1.2-.2.7-.7 1.4-.4.6-.9 1.1-1.6 1.1s-.9-.4-1.6-.4-1 .4-1.6.4c-.6 0-1.1-.5-1.6-1.1-.8-1.2-1.4-3.2-.6-4.6.4-.7 1.1-1.2 1.9-1.2s1.1.4 1.6.4 1-.4 1.7-.4c.7 0 1.4.4 1.9 1.1-.1 0-1.3.7-1.3 1.9m3.6-4.3v6.7h1v-2.3h1.5c1.4 0 2.3-.9 2.3-2.2s-.9-2.2-2.3-2.2h-2.5zm1 1h1.2c.9 0 1.5.5 1.5 1.3s-.6 1.3-1.5 1.3h-1.2v-2.6zm6.7 5.8c.9 0 1.6-.4 2-1.1h.1v1h1v-4.3h-1v1.1h-.1c-.4-.7-1.1-1.1-2-1.1-1.6 0-2.6 1.3-2.6 3.3 0 2 1 3.3 2.6 3.3zm.3-5.3c1.1 0 1.8.9 1.8 2.2s-.7 2.2-1.8 2.2-1.8-.9-1.8-2.2.7-2.2 1.8-2.2z"/></svg>
-                        </div>
-                    </div>
-                    <div class="payment-content" id="content-applepay">
-                        <p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development.</p>
-                    </div>
+<!-- 3. Apple Pay -->
+<div class="payment-tab disabled-tab" onclick="selectPayment('applepay')">
+<div class="radio-dot"></div>
+<span class="payment-tab-label">Apple Pay</span>
+<span class="badge-coming-soon">Coming Soon</span>
+<div class="brand-logos">
+<svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#FFF" d="M12.9 8.2c.3-.4.5-.9.4-1.4-.4 0-.9.3-1.2.7-.3.3-.5.8-.4 1.3.5.1 1-.2 1.2-.6m1.3 6.6c-.1 1.6 1.4 2.4 1.4 2.4-.1.2-.2.7-.7 1.4-.4.6-.9 1.1-1.6 1.1s-.9-.4-1.6-.4-1 .4-1.6.4c-.6 0-1.1-.5-1.6-1.1-.8-1.2-1.4-3.2-.6-4.6.4-.7 1.1-1.2 1.9-1.2s1.1.4 1.6.4 1-.4 1.7-.4c.7 0 1.4.4 1.9 1.1-.1 0-1.3.7-1.3 1.9m3.6-4.3v6.7h1v-2.3h1.5c1.4 0 2.3-.9 2.3-2.2s-.9-2.2-2.3-2.2h-2.5zm1 1h1.2c.9 0 1.5.5 1.5 1.3s-.6 1.3-1.5 1.3h-1.2v-2.6zm6.7 5.8c.9 0 1.6-.4 2-1.1h.1v1h1v-4.3h-1v1.1h-.1c-.4-.7-1.1-1.1-2-1.1-1.6 0-2.6 1.3-2.6 3.3 0 2 1 3.3 2.6 3.3zm.3-5.3c1.1 0 1.8.9 1.8 2.2s-.7 2.2-1.8 2.2-1.8-.9-1.8-2.2.7-2.2 1.8-2.2z"/></svg>
+</div>
+</div>
+<div class="payment-content" id="content-applepay">
+<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development.</p>
+</div>
 
-                    <!-- 4. PayPal -->
-                    <div class="payment-tab" onclick="selectPayment('paypal')">
-                        <div class="radio-dot"></div>
-                        <span class="payment-tab-label">PayPal</span>
-                        <div class="brand-logos">
-                            <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"/><path fill="#0079C1" d="M13.5 6h-3.2c-.2 0-.4.2-.4.4l-2 12.8c0 .2.1.3.3.3h1.6c.2 0 .4-.2.4-.4l.6-3.8c0-.2.2-.4.4-.4h1.1c2.2 0 3.8-1.1 4.1-3.2.2-1 0-1.7-.4-2.2-.6-.6-1.5-.8-2.5-.8zm.6 3.2c-.2 1.1-1 1.1-1.8 1.1h-.5l.3-2c0-.1.2-.2.3-.2h.3c.6 0 1.1 0 1.3.3.2.1.2.5.1.8z"/><path fill="#00457C" d="M22.5 9.1h-1.6c-.2 0-.3.1-.3.2l-.1.4-.1-.2c-.2-.4-.8-.5-1.3-.5-1.2 0-2.2.9-2.5 2.3-.2.9.1 1.8.5 2.2.4.4 1 .5 1.5.5 1 0 1.5-.6 1.5-.6l-.1.4c0 .2.1.3.3.3h1.4c.2 0 .4-.2.4-.4l.9-5.2c.1-.2-.1-.4-.3-.4zm-1.9 2.4c-.2.9-.8 1.5-1.7 1.5-.4 0-.7-.1-.9-.4-.2-.2-.3-.5-.2-.9.2-.9.8-1.5 1.7-1.5.4 0 .7.1.9.4.2.2.3.5.2.9z"/></svg>
-                        </div>
-                    </div>
-                    <div class="payment-content" id="content-paypal">
-                        <div id="paypal-button-container" style="min-height:50px;"></div>
-                    </div>
+<!-- 4. PayPal -->
+<div class="payment-tab" onclick="selectPayment('paypal')">
+<div class="radio-dot"></div>
+<span class="payment-tab-label">PayPal</span>
+<div class="brand-logos">
+<svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"/><path fill="#0079C1" d="M13.5 6h-3.2c-.2 0-.4.2-.4.4l-2 12.8c0 .2.1.3.3.3h1.6c.2 0 .4-.2.4-.4l.6-3.8c0-.2.2-.4.4-.4h1.1c2.2 0 3.8-1.1 4.1-3.2.2-1 0-1.7-.4-2.2-.6-.6-1.5-.8-2.5-.8zm.6 3.2c-.2 1.1-1 1.1-1.8 1.1h-.5l.3-2c0-.1.2-.2.3-.2h.3c.6 0 1.1 0 1.3.3.2.1.2.5.1.8z"/><path fill="#00457C" d="M22.5 9.1h-1.6c-.2 0-.3.1-.3.2l-.1.4-.1-.2c-.2-.4-.8-.5-1.3-.5-1.2 0-2.2.9-2.5 2.3-.2.9.1 1.8.5 2.2.4.4 1 .5 1.5.5 1 0 1.5-.6 1.5-.6l-.1.4c0 .2.1.3.3.3h1.4c.2 0 .4-.2.4-.4l.9-5.2c.1-.2-.1-.4-.3-.4zm-1.9 2.4c-.2.9-.8 1.5-1.7 1.5-.4 0-.7-.1-.9-.4-.2-.2-.3-.5-.2-.9.2-.9.8-1.5 1.7-1.5.4 0 .7.1.9.4.2.2.3.5.2.9z"/></svg>
+</div>
+</div>
+<div class="payment-content" id="content-paypal">
+<div id="paypal-button-container" style="min-height:50px;"></div>
+</div>
 
-                    <!-- 5. Cash on Delivery (COD) -->
-                    <div class="payment-tab" onclick="selectPayment('cod')">
-                        <div class="radio-dot"></div>
-                        <span class="payment-tab-label">Cash on Delivery (COD)</span>
-                        <div class="brand-logos">
-                            <svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
-                        </div>
-                    </div>
-                    <div class="payment-content" id="content-cod">
-                        <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay with cash directly to the courier upon delivery.</p>
-                        <button class="btn-pay btn-cod" id="btn-cod" onclick="processPayment('Cash on Delivery')">Place Order</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-        
-        <div class="sidebar">
-            <h2 class="section-title">Order Summary</h2>
-            <div id="checkout-items-list"></div>
-            <div class="cost-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
-            <div class="cost-row">
-                <span>Shipping <small id="shipping-reason" style="color:var(--text-muted); font-size:0.75rem; display:block;"></small></span>
-                <span id="shipping-val">E£0.00</span>
-            </div>
-            <div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
-        </div>
-    </div>
+<!-- 5. Cash on Delivery (COD) -->
+<div class="payment-tab" onclick="selectPayment('cod')">
+<div class="radio-dot"></div>
+<span class="payment-tab-label">Cash on Delivery (COD)</span>
+<div class="brand-logos">
+<svg viewBox="0 0 24 24" fill="none" stroke="#0a0a0a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width:24px; height:24px;"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2"/><path d="M6 12h.01M18 12h.01"/></svg>
+</div>
+</div>
+<div class="payment-content" id="content-cod">
+<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay with cash directly to the courier upon delivery.</p>
+<button class="btn-pay btn-cod" id="btn-cod" onclick="processPayment('Cash on Delivery')">Place Order</button>
+</div>
+</div>
+</div>
+</div>
+<div class="sidebar">
+<h2 class="section-title">Order Summary</h2>
+<div id="checkout-items-list"></div>
+<div class="cost-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
+<div class="cost-row">
+<span>Shipping <small id="shipping-reason" style="color:var(--text-muted); font-size:0.75rem; display:block;"></small></span>
+<span id="shipping-val">E£0.00</span>
+</div>
+<div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
+</div>
+</div>
 
-    <!-- RECEIPT MODAL DISPLAY -->
-    <div class="receipt-overlay" id="receipt-modal">
-        <div class="receipt-card">
-            <div class="receipt-header">
-                <h3>THE EGYPTIAN KING</h3>
-                <p>Official Purchase Receipt</p>
-            </div>
-            <div class="receipt-details" id="receipt-details-body"></div>
-            
-            <table class="receipt-table">
-                <thead>
-                    <tr>
-                        <th>Item</th>
-                        <th style="text-align:center;">Qty</th>
-                        <th style="text-align:right;">Price</th>
-                    </tr>
-                </thead>
-                <tbody id="receipt-items-tbody"></tbody>
-            </table>
+<!-- RECEIPT MODAL DISPLAY -->
+<div class="receipt-overlay" id="receipt-modal">
+<div class="receipt-card">
+<div class="receipt-header">
+<h3>THE EGYPTIAN KING</h3>
+<p>Official Purchase Receipt</p>
+</div>
+<div class="receipt-details" id="receipt-details-body"></div>
+<table class="receipt-table">
+<thead>
+<tr>
+<th>Item</th>
+<th style="text-align:center;">Qty</th>
+<th style="text-align:right;">Price</th>
+</tr>
+</thead>
+<tbody id="receipt-items-tbody"></tbody>
+</table>
 
-            <div class="receipt-summary-line">
-                <span>Subtotal</span>
-                <span id="receipt-subtotal">E£0.00</span>
-            </div>
-            <!-- Dynamic Explicit Shipping Fee Line -->
-            <div class="receipt-summary-line" style="color:#0a0a0a; font-weight:600;">
-                <span>Shipping <small id="receipt-shipping-reason" style="color:var(--text-muted); display:inline; font-weight:400;"></small></span>
-                <span id="receipt-shipping-fee">E£0.00</span>
-            </div>
-            <div class="receipt-summary-line total-line">
-                <span>Total Paid</span>
-                <span id="receipt-grand-total">E£0.00</span>
-            </div>
+<div class="receipt-summary-line">
+<span>Subtotal</span>
+<span id="receipt-subtotal">E£0.00</span>
+</div>
+<div class="receipt-summary-line" style="color:#0a0a0a; font-weight:600;">
+<span>Shipping <small id="receipt-shipping-reason" style="color:var(--text-muted); display:inline; font-weight:400;"></small></span>
+<span id="receipt-shipping-fee">E£0.00</span>
+</div>
+<div class="receipt-summary-line total-line">
+<span>Total Paid</span>
+<span id="receipt-grand-total">E£0.00</span>
+</div>
 
-            <div class="receipt-footer">
-                <p>Thank you for shopping with us!</p>
-                <p style="margin-top:0.5rem;"><button onclick="closeReceiptModal()" class="btn-pay btn-cod" style="padding:0.6rem 1rem; margin-top:0.5rem;">Close Receipt</button></p>
-            </div>
-        </div>
-    </div>
+<div class="receipt-footer">
+<p>Thank you for shopping with us!</p>
+<p style="margin-top:0.5rem;"><button onclick="closeReceiptModal()" class="btn-pay btn-cod" style="padding:0.6rem 1rem; margin-top:0.5rem;">Close Receipt</button></p>
+</div>
+</div>
+</div>
 
-    <script>
-        let currentTotal = 0;
-        let shippingFee = 0;
-        let shippingReason = "";
+<script>
+let currentTotal = 0;
+let shippingFee = 0;
+let shippingReason = "";
+let paymentsClient = null;
 
-        function showToast(message) {
-            let container = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.innerText = message;
-            container.appendChild(toast);
-            void toast.offsetWidth;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
-        }
+function showToast(message) {
+let container = document.querySelector('.toast-container');
+const toast = document.createElement('div');
+toast.className = 'toast-message';
+toast.innerText = message;
+container.appendChild(toast);
+void toast.offsetWidth;
+toast.classList.add('show');
+setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
+}
 
-        function validateAddressForm() {
-            const email = document.getElementById('email').value.trim();
-            const firstName = document.getElementById('first-name').value.trim();
-            const lastName = document.getElementById('last-name').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const phone = document.getElementById('phone').value.trim();
+function validateAddressForm() {
+const email = document.getElementById('email').value.trim();
+const firstName = document.getElementById('first-name').value.trim();
+const lastName = document.getElementById('last-name').value.trim();
+const address = document.getElementById('address').value.trim();
+const city = document.getElementById('city').value.trim();
+const phone = document.getElementById('phone').value.trim();
 
-            if (!email || !firstName || !lastName || !address || !city || !phone) {
-                showToast("Please fill in all required contact & address fields.");
-                return false;
-            }
-            return true;
-        }
+if (!email || !firstName || !lastName || !address || !city || !phone) {
+showToast("Please fill in all required contact & address fields.");
+return false;
+}
+return true;
+}
 
-        function calculateShipping(cart) {
-            if (!cart || cart.length === 0) {
-                shippingFee = 0;
-                shippingReason = "";
-                return;
-            }
+function calculateShipping(cart) {
+if (!cart || cart.length === 0) {
+shippingFee = 0;
+shippingReason = "";
+return;
+}
 
-            const hasHoodie = cart.some(item => item.name && item.name.toLowerCase().includes('hoodie'));
+const hasHoodie = cart.some(item => item.name && item.name.toLowerCase().includes('hoodie'));
 
-            if (hasHoodie) {
-                shippingFee = 50;
-                shippingReason = "Hoodie Flat Rate";
-            } else {
-                shippingFee = 150;
-                shippingReason = "Standard T-Shirt Rate";
-            }
-        }
+if (hasHoodie) {
+shippingFee = 50;
+shippingReason = "Hoodie Flat Rate";
+} else {
+shippingFee = 150;
+shippingReason = "Standard T-Shirt Rate";
+}
+}
 
-        function loadCheckout() {
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const listContainer = document.getElementById('checkout-items-list');
-            let subtotal = 0;
+// Google Pay Client Initialization
+function getGooglePaymentsClient() {
+if (paymentsClient === null) {
+paymentsClient = new google.payments.api.PaymentsClient({
+environment: 'TEST', // Change to 'PRODUCTION' when going live
+merchantInfo: {
+merchantId: '01234567890123456789', // Replace with your Google Merchant ID in production
+merchantName: 'THE EGYPTIAN KING'
+}
+});
+}
+return paymentsClient;
+}
 
-            if (cart.length === 0) {
-                listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">No items selected for checkout.</p>`;
-            } else {
-                listContainer.innerHTML = cart.map(item => {
-                    const itemTotal = item.price * item.qty;
-                    subtotal += itemTotal;
-                    return `
-                        <div class="summary-item">
-                            <img src="${item.img}" alt="${item.name}">
-                            <div style="flex:1;">
-                                <h4>${item.name}</h4>
-                                <p>Qty: ${item.qty}</p>
-                                <p style="color:#0a0a0a; font-weight:700; margin-top:4px;">E£${itemTotal.toFixed(2)}</p>
-                            </div>
-                        </div>
-                    `;
-                }).join('');
-            }
+function onGooglePayLoaded() {
+const paymentsClient = getGooglePaymentsClient();
+const baseRequest = {
+apiVersion: 2,
+apiVersionMinor: 0,
+allowedPaymentMethods: [{
+type: 'CARD',
+parameters: {
+allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
+},
+tokenizationSpecification: {
+type: 'PAYMENT_GATEWAY',
+parameters: {
+gateway: 'example', // Replace with your gateway processor (e.g., stripe, braintree)
+gatewayMerchantId: 'exampleGatewayMerchantId'
+}
+}
+}]
+};
 
-            calculateShipping(cart);
-            currentTotal = subtotal + shippingFee;
+paymentsClient.isReadyToPay(baseRequest)
+.then(function(response) {
+if (response.result) {
+const button = paymentsClient.createButton({
+onClick: onGooglePayButtonClicked,
+buttonColor: 'black',
+buttonType: 'buy'
+});
+const container = document.getElementById('gpay-button-container');
+if (container && container.children.length === 0) {
+container.appendChild(button);
+}
+}
+})
+.catch(function(err) {
+console.error('Google Pay Ready error:', err);
+});
+}
 
-            document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
-            document.getElementById('shipping-val').innerText = `E£${shippingFee.toFixed(2)}`;
-            document.getElementById('shipping-reason').innerText = shippingReason ? `(${shippingReason})` : '';
-            document.getElementById('total-val').innerText = `E£${currentTotal.toFixed(2)}`;
-            
-            document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
+function onGooglePayButtonClicked() {
+if (!validateAddressForm()) return;
 
-            if (window.paypal) {
-                // 1. Credit / Debit Card Render
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.CARD,
-                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) { processPayment('Credit/Debit Card'); });
-                    },
-                    onError: function(err) { showToast("Card transaction cancelled or failed."); }
-                }).render('#card-button-container');
+const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+const paymentDataRequest = {
+apiVersion: 2,
+apiVersionMinor: 0,
+allowedPaymentMethods: [{
+type: 'CARD',
+parameters: {
+allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
+},
+tokenizationSpecification: {
+type: 'PAYMENT_GATEWAY',
+parameters: {
+gateway: 'example',
+gatewayMerchantId: 'exampleGatewayMerchantId'
+}
+}
+}],
+merchantInfo: {
+merchantId: '01234567890123456789',
+merchantName: 'THE EGYPTIAN KING'
+},
+transactionInfo: {
+totalPriceStatus: 'FINAL',
+totalPrice: usdAmount,
+currencyCode: 'USD',
+countryCode: 'US'
+}
+};
 
-                // 2. Google Pay Render
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.GOOGLEPAY,
-                    style: { layout: 'vertical', color: 'black', shape: 'rect' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) { processPayment('Google Pay'); });
-                    },
-                    onError: function(err) { showToast("Google Pay transaction cancelled or failed."); }
-                }).render('#googlepay-button-container');
+const paymentsClient = getGooglePaymentsClient();
+paymentsClient.loadPaymentData(paymentDataRequest)
+.then(function(paymentData) {
+// Token received successfully from Google Pay interface
+processPayment('Google Pay');
+})
+.catch(function(err) {
+if (err.statusCode !== 'CANCELED') {
+console.error('Google Pay error:', err);
+showToast("Google Pay transaction failed.");
+}
+});
+}
 
-                // 3. PayPal Render
-                paypal.Buttons({
-                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) { processPayment('PayPal'); });
-                    },
-                    onError: function(err) { showToast("PayPal transaction error."); }
-                }).render('#paypal-button-container');
-            }
-        }
+function loadCheckout() {
+const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+const listContainer = document.getElementById('checkout-items-list');
+let subtotal = 0;
 
-        function selectPayment(method) {
-            if (method === 'applepay') return;
-            document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
-            
-            document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
-            document.getElementById(`content-${method}`).classList.add('active');
-        }
+if (cart.length === 0) {
+listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">No items selected for checkout.</p>`;
+} else {
+listContainer.innerHTML = cart.map(item => {
+const itemTotal = item.price * item.qty;
+subtotal += itemTotal;
+return `
+<div class="summary-item">
+<img src="${item.img}" alt="${item.name}">
+<div style="flex:1;">
+<h4>${item.name}</h4>
+<p>Qty: ${item.qty}</p>
+<p style="color:#0a0a0a; font-weight:700; margin-top:4px;">E£${itemTotal.toFixed(2)}</p>
+</div>
+</div>
+`;
+}).join('');
+}
 
-        function processPayment(method) {
-            if (!validateAddressForm()) return;
+calculateShipping(cart);
+currentTotal = subtotal + shippingFee;
 
-            const email = document.getElementById('email').value.trim();
-            const firstName = document.getElementById('first-name').value.trim();
-            const lastName = document.getElementById('last-name').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
+document.getElementById('shipping-val').innerText = `E£${shippingFee.toFixed(2)}`;
+document.getElementById('shipping-reason').innerText = shippingReason ? `(${shippingReason})` : '';
+document.getElementById('total-val').innerText = `E£${currentTotal.toFixed(2)}`;
+document.querySelector('#btn-cod').innerText = `Place Order (E£${currentTotal.toFixed(2)})`;
 
-            let subtotal = 0;
-            cart.forEach(item => subtotal += (item.price * item.qty));
+// Initialize Google Pay Button
+if (window.google && window.google.payments) {
+onGooglePayLoaded();
+}
 
-            const generatedOrderId = `#EK-${Math.floor(10000 + Math.random() * 90000)}`;
-            const lastOrder = {
-                orderId: generatedOrderId,
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city, email: email },
-                paymentMethod: method,
-                items: cart,
-                subtotal: `E£${subtotal.toFixed(2)}`,
-                shippingFee: `E£${shippingFee.toFixed(2)}`,
-                shippingReason: shippingReason,
-                total: `E£${currentTotal.toFixed(2)}`
-            };
+if (window.paypal) {
+paypal.Buttons({
+fundingSource: paypal.FUNDING.CARD,
+style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
+createOrder: function(data, actions) {
+if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
+const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+},
+onApprove: function(data, actions) {
+return actions.order.capture().then(function(details) { processPayment('Credit/Debit Card'); });
+},
+onError: function(err) { showToast("Card transaction cancelled or failed."); }
+}).render('#card-button-container');
 
-            const targetPhoneNumber = "213698756936";
-            
-            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n`;
-            message += `*Order ID:* ${generatedOrderId}\n\n`;
-            message += `*Customer:* ${firstName} ${lastName}\n`;
-            message += `*Phone:* ${phone}\n`;
-            message += `*Email:* ${email}\n`;
-            message += `*Address:* ${address}, ${city}\n`;
-            message += `*Payment Method:* ${method}\n\n`;
-            message += `📦 *ORDER ITEMS:*\n`;
+paypal.Buttons({
+style: { layout: 'vertical', color: 'gold', shape: 'rect' },
+createOrder: function(data, actions) {
+if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
+const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+},
+onApprove: function(data, actions) {
+return actions.order.capture().then(function(details) { processPayment('PayPal'); });
+},
+onError: function(err) { showToast("PayPal transaction error."); }
+}).render('#paypal-button-container');
+}
+}
 
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.qty;
-                message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
-            });
+function selectPayment(method) {
+if (method === 'applepay') return;
+document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
+document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
+document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
+document.getElementById(`content-${method}`).classList.add('active');
+}
 
-            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n`;
-            message += `*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
-            message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n`;
+function processPayment(method) {
+if (!validateAddressForm()) return;
 
-            localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
-            localStorage.removeItem('kingCart');
+const email = document.getElementById('email').value.trim();
+const firstName = document.getElementById('first-name').value.trim();
+const lastName = document.getElementById('last-name').value.trim();
+const address = document.getElementById('address').value.trim();
+const city = document.getElementById('city').value.trim();
+const phone = document.getElementById('phone').value.trim();
+const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
+let subtotal = 0;
+cart.forEach(item => subtotal += (item.price * item.qty));
 
-            showToast("Order placed! Displaying receipt...");
+const generatedOrderId = `#EK-${Math.floor(10000 + Math.random() * 90000)}`;
+const lastOrder = {
+orderId: generatedOrderId,
+date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city, email: email },
+paymentMethod: method,
+items: cart,
+subtotal: `E£${subtotal.toFixed(2)}`,
+shippingFee: `E£${shippingFee.toFixed(2)}`,
+shippingReason: shippingReason,
+total: `E£${currentTotal.toFixed(2)}`
+};
 
-            setTimeout(() => {
-                window.open(whatsappURL, '_blank');
-                renderReceiptModal(lastOrder);
-            }, 800);
-        }
+const targetPhoneNumber = "213698756936";
+let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n`;
+message += `*Order ID:* ${generatedOrderId}\n\n`;
+message += `*Customer:* ${firstName} ${lastName}\n`;
+message += `*Phone:* ${phone}\n`;
+message += `*Email:* ${email}\n`;
+message += `*Address:* ${address}, ${city}\n`;
+message += `*Payment Method:* ${method}\n\n`;
+message += `📦 *ORDER ITEMS:*\n`;
 
-        function renderReceiptModal(orderData) {
-            const detailsBox = document.getElementById('receipt-details-body');
-            detailsBox.innerHTML = `
-                <strong>Order ID:</strong> ${orderData.orderId}<br>
-                <strong>Date:</strong> ${orderData.date}<br>
-                <strong>Customer:</strong> ${orderData.customer.name}<br>
-                <strong>Address:</strong> ${orderData.customer.address}, ${orderData.customer.city}<br>
-                <strong>Payment Method:</strong> ${orderData.paymentMethod}
-            `;
+cart.forEach((item, index) => {
+const itemTotal = item.price * item.qty;
+message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
+});
 
-            const tbody = document.getElementById('receipt-items-tbody');
-            tbody.innerHTML = orderData.items.map(item => `
-                <tr>
-                    <td>${item.name}</td>
-                    <td style="text-align:center;">${item.qty}</td>
-                    <td style="text-align:right;">E£${(item.price * item.qty).toFixed(2)}</td>
-                </tr>
-            `).join('');
+message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n`;
+message += `*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
+message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n`;
 
-            document.getElementById('receipt-subtotal').innerText = orderData.subtotal;
-            document.getElementById('receipt-shipping-fee').innerText = orderData.shippingFee;
-            document.getElementById('receipt-shipping-reason').innerText = orderData.shippingReason ? `(${orderData.shippingReason})` : '';
-            document.getElementById('receipt-grand-total').innerText = orderData.total;
+localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
+localStorage.removeItem('kingCart');
 
-            document.getElementById('receipt-modal').style.display = 'flex';
-        }
+const encodedMessage = encodeURIComponent(message);
+const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-        function closeReceiptModal() {
-            document.getElementById('receipt-modal').style.display = 'none';
-            window.location.href = 'index.html';
-        }
+showToast("Order placed! Displaying receipt...");
 
-        window.addEventListener('DOMContentLoaded', () => { 
-            loadCheckout();
-            
-            // Auto open receipt if redirected with success parameter
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('orderSuccess') === 'true') {
-                const savedOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
-                if (savedOrder) renderReceiptModal(savedOrder);
-            }
-        });
-    </script>
+setTimeout(() => {
+window.open(whatsappURL, '_blank');
+renderReceiptModal(lastOrder);
+}, 800);
+}
+
+function renderReceiptModal(orderData) {
+const detailsBox = document.getElementById('receipt-details-body');
+detailsBox.innerHTML = `
+<strong>Order ID:</strong> ${orderData.orderId}<br>
+<strong>Date:</strong> ${orderData.date}<br>
+<strong>Customer:</strong> ${orderData.customer.name}<br>
+<strong>Address:</strong> ${orderData.customer.address}, ${orderData.customer.city}<br>
+<strong>Payment Method:</strong> ${orderData.paymentMethod}
+`;
+
+const tbody = document.getElementById('receipt-items-tbody');
+tbody.innerHTML = orderData.items.map(item => `
+<tr>
+<td>${item.name}</td>
+<td style="text-align:center;">${item.qty}</td>
+<td style="text-align:right;">E£${(item.price * item.qty).toFixed(2)}</td>
+</tr>
+`).join('');
+
+document.getElementById('receipt-subtotal').innerText = orderData.subtotal;
+document.getElementById('receipt-shipping-fee').innerText = orderData.shippingFee;
+document.getElementById('receipt-shipping-reason').innerText = orderData.shippingReason ? `(${orderData.shippingReason})` : '';
+document.getElementById('receipt-grand-total').innerText = orderData.total;
+
+document.getElementById('receipt-modal').style.display = 'flex';
+}
+
+function closeReceiptModal() {
+document.getElementById('receipt-modal').style.display = 'none';
+window.location.href = 'index.html';
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+loadCheckout();
+const urlParams = new URLSearchParams(window.location.search);
+if (urlParams.get('orderSuccess') === 'true') {
+const savedOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
+if (savedOrder) renderReceiptModal(savedOrder);
+}
+});
+</script>
 </body>
 </html>
