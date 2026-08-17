@@ -6,7 +6,7 @@
 <title>Checkout — THE EGYPTIAN KING</title>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <!-- Live PayPal SDK Integration -->
-<script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons"></script>
+<script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
 <!-- Google Pay SDK Integration -->
 <script src="https://pay.google.com/gp/p/js/pay.js"></script>
 
@@ -62,19 +62,6 @@ box-shadow:inset 0 0 0 4px #fff;
 .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
 @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
 
-/* Other Wallets Sub-Grid */
-.sub-wallets-grid {
-display:grid; grid-template-columns:1fr 1fr; gap:0.75rem; margin-top:1rem;
-}
-.wallet-card {
-background:#fff; border:1px solid var(--border); border-radius:6px; padding:1rem;
-display:flex; align-items:center; gap:0.75rem; cursor:pointer; transition:all 0.2s;
-}
-.wallet-card:hover { border-color:#0a0a0a; background:#fff; transform:translateY(-1px); box-shadow:0 4px 12px rgba(0,0,0,0.05); }
-.wallet-icon { width:28px; height:28px; border-radius:6px; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:0.8rem; color:#fff; flex-shrink:0; }
-.wallet-info h5 { font-size:0.85rem; font-weight:800; color:#0a0a0a; margin-bottom:2px; }
-.wallet-info p { font-size:0.7rem; color:var(--text-muted); }
-
 /* Buttons */
 .btn-pay {
 width:100%; padding:1.2rem; border:none; border-radius:4px;
@@ -110,7 +97,6 @@ cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-c
 @media (max-width:900px) {
 .checkout-layout { grid-template-columns:1fr; }
 .form-row { grid-template-columns:1fr; }
-.sub-wallets-grid { grid-template-columns:1fr; }
 }
 </style>
 </head>
@@ -151,8 +137,8 @@ cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-c
 </div>
 </div>
 <div class="payment-content active" id="content-card">
-<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay securely with your Visa, Mastercard, or Debit card.</p>
-<div id="card-button-container" style="min-height:50px;"></div>
+<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay securely using your Visa, Mastercard, or Credit/Debit card.</p>
+<div id="card-button-container"></div>
 </div>
 
 <!-- 2. Google Pay -->
@@ -164,8 +150,8 @@ cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-c
 </div>
 </div>
 <div class="payment-content" id="content-googlepay">
-<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay fast and securely using native Google Pay.</p>
-<div id="gpay-button-container" style="min-height:50px;"></div>
+<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1rem;">Pay instantly with Google Pay.</p>
+<div id="gpay-button-container"></div>
 </div>
 
 <!-- 3. Apple Pay -->
@@ -190,61 +176,10 @@ cursor:pointer; transition:all 0.3s; display:flex; align-items:center; justify-c
 </div>
 </div>
 <div class="payment-content" id="content-paypal">
-<div id="paypal-button-container" style="min-height:50px;"></div>
+<div id="paypal-button-container"></div>
 </div>
 
-<!-- 5. OTHER DIGITAL WALLETS BUTTON -->
-<div class="payment-tab" onclick="selectPayment('other')">
-<div class="radio-dot"></div>
-<span class="payment-tab-label">Other (International Wallets)</span>
-</div>
-<div class="payment-content" id="content-other">
-<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:0.75rem;">Select your preferred digital wallet to checkout instantly:</p>
-<div class="sub-wallets-grid">
-<!-- Cash App Pay -->
-<div class="wallet-card" onclick="processWalletCheckout('Cash App Pay')">
-<div class="wallet-icon" style="background:#00D632;">$</div>
-<div class="wallet-info">
-<h5>Cash App Pay</h5>
-<p>P2P & Merchant Wallet</p>
-</div>
-</div>
-<!-- Venmo -->
-<div class="wallet-card" onclick="processWalletCheckout('Venmo')">
-<div class="wallet-icon" style="background:#008CFF;">V</div>
-<div class="wallet-info">
-<h5>Venmo</h5>
-<p>US Social Wallet</p>
-</div>
-</div>
-<!-- Alipay -->
-<div class="wallet-card" onclick="processWalletCheckout('Alipay')">
-<div class="wallet-icon" style="background:#1677FF;">支</div>
-<div class="wallet-info">
-<h5>Alipay</h5>
-<p>Global Ecosystem</p>
-</div>
-</div>
-<!-- WeChat Pay -->
-<div class="wallet-card" onclick="processWalletCheckout('WeChat Pay')">
-<div class="wallet-icon" style="background:#07C160;">微</div>
-<div class="wallet-info">
-<h5>WeChat Pay</h5>
-<p>Instant Messaging Pay</p>
-</div>
-</div>
-<!-- GrabPay -->
-<div class="wallet-card" onclick="processWalletCheckout('GrabPay')">
-<div class="wallet-icon" style="background:#00B14F;">G</div>
-<div class="wallet-info">
-<h5>GrabPay</h5>
-<p>Southeast Asia</p>
-</div>
-</div>
-</div>
-</div>
-
-<!-- 6. Cash on Delivery (COD) -->
+<!-- 5. Cash on Delivery (COD) -->
 <div class="payment-tab" onclick="selectPayment('cod')">
 <div class="radio-dot"></div>
 <span class="payment-tab-label">Cash on Delivery (COD)</span>
@@ -315,6 +250,7 @@ let currentTotal = 0;
 let shippingFee = 0;
 let shippingReason = "";
 let paymentsClient = null;
+let paypalRendered = { card: false, paypal: false };
 
 function showToast(message) {
 let container = document.querySelector('.toast-container');
@@ -336,7 +272,7 @@ const city = document.getElementById('city').value.trim();
 const phone = document.getElementById('phone').value.trim();
 
 if (!email || !firstName || !lastName || !address || !city || !phone) {
-showToast("Please fill in all required contact & address fields.");
+showToast("Please fill in all required contact & address fields first.");
 return false;
 }
 return true;
@@ -358,7 +294,6 @@ shippingReason = "Standard T-Shirt Rate";
 }
 }
 
-// Google Pay Client Initialization
 function getGooglePaymentsClient() {
 if (paymentsClient === null) {
 paymentsClient = new google.payments.api.PaymentsClient({
@@ -373,6 +308,9 @@ return paymentsClient;
 }
 
 function onGooglePayLoaded() {
+const container = document.getElementById('gpay-button-container');
+if (!container || container.children.length > 0) return;
+
 const paymentsClient = getGooglePaymentsClient();
 const baseRequest = {
 apiVersion: 2,
@@ -399,12 +337,10 @@ if (response.result) {
 const button = paymentsClient.createButton({
 onClick: onGooglePayButtonClicked,
 buttonColor: 'black',
-buttonType: 'buy'
+buttonType: 'buy',
+buttonSizeMode: 'fill'
 });
-const container = document.getElementById('gpay-button-container');
-if (container && container.children.length === 0) {
 container.appendChild(button);
-}
 }
 })
 .catch(function(err) {
@@ -494,26 +430,37 @@ if (window.google && window.google.payments) {
 onGooglePayLoaded();
 }
 
-if (window.paypal) {
+renderPayPalButtons();
+}
+
+function renderPayPalButtons() {
+if (!window.paypal) return;
+
+const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
+
+// Render Card Button
+if (!paypalRendered.card && document.getElementById('card-button-container')) {
 paypal.Buttons({
 fundingSource: paypal.FUNDING.CARD,
 style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
 createOrder: function(data, actions) {
 if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
 return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
 },
 onApprove: function(data, actions) {
 return actions.order.capture().then(function(details) { processPayment('Credit/Debit Card'); });
 },
-onError: function(err) { showToast("Card transaction cancelled or failed."); }
+onError: function(err) { showToast("Card payment cancelled or failed."); }
 }).render('#card-button-container');
+paypalRendered.card = true;
+}
 
+// Render PayPal Button
+if (!paypalRendered.paypal && document.getElementById('paypal-button-container')) {
 paypal.Buttons({
 style: { layout: 'vertical', color: 'gold', shape: 'rect' },
 createOrder: function(data, actions) {
 if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-const usdAmount = (currentTotal > 0 ? (currentTotal / 50) : 10.00).toFixed(2);
 return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
 },
 onApprove: function(data, actions) {
@@ -521,6 +468,7 @@ return actions.order.capture().then(function(details) { processPayment('PayPal')
 },
 onError: function(err) { showToast("PayPal transaction error."); }
 }).render('#paypal-button-container');
+paypalRendered.paypal = true;
 }
 }
 
@@ -530,14 +478,6 @@ document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('activ
 document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
 document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
 document.getElementById(`content-${method}`).classList.add('active');
-}
-
-function processWalletCheckout(walletName) {
-if (!validateAddressForm()) return;
-showToast(`Connecting securely to ${walletName}...`);
-setTimeout(() => {
-processPayment(walletName);
-}, 1200);
 }
 
 function processPayment(method) {
@@ -592,7 +532,7 @@ localStorage.removeItem('kingCart');
 const encodedMessage = encodeURIComponent(message);
 const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-showToast("Order placed successfully! Displaying receipt...");
+showToast("Payment confirmed! Displaying receipt...");
 
 setTimeout(() => {
 window.open(whatsappURL, '_blank');
