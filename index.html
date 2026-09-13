@@ -21,12 +21,11 @@
         header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
         .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
         
-        .header-center-actions { display:flex; align-items:center; justify-content:center; }
-        .menu-toggle-btn { background:none; border:none; font-size:1.8rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:color 0.3s; }
+        .nav-actions { display:flex; gap:1.25rem; align-items:center; }
+        .menu-toggle-btn { background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:color 0.3s; }
         .menu-toggle-btn:hover { color:var(--accent); }
 
-        .nav-actions { display:flex; gap:1.5rem; align-items:center; }
-        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
         .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
         
         /* Slide-out Mobile/Hamburger Menu */
@@ -90,12 +89,9 @@
     <header>
         <a href="index.html" class="brand-logo">The Egyptian King</a>
 
-        <div class="header-center-actions">
-            <button class="menu-toggle-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
-        </div>
-
         <div class="nav-actions">
             <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="nav-cart-count">0</span></a>
+            <button class="menu-toggle-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
         </div>
     </header>
 
