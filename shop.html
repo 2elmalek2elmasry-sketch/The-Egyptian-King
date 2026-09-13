@@ -13,14 +13,30 @@
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:4px; font-weight:600; font-size:0.9rem; box-shadow:0 10px 30px rgba(0,0,0,0.2); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; }
         .toast-message.show { opacity:1; transform:translateY(0); }
         .announce-bar { background:#0a0a0a; color:#fff; padding:10px 0; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
-        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; }
+        
+        /* Header Styling */
+        header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
         .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
-        nav ul { display:flex; list-style:none; gap:clamp(1rem,3vw,2.5rem); flex-wrap:wrap; }
-        nav a { color:var(--text-main); text-decoration:none; font-size:0.85rem; font-weight:600; letter-spacing:0.5px; text-transform:uppercase; transition:color 0.3s; }
-        nav a:hover, nav a.active { color:var(--accent); }
-        .nav-actions { display:flex; gap:1.5rem; align-items:center; }
-        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; }
+        
+        .nav-actions { display:flex; gap:1.25rem; align-items:center; }
+        .menu-toggle-btn { background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:color 0.3s; }
+        .menu-toggle-btn:hover { color:var(--accent); }
+
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
         .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        
+        /* Slide-out Mobile/Hamburger Menu */
+        .side-menu-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
+        .side-menu-overlay.active { opacity:1; pointer-events:auto; }
+        .side-menu { position:fixed; top:0; left:-320px; width:300px; height:100%; background:#fff; z-index:1001; padding:2rem; display:flex; flex-direction:column; gap:2rem; transition:left 0.3s ease; box-shadow:5px 0 25px rgba(0,0,0,0.15); }
+        .side-menu.active { left:0; }
+        .side-menu-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem; }
+        .side-menu-header h3 { font-family:'Cinzel',serif; font-size:1.1rem; font-weight:900; letter-spacing:1px; }
+        .close-menu-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-main); }
+        .side-menu ul { list-style:none; display:flex; flex-direction:column; gap:1.5rem; }
+        .side-menu a { color:var(--text-main); text-decoration:none; font-size:1rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; transition:color 0.3s; }
+        .side-menu a:hover, .side-menu a.active { color:var(--accent); }
+
         .page-header { padding:4rem 2rem 2rem; text-align:center; border-bottom:1px solid var(--border); }
         .page-header h1 { font-family:'Cinzel',serif; font-size:clamp(2rem,5vw,3.5rem); margin-bottom:1rem; }
         .breadcrumb { font-size:0.8rem; color:var(--text-muted); text-transform:uppercase; letter-spacing:1px; }
@@ -48,20 +64,33 @@
 <body>
     <div class="toast-container"></div>
     <div class="announce-bar">🚚 FREE WORLDWIDE SHIPPING ON ORDERS OVER $100 • NEW PHARAOH DROP LIVE NOW</div>
+    
     <header>
         <a href="index.html" class="brand-logo">The Egyptian King</a>
+
+        <div class="nav-actions">
+            <button class="icon-btn">🔍</button>
+            <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="cart-count">0</span></a>
+            <button class="menu-toggle-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
+        </div>
+    </header>
+
+    <!-- Side Navigation Menu -->
+    <div class="side-menu-overlay" id="side-menu-overlay" onclick="toggleMenu()"></div>
+    <div class="side-menu" id="side-menu">
+        <div class="side-menu-header">
+            <h3>NAVIGATION</h3>
+            <button class="close-menu-btn" onclick="toggleMenu()">&times;</button>
+        </div>
         <nav>
             <ul>
                 <li><a href="index.html">Home</a></li>
                 <li><a href="shop.html" class="active">Shop</a></li>
-                <li><a href="reviews.html">Reviews</a></li>
+                <li><a href="track.html">Track Order</a></li>
             </ul>
         </nav>
-        <div class="nav-actions">
-            <button class="icon-btn">🔍</button>
-            <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="cart-count">0</span></a>
-        </div>
-    </header>
+    </div>
+
     <div class="page-header">
         <h1>SHOP ALL PRODUCTS</h1>
         <div class="breadcrumb"><a href="index.html">Home</a> / Shop</div>
@@ -73,6 +102,11 @@
     <div class="product-grid" id="product-grid"></div>
     <footer><div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div></footer>
     <script>
+        function toggleMenu() {
+            document.getElementById('side-menu').classList.toggle('active');
+            document.getElementById('side-menu-overlay').classList.toggle('active');
+        }
+
         function showToast(message) {
             let container = document.querySelector('.toast-container');
             const toast = document.createElement('div');
