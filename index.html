@@ -43,13 +43,113 @@
         .dropdown-links a:hover { color:var(--accent); }
         .dropdown-text { font-size:0.8rem; color:#aaa; line-height:1.5; margin-bottom:0.5rem; }
 
-        .hero { display:grid; grid-template-columns:1fr 1fr; min-height:80vh; align-items:center; padding:4rem clamp(1rem,5vw,4rem); gap:3rem; }
-        .hero-text h1 { font-family:'Cinzel',serif; font-size:clamp(2.5rem,6vw,4.5rem); line-height:1.1; margin-bottom:1.5rem; }
-        .hero-text p { color:var(--text-muted); font-size:1.1rem; line-height:1.6; margin-bottom:2.5rem; max-width:500px; }
-        .btn-primary { background:var(--btn-bg); color:var(--btn-text); padding:1rem 2.5rem; border:none; border-radius:4px; font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.3s ease; }
-        .btn-primary:hover { background:var(--accent); transform:translateY(-2px); }
-        .hero-img { width:100%; height:100%; max-height:600px; background:#f5f5f5; border-radius:8px; overflow:hidden; }
-        .hero-img img { width:100%; height:100%; object-fit:cover; }
+        /* Custom Slideshow Hero Styling */
+        .slideshow-container {
+            position: relative;
+            width: 100%;
+            height: 450px;
+            overflow: hidden;
+            background: #000;
+        }
+
+        @media (min-width: 768px) {
+            .slideshow-container { height: 650px; }
+        }
+
+        .slide {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.8s ease, visibility 0.8s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 1;
+        }
+
+        .slide-bg {
+            position: absolute;
+            inset: 0;
+            z-index: 0;
+        }
+
+        .slide-bg img, .slide-bg video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .slide-overlay {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background: rgba(0,0,0,0.45);
+        }
+
+        .slide-content {
+            position: relative;
+            z-index: 2;
+            color: #fff;
+            padding: 0 1.5rem;
+            max-width: 800px;
+        }
+
+        .subheading {
+            font-size: 0.85rem;
+            font-weight: 700;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            margin-bottom: 0.75rem;
+            color: var(--accent);
+        }
+
+        .slide-heading {
+            font-family: 'Cinzel', serif;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 1.5rem;
+            font-size: clamp(2rem, 5vw, 3.8rem);
+            line-height: 1.1;
+        }
+
+        .pagination-dots {
+            position: absolute;
+            bottom: 25px;
+            left: 0;
+            right: 0;
+            z-index: 10;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            list-style: none;
+        }
+
+        .dot {
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            border: 1.5px solid #fff;
+            background: transparent;
+            cursor: pointer;
+            transition: background 0.3s ease, transform 0.3s ease;
+        }
+
+        .dot.active {
+            background: #fff;
+            transform: scale(1.2);
+        }
+
         .trust-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:2rem; padding:2rem clamp(1rem,5vw,4rem); border-top:1px solid var(--border); border-bottom:1px solid var(--border); background:#fafafa; }
         .trust-item { display:flex; align-items:center; gap:1rem; justify-content:center; }
         .trust-icon { font-size:1.5rem; color:var(--accent); }
@@ -74,6 +174,8 @@
         .manifesto { background:#0a0a0a; color:#fff; text-align:center; padding:6rem 2rem; margin:4rem 0; }
         .manifesto h2 { font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,3rem); margin-bottom:1.5rem; }
         .manifesto p { max-width:600px; margin:0 auto 2.5rem; color:#ccc; line-height:1.8; }
+        .btn-primary { background:var(--btn-bg); color:var(--btn-text); padding:1rem 2.5rem; border:none; border-radius:4px; font-weight:700; font-size:0.85rem; letter-spacing:1px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.3s ease; }
+        .btn-primary:hover { background:var(--accent); transform:translateY(-2px); }
         footer { background:#0a0a0a; color:#fff; padding:4rem 2rem 2rem; }
         .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3rem; }
         .footer-grid h5 { font-size:0.85rem; font-weight:700; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:1px; }
@@ -81,7 +183,7 @@
         .footer-grid a { color:#aaa; text-decoration:none; font-size:0.9rem; transition:color 0.3s; }
         .footer-grid a:hover { color:var(--accent); }
         .footer-bottom { border-top:1px solid #333; padding-top:2rem; text-align:center; color:#666; font-size:0.8rem; }
-        @media (max-width:900px) { .hero { grid-template-columns:1fr; text-align:center; } .hero-text p { margin-left:auto; margin-right:auto; } .trust-bar { grid-template-columns:1fr 1fr; gap:1.5rem; } .footer-grid { grid-template-columns:1fr 1fr; } }
+        @media (max-width:900px) { .trust-bar { grid-template-columns:1fr 1fr; gap:1.5rem; } .footer-grid { grid-template-columns:1fr 1fr; } }
         @media (max-width:500px) { .trust-bar { grid-template-columns:1fr; } }
     </style>
 </head>
@@ -133,13 +235,57 @@
         </div>
     </header>
 
-    <section class="hero">
-        <div class="hero-text">
-            <h1>WEAR THE CROWN.<br>RULE THE STREETS.</h1>
-            <p>Premium 500 GSM heavyweight apparel engineered for the modern pharaoh. Bridging ancient majesty with futuristic street culture.</p>
-            <a href="shop.html" class="btn-primary">Shop The Collection</a>
+    <!-- NEW SLIDESHOW HERO SECTION -->
+    <section class="slideshow-container" id="hero-slideshow">
+        <!-- Slide 1: Image 1 (5 Seconds) -->
+        <div class="slide active">
+            <div class="slide-bg">
+                <img src="https://i.postimg.cc/T1cqv35P/IMG-5475.jpg" alt="The Egyptian King Collection 1">
+            </div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <p class="subheading">NEW ERA DROP</p>
+                <h1 class="slide-heading">WEAR THE CROWN.<br>RULE THE STREETS.</h1>
+                <a class="btn-primary" href="shop.html">Shop The Collection</a>
+            </div>
+        </div>
+
+        <!-- Slide 2: Image 2 (5 Seconds) -->
+        <div class="slide">
+            <div class="slide-bg">
+                <img src="https://i.postimg.cc/j2hQYSnd/IMG-5476.jpg" alt="The Egyptian King Collection 2">
+            </div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <p class="subheading">LUXURY STREETWEAR</p>
+                <h1 class="slide-heading">PREMIUM 500 GSM FLEECE</h1>
+                <a class="btn-primary" href="shop.html">Explore Products</a>
+            </div>
+        </div>
+
+        <!-- Slide 3: Streamable Video (Played Once, Muted, 0.5x Speed) -->
+        <div class="slide">
+            <div class="slide-bg">
+                <video id="hero-video" playsinline muted preload="metadata">
+                    <source src="https://streamable.com/e/mzripv?autoplay=1&muted=1" type="video/mp4">
+                </video>
+            </div>
+            <div class="slide-overlay"></div>
+            <div class="slide-content">
+                <p class="subheading">CINEMATIC TEASER</p>
+                <h1 class="slide-heading">SOVEREIGN DESIGN</h1>
+                <a class="btn-primary" href="shop.html">Discover More</a>
+            </div>
+        </div>
+
+        <!-- Dots Navigation -->
+        <div class="pagination-dots">
+            <button class="dot active" onclick="goToSlide(0)" aria-label="Slide 1"></button>
+            <button class="dot" onclick="goToSlide(1)" aria-label="Slide 2"></button>
+            <button class="dot" onclick="goToSlide(2)" aria-label="Slide 3"></button>
         </div>
     </section>
+
     <div class="trust-bar">
         <div class="trust-item"><span class="trust-icon">🚚</span><div><h4>Fast Shipping</h4><p>Worldwide delivery</p></div></div>
         <div class="trust-item"><span class="trust-icon">🔒</span><div><h4>Secure Checkout</h4><p>100% protected</p></div></div>
@@ -168,12 +314,59 @@
         <div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div>
         <div class="footer-bottom">WB 5.4</div>
     </footer>
+
     <script>
+        // Slideshow Controller with 0.5x Speed and Single Play Video Logic
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('#hero-slideshow .slide');
+        const dots = document.querySelectorAll('#hero-slideshow .dot');
+        const heroVideo = document.getElementById('hero-video');
+        const totalSlides = slides.length;
+        let slideTimeout;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('active', i === index);
+                dots[i].classList.toggle('active', i === index);
+            });
+            
+            currentSlide = index;
+            clearTimeout(slideTimeout);
+
+            // Handle Video Specific Rules on Slide 3
+            if (index === 2 && heroVideo) {
+                heroVideo.currentTime = 0;
+                heroVideo.playbackRate = 0.5; // Set playback speed to 0.5x
+                heroVideo.muted = true;
+                heroVideo.play().catch(() => {});
+
+                // Advance when video finishes playing once
+                heroVideo.onended = () => {
+                    nextSlide();
+                };
+            } else {
+                if (heroVideo) heroVideo.pause();
+                // 5 Second duration for image slides
+                slideTimeout = setTimeout(nextSlide, 5000);
+            }
+        }
+
+        function nextSlide() {
+            let next = (currentSlide + 1) % totalSlides;
+            showSlide(next);
+        }
+
+        function goToSlide(index) {
+            showSlide(index);
+        }
+
+        // Initialize Slideshow
+        showSlide(0);
+
         function toggleDropdown() {
             document.getElementById('dropdown-menu').classList.toggle('active');
         }
 
-        // Close dropdown when clicking outside
         window.addEventListener('click', function(e) {
             const wrapper = document.querySelector('.dropdown-wrapper');
             if (wrapper && !wrapper.contains(e.target)) {
@@ -306,7 +499,6 @@
     </div>
 
     <style>
-    /* Modal Overlay & Styling */
     .receipt-overlay {
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
         background: rgba(0, 0, 0, 0.85); backdrop-filter: blur(8px);
@@ -342,7 +534,6 @@
     .btn-receipt.secondary { background: #f0f0f0; color: #0a0a0a; border: 1px solid #ccc; }
     .btn-receipt.close { background: transparent; color: #666; text-decoration: underline; }
 
-    /* Off-Screen Receipt Capture Element */
     .receipt-node {
         position: absolute; left: -9999px; top: -9999px; width: 420px;
         background: #ffffff; color: #0a0a0a; padding: 2.5rem; font-family: 'Inter', sans-serif;
@@ -370,11 +561,9 @@
             const lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
             if (!lastOrder) return;
 
-            // Show Overlay & Loader
             const overlay = document.getElementById('receipt-modal-overlay');
             overlay.classList.add('active');
 
-            // Populate Hidden Template Node
             document.getElementById('node-order-id').innerText = lastOrder.orderId;
             document.getElementById('node-order-date').innerText = lastOrder.date;
             document.getElementById('node-customer-name').innerText = lastOrder.customer.name;
@@ -390,22 +579,18 @@
                 </div>
             `).join('');
 
-            // Generate Image using html2canvas after short delay
             setTimeout(() => {
                 const receiptNode = document.getElementById('receipt-capture-node');
                 
                 html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
                     const imageDataUrl = canvas.toDataURL('image/png');
                     
-                    // Render Image into Modal
                     const imgElement = document.getElementById('generated-receipt-img');
                     imgElement.src = imageDataUrl;
 
-                    // Hide Loader & Display Content
                     document.getElementById('receipt-loader').style.display = 'none';
                     document.getElementById('receipt-content-box').style.display = 'block';
 
-                    // Configure Download Button
                     document.getElementById('btn-save-receipt').onclick = function() {
                         const a = document.createElement('a');
                         a.href = imageDataUrl;
@@ -413,7 +598,6 @@
                         a.click();
                     };
 
-                    // Configure Copy Button
                     document.getElementById('btn-copy-receipt').onclick = function() {
                         canvas.toBlob(blob => {
                             if (navigator.clipboard && window.ClipboardItem) {
@@ -432,7 +616,6 @@
 
         function closeReceiptModal() {
             document.getElementById('receipt-modal-overlay').classList.remove('active');
-            // Clean up URL parameter
             window.history.replaceState({}, document.title, window.location.pathname);
         }
 
