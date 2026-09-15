@@ -14,28 +14,31 @@
         .toast-message.show { opacity:1; transform:translateY(0); }
         .announce-bar { background:#0a0a0a; color:#fff; padding:10px 0; text-align:center; font-size:0.75rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; }
         
-        /* Header Styling */
+        /* Header & Navigation Styling */
         header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem clamp(1rem,5vw,4rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
         .brand-logo { font-family:'Cinzel',serif; font-size:clamp(1.2rem,3vw,1.6rem); font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
         
-        .nav-actions { display:flex; gap:1.25rem; align-items:center; }
+        .nav-actions { display:flex; gap:1.25rem; align-items:center; position:relative; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
+        .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+
+        /* Dropdown Menu Container */
+        .dropdown-wrapper { position:relative; }
         .menu-toggle-btn { background:none; border:none; font-size:1.6rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:color 0.3s; }
         .menu-toggle-btn:hover { color:var(--accent); }
 
-        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.2rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
-        .cart-count { position:absolute; top:-5px; right:-8px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; width:16px; height:16px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        /* Dropdown Content */
+        .dropdown-menu { position:absolute; top:calc(100% + 15px); right:0; width:320px; background:#0a0a0a; color:#fff; border-radius:8px; padding:1.5rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 15px 35px rgba(0,0,0,0.3); border:1px solid #222; z-index:1000; }
+        .dropdown-menu.active { display:flex; }
         
-        /* Slide-out Mobile/Hamburger Menu */
-        .side-menu-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.5); backdrop-filter:blur(4px); z-index:1000; opacity:0; pointer-events:none; transition:opacity 0.3s ease; }
-        .side-menu-overlay.active { opacity:1; pointer-events:auto; }
-        .side-menu { position:fixed; top:0; left:-320px; width:300px; height:100%; background:#fff; z-index:1001; padding:2rem; display:flex; flex-direction:column; gap:2rem; transition:left 0.3s ease; box-shadow:5px 0 25px rgba(0,0,0,0.15); }
-        .side-menu.active { left:0; }
-        .side-menu-header { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem; }
-        .side-menu-header h3 { font-family:'Cinzel',serif; font-size:1.1rem; font-weight:900; letter-spacing:1px; }
-        .close-menu-btn { background:none; border:none; font-size:1.5rem; cursor:pointer; color:var(--text-main); }
-        .side-menu ul { list-style:none; display:flex; flex-direction:column; gap:1.5rem; }
-        .side-menu a { color:var(--text-main); text-decoration:none; font-size:1rem; font-weight:700; letter-spacing:1px; text-transform:uppercase; transition:color 0.3s; }
-        .side-menu a:hover, .side-menu a.active { color:var(--accent); }
+        .dropdown-section { border-bottom:1px solid #222; padding-bottom:1rem; }
+        .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
+        .dropdown-title { font-family:'Cinzel',serif; font-size:0.75rem; font-weight:800; color:var(--accent); letter-spacing:2px; text-transform:uppercase; margin-bottom:0.75rem; }
+        
+        .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.6rem; }
+        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.85rem; font-weight:600; text-transform:uppercase; letter-spacing:1px; transition:color 0.3s; }
+        .dropdown-links a:hover { color:var(--accent); }
+        .dropdown-text { font-size:0.8rem; color:#aaa; line-height:1.5; margin-bottom:0.5rem; }
 
         .cart-layout { display:grid; grid-template-columns:2fr 1fr; gap:3rem; max-width:1300px; margin:0 auto; padding:3rem clamp(1rem,5vw,4rem); }
         .page-title { font-family:'Cinzel',serif; font-size:clamp(1.8rem,4vw,2.5rem); margin-bottom:2rem; border-bottom:1px solid var(--border); padding-bottom:1rem; }
@@ -69,25 +72,40 @@
 
         <div class="nav-actions">
             <a href="cart.html" class="icon-btn">🛍️ <span class="cart-count" id="cart-count">0</span></a>
-            <button class="menu-toggle-btn" onclick="toggleMenu()" aria-label="Toggle navigation menu">☰</button>
+            
+            <div class="dropdown-wrapper">
+                <button class="menu-toggle-btn" onclick="toggleDropdown()" aria-label="Toggle navigation menu">☰</button>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <!-- Main Pages -->
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">Navigation</div>
+                        <ul class="dropdown-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop.html">Shop All</a></li>
+                            <li><a href="track.html">Track Order</a></li>
+                        </ul>
+                    </div>
+                    
+                    <!-- Footer Content: Customer Support -->
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">Customer Care</div>
+                        <ul class="dropdown-links">
+                            <li><a href="#">Shipping Policy</a></li>
+                            <li><a href="#">Returns & Exchanges</a></li>
+                            <li><a href="#">Contact Us</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Footer Content: Brand Details -->
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">The Egyptian King</div>
+                        <p class="dropdown-text">Premium streetwear combining ancient culture with contemporary design.</p>
+                        <div class="dropdown-text">&copy; 2026 THE EGYPTIAN KING</div>
+                    </div>
+                </div>
+            </div>
         </div>
     </header>
-
-    <!-- Side Navigation Menu -->
-    <div class="side-menu-overlay" id="side-menu-overlay" onclick="toggleMenu()"></div>
-    <div class="side-menu" id="side-menu">
-        <div class="side-menu-header">
-            <h3>NAVIGATION</h3>
-            <button class="close-menu-btn" onclick="toggleMenu()">&times;</button>
-        </div>
-        <nav>
-            <ul>
-                <li><a href="index.html">Home</a></li>
-                <li><a href="shop.html">Shop</a></li>
-                <li><a href="track.html">Track Order</a></li>
-            </ul>
-        </nav>
-    </div>
 
     <div class="cart-layout">
         <div>
@@ -104,11 +122,19 @@
         </div>
     </div>
     <footer><div class="footer-bottom">&copy; 2026 THE EGYPTIAN KING. All rights reserved.</div></footer>
+
     <script>
-        function toggleMenu() {
-            document.getElementById('side-menu').classList.toggle('active');
-            document.getElementById('side-menu-overlay').classList.toggle('active');
+        function toggleDropdown() {
+            document.getElementById('dropdown-menu').classList.toggle('active');
         }
+
+        // Close dropdown when clicking outside
+        window.addEventListener('click', function(e) {
+            const wrapper = document.querySelector('.dropdown-wrapper');
+            if (wrapper && !wrapper.contains(e.target)) {
+                document.getElementById('dropdown-menu').classList.remove('active');
+            }
+        });
 
         function showToast(message) {
             let container = document.querySelector('.toast-container');
@@ -120,6 +146,7 @@
             toast.classList.add('show');
             setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
+
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const container = document.getElementById('cart-container');
@@ -155,6 +182,7 @@
             document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
             document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)}`;
         }
+
         function changeQty(index, delta) {
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             if (!cart[index]) return;
@@ -163,6 +191,7 @@
             localStorage.setItem('kingCart', JSON.stringify(cart));
             renderCart(); updateCartCount();
         }
+
         function removeItem(index) {
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             cart.splice(index, 1);
@@ -170,15 +199,18 @@
             renderCart(); updateCartCount();
             showToast('Item removed from bag.');
         }
+
         function checkout() {
             showToast('Redirecting to secure checkout...');
             setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
         }
+
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
             document.getElementById('cart-count').innerText = count;
         }
+
         window.addEventListener('DOMContentLoaded', () => { renderCart(); updateCartCount(); });
     </script>
 </body>
