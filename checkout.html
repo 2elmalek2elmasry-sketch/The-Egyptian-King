@@ -6,10 +6,35 @@
     <title>Checkout — THE EGYPTIAN KING</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Google Analytics 4 (Replace G-XXXXXXXXXX with your actual ID when ready) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    <!-- Meta Pixel Code (Replace YOUR_PIXEL_ID with your actual ID when ready) -->
+    <script>
+      !function(f,b,e,v,n,t,s)
+      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+      n.queue=[];t=b.createElement(e);t.async=!0;
+      t.src=v;s=b.getElementsByTagName(e)[0];
+      s.parentNode.insertBefore(t,s)}(window, document,'script',
+      'https://connect.facebook.net/en_US/fbevents.js');
+      fbq('init', 'YOUR_PIXEL_ID');
+      fbq('track', 'PageView');
+    </script>
+
     <!-- Live PayPal SDK Integration -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
     <!-- Google Pay SDK Integration -->
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
+    <!-- EmailJS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
     <style>
         :root {
@@ -18,7 +43,7 @@
             --text-main:#0a0a0a;
             --text-muted:#6b6b6b;
             --accent:#bfa15f;
-            --accent-dark:#9a7f3e; 
+            --accent-dark:#9a7f3e;
             --border:#e8e6e1;
             --btn-bg:#0a0a0a;
             --btn-text:#fff;
@@ -717,15 +742,38 @@
                 total: `E£${currentTotal.toFixed(2)}`
             };
 
-            const targetPhoneNumber = "213698756936"; // Update this to your actual WhatsApp number if needed
-            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n`;
-            message += `*Order ID:* ${generatedOrderId}\n\n`;
-            message += `*Customer:* ${firstName} ${lastName}\n`;
-            message += `*Phone:* ${phone}\n`;
-            message += `*Email:* ${email}\n`;
-            message += `*Address:* ${address}, ${city}\n`;
-            message += `*Payment Method:* ${method}\n\n`;
-            message += `📦 *ORDER ITEMS:*\n`;
+            // --- EMAILJS INTEGRATION ---
+            emailjs.init({ publicKey: "BoqwuUpiG0TN-KnN2" });
+
+            // Format items for email
+            let itemsHtml = cart.map(item => 
+                `• ${item.name} ${item.size ? '(Size: '+item.size+')' : ''} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}`
+            ).join('<br>');
+
+            // Send the email
+            const templateParams = {
+                to_email: email,
+                to_name: firstName,
+                order_id: generatedOrderId,
+                payment_method: method,
+                total_amount: `E£${currentTotal.toFixed(2)}`,
+                items_list: itemsHtml
+            };
+
+            emailjs.send("service_hzjom7o", "template_islk6aw", templateParams)
+                .then(() => console.log("Email receipt sent successfully!"))
+                .catch(err => console.error("Email failed:", err));
+
+            // --- FIREBASE ANALYTICS & PIXEL TRACKING ---
+            if (typeof fbq !== 'undefined') {
+                fbq('track', 'Purchase', {value: currentTotal, currency: 'USD'});
+            }
+            if (typeof gtag !== 'undefined') {
+                gtag('event', 'purchase', { transaction_id: generatedOrderId, value: currentTotal, currency: 'USD' });
+            }
+
+            const targetPhoneNumber = "213698756936"; 
+            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n*Order ID:* ${generatedOrderId}\n\n*Customer:* ${firstName} ${lastName}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}, ${city}\n*Payment Method:* ${method}\n\n📦 *ORDER ITEMS:*\n`;
 
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.qty;
@@ -733,9 +781,7 @@
                 message += `${index + 1}. ${item.name}${sizeText} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
             });
 
-            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n`;
-            message += `*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
-            message += `*Total Amount:* E£${currentTotal.toFixed(2)}\n`;
+            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n*Total Amount:* E£${currentTotal.toFixed(2)}\n`;
 
             localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
             localStorage.removeItem('kingCart');
@@ -743,7 +789,7 @@
             const encodedMessage = encodeURIComponent(message);
             const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
 
-            showToast("Payment confirmed! Generating receipt...");
+            showToast("Payment confirmed! Sending receipt to your email...");
 
             setTimeout(() => {
                 window.open(whatsappURL, '_blank');
@@ -816,32 +862,33 @@
             else header.classList.remove('scrolled');
         });
 
+        // ===== Firebase Auto-fill Auth Logic =====
         window.addEventListener('DOMContentLoaded', () => {
-    // Wait for Firebase to confirm auth state
-    firebase.auth().onAuthStateChanged(user => {
-        if (user) {
-            // Logged in: Auto-fill form
-            db.collection('users').doc(user.uid).get().then(doc => {
-                if (doc.exists) {
-                    const d = doc.data();
-                    document.getElementById('email').value = d.email || user.email || '';
-                    document.getElementById('first-name').value = (d.name || user.displayName || '').split(' ')[0] || '';
-                    document.getElementById('last-name').value = (d.name || user.displayName || '').split(' ').slice(1).join(' ') || '';
-                    document.getElementById('phone').value = d.phone || '';
-                    document.getElementById('address').value = d.address || '';
-                    document.getElementById('city').value = d.city || '';
-                }
-            });
-        }
-        // Load cart regardless
-        loadCheckout();
-    });
-});
+            // Check if Firebase is loaded (via auth.js)
+            if (typeof firebase !== 'undefined' && firebase.auth) {
+                firebase.auth().onAuthStateChanged(user => {
+                    if (user) {
+                        // Logged in: Auto-fill form
+                        firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+                            if (doc.exists) {
+                                const d = doc.data();
+                                document.getElementById('email').value = d.email || user.email || '';
+                                document.getElementById('first-name').value = (d.name || user.displayName || '').split(' ')[0] || '';
+                                document.getElementById('last-name').value = (d.name || user.displayName || '').split(' ').slice(1).join(' ') || '';
+                                document.getElementById('phone').value = d.phone || '';
+                                document.getElementById('address').value = d.address || '';
+                                document.getElementById('city').value = d.city || '';
+                            }
+                        }).catch(err => console.error("Error fetching user data:", err));
+                    }
+                    // Load cart regardless of login state
+                    loadCheckout();
+                });
+            } else {
+                // Fallback if Firebase isn't loaded on this page
+                loadCheckout();
+            }
+        });
     </script>
-    <!-- Add this right above </body> -->
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-<script src="auth.js"></script>
 </body>
 </html>
