@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>My Account — THE EGYPTIAN KING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b;
+            --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --sale:#c8102e;
+        }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        html { scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        a { text-decoration: none; color: inherit; }
+
+        header { background:rgba(255,255,255,0.98); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); display:flex; justify-content:center; align-items:center; position: sticky; top: 0; z-index: 100; }
+        .logo-img { height: 26px; width: auto; object-fit: contain; }
+
+        .account-container { max-width: 1000px; margin: 4rem auto; padding: 0 1.25rem; }
+        .account-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 3rem; border-bottom: 1px solid var(--border); padding-bottom: 2rem; flex-wrap: wrap; gap: 1rem; }
+        .account-header h1 { font-family: 'Cinzel', serif; font-size: 1.8rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; }
+        .logout-link { color: var(--sale); font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer; }
+
+        .dashboard-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; }
+        .card { background: var(--bg-alt); border: 1px solid var(--border); padding: 2rem; border-radius: 4px; }
+        .card h2 { font-family: 'Cinzel', serif; font-size: 1.1rem; font-weight: 900; letter-spacing: 1px; text-transform: uppercase; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+
+        .form-group { margin-bottom: 1rem; }
+        .input-field { width: 100%; padding: 0.85rem 1rem; border: 1px solid var(--border); border-radius: 2px; font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; background: #fff; }
+        .input-field:focus { border-color: var(--text-main); }
+        .btn-primary { width: 100%; background: var(--btn-bg); color: #fff; padding: 1rem; border: none; border-radius: 2px; font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.35s ease; margin-top: 1rem; }
+        .btn-primary:hover { background: var(--accent); }
+
+        .order-row { display: flex; justify-content: space-between; padding: 1rem 0; border-bottom: 1px solid var(--border); }
+        .order-row:last-child { border-bottom: none; }
+        .order-status { font-size: 0.7rem; font-weight: 800; padding: 4px 8px; border-radius: 2px; text-transform: uppercase; letter-spacing: 1px; }
+        .st-received { background: #f1f5f9; color: #334155; }
+        .st-printing { background: #fef3c7; color: #d97706; }
+        .st-dispatched { background: #e0f2fe; color: #0284c7; }
+        .st-delivered { background: #dcfce7; color: #16a34a; }
+
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; border-left:3px solid var(--accent); opacity:0; transform:translateY(20px); transition:all 0.4s ease; }
+        .toast-message.show { opacity:1; transform:translateY(0); }
+
+        @media (max-width: 768px) { .dashboard-grid { grid-template-columns: 1fr; } }
+    </style>
+</head>
+<body>
+    <header><a href="index.html"><img src="https://i.postimg.cc/N0g8X9mx/logo-words-transparent.png" alt="The Egyptian King" class="logo-img"></a></header>
+    <div class="toast-container"></div>
+
+    <div class="account-container">
+        <div class="account-header">
+            <h1>My Account</h1>
+            <span class="logout-link" onclick="logoutUser()">Logout</span>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="card">
+                <h2>Saved Address</h2>
+                <form onsubmit="saveAddress(event)">
+                    <div class="form-group"><input type="text" id="acc-fullname" class="input-field" placeholder="Full Name"></div>
+                    <div class="form-group"><input type="text" id="acc-phone" class="input-field" placeholder="Phone Number"></div>
+                    <div class="form-group"><input type="text" id="acc-address" class="input-field" placeholder="Street Address"></div>
+                    <div class="form-group"><input type="text" id="acc-city" class="input-field" placeholder="City"></div>
+                    <button type="submit" class="btn-primary">Save Details</button>
+                </form>
+            </div>
+
+            <div class="card">
+                <h2>Order History</h2>
+                <div id="orders-list"><p style="color: var(--text-muted); font-size: 0.85rem;">Loading orders...</p></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Firebase SDKs -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    
+    <script>
+        const firebaseConfig = {
+            apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
+            authDomain: "the-egyptian-king-68e45.firebaseapp.com",
+            projectId: "the-egyptian-king-68e45",
+            storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
+            messagingSenderId: "94881816710",
+            appId: "1:94881816710:web:10fca569f1b43c583ab107",
+            measurementId: "G-ZR0FBN0PRV"
+        };
+        firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+        const db = firebase.firestore();
+
+        function showToast(message) {
+            let container = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = message;
+            container.appendChild(toast);
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000);
+        }
+
+        function logoutUser() {
+            auth.signOut().then(() => window.location.href = 'index.html');
+        }
+
+        auth.onAuthStateChanged(user => {
+            if (!user) {
+                window.location.href = 'login.html'; // Redirect if not logged in
+            } else {
+                loadUserData(user.uid);
+                loadUserOrders(user.uid);
+            }
+        });
+
+        function loadUserData(uid) {
+            db.collection('users').doc(uid).get().then(doc => {
+                if (doc.exists) {
+                    const d = doc.data();
+                    document.getElementById('acc-fullname').value = d.name || '';
+                    document.getElementById('acc-phone').value = d.phone || '';
+                    document.getElementById('acc-address').value = d.address || '';
+                    document.getElementById('acc-city').value = d.city || '';
+                }
+            });
+        }
+
+        function saveAddress(e) {
+            e.preventDefault();
+            const user = auth.currentUser;
+            const data = {
+                name: document.getElementById('acc-fullname').value,
+                phone: document.getElementById('acc-phone').value,
+                address: document.getElementById('acc-address').value,
+                city: document.getElementById('acc-city').value
+            };
+            db.collection('users').doc(user.uid).set(data, { merge: true })
+                .then(() => showToast("Address saved successfully!"))
+                .catch(err => showToast("Error saving address."));
+        }
+
+        function loadUserOrders(uid) {
+            const localAllOrders = JSON.parse(localStorage.getItem('allStoreOrders')) || [];
+            const userOrders = localAllOrders.filter(o => o.customer && o.customer.email === auth.currentUser.email);
+            
+            const listContainer = document.getElementById('orders-list');
+            if (userOrders.length === 0) {
+                listContainer.innerHTML = '<p style="color: var(--text-muted); font-size: 0.85rem;">You have no orders yet.</p>';
+                return;
+            }
+
+            listContainer.innerHTML = userOrders.map(o => `
+                <div class="order-row">
+                    <div>
+                        <strong style="font-size: 0.85rem; display:block; margin-bottom: 4px;">${o.orderId}</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">${o.date} — ${o.customer ? o.customer.name : ''}</span>
+                    </div>
+                    <span class="order-status st-${o.status}">${o.status}</span>
+                </div>
+            `).join('');
+        }
+    </script>
+</body>
+</html>
