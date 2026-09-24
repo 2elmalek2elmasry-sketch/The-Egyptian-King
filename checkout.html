@@ -156,7 +156,7 @@
         .summary-item { display:flex; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
         .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:2px; background: #fff; }
         .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
-        .summary-item p { font-size:0.78rem; color:var(--text-muted); letter-spacing: 0.5px; }
+        .summary-item p { font-size:0.78rem; color:var(--text-muted); letter-spacing: 0.5px; margin-bottom: 2px; }
         .cost-row { display:flex; justify-content:space-between; margin-bottom:1rem; font-size:0.85rem; color: var(--text-muted); }
         .cost-row.total { font-size:1.2rem; font-weight:800; color: var(--text-main); border-top:1px solid var(--border); padding-top:1.5rem; margin-top:1.5rem; }
 
@@ -623,6 +623,7 @@
                             <img src="${item.img}" alt="${item.name}">
                             <div style="flex:1;">
                                 <h4>${item.name}</h4>
+                                <p>Size: ${item.size || 'One Size'}</p>
                                 <p>Qty: ${item.qty}</p>
                                 <p style="color:#0a0a0a; font-weight:700; margin-top:4px;">E£${itemTotal.toFixed(2)}</p>
                             </div>
@@ -728,7 +729,8 @@
 
             cart.forEach((item, index) => {
                 const itemTotal = item.price * item.qty;
-                message += `${index + 1}. ${item.name} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
+                const sizeText = item.size ? ` [Size: ${item.size}]` : '';
+                message += `${index + 1}. ${item.name}${sizeText} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
             });
 
             message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n`;
@@ -765,7 +767,7 @@
             const itemsContainer = document.getElementById('node-items-list');
             itemsContainer.innerHTML = orderData.items.map(item => `
                 <div class="node-item-row">
-                    <span>${item.name} (x${item.qty})</span>
+                    <span>${item.name} ${item.size ? `(Size: ${item.size})` : ''} (x${item.qty})</span>
                     <span>E£${(item.price * item.qty).toFixed(2)}</span>
                 </div>
             `).join('');
