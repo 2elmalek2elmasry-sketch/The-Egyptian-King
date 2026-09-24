@@ -817,8 +817,26 @@
         });
 
         window.addEventListener('DOMContentLoaded', () => {
-            loadCheckout();
-        });
+    // Wait for Firebase to confirm auth state
+    firebase.auth().onAuthStateChanged(user => {
+        if (user) {
+            // Logged in: Auto-fill form
+            db.collection('users').doc(user.uid).get().then(doc => {
+                if (doc.exists) {
+                    const d = doc.data();
+                    document.getElementById('email').value = d.email || user.email || '';
+                    document.getElementById('first-name').value = (d.name || user.displayName || '').split(' ')[0] || '';
+                    document.getElementById('last-name').value = (d.name || user.displayName || '').split(' ').slice(1).join(' ') || '';
+                    document.getElementById('phone').value = d.phone || '';
+                    document.getElementById('address').value = d.address || '';
+                    document.getElementById('city').value = d.city || '';
+                }
+            });
+        }
+        // Load cart regardless
+        loadCheckout();
+    });
+});
     </script>
     <!-- Add this right above </body> -->
 <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
