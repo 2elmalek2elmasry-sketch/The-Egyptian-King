@@ -1,393 +1,666 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Track Order — THE EGYPTIAN KING</title>
-<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
-<style>
-:root { --bg:#fff; --text-main:#0a0a0a; --text-muted:#666; --accent:#bfa15f; --border:#e5e5e5; }
-* { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; }
-body { background:var(--bg); color:var(--text-main); }
-header { background:rgba(255,255,255,0.95); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); padding:1.25rem 2rem; display:flex; justify-content:space-between; align-items:center; }
-.brand-logo { font-family:'Cinzel',serif; font-size:1.4rem; font-weight:900; letter-spacing:2px; color:#0a0a0a; text-decoration:none; text-transform:uppercase; }
-.nav-track-btn { background:transparent; border:1px solid #0a0a0a; color:#0a0a0a; padding:0.5rem 1rem; border-radius:4px; font-weight:700; font-size:0.8rem; text-transform:uppercase; text-decoration:none; transition:all 0.2s; }
-.nav-track-btn:hover { background:#0a0a0a; color:#fff; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Track Order — THE EGYPTIAN KING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg:#ffffff;
+            --bg-alt:#faf9f7;
+            --text-main:#0a0a0a;
+            --text-muted:#6b6b6b;
+            --accent:#bfa15f;
+            --accent-dark:#9a7f3e;
+            --border:#e8e6e1;
+            --btn-bg:#0a0a0a;
+            --btn-text:#fff;
+            --sale:#c8102e;
+        }
 
-.container { max-width:700px; margin:3rem auto; padding:0 1.5rem; }
-h1 { font-family:'Cinzel',serif; font-size:1.8rem; font-weight:900; margin-bottom:0.5rem; text-align:center; }
-p.subtitle { text-align:center; color:var(--text-muted); font-size:0.9rem; margin-bottom:2rem; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        html { scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
+        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        a { text-decoration: none; color: inherit; }
 
-.search-box-wrapper { background:#fafafa; border:1px solid var(--border); padding:2rem; border-radius:8px; margin-bottom:2rem; }
-.search-box { display:flex; gap:0.5rem; margin-bottom:1rem; }
-.input-field { flex:1; padding:0.9rem 1rem; border:1px solid var(--border); border-radius:4px; font-size:0.9rem; outline:none; background:#fff; }
-.input-field:focus { border-color:#0a0a0a; }
-.btn { padding:0.9rem 1.5rem; background:#0a0a0a; color:#fff; border:none; border-radius:4px; font-weight:800; cursor:pointer; text-transform:uppercase; font-size:0.85rem; transition:background 0.2s; }
-.btn:hover { background:#333; }
+        /* ===== Toast ===== */
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
+        .toast-message.show { opacity:1; transform:translateY(0); }
 
-.forgot-link { background:none; border:none; color:var(--text-muted); font-size:0.8rem; font-weight:600; cursor:pointer; text-decoration:underline; padding:0; }
-.forgot-link:hover { color:#0a0a0a; }
+        /* ===== Header ===== */
+        header {
+            background:rgba(255,255,255,0.98);
+            backdrop-filter:blur(20px);
+            -webkit-backdrop-filter:blur(20px);
+            border-bottom:1px solid var(--border);
+            padding:1.1rem clamp(1.2rem,5vw,3.5rem);
+            position:sticky;
+            top:0;
+            z-index:100;
+            display:flex;
+            justify-content:space-between;
+            align-items:center;
+            transition:padding 0.3s ease;
+        }
+        header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
+        
+        .nav-left { flex: 1; }
+        
+        .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
+        .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
+        header.scrolled .logo-img { height: 22px; }
+        .brand-logo:hover .logo-img { opacity: 0.8; }
 
-.site-alert { background:#fee2e2; color:#dc2626; border:1px solid #fecaca; padding:1rem; border-radius:6px; font-size:0.85rem; font-weight:600; text-align:center; margin-bottom:1.5rem; display:none; }
-.site-alert.show { display:block; }
+        .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
+        .icon-btn:hover { opacity:0.65; transform:translateY(-1px); }
+        .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
+        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; padding:0 4px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
 
-.result-card { background:#fafafa; border:1px solid var(--border); border-radius:8px; padding:2rem; display:none; }
-.result-card.active { display:block; }
-.order-header-info { display:flex; justify-content:space-between; align-items:center; border-bottom:1px solid var(--border); padding-bottom:1rem; margin-bottom:1.5rem; }
-.status-badge { padding:6px 12px; border-radius:4px; font-size:0.8rem; font-weight:800; text-transform:uppercase; letter-spacing:0.5px; }
-.status-received { background:#e2e8f0; color:#1e293b; }
-.status-printing { background:#fef3c7; color:#d97706; }
-.status-delayed { background:#fee2e2; color:#dc2626; }
-.status-dispatched { background:#e0f2fe; color:#0284c7; }
-.status-delivered { background:#dcfce7; color:#16a34a; }
+        .dropdown-wrapper { position:relative; }
+        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:transform 0.3s; }
+        .menu-toggle-btn:hover { transform:rotate(90deg); }
 
-/* Moving Delivery Truck Timeline UI */
-.timeline { position:relative; padding-left:2.5rem; margin-top:1.5rem; border-left:3px solid var(--border); }
-.timeline-step { position:relative; margin-bottom:1.8rem; }
-.timeline-step::before { content:''; position:absolute; left:-2.75rem; top:0.2rem; width:14px; height:14px; border-radius:50%; background:#ccc; border:2px solid #fff; z-index:2; transition:all 0.3s; }
-.timeline-step.completed::before { background:#0a0a0a; }
-.timeline-step.active::before { background:#bfa15f; box-shadow:0 0 0 4px rgba(191,161,95,0.2); }
-.timeline-step h4 { font-size:0.95rem; font-weight:700; margin-bottom:0.2rem; }
-.timeline-step p { font-size:0.85rem; color:var(--text-muted); }
+        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; text-align:left; opacity:0; transform:translateY(-10px); transition:opacity 0.3s, transform 0.3s; }
+        .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
+        .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
+        .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
+        .dropdown-title { font-family:'Cinzel',serif; font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; transition:color 0.3s, padding-left 0.3s; display:inline-block; }
+        .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
+        .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
 
-/* Animated Delivery Truck Icon */
-.delivery-truck {
-position:absolute; left:-3.25rem; top:0; font-size:1.2rem; z-index:5;
-transition:top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
-}
+        /* ===== Track Layout ===== */
+        .track-container { max-width: 800px; margin: 0 auto; padding: 4rem clamp(1.2rem, 5vw, 3.5rem); }
+        
+        .page-header { text-align: center; margin-bottom: 3rem; }
+        .page-header h1 {
+            font-family: 'Cinzel', serif; font-size: clamp(2rem, 5vw, 3rem);
+            font-weight: 900; letter-spacing: 2px; text-transform: uppercase;
+            margin-bottom: 1rem; position: relative; z-index: 2;
+        }
+        .page-header p { color: var(--text-muted); font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; }
 
-.modal-overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.6); z-index:1000; display:none; justify-content:center; align-items:center; padding:1rem; }
-.modal-content { background:#fff; padding:2rem; border-radius:8px; width:100%; max-width:550px; max-height:90vh; overflow-y:auto; }
+        .search-box-wrapper {
+            background: var(--bg-alt); border: 1px solid var(--border);
+            padding: 2.5rem; border-radius: 4px; margin-bottom: 2.5rem;
+        }
+        .search-box { display: flex; gap: 0.75rem; margin-bottom: 1rem; flex-wrap: wrap; }
+        .input-field {
+            flex: 1; min-width: 200px;
+            padding: 1rem 1.25rem; border: 1px solid var(--border);
+            background: #fff; color: var(--text-main);
+            font-size: 0.85rem; font-family: 'Inter', sans-serif;
+            outline: none; transition: border-color 0.3s; border-radius: 2px;
+        }
+        .input-field:focus { border-color: var(--text-main); }
+        .input-field::placeholder { color: #999; }
 
-.admin-panel-toggle { margin-top:3rem; text-align:center; border-top:1px dashed var(--border); padding-top:1.5rem; }
-.admin-order-row { background:#f9f9f9; border:1px solid var(--border); padding:1rem; border-radius:6px; margin-bottom:0.8rem; }
-</style>
+        .btn-primary {
+            background: var(--btn-bg); color: var(--btn-text);
+            padding: 1rem 2.5rem; border: 1px solid var(--btn-bg);
+            border-radius: 2px; font-weight: 700; font-size: 0.78rem;
+            letter-spacing: 2px; text-transform: uppercase; cursor: pointer;
+            text-decoration: none; display: inline-block;
+            transition: all 0.35s ease;
+        }
+        .btn-primary:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+        
+        .btn-ghost { background: transparent; color: var(--text-main); border: 1px solid var(--border); padding: 0.85rem 2rem; border-radius: 2px; font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: all 0.3s ease; }
+        .btn-ghost:hover { border-color: var(--text-main); background: var(--bg-alt); }
+
+        .forgot-link { background:none; border:none; color:var(--text-muted); font-size:0.75rem; font-weight:600; cursor:pointer; text-decoration:underline; padding:0; letter-spacing: 1px; text-transform: uppercase; }
+        .forgot-link:hover { color: var(--accent); }
+
+        /* ===== Result Card ===== */
+        .result-card { background: #fff; border: 1px solid var(--border); border-radius: 4px; padding: 2.5rem; display: none; box-shadow: 0 15px 40px rgba(0,0,0,0.04); }
+        .result-card.active { display: block; }
+        
+        .order-header-info { display:flex; justify-content:space-between; align-items:flex-start; border-bottom:1px solid var(--border); padding-bottom:1.5rem; margin-bottom:2rem; flex-wrap: wrap; gap: 1rem; }
+        .order-header-info h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem; }
+        .order-header-info p { font-size: 0.8rem; color: var(--text-muted); letter-spacing: 0.5px; }
+        
+        .status-badge { padding: 0.5rem 1rem; border-radius: 2px; font-size: 0.7rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1.5px; }
+        .status-received { background: #f1f5f9; color: #334155; }
+        .status-printing { background: #fef3c7; color: #d97706; }
+        .status-delayed { background: #fee2e2; color: #dc2626; }
+        .status-dispatched { background: #e0f2fe; color: #0284c7; }
+        .status-delivered { background: #dcfce7; color: #16a34a; }
+
+        /* ===== Timeline ===== */
+        .timeline { position:relative; padding-left:3rem; margin-top:2.5rem; border-left:2px solid var(--border); }
+        .timeline-step { position:relative; margin-bottom:2.5rem; }
+        .timeline-step:last-child { margin-bottom: 0; }
+        .timeline-step::before {
+            content:''; position:absolute; left:-3.4rem; top:0.2rem;
+            width:16px; height:16px; border-radius:50%;
+            background:#fff; border: 2px solid #ccc; z-index:2;
+            transition:all 0.3s;
+        }
+        .timeline-step.completed::before { background: var(--text-main); border-color: var(--text-main); }
+        .timeline-step.active::before { background: var(--accent); border-color: var(--accent); box-shadow: 0 0 0 6px rgba(191,161,95,0.15); }
+        .timeline-step h4 { font-size: 0.9rem; font-weight: 800; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.3rem; }
+        .timeline-step p { font-size: 0.85rem; color: var(--text-muted); line-height: 1.5; }
+
+        .delivery-truck {
+            position:absolute; left:-3.75rem; top:0; font-size:1.4rem; z-index:5;
+            transition:top 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            filter: drop-shadow(0 4px 6px rgba(0,0,0,0.2));
+        }
+
+        /* ===== Admin Panel ===== */
+        .admin-panel-toggle { margin-top:4rem; text-align:center; border-top:1px dashed var(--border); padding-top:2rem; }
+        .admin-panel-toggle p { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem; letter-spacing: 1px; text-transform: uppercase; }
+
+        /* ===== Footer ===== */
+        footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; margin-top: 4rem; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
+        .footer-grid h5 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 2px; color: #fff; }
+        .footer-grid ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
+        .footer-grid a { color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.3s, padding-left 0.3s; }
+        .footer-grid a:hover { color: var(--accent); padding-left: 5px; }
+        .footer-brand p { color: #888; font-size: 0.88rem; line-height: 1.7; margin-top: 1rem; max-width: 340px; }
+        .footer-socials { display: flex; gap: 0.85rem; margin-top: 1.5rem; }
+        .footer-socials a { width: 38px; height: 38px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
+        .footer-socials a:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
+        .footer-bottom { border-top: 1px solid #1c1c1c; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; max-width: 1300px; margin: 0 auto; }
+        .footer-bottom .copyright { color: #666; font-size: 0.78rem; letter-spacing: 0.5px; }
+        .payment-icons { display: flex; gap: 8px; align-items: center; }
+        .payment-icon { background: #fff; color: #0a0a0a; padding: 4px 8px; border-radius: 3px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; }
+
+        /* ===== Modals ===== */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem;
+        }
+        .modal-overlay.active { display: flex; }
+        .modal-card {
+            background: #fff; width: 100%; max-width: 550px; border-radius: 12px;
+            padding: 2.5rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5);
+            text-align: center; max-height: 90vh; overflow-y: auto;
+        }
+        .modal-card h3 { font-family: 'Cinzel', serif; font-size: 1.4rem; font-weight: 900; margin-bottom: 0.5rem; letter-spacing: 1px; }
+        .modal-card p { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 1.5rem; line-height: 1.6; }
+        .modal-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-weight: 800; cursor: pointer; font-size: 1.2rem; color: var(--text-muted); transition: color 0.2s; }
+        .modal-close:hover { color: var(--text-main); }
+
+        .admin-order-row { background: var(--bg-alt); border: 1px solid var(--border); padding: 1.5rem; border-radius: 4px; margin-bottom: 1rem; text-align: left; }
+        .admin-order-row strong { font-size: 0.9rem; }
+        .admin-order-row .ord-meta { font-size: 0.75rem; color: var(--text-muted); margin-bottom: 0.5rem; }
+        .admin-controls { display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap; }
+        .admin-controls .input-field { padding: 0.6rem 0.8rem; font-size: 0.8rem; flex: 1; min-width: 100px; }
+        
+        /* ===== Responsive ===== */
+        @media (max-width: 1024px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
+            .footer-brand { grid-column: 1 / -1; text-align: center; }
+            .footer-brand p { max-width: 500px; margin: 1rem auto 0; }
+            .footer-socials { justify-content: center; }
+        }
+        @media (max-width: 768px) {
+            .footer-bottom { justify-content: center; text-align: center; flex-direction: column; gap: 1.5rem; }
+            .order-header-info { flex-direction: column; align-items: flex-start; }
+        }
+        @media (max-width: 600px) {
+            .track-container { padding: 3rem 1.25rem; }
+            .search-box-wrapper, .result-card { padding: 1.5rem; }
+            .footer-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
+            .footer-grid ul { align-items: center; }
+            .dropdown-menu { width: calc(100vw - 2rem); right: -0.5rem; }
+            .admin-controls { flex-direction: column; align-items: stretch; }
+            .admin-controls .input-field { min-width: 100%; }
+        }
+    </style>
 </head>
 <body>
-<header>
-<a href="index.html" class="brand-logo">The Egyptian King</a>
-<a href="shop.html" class="nav-track-btn">Back to Shop</a>
-</header>
+    <div class="toast-container"></div>
 
-<div class="container">
-<h1>Order Tracking</h1>
-<p class="subtitle">Enter your Order ID to monitor live progress.</p>
+    <!-- Header -->
+    <header id="main-header">
+        <div class="nav-left"></div>
+        <a href="index.html" class="brand-logo">
+            <img src="https://i.postimg.cc/N0g8X9mx/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
+        </a>
 
-<div class="search-box-wrapper">
-<div class="site-alert" id="custom-site-alert">U have no orders to track</div>
-<div class="search-box">
-<input type="text" id="order-search-input" class="input-field" placeholder="e.g. #EK-48291">
-<button class="btn" onclick="trackOrder()">Track Order</button>
-</div>
-<div style="text-align:right;">
-<button class="forgot-link" onclick="openForgotModal()">Forgot Order ID?</button>
-</div>
-</div>
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn" aria-label="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="cart-count" id="nav-cart-count">0</span>
+            </a>
 
-<div class="result-card" id="result-card">
-<div class="order-header-info">
-<div>
-<h3 id="res-id" style="font-weight:900; font-size:1.1rem;">#EK-00000</h3>
-<p id="res-date" style="font-size:0.8rem; color:var(--text-muted);">Date: —</p>
-<p id="res-customer" style="font-size:0.8rem; font-weight:600; color:#333; margin-top:2px;"></p>
-</div>
-<div>
-<span id="res-status-badge" class="status-badge status-received">Processing</span>
-</div>
-</div>
+            <div class="dropdown-wrapper">
+                <button class="menu-toggle-btn" onclick="toggleDropdown()" aria-label="Toggle navigation menu">☰</button>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">Navigation</div>
+                        <ul class="dropdown-links">
+                            <li><a href="index.html">Home</a></li>
+                            <li><a href="shop.html">Shop All</a></li>
+                            <li><a href="track.html">Track Order</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">Support</div>
+                        <ul class="dropdown-links">
+                            <li><a href="shop.html">Shipping Info</a></li>
+                            <li><a href="shop.html">Returns & Exchanges</a></li>
+                            <li><a href="shop.html">FAQ</a></li>
+                            <li><a href="shop.html">Size Guide</a></li>
+                        </ul>
+                    </div>
+                    <div class="dropdown-section">
+                        <div class="dropdown-title">The Egyptian King</div>
+                        <p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
+                        <ul class="dropdown-links">
+                            <li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li>
+                            <li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li>
+                            <li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
 
-<div style="margin-bottom:1.5rem;">
-<p style="font-size:0.85rem; font-weight:700; margin-bottom:0.3rem;">Current Status Message:</p>
-<p id="res-status-desc" style="font-size:0.9rem; color:var(--text-muted);"></p>
-</div>
+    <!-- Track Container -->
+    <div class="track-container">
+        <div class="page-header">
+            <h1>Order Tracking</h1>
+            <p>Enter your Order ID to monitor live progress</p>
+        </div>
 
-<h4 style="font-size:0.95rem; font-weight:800; text-transform:uppercase; margin-bottom:1rem; letter-spacing:0.5px;">Milestone Timeline</h4>
-<div class="timeline" id="timeline-container">
-<div class="delivery-truck" id="truck-icon">🚚</div>
-</div>
-</div>
+        <div class="search-box-wrapper">
+            <div class="search-box">
+                <input type="text" id="order-search-input" class="input-field" placeholder="e.g. #EK-48291">
+                <button class="btn-primary" onclick="trackOrder()">Track Order</button>
+            </div>
+            <div style="text-align:right; margin-top: 0.5rem;">
+                <button class="forgot-link" onclick="openForgotModal()">Forgot Order ID?</button>
+            </div>
+        </div>
 
-<div class="admin-panel-toggle">
-<p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:0.5rem;">Store Owner Control Panel</p>
-<button class="btn" style="background:#bfa15f; font-size:0.75rem; padding:0.5rem 1rem;" onclick="promptAdminPasscode()">Open Owner Dashboard</button>
-</div>
-</div>
+        <div class="result-card" id="result-card">
+            <div class="order-header-info">
+                <div>
+                    <h3 id="res-id">#EK-00000</h3>
+                    <p id="res-date">Date: —</p>
+                    <p id="res-customer" style="font-weight: 700; color: var(--text-main); margin-top: 4px;"></p>
+                </div>
+                <div>
+                    <span id="res-status-badge" class="status-badge status-received">Processing</span>
+                </div>
+            </div>
 
-<!-- PASSCODE MODAL -->
-<div class="modal-overlay" id="passcode-modal">
-<div class="modal-content" style="max-width:380px; text-align:center;">
-<h3 style="font-size:1.1rem; font-weight:900; margin-bottom:0.5rem;">Owner Passcode Required</h3>
-<p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1rem;">Enter secure passcode to manage store orders.</p>
-<div style="margin-bottom:1rem;">
-<input type="password" id="passcode-input" class="input-field" placeholder="Enter passcode..." style="text-align:center;">
-</div>
-<div style="display:flex; gap:0.5rem;">
-<button class="btn" style="flex:1;" onclick="verifyPasscode()">Unlock</button>
-<button class="btn" style="background:#ccc; color:#000; flex:1;" onclick="closePasscodeModal()">Cancel</button>
-</div>
-</div>
-</div>
+            <div style="margin-bottom: 1.5rem;">
+                <p style="font-size: 0.75rem; font-weight: 700; margin-bottom: 0.3rem; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted);">Current Status Message:</p>
+                <p id="res-status-desc" style="font-size: 0.9rem; color: var(--text-main); line-height: 1.6;"></p>
+            </div>
 
-<!-- MASTER ADMIN DASHBOARD MODAL -->
-<div class="modal-overlay" id="admin-modal">
-<div class="modal-content">
-<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:1rem;">
-<h3 style="font-size:1.2rem; font-weight:900;">Live Order Control Dashboard</h3>
-<button onclick="closeAdminModal()" style="background:none; border:none; font-weight:bold; cursor:pointer; font-size:1.1rem;">✕</button>
-</div>
-<p style="font-size:0.8rem; color:var(--text-muted); margin-bottom:1.5rem;">Review all active customer orders and update their statuses in real time.</p>
-<div id="admin-orders-list"></div>
-</div>
-</div>
+            <h4 style="font-size: 0.9rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 1px; border-top: 1px solid var(--border); padding-top: 1.5rem;">Milestone Timeline</h4>
+            <div class="timeline" id="timeline-container">
+                <div class="delivery-truck" id="truck-icon">🚚</div>
+            </div>
+        </div>
 
-<!-- FORGOT ORDER ID MODAL -->
-<div class="modal-overlay" id="forgot-modal">
-<div class="modal-content">
-<h3 style="font-size:1.2rem; font-weight:900; margin-bottom:0.5rem;">Find Your Order ID</h3>
-<p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:1.2rem;">Re-enter your checkout details (Phone, Name, or Email).</p>
-<div style="margin-bottom:1rem;">
-<input type="text" id="forgot-query" class="input-field" placeholder="Enter phone, name, or email..." style="width:100%;">
-</div>
-<div id="forgot-results-list" style="margin-bottom:1rem; max-height:180px; overflow-y:auto;"></div>
-<div style="display:flex; gap:0.5rem;">
-<button class="btn" style="flex:1;" onclick="searchUserOrders()">Search Orders</button>
-<button class="btn" style="background:#ccc; color:#000; flex:1;" onclick="closeForgotModal()">Close</button>
-</div>
-</div>
-</div>
+        <div class="admin-panel-toggle">
+            <p>Store Owner Control Panel</p>
+            <button class="btn-ghost" onclick="promptAdminPasscode()">Open Owner Dashboard</button>
+        </div>
+    </div>
 
-<script>
-function getStoredOrders() {
-return JSON.parse(localStorage.getItem('allStoreOrders')) || [];
-}
+    <!-- Footer -->
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h5>The Egyptian King</h5>
+                <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">IG</a>
+                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">FB</a>
+                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">X</a>
+                    <a href="#" aria-label="TikTok">TT</a>
+                </div>
+            </div>
+            <div>
+                <h5>Shop</h5>
+                <ul>
+                    <li><a href="shop.html">All Products</a></li>
+                    <li><a href="shop.html">Hoodies</a></li>
+                    <li><a href="shop.html">New Arrivals</a></li>
+                    <li><a href="shop.html">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Support</h5>
+                <ul>
+                    <li><a href="track.html">Track Order</a></li>
+                    <li><a href="shop.html">Shipping Info</a></li>
+                    <li><a href="shop.html">Returns</a></li>
+                    <li><a href="shop.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Company</h5>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved. WB 5.4</span>
+            <div class="payment-icons">
+                <span class="payment-icon">VISA</span>
+                <span class="payment-icon">MC</span>
+                <span class="payment-icon">AMEX</span>
+                <span class="payment-icon">PAYPAL</span>
+                <span class="payment-icon">APPLE</span>
+            </div>
+        </div>
+    </footer>
 
-window.addEventListener('DOMContentLoaded', () => {
-let lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
-if(lastOrder) {
-let allOrders = getStoredOrders();
-if(!allOrders.some(o => o.orderId === lastOrder.orderId)) {
-allOrders.unshift({
-orderId: lastOrder.orderId,
-date: lastOrder.date,
-status: 'received',
-note: 'Your order has been registered successfully.',
-customer: lastOrder.customer
-});
-localStorage.setItem('allStoreOrders', JSON.stringify(allOrders));
-}
-}
-});
+    <!-- PASSCODE MODAL -->
+    <div class="modal-overlay" id="passcode-modal">
+        <div class="modal-card" style="max-width: 400px;">
+            <button class="modal-close" onclick="closePasscodeModal()">✕</button>
+            <h3>Owner Passcode</h3>
+            <p>Enter secure passcode to manage store orders.</p>
+            <input type="password" id="passcode-input" class="input-field" placeholder="Enter passcode..." style="text-align: center; margin-bottom: 1.5rem;">
+            <div style="display: flex; gap: 0.75rem; justify-content: center;">
+                <button class="btn-primary" onclick="verifyPasscode()">Unlock</button>
+                <button class="btn-ghost" onclick="closePasscodeModal()">Cancel</button>
+            </div>
+        </div>
+    </div>
 
-function showSiteAlert(msg) {
-const alertBox = document.getElementById('custom-site-alert');
-alertBox.innerText = msg;
-alertBox.classList.add('show');
-setTimeout(() => { alertBox.classList.remove('show'); }, 4000);
-}
+    <!-- MASTER ADMIN DASHBOARD MODAL -->
+    <div class="modal-overlay" id="admin-modal">
+        <div class="modal-card" style="max-width: 650px; text-align: left;">
+            <button class="modal-close" onclick="closeAdminModal()">✕</button>
+            <h3 style="text-align: center;">Live Order Control</h3>
+            <p style="text-align: center;">Review all active customer orders and update their statuses in real time.</p>
+            <div id="admin-orders-list"></div>
+        </div>
+    </div>
 
-function trackOrder() {
-const queryId = document.getElementById('order-search-input').value.trim();
-const allOrders = getStoredOrders();
-const resultCard = document.getElementById('result-card');
+    <!-- FORGOT ORDER ID MODAL -->
+    <div class="modal-overlay" id="forgot-modal">
+        <div class="modal-card" style="max-width: 500px; text-align: left;">
+            <button class="modal-close" onclick="closeForgotModal()">✕</button>
+            <h3 style="text-align: center;">Find Your Order ID</h3>
+            <p style="text-align: center;">Re-enter your checkout details (Phone, Name, or Email).</p>
+            <input type="text" id="forgot-query" class="input-field" placeholder="Enter phone, name, or email..." style="margin-bottom: 1rem;">
+            <div id="forgot-results-list" style="margin-bottom: 1rem; max-height: 200px; overflow-y: auto;"></div>
+            <div style="display: flex; gap: 0.75rem; justify-content: center;">
+                <button class="btn-primary" onclick="searchUserOrders()">Search</button>
+                <button class="btn-ghost" onclick="closeForgotModal()">Close</button>
+            </div>
+        </div>
+    </div>
 
-if (allOrders.length === 0) {
-showSiteAlert("U have no orders to track");
-resultCard.classList.remove('active');
-return;
-}
+    <script>
+        // ===== Global UI Functions =====
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
+        window.addEventListener('click', function(e) {
+            const wrapper = document.querySelector('.dropdown-wrapper');
+            if (wrapper && !wrapper.contains(e.target)) { document.getElementById('dropdown-menu').classList.remove('active'); }
+        });
 
-if (!queryId) {
-showSiteAlert("Please enter an Order ID.");
-return;
-}
+        function showToast(message) {
+            let container = document.querySelector('.toast-container');
+            const toast = document.createElement('div');
+            toast.className = 'toast-message';
+            toast.innerText = message;
+            container.appendChild(toast);
+            void toast.offsetWidth;
+            toast.classList.add('show');
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
+        }
 
-const order = allOrders.find(o => o.orderId.toLowerCase() === queryId.toLowerCase());
+        function updateCartCount() {
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+            document.getElementById('nav-cart-count').innerText = count;
+        }
 
-if(!order) {
-showSiteAlert("U have no orders to track");
-resultCard.classList.remove('active');
-return;
-}
+        // ===== Track Order Logic =====
+        function getStoredOrders() {
+            return JSON.parse(localStorage.getItem('allStoreOrders')) || [];
+        }
 
-document.getElementById('res-id').innerText = order.orderId;
-document.getElementById('res-date').innerText = `Date: ${order.date}`;
-document.getElementById('res-customer').innerText = `Customer: ${order.customer ? order.customer.name : 'N/A'}`;
-document.getElementById('res-status-desc').innerText = order.note;
+        window.addEventListener('DOMContentLoaded', () => {
+            updateCartCount();
+            let lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
+            if(lastOrder) {
+                let allOrders = getStoredOrders();
+                if(!allOrders.some(o => o.orderId === lastOrder.orderId)) {
+                    allOrders.unshift({
+                        orderId: lastOrder.orderId,
+                        date: lastOrder.date,
+                        status: 'received',
+                        note: 'Your order has been registered successfully.',
+                        customer: lastOrder.customer
+                    });
+                    localStorage.setItem('allStoreOrders', JSON.stringify(allOrders));
+                }
+            }
 
-const badge = document.getElementById('res-status-badge');
-badge.className = `status-badge status-${order.status}`;
-badge.innerText = order.status.toUpperCase();
+            // Auto-track if ID is in URL (e.g., coming from checkout)
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.has('track')) {
+                document.getElementById('order-search-input').value = urlParams.get('track');
+                trackOrder();
+            }
+        });
 
-const timelineContainer = document.getElementById('timeline-container');
-const stages = [
-{ key: 'received', title: 'Order Registered', desc: 'Payment verified and order logged.' },
-{ key: 'printing', title: 'Apparel Printing & Quality Check', desc: 'Custom calligraffiti press in progress.' },
-{ key: 'delayed', title: 'Status Notice / Hold', desc: 'Paused due to stock adjustments or checks.' },
-{ key: 'dispatched', title: 'Dispatched with Courier', desc: 'Handed over to delivery partner.' },
-{ key: 'delivered', title: 'Delivered', desc: 'Package safely delivered.' }
-];
+        function trackOrder() {
+            const queryId = document.getElementById('order-search-input').value.trim();
+            const allOrders = getStoredOrders();
+            const resultCard = document.getElementById('result-card');
 
-let stageReached = true;
-let activeStepIndex = 0;
+            if (allOrders.length === 0) {
+                showToast("You have no orders to track");
+                resultCard.classList.remove('active');
+                return;
+            }
 
-timelineContainer.innerHTML = `<div class="delivery-truck" id="truck-icon">🚚</div>` + stages.map((s, idx) => {
-let isCurrent = (order.status === s.key);
-let cls = '';
-if(isCurrent) { cls = 'active'; activeStepIndex = idx; stageReached = false; }
-else if(stageReached && order.status !== 'delayed') { cls = 'completed'; }
-if(order.status === 'delayed' && s.key === 'delayed') { cls = 'active'; activeStepIndex = idx; }
+            if (!queryId) {
+                showToast("Please enter an Order ID.");
+                resultCard.classList.remove('active');
+                return;
+            }
 
-return `
-<div class="timeline-step ${cls}">
-<h4>${s.title}</h4>
-<p>${s.desc}</p>
-</div>
-`;
-}).join('');
+            const order = allOrders.find(o => o.orderId.toLowerCase() === queryId.toLowerCase());
 
-// Position the moving delivery truck precisely next to the active milestone step
-setTimeout(() => {
-const stepElements = timelineContainer.querySelectorAll('.timeline-step');
-if(stepElements[activeStepIndex]) {
-const targetTop = stepElements[activeStepIndex].offsetTop;
-document.getElementById('truck-icon').style.top = `${targetTop}px`;
-}
-}, 50);
+            if(!order) {
+                showToast("No matching order found for this ID");
+                resultCard.classList.remove('active');
+                return;
+            }
 
-resultCard.classList.add('active');
-}
+            document.getElementById('res-id').innerText = order.orderId;
+            document.getElementById('res-date').innerText = `Date: ${order.date}`;
+            document.getElementById('res-customer').innerText = `Customer: ${order.customer ? order.customer.name : 'N/A'}`;
+            document.getElementById('res-status-desc').innerText = order.note;
 
-/* Secure Passcode Functions */
-function promptAdminPasscode() {
-document.getElementById('passcode-input').value = '';
-document.getElementById('passcode-modal').style.display = 'flex';
-}
+            const badge = document.getElementById('res-status-badge');
+            badge.className = `status-badge status-${order.status}`;
+            badge.innerText = order.status.toUpperCase();
 
-function closePasscodeModal() {
-document.getElementById('passcode-modal').style.display = 'none';
-}
+            const timelineContainer = document.getElementById('timeline-container');
+            const stages = [
+                { key: 'received', title: 'Order Registered', desc: 'Payment verified and order logged.' },
+                { key: 'printing', title: 'Apparel Printing & Quality Check', desc: 'Custom calligraffiti press in progress.' },
+                { key: 'delayed', title: 'Status Notice / Hold', desc: 'Paused due to stock adjustments or checks.' },
+                { key: 'dispatched', title: 'Dispatched with Courier', desc: 'Handed over to delivery partner.' },
+                { key: 'delivered', title: 'Delivered', desc: 'Package safely delivered.' }
+            ];
 
-function verifyPasscode() {
-const entered = document.getElementById('passcode-input').value.trim();
-if(entered === "01025002299Abcd") {
-closePasscodeModal();
-openMasterAdminDashboard();
-} else {
-alert("Incorrect passcode!");
-}
-}
+            let stageReached = true;
+            let activeStepIndex = 0;
 
-/* Master Admin Dashboard */
-function openMasterAdminDashboard() {
-const allOrders = getStoredOrders();
-const container = document.getElementById('admin-orders-list');
+            timelineContainer.innerHTML = `<div class="delivery-truck" id="truck-icon">🚚</div>` + stages.map((s, idx) => {
+                let isCurrent = (order.status === s.key);
+                let cls = '';
+                if(isCurrent) { cls = 'active'; activeStepIndex = idx; stageReached = false; }
+                else if(stageReached && order.status !== 'delayed') { cls = 'completed'; }
+                if(order.status === 'delayed' && s.key === 'delayed') { cls = 'active'; activeStepIndex = idx; }
 
-if(allOrders.length === 0) {
-container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted);">No orders exist in the system yet.</p>';
-} else {
-container.innerHTML = allOrders.map(o => `
-<div class="admin-order-row">
-<div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
-<strong>${o.orderId}</strong>
-<span style="font-size:0.75rem; color:var(--text-muted);">${o.date}</span>
-</div>
-<div style="font-size:0.8rem; color:#444; margin-bottom:0.6rem;">
-Customer: <strong>${o.customer ? o.customer.name : 'N/A'}</strong> (${o.customer ? o.customer.phone : ''})
-</div>
-<div style="display:flex; gap:0.5rem; align-items:center;">
-<select id="status-${o.orderId}" class="input-field" style="padding:0.4rem; font-size:0.8rem;">
-<option value="received" ${o.status==='received'?'selected':''}>1. Registered</option>
-<option value="printing" ${o.status==='printing'?'selected':''}>2. Printing</option>
-<option value="delayed" ${o.status==='delayed'?'selected':''}>⚠️ Delayed / On Hold</option>
-<option value="dispatched" ${o.status==='dispatched'?'selected':''}>3. Dispatched</option>
-<option value="delivered" ${o.status==='delivered'?'selected':''}>4. Delivered</option>
-</select>
-<input type="text" id="note-${o.orderId}" class="input-field" value="${o.note || ''}" placeholder="Custom note..." style="padding:0.4rem; font-size:0.8rem; flex:1;">
-<button class="btn" style="padding:0.4rem 0.8rem; font-size:0.75rem;" onclick="saveSingleOrderUpdate('${o.orderId}')">Save</button>
-</div>
-</div>
-`).join('');
-}
-document.getElementById('admin-modal').style.display = 'flex';
-}
+                return `
+                    <div class="timeline-step ${cls}">
+                        <h4>${s.title}</h4>
+                        <p>${s.desc}</p>
+                    </div>
+                `;
+            }).join('');
 
-function closeAdminModal() {
-document.getElementById('admin-modal').style.display = 'none';
-}
+            setTimeout(() => {
+                const stepElements = timelineContainer.querySelectorAll('.timeline-step');
+                if(stepElements[activeStepIndex]) {
+                    const targetTop = stepElements[activeStepIndex].offsetTop;
+                    document.getElementById('truck-icon').style.top = `${targetTop}px`;
+                }
+            }, 50);
 
-function saveSingleOrderUpdate(orderId) {
-const newStatus = document.getElementById(`status-${orderId}`).value;
-const customNote = document.getElementById(`note-${orderId}`).value;
+            resultCard.classList.add('active');
+        }
 
-let allOrders = getStoredOrders();
-let target = allOrders.find(o => o.orderId === orderId);
-if(target) {
-target.status = newStatus;
-target.note = customNote;
-localStorage.setItem('allStoreOrders', JSON.stringify(allOrders));
-alert(`Order ${orderId} updated successfully!`);
-openMasterAdminDashboard();
-}
-}
+        // ===== Secure Passcode Functions =====
+        function promptAdminPasscode() {
+            document.getElementById('passcode-input').value = '';
+            document.getElementById('passcode-modal').classList.add('active');
+        }
 
-/* Forgot Order ID Logic */
-function openForgotModal() {
-const allOrders = getStoredOrders();
-if(allOrders.length === 0) {
-showSiteAlert("U have no orders to track");
-return;
-}
-document.getElementById('forgot-query').value = '';
-document.getElementById('forgot-results-list').innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted);">Type your info above and click search.</p>';
-document.getElementById('forgot-modal').style.display = 'flex';
-}
+        function closePasscodeModal() {
+            document.getElementById('passcode-modal').classList.remove('active');
+        }
 
-function closeForgotModal() {
-document.getElementById('forgot-modal').style.display = 'none';
-}
+        function verifyPasscode() {
+            const entered = document.getElementById('passcode-input').value.trim();
+            if(entered === "01025002299Abcd") {
+                closePasscodeModal();
+                openMasterAdminDashboard();
+            } else {
+                showToast("Incorrect passcode!");
+            }
+        }
 
-function searchUserOrders() {
-const query = document.getElementById('forgot-query').value.trim().toLowerCase();
-const allOrders = getStoredOrders();
-const listContainer = document.getElementById('forgot-results-list');
+        // ===== Master Admin Dashboard =====
+        function openMasterAdminDashboard() {
+            const allOrders = getStoredOrders();
+            const container = document.getElementById('admin-orders-list');
 
-if(!query) {
-listContainer.innerHTML = '<p style="font-size:0.8rem; color:red;">Please type something to search.</p>';
-return;
-}
+            if(allOrders.length === 0) {
+                container.innerHTML = '<p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">No orders exist in the system yet.</p>';
+            } else {
+                container.innerHTML = allOrders.map(o => `
+                    <div class="admin-order-row">
+                        <div style="display:flex; justify-content:space-between; margin-bottom:0.5rem;">
+                            <strong>${o.orderId}</strong>
+                            <span style="font-size:0.75rem; color:var(--text-muted);">${o.date}</span>
+                        </div>
+                        <div class="ord-meta">
+                            Customer: <strong>${o.customer ? o.customer.name : 'N/A'}</strong> (${o.customer ? o.customer.phone : ''})
+                        </div>
+                        <div class="admin-controls">
+                            <select id="status-${o.orderId}" class="input-field">
+                                <option value="received" ${o.status==='received'?'selected':''}>1. Registered</option>
+                                <option value="printing" ${o.status==='printing'?'selected':''}>2. Printing</option>
+                                <option value="delayed" ${o.status==='delayed'?'selected':''}>⚠️ Delayed / On Hold</option>
+                                <option value="dispatched" ${o.status==='dispatched'?'selected':''}>3. Dispatched</option>
+                                <option value="delivered" ${o.status==='delivered'?'selected':''}>4. Delivered</option>
+                            </select>
+                            <input type="text" id="note-${o.orderId}" class="input-field" value="${o.note || ''}" placeholder="Custom note...">
+                            <button class="btn-primary" style="padding: 0.8rem 1.5rem;" onclick="saveSingleOrderUpdate('${o.orderId}')">Save</button>
+                        </div>
+                    </div>
+                `).join('');
+            }
+            document.getElementById('admin-modal').classList.add('active');
+        }
 
-const matches = allOrders.filter(o => {
-const c = o.customer || {};
-return (
-(c.name && c.name.toLowerCase().includes(query)) ||
-(c.phone && c.phone.toLowerCase().includes(query)) ||
-(c.email && c.email.toLowerCase().includes(query)) ||
-o.orderId.toLowerCase().includes(query)
-);
-});
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.remove('active');
+        }
 
-if(matches.length === 0) {
-listContainer.innerHTML = '<p style="font-size:0.8rem; color:red;">No matching orders found.</p>';
-return;
-}
+        function saveSingleOrderUpdate(orderId) {
+            const newStatus = document.getElementById(`status-${orderId}`).value;
+            const customNote = document.getElementById(`note-${orderId}`).value;
 
-listContainer.innerHTML = matches.map(m => `
-<div style="padding:0.6rem; border:1px solid var(--border); border-radius:4px; margin-bottom:0.4rem; display:flex; justify-content:space-between; align-items:center; background:#fafafa;">
-<div>
-<strong style="font-size:0.85rem;">${m.orderId}</strong>
-<div style="font-size:0.75rem; color:var(--text-muted);">${m.date} — ${m.customer ? m.customer.name : ''}</div>
-</div>
-<button class="btn" style="padding:0.3rem 0.6rem; font-size:0.7rem;" onclick="selectFoundOrder('${m.orderId}')">Select</button>
-</div>
-`).join('');
-}
+            let allOrders = getStoredOrders();
+            let target = allOrders.find(o => o.orderId === orderId);
+            if(target) {
+                target.status = newStatus;
+                target.note = customNote;
+                localStorage.setItem('allStoreOrders', JSON.stringify(allOrders));
+                showToast(`Order ${orderId} updated successfully!`);
+                openMasterAdminDashboard(); // Refresh view
+            }
+        }
 
-function selectFoundOrder(orderId) {
-document.getElementById('order-search-input').value = orderId;
-closeForgotModal();
-trackOrder();
-}
-</script>
+        // ===== Forgot Order ID Logic =====
+        function openForgotModal() {
+            const allOrders = getStoredOrders();
+            if(allOrders.length === 0) {
+                showToast("You have no orders to track");
+                return;
+            }
+            document.getElementById('forgot-query').value = '';
+            document.getElementById('forgot-results-list').innerHTML = '<p style="font-size:0.8rem; color:var(--text-muted); text-align:center; padding: 1rem 0;">Type your info above and click search.</p>';
+            document.getElementById('forgot-modal').classList.add('active');
+        }
+
+        function closeForgotModal() {
+            document.getElementById('forgot-modal').classList.remove('active');
+        }
+
+        function searchUserOrders() {
+            const query = document.getElementById('forgot-query').value.trim().toLowerCase();
+            const allOrders = getStoredOrders();
+            const listContainer = document.getElementById('forgot-results-list');
+
+            if(!query) {
+                listContainer.innerHTML = '<p style="font-size:0.8rem; color:var(--sale); text-align:center;">Please type something to search.</p>';
+                return;
+            }
+
+            const matches = allOrders.filter(o => {
+                const c = o.customer || {};
+                return (
+                    (c.name && c.name.toLowerCase().includes(query)) ||
+                    (c.phone && c.phone.toLowerCase().includes(query)) ||
+                    (c.email && c.email.toLowerCase().includes(query)) ||
+                    o.orderId.toLowerCase().includes(query)
+                );
+            });
+
+            if(matches.length === 0) {
+                listContainer.innerHTML = '<p style="font-size:0.8rem; color:var(--sale); text-align:center;">No matching orders found.</p>';
+                return;
+            }
+
+            listContainer.innerHTML = matches.map(m => `
+                <div style="padding: 1rem; border: 1px solid var(--border); border-radius: 4px; margin-bottom: 0.5rem; display: flex; justify-content: space-between; align-items: center; background: var(--bg-alt);">
+                    <div>
+                        <strong style="font-size: 0.85rem; display:block; margin-bottom: 2px;">${m.orderId}</strong>
+                        <span style="font-size: 0.75rem; color: var(--text-muted);">${m.date} — ${m.customer ? m.customer.name : ''}</span>
+                    </div>
+                    <button class="btn-ghost" style="padding: 0.5rem 1rem; font-size: 0.7rem;" onclick="selectFoundOrder('${m.orderId}')">Select</button>
+                </div>
+            `).join('');
+        }
+
+        function selectFoundOrder(orderId) {
+            document.getElementById('order-search-input').value = orderId;
+            closeForgotModal();
+            trackOrder();
+        }
+    </script>
 </body>
 </html>
