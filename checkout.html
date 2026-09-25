@@ -7,27 +7,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     
-    <!-- Google Analytics 4 (Replace G-XXXXXXXXXX with your actual ID when ready) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <!-- ===== GOOGLE ANALYTICS 4 (GA4) ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR0FBN0PRV"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
       function gtag(){dataLayer.push(arguments);}
       gtag('js', new Date());
-      gtag('config', 'G-XXXXXXXXXX');
+      gtag('config', 'G-ZR0FBN0PRV');
     </script>
-    <!-- Meta Pixel Code (Replace YOUR_PIXEL_ID with your actual ID when ready) -->
+
+    <!-- ===== META PIXEL CODE ===== -->
     <script>
-      !function(f,b,e,v,n,t,s)
-      {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-      n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-      if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-      n.queue=[];t=b.createElement(e);t.async=!0;
-      t.src=v;s=b.getElementsByTagName(e)[0];
-      s.parentNode.insertBefore(t,s)}(window, document,'script',
-      'https://connect.facebook.net/en_US/fbevents.js');
-      fbq('init', 'YOUR_PIXEL_ID');
-      fbq('track', 'PageView');
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1099053245985344');
+    fbq('track', 'PageView');
     </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1099053245985344&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
 
     <!-- Live PayPal SDK Integration -->
     <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
@@ -252,10 +257,10 @@
                     <div class="dropdown-section">
                         <div class="dropdown-title">Support</div>
                         <ul class="dropdown-links">
-                            <li><a href="shop.html">Shipping Info</a></li>
-                            <li><a href="shop.html">Returns & Exchanges</a></li>
-                            <li><a href="shop.html">FAQ</a></li>
-                            <li><a href="shop.html">Size Guide</a></li>
+                            <li><a href="terms.html">Shipping Info</a></li>
+                            <li><a href="terms.html">Returns & Exchanges</a></li>
+                            <li><a href="terms.html">FAQ</a></li>
+                            <li><a href="terms.html">Size Guide</a></li>
                         </ul>
                     </div>
                     <div class="dropdown-section">
@@ -404,9 +409,9 @@
                 <h5>Support</h5>
                 <ul>
                     <li><a href="track.html">Track Order</a></li>
-                    <li><a href="shop.html">Shipping Info</a></li>
-                    <li><a href="shop.html">Returns</a></li>
-                    <li><a href="shop.html">FAQ</a></li>
+                    <li><a href="terms.html">Shipping Info</a></li>
+                    <li><a href="terms.html">Returns</a></li>
+                    <li><a href="terms.html">FAQ</a></li>
                 </ul>
             </div>
             <div>
@@ -743,26 +748,37 @@
             };
 
             // --- EMAILJS INTEGRATION ---
-            emailjs.init({ publicKey: "BoqwuUpiG0TN-KnN2" });
+            if (typeof emailjs !== 'undefined') {
+                emailjs.init({ publicKey: "BoqwuUpiG0TN-KnN2" });
 
-            // Format items for email
-            let itemsHtml = cart.map(item => 
-                `• ${item.name} ${item.size ? '(Size: '+item.size+')' : ''} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}`
-            ).join('<br>');
+                // Format items for email
+                let itemsHtml = cart.map(item => 
+                    `• ${item.name} ${item.size ? '(Size: '+item.size+')' : ''} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}`
+                ).join('<br>');
 
-            // Send the email
-            const templateParams = {
-                to_email: email,
-                to_name: firstName,
-                order_id: generatedOrderId,
-                payment_method: method,
-                total_amount: `E£${currentTotal.toFixed(2)}`,
-                items_list: itemsHtml
-            };
+                // Send the email
+                const templateParams = {
+                    to_email: email,
+                    to_name: firstName,
+                    order_id: generatedOrderId,
+                    payment_method: method,
+                    total_amount: `E£${currentTotal.toFixed(2)}`,
+                    items_list: itemsHtml
+                };
 
-            emailjs.send("service_hzjom7o", "template_islk6aw", templateParams)
-                .then(() => console.log("Email receipt sent successfully!"))
-                .catch(err => console.error("Email failed:", err));
+                emailjs.send("service_hzjom7o", "template_b31wo7r", templateParams)
+                    .then((response) => {
+                        console.log("Email sent successfully!", response);
+                        showToast("Email receipt sent to your inbox!");
+                    })
+                    .catch((err) => {
+                        console.error("Email failed:", err);
+                        showToast("Email failed: " + (err.text || "Check EmailJS dashboard"));
+                    });
+            } else {
+                console.error("EmailJS SDK is not loaded.");
+                showToast("Email system not loaded.");
+            }
 
             // --- FIREBASE ANALYTICS & PIXEL TRACKING ---
             if (typeof fbq !== 'undefined') {
@@ -890,5 +906,11 @@
             }
         });
     </script>
+    
+    <!-- Firebase SDKs & Auth Script -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
