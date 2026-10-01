@@ -4,12 +4,50 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shop All — THE EGYPTIAN KING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <!-- Replaced Cinzel with Inter only -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    
+    <!-- ===== FIREBASE SDK (Moved to top so it loads before the page) ===== -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
+
+    <!-- ===== GOOGLE ANALYTICS 4 (GA4) ===== -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR0FBN0PRV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-ZR0FBN0PRV');
+    </script>
+
+    <!-- ===== META PIXEL CODE ===== -->
+    <script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    fbq('init', '1099053245985344');
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1099053245985344&ev=PageView&noscript=1"
+    /></noscript>
+    <!-- End Meta Pixel Code -->
+
+    <!-- Live PayPal SDK Integration -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
+
     <style>
         :root {
             --bg:#ffffff;
-            --bg-alt:#faf9f7; 
+            --bg-alt:#faf9f7;
             --text-main:#0a0a0a;
             --text-muted:#6b6b6b;
             --accent:#bfa15f;
@@ -49,71 +87,26 @@
         
         .nav-left { flex: 1; }
         
-        .brand-logo {
-            flex: 0 0 auto;
-            text-decoration: none;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .logo-img {
-            height: 26px;
-            width: auto;
-            object-fit: contain;
-            transition: height 0.3s ease, opacity 0.3s ease;
-        }
+        .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
+        .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
         header.scrolled .logo-img { height: 22px; }
         .brand-logo:hover .logo-img { opacity: 0.8; }
 
-        .nav-actions { 
-            flex: 1;
-            display:flex; 
-            gap:1.5rem; 
-            align-items:center; 
-            position:relative; 
-            justify-content: flex-end;
-        }
-        .icon-btn {
-            background:none; border:none; cursor:pointer;
-            font-size:1.15rem; color:#0a0a0a;
-            position:relative; text-decoration:none;
-            display:flex; align-items:center;
-            transition:opacity 0.3s, transform 0.3s;
-        }
+        .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
         .icon-btn:hover { opacity:0.65; transform:translateY(-1px); }
         .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
-        .cart-count {
-            position:absolute; top:-6px; right:-10px;
-            background:var(--accent); color:#fff;
-            font-size:0.6rem; font-weight:800;
-            min-width:18px; height:18px; padding:0 4px;
-            border-radius:50%;
-            display:flex; align-items:center; justify-content:center;
-            font-family:'Inter',sans-serif;
-        }
+        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; padding:0 4px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
 
         .dropdown-wrapper { position:relative; }
-        .menu-toggle-btn {
-            background:none; border:none; font-size:1.4rem; cursor:pointer;
-            color:var(--text-main); display:flex; align-items:center;
-            padding:0.25rem; transition:transform 0.3s;
-        }
+        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:transform 0.3s; }
         .menu-toggle-btn:hover { transform:rotate(90deg); }
 
-        .dropdown-menu {
-            position:absolute; top:calc(100% + 18px); right:0;
-            width:340px; background:#0a0a0a; color:#fff;
-            border-radius:4px; padding:1.75rem;
-            display:none; flex-direction:column; gap:1.5rem;
-            box-shadow:0 25px 60px rgba(0,0,0,0.4);
-            border:1px solid #222; z-index:1000; text-align:left;
-            opacity:0; transform:translateY(-10px);
-            transition:opacity 0.3s, transform 0.3s;
-        }
+        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; text-align:left; opacity:0; transform:translateY(-10px); transition:opacity 0.3s, transform 0.3s; }
         .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
         .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
         .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
-        .dropdown-title { font-family:'Cinzel',serif; font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-title { font-family:'Inter',sans-serif; font-weight:800; font-size:0.7rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
         .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
         .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; transition:color 0.3s, padding-left 0.3s; display:inline-block; }
         .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
@@ -140,9 +133,9 @@
             z-index: 1;
         }
         .shop-hero h1 {
-            font-family: 'Cinzel', serif;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
+            font-family: 'Inter', sans-serif;
             font-weight: 900;
+            font-size: clamp(2.5rem, 6vw, 4.5rem);
             letter-spacing: 4px;
             text-transform: uppercase;
             margin-bottom: 1rem;
@@ -177,9 +170,9 @@
             height: fit-content;
         }
         .sidebar h3 {
-            font-family: 'Cinzel', serif;
+            font-family: 'Inter', sans-serif;
+            font-weight: 800;
             font-size: 0.9rem;
-            font-weight: 900;
             letter-spacing: 2px;
             text-transform: uppercase;
             margin-bottom: 1.5rem;
@@ -325,33 +318,89 @@
         }
         .star-rating span { color: var(--text-muted); font-size: 0.72rem; font-weight: 400; }
 
-        /* ===== Newsletter ===== */
-        .newsletter {
-            background: #0a0a0a; color: #fff;
-            padding: 5rem 2rem; text-align: center;
+        /* ===== Membership Section ===== */
+        .membership-section {
+            background: #0a0a0a;
+            color: #fff;
+            padding: 6rem 2rem;
+            margin-top: 6rem;
+            width: 100%;
+            box-sizing: border-box;
+            display: block;
+            overflow: hidden;
         }
-        .newsletter-inner { max-width: 580px; margin: 0 auto; }
-        .newsletter .eyebrow { font-size: 0.7rem; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1.25rem; display: inline-block; }
-        .newsletter h2 { font-family: 'Cinzel', serif; font-size: clamp(1.8rem, 4vw, 2.6rem); margin-bottom: 1rem; letter-spacing: 1px; }
-        .newsletter p { color: #aaa; margin-bottom: 2.25rem; font-size: 0.95rem; line-height: 1.7; }
-        .newsletter-form { display: flex; gap: 0.5rem; max-width: 480px; margin: 0 auto; flex-wrap: wrap; }
-        .newsletter-form input {
-            flex: 1; min-width: 200px;
-            padding: 1rem 1.25rem; border: 1px solid #333;
-            background: #111; color: #fff; border-radius: 2px;
-            font-size: 0.85rem; font-family: 'Inter', sans-serif;
-            outline: none; transition: border-color 0.3s;
+        .membership-inner { 
+            max-width: 1200px; 
+            margin: 0 auto; 
+            display: block;
         }
-        .newsletter-form input:focus { border-color: var(--accent); }
-        .newsletter-form input::placeholder { color: #666; }
-        .newsletter-form button {
-            background: var(--accent); color: #fff;
-            padding: 1rem 2rem; border: none; border-radius: 2px;
-            font-weight: 700; font-size: 0.78rem;
-            letter-spacing: 2px; text-transform: uppercase;
-            cursor: pointer; transition: background 0.3s;
+        .membership-header { 
+            text-align: center; 
+            margin-bottom: 4rem; 
+            display: block;
+            width: 100%;
         }
-        .newsletter-form button:hover { background: #fff; color: #0a0a0a; }
+        .membership-header .eyebrow { font-size: 0.7rem; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
+        .membership-header h2 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 2px; margin-bottom: 1rem; }
+        .membership-header p { color: #888; font-size: 0.9rem; letter-spacing: 1px; }
+
+        .plan-grid { 
+            display: grid; 
+            grid-template-columns: repeat(3, 1fr); 
+            gap: 1.5rem; 
+            align-items: stretch;
+        }
+        .plan-card {
+            background: #111; 
+            border: 1px solid #222; 
+            border-radius: 4px;
+            padding: 2.5rem 2rem; 
+            text-align: center; 
+            position: relative;
+            transition: all 0.3s ease; 
+            display: flex; 
+            flex-direction: column;
+            min-height: 420px;
+        }
+        .plan-card:hover { border-color: #333; transform: translateY(-5px); }
+        .plan-card.premium { border-color: var(--accent); background: linear-gradient(180deg, rgba(191,161,95,0.05) 0%, #111 100%); }
+
+        .plan-badge {
+            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
+            background: var(--accent); color: #000; font-size: 0.65rem; font-weight: 800;
+            padding: 6px 16px; border-radius: 2px; letter-spacing: 1.5px; text-transform: uppercase;
+            opacity: 0; transition: opacity 0.3s ease; white-space: nowrap;
+        }
+        .plan-card.active-plan .plan-badge { opacity: 1; }
+
+        .plan-name { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
+        .plan-price { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.25rem; display: block; }
+        .plan-price span { font-size: 0.8rem; font-weight: 400; color: #888; }
+        .plan-desc { font-size: 0.8rem; color: #666; margin-bottom: 2rem; min-height: 35px; display: block; }
+
+        .plan-features { list-style: none; text-align: left; margin-bottom: 2rem; flex-grow: 1; padding: 0; }
+        .plan-features li { font-size: 0.85rem; color: #aaa; margin-bottom: 0.85rem; display: flex; align-items: flex-start; gap: 10px; }
+        .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 800; flex-shrink: 0; }
+        .plan-features li.disabled { color: #444; }
+        .plan-features li.disabled::before { content: '✕'; color: #444; }
+
+        .btn-plan {
+            width: 100%; padding: 1rem; border-radius: 2px; font-weight: 700; font-size: 0.75rem;
+            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: 1px solid #333;
+            background: transparent; color: #fff; transition: all 0.3s ease;
+            margin-top: auto;
+            display: block;
+            text-align: center;
+            text-decoration: none;
+        }
+        .btn-plan:hover { background: #fff; color: #000; border-color: #fff; }
+        .btn-plan.btn-upgrade { background: var(--accent); color: #000; border-color: var(--accent); }
+        .btn-plan.btn-upgrade:hover { background: #fff; border-color: #fff; }
+        .btn-plan.btn-current { background: #1c1c1c; color: #666; cursor: not-allowed; border-color: #1c1c1c; }
+
+        @media (max-width: 900px) { 
+            .plan-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; } 
+        }
 
         /* ===== Footer ===== */
         footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; }
@@ -362,32 +411,65 @@
         .footer-grid a:hover { color: var(--accent); padding-left: 5px; }
         .footer-brand p { color: #888; font-size: 0.88rem; line-height: 1.7; margin-top: 1rem; max-width: 340px; }
         .footer-socials { display: flex; gap: 0.85rem; margin-top: 1.5rem; }
-        .footer-socials a {
-            width: 38px; height: 38px; border: 1px solid #333;
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            color: #fff; text-decoration: none; font-size: 0.85rem; transition: all 0.3s;
-        }
+        .footer-socials a { width: 38px; height: 38px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
         .footer-socials a:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-        .footer-bottom {
-            border-top: 1px solid #1c1c1c; padding-top: 2rem;
-            display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;
-            max-width: 1300px; margin: 0 auto;
-        }
+        .footer-bottom { border-top: 1px solid #1c1c1c; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; max-width: 1300px; margin: 0 auto; }
         .footer-bottom .copyright { color: #666; font-size: 0.78rem; letter-spacing: 0.5px; }
         .payment-icons { display: flex; gap: 8px; align-items: center; }
         .payment-icon { background: #fff; color: #0a0a0a; padding: 4px 8px; border-radius: 3px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; }
 
         /* ===== Back to Top ===== */
-        .back-to-top {
-            position: fixed; bottom: 2rem; right: 2rem;
-            width: 48px; height: 48px; background: #0a0a0a; color: #fff;
-            border: none; border-radius: 50%; cursor: pointer; display: flex;
-            align-items: center; justify-content: center; font-size: 1.2rem;
-            opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 90;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.25);
-        }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: #0a0a0a; color: #fff; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
         .back-to-top.visible { opacity: 1; visibility: visible; }
         .back-to-top:hover { background: var(--accent); transform: translateY(-3px); }
+
+        /* ===== Upgrade Modal ===== */
+        .upgrade-overlay {
+            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+            display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem;
+        }
+        .upgrade-overlay.active { display: flex; }
+        .upgrade-card {
+            background: #fff; width: 100%; max-width: 450px; border-radius: 12px;
+            padding: 3rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center;
+            position: relative; max-height: 90vh; overflow-y: auto;
+        }
+        .upgrade-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; transition: color 0.2s; }
+        .upgrade-close:hover { color: #0a0a0a; }
+        .upgrade-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
+        .upgrade-subtitle { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
+        .upgrade-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 2rem; }
+
+        /* ===== Payment Options (Matching Checkout) ===== */
+        .payment-options { display:flex; flex-direction:column; gap:0.8rem; text-align: left; }
+        .payment-tab {
+            display:flex; align-items:center; gap:0.75rem; padding:1.5rem;
+            border:1px solid var(--border); border-radius:4px; cursor:pointer;
+            transition:all 0.3s ease; background:#fff;
+        }
+        .payment-tab:hover { border-color: var(--text-muted); }
+        .payment-tab.active {
+            border-color: var(--text-main);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .radio-dot {
+            width:20px; height:20px; border:2px solid #ccc; border-radius:50%;
+            display:flex; align-items:center; justify-content:center; flex-shrink:0;
+            transition:all 0.2s;
+        }
+        .payment-tab.active .radio-dot {
+            border-color: var(--text-main);
+            background: var(--text-main);
+            box-shadow: inset 0 0 0 4px #fff;
+        }
+        .payment-tab-label { font-weight:700; font-size:0.95rem; color: var(--text-main); flex: 1; }
+        .brand-logos { display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left: auto; }
+        .brand-logos svg { display:block; height:20px; width:auto; }
+
+        .payment-content { display:none; margin-top:1.2rem; padding:1.5rem; background:var(--bg-alt); border:1px solid var(--border); border-radius:4px; }
+        .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
 
         /* ===== Responsive ===== */
         @media (max-width: 1024px) {
@@ -419,10 +501,8 @@
             .product-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
             .footer-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
             .footer-grid ul { align-items: center; }
-            .newsletter-form { flex-direction: column; }
-            .newsletter-form input { width: 100%; flex: none; }
-            .newsletter-form button { width: 100%; padding: 0.9rem; }
             .dropdown-menu { width: calc(100vw - 2rem); right: -0.5rem; }
+            .upgrade-card { padding: 2rem 1.5rem; }
         }
     </style>
 </head>
@@ -456,10 +536,10 @@
                     <div class="dropdown-section">
                         <div class="dropdown-title">Support</div>
                         <ul class="dropdown-links">
-                            <li><a href="shop.html">Shipping Info</a></li>
-                            <li><a href="shop.html">Returns & Exchanges</a></li>
-                            <li><a href="shop.html">FAQ</a></li>
-                            <li><a href="shop.html">Size Guide</a></li>
+                            <li><a href="terms.html">Shipping Info</a></li>
+                            <li><a href="terms.html">Returns & Exchanges</a></li>
+                            <li><a href="terms.html">FAQ</a></li>
+                            <li><a href="terms.html">Size Guide</a></li>
                         </ul>
                     </div>
                     <div class="dropdown-section">
@@ -484,7 +564,6 @@
 
     <!-- Shop Layout -->
     <div class="shop-layout">
-        
         <!-- Sidebar -->
         <aside class="sidebar">
             <h3>Categories</h3>
@@ -528,16 +607,63 @@
         </main>
     </div>
 
-    <!-- Newsletter -->
-    <section class="newsletter">
-        <div class="newsletter-inner">
-            <p class="eyebrow">Join The Kingdom</p>
-            <h2>Get 10% Off Your First Order</h2>
-            <p>Be the first to know about exclusive drops, private sales, and behind-the-scenes content. No spam, only gold.</p>
-            <form class="newsletter-form" onsubmit="subscribeNewsletter(event)">
-                <input type="email" placeholder="Enter your email address" required>
-                <button type="submit">Subscribe</button>
-            </form>
+    <!-- Membership Plans -->
+    <section class="membership-section" id="membership-plans">
+        <div class="membership-inner">
+            <div class="membership-header">
+                <p class="eyebrow">Join The Kingdom</p>
+                <h2>Membership Tiers</h2>
+                <p>Unlock exclusive discounts and premium perks.</p>
+            </div>
+            <div class="plan-grid">
+                <!-- Basic Plan -->
+                <div class="plan-card" id="card-basic">
+                    <div class="plan-badge">UR CURRENT PLAN</div>
+                    <h3 class="plan-name">Basic</h3>
+                    <div class="plan-price">Free<span> /forever</span></div>
+                    <p class="plan-desc">The standard citizen experience.</p>
+                    <ul class="plan-features">
+                        <li>Account & Order History</li>
+                        <li>Standard Shipping Rates</li>
+                        <li>Access to General Drops</li>
+                        <li class="disabled">Product Discounts</li>
+                        <li class="disabled">Exclusive Gold Tags</li>
+                    </ul>
+                    <button class="btn-plan btn-current" onclick="upgradePlan('Basic')">Current Plan</button>
+                </div>
+
+                <!-- Standard Plan -->
+                <div class="plan-card" id="card-standard">
+                    <div class="plan-badge">UR CURRENT PLAN</div>
+                    <h3 class="plan-name">Standard</h3>
+                    <div class="plan-price">150 EGP<span> /month</span></div>
+                    <p class="plan-desc">For the regular streetwear enthusiast.</p>
+                    <ul class="plan-features">
+                        <li>Everything in Basic</li>
+                        <li><strong>10% Off</strong> All Products</li>
+                        <li>Free Standard Shipping</li>
+                        <li>2x Reward Points</li>
+                        <li class="disabled">Exclusive Gold Tags</li>
+                    </ul>
+                    <button class="btn-plan btn-upgrade" onclick="upgradePlan('Standard')">Upgrade to Standard</button>
+                </div>
+
+                <!-- Premium Plan -->
+                <div class="plan-card premium" id="card-premium">
+                    <div class="plan-badge">UR CURRENT PLAN</div>
+                    <h3 class="plan-name">Premium</h3>
+                    <div class="plan-price">300 EGP<span> /month</span></div>
+                    <p class="plan-desc">The ultimate monarch experience.</p>
+                    <ul class="plan-features">
+                        <li>Everything in Standard</li>
+                        <li><strong>20% Off</strong> All Products</li>
+                        <li>Free Express Shipping</li>
+                        <li>3x Reward Points</li>
+                        <li><strong>Exclusive Gold Tag</strong> on Hoodies</li>
+                    </ul>
+                    <button class="btn-plan btn-upgrade" onclick="upgradePlan('Premium')">Upgrade to Premium</button>
+                </div>
+            </div>
         </div>
     </section>
 
@@ -559,7 +685,6 @@
                 <ul>
                     <li><a href="shop.html">All Products</a></li>
                     <li><a href="shop.html">Hoodies</a></li>
-                    <li><a href="shop.html">T-Shirts</a></li>
                     <li><a href="shop.html">New Arrivals</a></li>
                     <li><a href="shop.html">Best Sellers</a></li>
                 </ul>
@@ -568,10 +693,9 @@
                 <h5>Support</h5>
                 <ul>
                     <li><a href="track.html">Track Order</a></li>
-                    <li><a href="shop.html">Shipping Info</a></li>
-                    <li><a href="shop.html">Returns</a></li>
-                    <li><a href="shop.html">Size Guide</a></li>
-                    <li><a href="shop.html">FAQ</a></li>
+                    <li><a href="terms.html">Shipping Info</a></li>
+                    <li><a href="terms.html">Returns</a></li>
+                    <li><a href="terms.html">FAQ</a></li>
                 </ul>
             </div>
             <div>
@@ -580,7 +704,6 @@
                     <li><a href="#">Our Story</a></li>
                     <li><a href="#">Sustainability</a></li>
                     <li><a href="#">Careers</a></li>
-                    <li><a href="#">Wholesale</a></li>
                     <li><a href="#">Contact</a></li>
                 </ul>
             </div>
@@ -598,6 +721,44 @@
     </footer>
 
     <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">↑</button>
+
+    <!-- Upgrade Modal -->
+    <div class="upgrade-overlay" id="upgrade-overlay">
+        <div class="upgrade-card">
+            <button class="upgrade-close" onclick="closeUpgradeModal()">✕</button>
+            <h2 class="upgrade-title" id="upgrade-plan-name">Standard</h2>
+            <p class="upgrade-subtitle">Unlock exclusive perks and discounts.</p>
+            <div class="upgrade-price" id="upgrade-plan-price">150 EGP / month</div>
+            
+            <div class="payment-options">
+                <!-- 1. Debit or Credit Card -->
+                <div class="payment-tab active" onclick="selectUpgradePayment('card')">
+                    <div class="radio-dot"></div>
+                    <span class="payment-tab-label">Debit or Credit Card</span>
+                    <div class="brand-logos">
+                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><path fill="#FFF" d="M13.8 16.5l1.6-9.6h2.6l-1.6 9.6h-2.6zm8.8-9.4c-.5-.2-1.4-.4-2.4-.4-2.7 0-4.6 1.4-4.6 3.4 0 1.5 1.3 2.3 2.3 2.8 1 .5 1.4.8 1.4 1.3 0 .7-.9 1-1.7 1-.1 0-1.7-.1-2.6-.5l-.4-.2-.4 2.4c.7.3 2 .6 3.3.6 3 0 4.9-1.4 4.9-3.6 0-1.2-.7-2.1-2.3-2.9-.9-.5-1.5-.8-1.5-1.3 0-.4.5-.9 1.5-.9.9 0 1.6.2 2.1.4l.3.1.5-2.2zm6.2-.2h-2c-.6 0-1.1.2-1.3.8l-3.7 8.8h2.8l.6-1.5h3.4l.3 1.5h2.5l-2.2-9.6zm-2.4 6.2l1.1-2.9.6 2.9h-1.7zM11.9 6.9L9.4 13.5l-.3-1.4c-.5-1.7-2-3.5-3.7-4.4l2.4 8.8h2.8l4.1-9.6h-2.8z"/></svg>
+                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><circle cx="13" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M18 6.6a6.9 6.9 0 000 10.8 6.9 6.9 0 000-10.8z" fill="#FF5F00"/></svg>
+                    </div>
+                </div>
+                <div class="payment-content active" id="upgrade-content-card">
+                    <div id="upgrade-card-button-container"></div>
+                </div>
+
+                <!-- 2. PayPal -->
+                <div class="payment-tab" onclick="selectUpgradePayment('paypal')">
+                    <div class="radio-dot"></div>
+                    <span class="payment-tab-label">PayPal</span>
+                    <div class="brand-logos">
+                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"/><path fill="#0079C1" d="M13.5 6h-3.2c-.2 0-.4.2-.4.4l-2 12.8c0 .2.1.3.3.3h1.6c.2 0 .4-.2.4-.4l.6-3.8c0-.2.2-.4.4-.4h1.1c2.2 0 3.8-1.1 4.1-3.2.2-1 0-1.7-.4-2.2-.6-.6-1.5-.8-2.5-.8zm.6 3.2c-.2 1.1-1 1.1-1.8 1.1h-.5l.3-2c0-.1.2-.2.3-.2h.3c.6 0 1.1 0 1.3.3.2.1.2.5.1.8z"/></svg>
+                    </div>
+                </div>
+                <div class="payment-content" id="upgrade-content-paypal">
+                    <div id="upgrade-paypal-button-container"></div>
+                </div>
+            </div>
+            <p style="font-size: 0.7rem; color: #999; margin-top: 1rem; text-align: center;">Secure payment powered by PayPal</p>
+        </div>
+    </div>
 
     <script>
         // ===== Dropdown =====
@@ -626,14 +787,6 @@
             }, 3000);
         }
         window.showToast = showToast;
-
-        // ===== Newsletter =====
-        function subscribeNewsletter(e) {
-            e.preventDefault();
-            const input = e.target.querySelector('input');
-            showToast('Welcome to the kingdom! Check your inbox for 10% off 👑');
-            input.value = '';
-        }
 
         // ===== Products Data (All 24 Items Included) =====
         const rawProducts = [
@@ -668,12 +821,13 @@
             let category = p.name.includes("Basic H Core") ? "basic" : "graphic";
             let badge = "";
             if (p.rating >= 4.9) badge = "bestseller";
-            else if (p.id % 3 === 0) badge = "new"; // Just adding some 'New' badges for variety
+            else if (p.id % 3 === 0) badge = "new";
             return { ...p, category, badge };
         });
 
         let currentFilter = 'all';
         let currentSort = 'featured';
+        let selectedUpgradePlan = '';
 
         function getStars(rating) {
             let r = Math.round(rating);
@@ -724,9 +878,7 @@
                     <div class="product-info">
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
                         <h3 class="product-title">${p.name}</h3>
-                        <p class="product-price">
-                            E£${p.price}.00 EGP
-                        </p>
+                        <p class="product-price">E£${p.price}.00 EGP</p>
                     </div>
                 </div>
             `).join('');
@@ -747,18 +899,32 @@
 
         function quickAdd(id) {
             const product = products.find(p => p.id === id);
+            const activeSizeBtn = document.querySelector('.size-btn.active');
+            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'One Size';
+
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const existing = cart.find(item => item.id === id);
-            if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({ ...product, qty: 1 }); }
+            const existing = cart.find(item => item.id === id && item.size === selectedSize);
+            if (existing) { existing.qty = (existing.qty || 1) + 1; } 
+            else { cart.push({ ...product, qty: 1, size: selectedSize }); }
+            
             localStorage.setItem('kingCart', JSON.stringify(cart));
             updateCartCount();
-            showToast(`${product.name} added to bag!`);
+            
+            // --- ANALYTICS & PIXEL TRACKING ---
+            if (typeof fbq !== 'undefined') fbq('track', 'AddToCart', { value: product.price, currency: 'USD' });
+            if (typeof gtag !== 'undefined') gtag('event', 'add_to_cart', { items: [{ id: product.id, name: product.name, price: product.price }] });
+
+            showToast(`${product.name} (Size: ${selectedSize}) added to bag!`);
+            
+            // Sync to Firebase if logged in
+            if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
         function updateCartCount() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const totalCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            document.getElementById('nav-cart-count').innerText = totalCount;
+            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
+            const navCount = document.getElementById('nav-cart-count');
+            if (navCount) navCount.innerText = count;
         }
 
         // ===== Scroll Effects =====
@@ -779,182 +945,187 @@
             });
         });
 
+        // ===== Membership Plan Logic =====
+        function checkUserPlan() {
+            if (typeof firebase === 'undefined' || !firebase.auth) {
+                updatePlanUI('Basic');
+                return;
+            }
+
+            firebase.auth().onAuthStateChanged(user => {
+                if (user) {
+                    firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
+                        if (doc.exists) {
+                            const currentPlan = doc.data().subscriptionTier || 'Basic';
+                            updatePlanUI(currentPlan);
+                        } else {
+                            updatePlanUI('Basic');
+                        }
+                    });
+                } else {
+                    updatePlanUI('Basic'); // Logged out users see Basic as active
+                }
+            });
+        }
+
+        function updatePlanUI(plan) {
+            const plans = ['basic', 'standard', 'premium'];
+            plans.forEach(p => {
+                const card = document.getElementById(`card-${p}`);
+                if (!card) return;
+                
+                card.classList.remove('active-plan');
+                const btn = card.querySelector('button');
+                
+                if (p.toLowerCase() === plan.toLowerCase()) {
+                    card.classList.add('active-plan');
+                    btn.className = 'btn-plan btn-current';
+                    btn.innerText = 'Current Plan';
+                    btn.onclick = null;
+                } else {
+                    const planName = p.charAt(0).toUpperCase() + p.slice(1);
+                    btn.className = 'btn-plan btn-upgrade';
+                    btn.innerText = `Upgrade to ${planName}`;
+                    btn.onclick = () => upgradePlan(planName);
+                }
+            });
+        }
+
+        function upgradePlan(planName) {
+            if (planName === 'Basic') return; // Can't "upgrade" to basic
+
+            selectedUpgradePlan = planName;
+            let egpPrice = planName === 'Standard' ? 150 : 300;
+            let usdPrice = (egpPrice / 50).toFixed(2); // Convert EGP to USD for PayPal
+
+            // Update modal text
+            document.getElementById('upgrade-plan-name').innerText = planName;
+            document.getElementById('upgrade-plan-price').innerText = `${egpPrice} EGP / month (~$${usdPrice})`;
+            
+            // Open the popup instantly
+            document.getElementById('upgrade-overlay').classList.add('active');
+            
+            const user = typeof firebase !== 'undefined' && firebase.auth ? firebase.auth().currentUser : null;
+            const cardContainer = document.getElementById('upgrade-card-button-container');
+            const paypalContainer = document.getElementById('upgrade-paypal-button-container');
+            
+            if (cardContainer) cardContainer.innerHTML = '';
+            if (paypalContainer) paypalContainer.innerHTML = '';
+
+            if (!user) {
+                // If not logged in, show login prompt inside the popup
+                cardContainer.innerHTML = `
+                    <div style="text-align: center; padding: 2rem 0;">
+                        <p style="color: #0a0a0a; font-weight: 700; margin-bottom: 1.5rem; font-size: 0.9rem;">Please login to your Egyptian King account to activate your membership.</p>
+                        <button onclick="window.location.href='login.html'" style="width: 100%; padding: 1rem; background: #0a0a0a; color: #fff; border: none; border-radius: 2px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;">Login / Sign Up</button>
+                    </div>
+                `;
+            } else {
+                // If logged in, render PayPal buttons
+                renderUpgradePayPal(usdPrice);
+            }
+        }
+
+        function closeUpgradeModal() {
+            document.getElementById('upgrade-overlay').classList.remove('active');
+        }
+
+        function selectUpgradePayment(method) {
+            document.querySelectorAll('.upgrade-overlay .payment-tab').forEach(t => t.classList.remove('active'));
+            document.querySelectorAll('.upgrade-overlay .payment-content').forEach(c => c.classList.remove('active'));
+            document.querySelector(`.upgrade-overlay [onclick="selectUpgradePayment('${method}')"]`).classList.add('active');
+            document.getElementById(`upgrade-content-${method}`).classList.add('active');
+        }
+
+        function renderUpgradePayPal(usdPrice) {
+            const cardContainer = document.getElementById('upgrade-card-button-container');
+            const paypalContainer = document.getElementById('upgrade-paypal-button-container');
+            
+            if (window.paypal) {
+                // 1. Debit/Credit Card Button
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.CARD,
+                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({ 
+                            purchase_units: [{ 
+                                amount: { value: usdPrice, currency: 'USD' }, 
+                                description: `${selectedUpgradePlan} Membership (Monthly)` 
+                            }] 
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            confirmUpgradeFirebase(selectedUpgradePlan);
+                        });
+                    },
+                    onError: function(err) {
+                        showToast("Card payment failed or cancelled.");
+                    }
+                }).render(cardContainer).catch(err => console.error("PayPal Card Render Error:", err));
+
+                // 2. PayPal Button
+                paypal.Buttons({
+                    fundingSource: paypal.FUNDING.PAYPAL,
+                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
+                    createOrder: function(data, actions) {
+                        return actions.order.create({ 
+                            purchase_units: [{ 
+                                amount: { value: usdPrice, currency: 'USD' }, 
+                                description: `${selectedUpgradePlan} Membership (Monthly)` 
+                            }] 
+                        });
+                    },
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            confirmUpgradeFirebase(selectedUpgradePlan);
+                        });
+                    },
+                    onError: function(err) {
+                        showToast("PayPal payment failed or cancelled.");
+                    }
+                }).render(paypalContainer).catch(err => console.error("PayPal Button Render Error:", err));
+
+            } else {
+                cardContainer.innerHTML = '<p style="color:red; text-align:center;">Payment system failed to load. Please refresh the page.</p>';
+            }
+        }
+
+        function confirmUpgradeFirebase(planName) {
+            const user = firebase.auth().currentUser;
+            firebase.firestore().collection('users').doc(user.uid).set({
+                subscriptionTier: planName
+            }, { merge: true }).then(() => {
+                showToast(`Successfully upgraded to ${planName}! 👑`);
+                updatePlanUI(planName);
+                applyMembershipDiscount(planName);
+                closeUpgradeModal();
+            }).catch(err => {
+                showToast("Error upgrading plan.");
+                closeUpgradeModal();
+            });
+        }
+
+        function applyMembershipDiscount(planName) {
+            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            if (cart.length === 0) return;
+            
+            cart.forEach(item => {
+                let basePrice = item.originalPrice || item.price; 
+                if (planName === 'Standard') item.price = Math.round(basePrice * 0.9); // 10% off
+                if (planName === 'Premium') item.price = Math.round(basePrice * 0.8); // 20% off
+            });
+            
+            localStorage.setItem('kingCart', JSON.stringify(cart));
+            updateCartCount();
+        }
+
+        // Run on load
         window.addEventListener('DOMContentLoaded', () => {
             renderProducts();
             updateCartCount();
+            checkUserPlan();
         });
     </script>
-
-    <!-- Receipt Modal -->
-    <div id="receipt-modal-overlay" class="receipt-overlay">
-        <div class="receipt-modal-card">
-            <div id="receipt-loader" class="receipt-loader-box">
-                <div class="spinner"></div>
-                <h3>LOADING YOUR RECEIPT...</h3>
-                <p>Generating your official order confirmation image.</p>
-            </div>
-            <div id="receipt-content-box" class="receipt-content-box" style="display: none;">
-                <div class="receipt-preview-wrapper">
-                    <img id="generated-receipt-img" src="" alt="Order Receipt">
-                </div>
-                <div class="receipt-actions">
-                    <button id="btn-save-receipt" class="btn-receipt primary">Save Receipt</button>
-                    <button id="btn-copy-receipt" class="btn-receipt secondary">Copy Receipt</button>
-                    <button onclick="closeReceiptModal()" class="btn-receipt close">Close</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div id="receipt-capture-node" class="receipt-node">
-        <div class="watermark-bg">THE EGYPTIAN KING</div>
-        <div class="node-header">
-            <h2>THE EGYPTIAN KING</h2>
-            <p class="node-tagline">OFFICIAL ORDER RECEIPT</p>
-        </div>
-        <hr class="node-divider">
-        <div class="node-meta">
-            <div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div>
-            <div><strong>Date:</strong> <span id="node-order-date">---</span></div>
-        </div>
-        <div class="node-customer">
-            <p><strong>Customer:</strong> <span id="node-customer-name">---</span></p>
-            <p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p>
-            <p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p>
-        </div>
-        <hr class="node-divider">
-        <div id="node-items-list" class="node-items"></div>
-        <hr class="node-divider">
-        <div class="node-total">
-            <span>TOTAL PAID:</span>
-            <span id="node-total-price">E£0.00</span>
-        </div>
-        <div class="node-footer">
-            <p>Thank you for shopping with THE EGYPTIAN KING.</p>
-            <p>Keep this receipt image for delivery verification.</p>
-        </div>
-    </div>
-
-    <style>
-    .receipt-overlay {
-        position:fixed; top:0; left:0; width:100vw; height:100vh;
-        background:rgba(0,0,0,0.85); backdrop-filter:blur(8px);
-        display:none; justify-content:center; align-items:center; z-index:99999;
-        padding: 1rem;
-    }
-    .receipt-overlay.active { display:flex; }
-    .receipt-modal-card {
-        background:#fff; width:100%; max-width:480px; border-radius:12px;
-        padding:2rem; box-shadow:0 20px 50px rgba(0,0,0,0.5);
-        text-align:center; max-height:90vh; overflow-y:auto;
-    }
-    .receipt-loader-box { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2rem 0; }
-    .spinner {
-        width:48px; height:48px; border:4px solid #e5e5e5;
-        border-top:4px solid #0a0a0a; border-radius:50%;
-        animation:spin 0.9s linear infinite;
-    }
-    @keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
-    .receipt-preview-wrapper img {
-        width:100%; border-radius:8px; border:1px solid #e5e5e5;
-        box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:1.5rem;
-    }
-    .receipt-actions { display:flex; flex-direction:column; gap:0.75rem; }
-    .btn-receipt {
-        width:100%; padding:0.9rem; border-radius:6px; font-weight:800;
-        font-size:0.85rem; text-transform:uppercase; cursor:pointer; border:none; transition:0.2s;
-    }
-    .btn-receipt.primary { background:#0a0a0a; color:#fff; }
-    .btn-receipt.secondary { background:#f0f0f0; color:#0a0a0a; border:1px solid #ccc; }
-    .btn-receipt.close { background:transparent; color:#666; text-decoration:underline; }
-    .receipt-node {
-        position:absolute; left:-9999px; top:-9999px; width:420px;
-        background:#fff; color:#0a0a0a; padding:2.5rem; font-family:'Inter',sans-serif;
-        border:2px solid #0a0a0a; box-sizing:border-box; overflow:hidden;
-    }
-    .watermark-bg {
-        position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg);
-        font-size:3.2rem; font-weight:900; color:rgba(0,0,0,0.04);
-        white-space:nowrap; pointer-events:none; font-family:'Cinzel',serif; letter-spacing:4px;
-    }
-    .node-header h2 { font-family:'Cinzel',serif; font-size:1.5rem; font-weight:900; letter-spacing:2px; }
-    .node-tagline { font-size:0.75rem; letter-spacing:1.5px; color:#666; font-weight:700; margin-top:4px; }
-    .node-divider { border:0; border-top:1px dashed #ccc; margin:1rem 0; }
-    .node-meta, .node-customer { font-size:0.85rem; text-align:left; line-height:1.6; }
-    .node-items { text-align:left; font-size:0.85rem; }
-    .node-item-row { display:flex; justify-content:space-between; margin-bottom:0.4rem; font-weight:600; }
-    .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
-    .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
-    </style>
-
-    <script>
-        function checkAndRenderOrderReceipt() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (!urlParams.has('orderSuccess')) return;
-            const lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
-            if (!lastOrder) return;
-
-            const overlay = document.getElementById('receipt-modal-overlay');
-            overlay.classList.add('active');
-
-            document.getElementById('node-order-id').innerText = lastOrder.orderId;
-            document.getElementById('node-order-date').innerText = lastOrder.date;
-            document.getElementById('node-customer-name').innerText = lastOrder.customer.name;
-            document.getElementById('node-customer-phone').innerText = lastOrder.customer.phone;
-            document.getElementById('node-customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city}`;
-            document.getElementById('node-total-price').innerText = lastOrder.total;
-
-            const itemsContainer = document.getElementById('node-items-list');
-            itemsContainer.innerHTML = lastOrder.items.map(item => `
-                <div class="node-item-row">
-                    <span>${item.name} (x${item.qty})</span>
-                    <span>E£${(item.price * item.qty).toFixed(2)}</span>
-                </div>
-            `).join('');
-
-            setTimeout(() => {
-                const receiptNode = document.getElementById('receipt-capture-node');
-                html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-                    const imageDataUrl = canvas.toDataURL('image/png');
-                    const imgElement = document.getElementById('generated-receipt-img');
-                    imgElement.src = imageDataUrl;
-                    document.getElementById('receipt-loader').style.display = 'none';
-                    document.getElementById('receipt-content-box').style.display = 'block';
-
-                    document.getElementById('btn-save-receipt').onclick = function() {
-                        const a = document.createElement('a');
-                        a.href = imageDataUrl;
-                        a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`;
-                        a.click();
-                    };
-
-                    document.getElementById('btn-copy-receipt').onclick = function() {
-                        canvas.toBlob(blob => {
-                            if (navigator.clipboard && window.ClipboardItem) {
-                                const item = new ClipboardItem({ 'image/png': blob });
-                                navigator.clipboard.write([item]).then(() => {
-                                    alert('Receipt image copied to clipboard!');
-                                });
-                            } else {
-                                alert('Copy to clipboard is not supported on this browser.');
-                            }
-                        });
-                    };
-                });
-            }, 1200);
-        }
-
-        function closeReceiptModal() {
-            document.getElementById('receipt-modal-overlay').classList.remove('active');
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
-        window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
-    </script>
-    <!-- Add this right above </body> -->
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-<script src="auth.js"></script>
 </body>
 </html>
