@@ -4,8 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shop All — THE EGYPTIAN KING</title>
-    
-    <!-- Replaced Cinzel with Inter only -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     
     <!-- ===== FIREBASE SDK (Moved to top so it loads before the page) ===== -->
@@ -915,8 +913,6 @@
             if (typeof gtag !== 'undefined') gtag('event', 'add_to_cart', { items: [{ id: product.id, name: product.name, price: product.price }] });
 
             showToast(`${product.name} (Size: ${selectedSize}) added to bag!`);
-            
-            // Sync to Firebase if logged in
             if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
