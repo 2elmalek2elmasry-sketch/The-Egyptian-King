@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shopping Bag — THE EGYPTIAN KING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@800;900&family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
@@ -15,7 +15,7 @@
             --accent:#bfa15f;
             --accent-dark:#9a7f3e;
             --border:#e8e6e1;
-            --btn-bg:#0a0a0a; 
+            --btn-bg:#0a0a0a;
             --btn-text:#fff;
             --sale:#c8102e;
         }
@@ -68,7 +68,7 @@
         .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
         .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
         .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
-        .dropdown-title { font-family:'Cinzel',serif; font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-title { font-family:'Inter',sans-serif; font-weight:800; font-size:0.7rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
         .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
         .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; transition:color 0.3s, padding-left 0.3s; display:inline-block; }
         .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
@@ -85,7 +85,7 @@
         }
 
         .cart-main h1 {
-            font-family: 'Cinzel', serif;
+            font-family: 'Inter', sans-serif;
             font-size: clamp(1.8rem, 4vw, 2.4rem);
             font-weight: 900;
             letter-spacing: 1px;
@@ -143,7 +143,7 @@
             top: 100px;
         }
         .summary-title {
-            font-family: 'Cinzel', serif;
+            font-family: 'Inter', sans-serif;
             font-size: 1.2rem;
             font-weight: 900;
             text-transform: uppercase;
@@ -179,7 +179,7 @@
             background: var(--bg-alt); border-radius: 4px;
             border: 1px solid var(--border);
         }
-        .empty-state h2 { font-family: 'Cinzel', serif; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 900; }
+        .empty-state h2 { font-family: 'Inter', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 900; }
         .empty-state p { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 1px; }
         .empty-state a {
             display: inline-block; background: var(--btn-bg); color: #fff;
@@ -357,14 +357,10 @@
 
     <script>
         // ===== Dropdown =====
-        function toggleDropdown() {
-            document.getElementById('dropdown-menu').classList.toggle('active');
-        }
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
         window.addEventListener('click', function(e) {
             const wrapper = document.querySelector('.dropdown-wrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                document.getElementById('dropdown-menu').classList.remove('active');
-            }
+            if (wrapper && !wrapper.contains(e.target)) { document.getElementById('dropdown-menu').classList.remove('active'); }
         });
 
         // ===== Toast =====
@@ -376,10 +372,7 @@
             container.appendChild(toast);
             void toast.offsetWidth;
             toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => { toast.remove(); }, 400);
-            }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
         window.showToast = showToast;
 
@@ -442,6 +435,7 @@
             localStorage.setItem('kingCart', JSON.stringify(cart));
             renderCart(); 
             updateCartCount();
+            if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
         function removeItem(index) {
@@ -451,9 +445,16 @@
             renderCart(); 
             updateCartCount();
             showToast('Item removed from bag.');
+            if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
         function checkout() {
+            // --- ANALYTICS & PIXEL TRACKING ---
+            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            let totalValue = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+            if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout', { value: totalValue, currency: 'USD' });
+            if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { value: totalValue, currency: 'USD' });
+
             showToast('Redirecting to secure checkout...');
             setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
         }
@@ -511,6 +512,7 @@
         <div class="node-meta">
             <div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div>
             <div><strong>Date:</strong> <span id="node-order-date">---</span></div>
+            <div><strong>Payment:</strong> <span id="node-payment-method">---</span></div>
         </div>
         <div class="node-customer">
             <p><strong>Customer:</strong> <span id="node-customer-name">---</span></p>
@@ -544,8 +546,8 @@
     .btn-receipt.secondary { background:#f0f0f0; color:#0a0a0a; border:1px solid #ccc; }
     .btn-receipt.close { background:transparent; color:#666; text-decoration:underline; }
     .receipt-node { position:absolute; left:-9999px; top:-9999px; width:420px; background:#fff; color:#0a0a0a; padding:2.5rem; font-family:'Inter',sans-serif; border:2px solid #0a0a0a; box-sizing:border-box; overflow:hidden; }
-    .watermark-bg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-size:3.2rem; font-weight:900; color:rgba(0,0,0,0.04); white-space:nowrap; pointer-events:none; font-family:'Cinzel',serif; letter-spacing:4px; }
-    .node-header h2 { font-family:'Cinzel',serif; font-size:1.5rem; font-weight:900; letter-spacing:2px; }
+    .watermark-bg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-size:3.2rem; font-weight:900; color:rgba(0,0,0,0.04); white-space:nowrap; pointer-events:none; font-family:'Inter',sans-serif; letter-spacing:4px; }
+    .node-header h2 { font-family:'Inter',sans-serif; font-size:1.5rem; font-weight:900; letter-spacing:2px; }
     .node-tagline { font-size:0.75rem; letter-spacing:1.5px; color:#666; font-weight:700; margin-top:4px; }
     .node-divider { border:0; border-top:1px dashed #ccc; margin:1rem 0; }
     .node-meta, .node-customer { font-size:0.85rem; text-align:left; line-height:1.6; }
@@ -567,6 +569,7 @@
 
             document.getElementById('node-order-id').innerText = lastOrder.orderId;
             document.getElementById('node-order-date').innerText = lastOrder.date;
+            document.getElementById('node-payment-method').innerText = lastOrder.paymentMethod;
             document.getElementById('node-customer-name').innerText = lastOrder.customer.name;
             document.getElementById('node-customer-phone').innerText = lastOrder.customer.phone;
             document.getElementById('node-customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city}`;
@@ -575,7 +578,7 @@
             const itemsContainer = document.getElementById('node-items-list');
             itemsContainer.innerHTML = lastOrder.items.map(item => `
                 <div class="node-item-row">
-                    <span>${item.name} (x${item.qty})</span>
+                    <span>${item.name} ${item.size ? `(Size: ${item.size})` : ''} (x${item.qty})</span>
                     <span>E£${(item.price * item.qty).toFixed(2)}</span>
                 </div>
             `).join('');
@@ -601,10 +604,10 @@
                             if (navigator.clipboard && window.ClipboardItem) {
                                 const item = new ClipboardItem({ 'image/png': blob });
                                 navigator.clipboard.write([item]).then(() => {
-                                    alert('Receipt image copied to clipboard!');
+                                    showToast('Receipt image copied to clipboard!');
                                 });
                             } else {
-                                alert('Copy to clipboard is not supported on this browser.');
+                                showToast('Copy to clipboard is not supported on this browser.');
                             }
                         });
                     };
@@ -619,10 +622,11 @@
 
         window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
     </script>
-    <!-- Add this right above </body> -->
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-<script src="auth.js"></script>
+    
+    <!-- Firebase SDKs & Auth Script -->
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
