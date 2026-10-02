@@ -13,7 +13,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const db = firebase.firestore();
 
-// Global Cart Sync Function
+// Sync local cart to Firebase
 function saveCartToBackend() {
     const user = auth.currentUser;
     if (!user) return; // Only save to backend if logged in
@@ -21,35 +21,23 @@ function saveCartToBackend() {
     const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
     const cartRef = db.collection('users').doc(user.uid).collection('cart');
 
-    // Clear old cart and set new one
     cartRef.get().then(snapshot => {
         const batch = db.batch();
-        snapshot.forEach(doc => batch.delete(doc.ref));
+        snapshot.forEach(doc => batch.delete(doc.ref)); // Clear old cloud cart
         cart.forEach(item => {
             const newDocRef = cartRef.doc(item.id.toString());
-            batch.set(newDocRef, item);
+            batch.set(newDocRef, item); // Save new cart
         });
         return batch.commit();
     }).catch(err => console.error("Cart sync error:", err));
 }
 
-// Load Cart from Backend
+// Load cart from Firebase and overwrite local
 function loadCartFromBackend(user) {
     db.collection('users').doc(user.uid).collection('cart').get().then(snapshot => {
-        if (!snapshot.empty) {
-            const backendCart = snapshot.docs.map(doc => doc.data());
-            const localCart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            
-            // Merge backend cart with local cart (simple union for this MVP)
-            let mergedCart = [...localCart];
-            backendCart.forEach(bItem => {
-                const exists = mergedCart.find(mItem => mItem.id === bItem.id && mItem.size === bItem.size);
-                if (!exists) mergedCart.push(bItem);
-            });
-            
-            localStorage.setItem('kingCart', JSON.stringify(mergedCart));
-            if (typeof updateCartCount === 'function') updateCartCount();
-        }
+        const backendCart = snapshot.docs.map(doc => doc.data());
+        localStorage.setItem('kingCart', JSON.stringify(backendCart));
+        if (typeof updateCartCount === 'function') updateCartCount();
     }).catch(err => console.error("Load cart error:", err));
 }
 
@@ -73,8 +61,7 @@ auth.onAuthStateChanged(user => {
                 </ul>
             </div>
         `;
-        saveCartToBackend(); // Save current local cart to their account
-        loadCartFromBackend(user); // Load any cart items they had on another device
+        loadCartFromBackend(user); // Load cloud cart on login
     } else {
         // User is logged out
         authHTML = `
@@ -95,6 +82,8 @@ auth.onAuthStateChanged(user => {
             e.preventDefault();
             auth.signOut().then(() => {
                 window.showToast && window.showToast("Logged out successfully.");
+                localStorage.removeItem('kingCart'); // Clear local cart on logout
+                if (typeof updateCartCount === 'function') updateCartCount();
                 setTimeout(() => window.location.href = 'index.html', 800);
             }).catch(err => window.showToast && window.showToast("Logout failed."));
         });
