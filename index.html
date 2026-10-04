@@ -75,59 +75,59 @@
         .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
         .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
 
-        /* ===== Poster Hero ===== */
+        /* ===== Poster Hero (Resized to be more compact) ===== */
         .hero-poster {
             position: relative;
             background: #ffffff;
             display: grid;
             grid-template-columns: 1.2fr 1fr;
-            gap: 4rem;
+            gap: 3rem;
             align-items: center;
-            padding: 6rem clamp(1.2rem, 5vw, 6rem);
+            padding: 4rem clamp(1.2rem, 5vw, 4rem);
             overflow: hidden;
-            min-height: 90vh;
         }
 
         .hero-bg-shape { position: absolute; z-index: 0; }
-        .shape-circle { top: -50px; left: -50px; width: 400px; height: 400px; background: var(--bg-alt); border-radius: 50%; }
-        .shape-triangle { bottom: 10%; right: -10%; width: 0; height: 0; border-left: 200px solid transparent; border-right: 200px solid transparent; border-bottom: 300px solid rgba(191,161,95,0.1); transform: rotate(15deg); }
-        .shape-rect { top: 20%; right: 40%; width: 100px; height: 100px; background: #0a0a0a; border-radius: 12px; transform: rotate(45deg); opacity: 0.05; }
+        .shape-circle { top: -50px; left: -50px; width: 300px; height: 300px; background: var(--bg-alt); border-radius: 50%; }
+        .shape-triangle { bottom: 10%; right: -10%; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 250px solid rgba(191,161,95,0.1); transform: rotate(15deg); }
+        .shape-rect { top: 20%; right: 40%; width: 80px; height: 80px; background: #0a0a0a; border-radius: 12px; transform: rotate(45deg); opacity: 0.05; }
 
         .hero-text { position: relative; z-index: 2; }
-        .hero-badge { display: inline-block; background: #0a0a0a; color: #fff; padding: 0.5rem 1.25rem; border-radius: 4px; font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 2rem; }
-        .hero-title { font-family: 'Inter', sans-serif; font-size: clamp(2.5rem, 6vw, 5.5rem); font-weight: 900; line-height: 0.95; letter-spacing: -2px; margin-bottom: 1.5rem; }
+        .hero-badge { display: inline-block; background: #0a0a0a; color: #fff; padding: 0.4rem 1rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; }
+        .hero-title { font-family: 'Inter', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1; letter-spacing: -1px; margin-bottom: 1rem; }
         .hero-title span { color: var(--accent); font-style: italic; font-weight: 800; }
-        .hero-desc { font-size: 1.1rem; color: var(--text-muted); max-width: 450px; margin-bottom: 2.5rem; line-height: 1.6; }
+        .hero-desc { font-size: 1rem; color: var(--text-muted); max-width: 450px; margin-bottom: 2rem; line-height: 1.6; }
         .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
         
-        .btn-primary { background: var(--btn-bg); color: var(--btn-text); padding: 1.1rem 2.8rem; border: 1px solid var(--btn-bg); border-radius: 2px; font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; position: relative; overflow: hidden; }
+        .btn-primary { background: var(--btn-bg); color: var(--btn-text); padding: 0.9rem 2.2rem; border: 1px solid var(--btn-bg); border-radius: 2px; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; position: relative; overflow: hidden; }
         .btn-primary::before { content:''; position:absolute; inset:0; background:var(--accent); transform:translateY(100%); transition:transform 0.3s ease; z-index:-1; }
         .btn-primary:hover::before { transform:translateY(0); }
         .btn-primary:hover { border-color:var(--accent); transform:translateY(-2px); }
         
-        .btn-ghost { background:transparent; color:var(--text-main); padding:1.1rem 2.8rem; border:1px solid var(--text-main); border-radius:2px; font-weight:700; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.35s ease; }
+        .btn-ghost { background:transparent; color:var(--text-main); padding:0.9rem 2.2rem; border:1px solid var(--text-main); border-radius:2px; font-weight:700; font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.35s ease; }
         .btn-ghost:hover { background:var(--text-main); color:#fff; transform:translateY(-2px); }
 
-        .hero-collage { position: relative; height: 600px; z-index: 2; }
-        .collage-card { position: absolute; background: #fff; padding: 10px; border-radius: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); border: 1px solid #eee; transition: transform 0.3s ease; }
+        /* Collage Elements (Resized to be smaller) */
+        .hero-collage { position: relative; height: 420px; z-index: 2; }
+        .collage-card { position: absolute; background: #fff; padding: 8px; border-radius: 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border: 1px solid #eee; transition: transform 0.3s ease; }
         .collage-card:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
-        .collage-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; display: block; }
+        .collage-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; display: block; }
         
-        .card-1 { top: 0; right: 10%; width: 300px; height: 380px; transform: rotate(5deg); animation: float 6s ease-in-out infinite; --r: 5deg; }
-        .card-2 { bottom: 0; left: 0; width: 260px; height: 320px; transform: rotate(-5deg); z-index: 2; animation: float 6s ease-in-out infinite 1.5s; --r: -5deg; }
+        .card-1 { top: 0; right: 10%; width: 220px; height: 280px; transform: rotate(5deg); animation: float 6s ease-in-out infinite; --r: 5deg; }
+        .card-2 { bottom: 0; left: 0; width: 190px; height: 240px; transform: rotate(-5deg); z-index: 2; animation: float 6s ease-in-out infinite 1.5s; --r: -5deg; }
 
         .sticker { position: absolute; z-index: 5; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); font-weight: 800; }
-        .sticker-circle { width: 120px; height: 120px; border-radius: 50%; background: var(--accent); color: #0a0a0a; flex-direction: column; transform: rotate(15deg); top: 35%; left: 5%; animation: float 5s ease-in-out infinite; --r: 15deg; }
-        .sticker-circle span { font-size: 1.2rem; line-height: 1; }
-        .sticker-circle small { font-size: 0.7rem; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
+        .sticker-circle { width: 90px; height: 90px; border-radius: 50%; background: var(--accent); color: #0a0a0a; flex-direction: column; transform: rotate(15deg); top: 30%; left: 0%; animation: float 5s ease-in-out infinite; --r: 15deg; }
+        .sticker-circle span { font-size: 1rem; line-height: 1; }
+        .sticker-circle small { font-size: 0.6rem; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
 
-        .sticker-badge { background: #0a0a0a; color: #fff; padding: 0.75rem 1.5rem; border-radius: 30px; font-size: 0.85rem; letter-spacing: 1px; top: 10%; right: 0; transform: rotate(-10deg); animation: float 5s ease-in-out infinite 1s; --r: -10deg; }
+        .sticker-badge { background: #0a0a0a; color: #fff; padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.75rem; letter-spacing: 1px; top: 5%; right: 0%; transform: rotate(-10deg); animation: float 5s ease-in-out infinite 1s; --r: -10deg; }
 
-        .speech-bubble { position: absolute; background: #fff; border: 2px solid #0a0a0a; padding: 1rem 1.5rem; border-radius: 20px 20px 20px 4px; font-weight: 700; font-size: 0.9rem; color: #0a0a0a; bottom: 15%; right: 0; transform: rotate(3deg); z-index: 5; box-shadow: 5px 5px 0px #bfa15f; animation: float 5s ease-in-out infinite 0.5s; --r: 3deg; }
+        .speech-bubble { position: absolute; background: #fff; border: 2px solid #0a0a0a; padding: 0.75rem 1.2rem; border-radius: 20px 20px 20px 4px; font-weight: 700; font-size: 0.8rem; color: #0a0a0a; bottom: 10%; right: 0%; transform: rotate(3deg); z-index: 5; box-shadow: 5px 5px 0px #bfa15f; animation: float 5s ease-in-out infinite 0.5s; --r: 3deg; }
 
         @keyframes float {
             0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
-            50% { transform: translateY(-15px) rotate(var(--r, 0deg)); }
+            50% { transform: translateY(-10px) rotate(var(--r, 0deg)); }
         }
 
         /* ===== Trust Bar ===== */
@@ -180,7 +180,7 @@
 
         /* ===== Lookbook ===== */
         .lookbook { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:1400px; margin:0 auto; }
-        .lookbook-item { position:relative; aspect-ratio:4/5; overflow-hidden; border-radius:4px; cursor:pointer; }
+        .lookbook-item { position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:4px; cursor:pointer; }
         .lookbook-item.tall { aspect-ratio:4/6; grid-row:span 2; }
         .lookbook-item img { width:100%; height:100%; object-fit:cover; transition:transform 0.8s ease; }
         .lookbook-item:hover img { transform:scale(1.07); }
@@ -236,8 +236,10 @@
         .footer-grid a:hover { color:var(--accent); padding-left:5px; }
         .footer-brand p { color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem; max-width:340px; }
         .footer-socials { display:flex; gap:0.85rem; margin-top:1.5rem; }
-        .footer-socials a { width:38px; height:38px; border:1px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:0.85rem; transition:all 0.3s; }
+        .footer-socials a { width:38px; height:38px; border:1px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; transition:all 0.3s; }
+        .footer-socials a svg { width:16px; height:16px; fill:#fff; transition: fill 0.3s; }
         .footer-socials a:hover { background:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+        .footer-socials a:hover svg { fill:#0a0a0a; }
         .footer-bottom { border-top:1px solid #1c1c1c; padding-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; max-width:1300px; margin:0 auto; }
         .footer-bottom .copyright { color:#666; font-size:0.78rem; letter-spacing:0.5px; }
         .payment-icons { display:flex; gap:8px; align-items:center; }
@@ -254,27 +256,27 @@
 
         /* ===== Responsive ===== */
         @media (max-width: 1024px) {
-            .hero-poster { grid-template-columns: 1fr; text-align: center; padding-top: 4rem; }
+            .hero-poster { grid-template-columns: 1fr; text-align: center; padding-top: 3rem; }
             .hero-text { max-width: 600px; margin: 0 auto; }
             .hero-cta-group { justify-content: center; }
-            .hero-collage { height: 500px; margin-top: 4rem; }
+            .hero-collage { height: 400px; margin-top: 3rem; }
             .testimonial-grid { grid-template-columns:1fr; }
             .lookbook { grid-template-columns:1fr; }
             .lookbook-item.tall { aspect-ratio:4/5; grid-row:span 1; }
         }
         @media (max-width: 768px) {
-            .hero-collage { height: 400px; }
-            .card-1 { width: 200px; height: 250px; right: 5%; }
-            .card-2 { width: 180px; height: 220px; left: 5%; }
-            .sticker-circle { width: 90px; height: 90px; top: 40%; left: 0; }
-            .sticker-circle span { font-size: 1rem; }
-            .speech-bubble { font-size: 0.8rem; padding: 0.75rem 1rem; right: -10%; }
+            .hero-collage { height: 350px; }
+            .card-1 { width: 180px; height: 220px; right: 5%; }
+            .card-2 { width: 150px; height: 190px; left: 5%; }
+            .sticker-circle { width: 75px; height: 75px; top: 35%; left: 0; }
+            .sticker-circle span { font-size: 0.85rem; }
+            .speech-bubble { font-size: 0.75rem; padding: 0.6rem 1rem; right: -5%; }
             .trust-bar { grid-template-columns:1fr 1fr; gap:1.5rem; }
             .footer-grid { grid-template-columns:1fr 1fr; gap:2.5rem; }
             .footer-bottom { justify-content:center; text-align:center; flex-direction: column; gap: 1.5rem; }
         }
         @media (max-width: 480px) {
-            .hero-title { font-size: 2.5rem; }
+            .hero-title { font-size: 2rem; }
             .sticker-badge { display: none; }
             .trust-bar { grid-template-columns:1fr; }
             .insta-grid { grid-template-columns:repeat(2, 1fr); }
@@ -531,10 +533,19 @@
                 <h5>The Egyptian King</h5>
                 <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
                 <div class="footer-socials">
-                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">IG</a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">FB</a>
-                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">X</a>
-                    <a href="#" aria-label="TikTok">TT</a>
+                    <!-- Replaced Text with Actual SVG Logos -->
+                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+                    </a>
+                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
+                    </a>
+                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                    </a>
+                    <a href="#" aria-label="TikTok">
+                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.08v11.85a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 .89.13V6.83a6 6 0 0 0-1-.05A6 6 0 0 0 3.6 18.7a6 6 0 0 0 10.74-3.69V8.46a7.84 7.84 0 0 0 4.85 1.66v-3a4.85 4.85 0 0 1-1.6-.43z"/></svg>
+                    </a>
                 </div>
             </div>
             <div>
