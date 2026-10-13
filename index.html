@@ -411,20 +411,23 @@
         window.showToast = showToast;
         function subscribeNewsletter(e) { e.preventDefault(); const input = e.target.querySelector('input'); showToast('Welcome to the kingdom! Check your inbox for 10% off 👑'); input.value = ''; }
 
+        // YOUR 4 BEST SELLERS
+        const products = [
+            { id: 13, name: "3esh w mal7 Hoodie", price: 950, rating: 5.0, reviews: 456, img: "https://i.postimg.cc/RZ4BDMW0/Untitled-design-8.png", images: ["https://i.postimg.cc/RZ4BDMW0/Untitled-design-8.png"] },
+            { id: 14, name: "8azl banaat Hoodie", price: 950, rating: 4.9, reviews: 256, img: "https://i.postimg.cc/jC0pqbGM/Untitled-design-(7).jpg", images: ["https://i.postimg.cc/jC0pqbGM/Untitled-design-(7).jpg"] },
+            { id: 15, name: "yomak 3asal Hoodie", price: 950, rating: 4.7, reviews: 416, img: "https://i.postimg.cc/MX2CZShs/Untitled-design-(6).jpg", images: ["https://i.postimg.cc/MX2CZShs/Untitled-design-(6).jpg"] },
+            { id: 16, name: "safynet el bo7era Hoodie", price: 950, rating: 4.9, reviews: 456, img: "https://i.postimg.cc/htkn3Rv7/Untitled-design-4.png", images: ["https://i.postimg.cc/htkn3Rv7/Untitled-design-4.png"] }
+        ];
+
+        function getStars(rating) { let r = Math.round(rating); return '★'.repeat(r) + '☆'.repeat(5 - r); }
+
         function renderFeatured() {
             const grid = document.getElementById('featured-grid');
-            // Fetch 4 bestsellers from the global products.js array
-            const featured = products.filter(p => p.rating >= 4.9).slice(0, 4);
-            grid.innerHTML = featured.map(p => `
-                <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
+            grid.innerHTML = products.map(p => `
+                <div class="product-card" onclick="viewProduct(${p.id})">
                     <div class="product-img-wrapper">
-                        <div class="product-badges">
-                            ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
-                            ${p.badge === 'sale' ? '<span class="badge sale">Sale</span>' : ''}
-                            ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
-                        </div>
-                        <img src="${p.images[0]}" alt="${p.name}">
-                        <button class="quick-add" onclick="event.stopPropagation(); window.location.href='product.html?id=${p.id}';">View Product</button>
+                        <img src="${p.img}" alt="${p.name}">
+                        <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">View Product</button>
                     </div>
                     <div class="product-info">
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
@@ -433,6 +436,15 @@
                     </div>
                 </div>
             `).join('');
+        }
+
+        // SENDS THE CLICKED PRODUCT TO product.html
+        function viewProduct(id) {
+            const p = products.find(prod => prod.id === id);
+            if (p) {
+                localStorage.setItem('viewingProduct', JSON.stringify(p));
+                window.location.href = 'product.html';
+            }
         }
 
         function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; const totalCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0); document.getElementById('nav-cart-count').innerText = totalCount; }
@@ -523,7 +535,6 @@
         function closeReceiptModal() { document.getElementById('receipt-modal-overlay').classList.remove('active'); window.history.replaceState({}, document.title, window.location.pathname); }
         window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
     </script>
-    <script src="products.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
