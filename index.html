@@ -9,62 +9,31 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --bg:#ffffff;
-            --bg-alt:#faf9f7;
-            --text-main:#0a0a0a;
-            --text-muted:#6b6b6b;
-            --accent:#bfa15f; 
-            --accent-dark:#9a7f3e;
-            --border:#e8e6e1;
-            --btn-bg:#0a0a0a;
-            --btn-text:#fff;
-            --sale:#c8102e;
+            --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b;
+            --accent:#bfa15f; --accent-dark:#9a7f3e; --border:#e8e6e1; --btn-bg:#0a0a0a; --btn-text:#fff; --sale:#c8102e;
         }
-
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
         html { scroll-behavior:smooth; }
         body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
         a { text-decoration: none; color: inherit; }
-
-        /* ===== Toast ===== */
         .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
         .toast-message.show { opacity:1; transform:translateY(0); }
-
-        /* ===== Header ===== */
-        header {
-            background:rgba(255,255,255,0.98);
-            backdrop-filter:blur(20px);
-            -webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid var(--border);
-            padding:1.1rem clamp(1.2rem,5vw,3.5rem);
-            position:sticky;
-            top:0;
-            z-index:100;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            transition:padding 0.3s ease;
-        }
+        header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; transition:padding 0.3s ease; }
         header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
-        
         .nav-left { flex: 1; }
-        
         .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
         .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
         header.scrolled .logo-img { height: 22px; }
         .brand-logo:hover .logo-img { opacity: 0.8; }
-
         .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
         .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
         .icon-btn:hover { opacity:0.65; transform:translateY(-1px); }
         .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
         .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; padding:0 4px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
-
         .dropdown-wrapper { position:relative; }
         .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:transform 0.3s; }
         .menu-toggle-btn:hover { transform:rotate(90deg); }
-
         .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; text-align:left; opacity:0; transform:translateY(-10px); transition:opacity 0.3s, transform 0.3s; }
         .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
         .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
@@ -75,92 +44,53 @@
         .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
         .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
 
-        /* ===== Poster Hero (Resized to be more compact) ===== */
-        .hero-poster {
-            position: relative;
-            background: #ffffff;
-            display: grid;
-            grid-template-columns: 1.2fr 1fr;
-            gap: 3rem;
-            align-items: center;
-            padding: 4rem clamp(1.2rem, 5vw, 4rem);
-            overflow: hidden;
-        }
-
+        .hero-poster { position: relative; background: #ffffff; display: grid; grid-template-columns: 1.2fr 1fr; gap: 3rem; align-items: center; padding: 4rem clamp(1.2rem, 5vw, 4rem); overflow: hidden; }
         .hero-bg-shape { position: absolute; z-index: 0; }
         .shape-circle { top: -50px; left: -50px; width: 300px; height: 300px; background: var(--bg-alt); border-radius: 50%; }
         .shape-triangle { bottom: 10%; right: -10%; width: 0; height: 0; border-left: 150px solid transparent; border-right: 150px solid transparent; border-bottom: 250px solid rgba(191,161,95,0.1); transform: rotate(15deg); }
         .shape-rect { top: 20%; right: 40%; width: 80px; height: 80px; background: #0a0a0a; border-radius: 12px; transform: rotate(45deg); opacity: 0.05; }
-
         .hero-text { position: relative; z-index: 2; }
         .hero-badge { display: inline-block; background: #0a0a0a; color: #fff; padding: 0.4rem 1rem; border-radius: 4px; font-size: 0.7rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; }
         .hero-title { font-family: 'Inter', sans-serif; font-size: clamp(2rem, 5vw, 4rem); font-weight: 900; line-height: 1; letter-spacing: -1px; margin-bottom: 1rem; }
         .hero-title span { color: var(--accent); font-style: italic; font-weight: 800; }
         .hero-desc { font-size: 1rem; color: var(--text-muted); max-width: 450px; margin-bottom: 2rem; line-height: 1.6; }
         .hero-cta-group { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-        
         .btn-primary { background: var(--btn-bg); color: var(--btn-text); padding: 0.9rem 2.2rem; border: 1px solid var(--btn-bg); border-radius: 2px; font-weight: 700; font-size: 0.75rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; text-decoration: none; display: inline-block; transition: all 0.3s ease; position: relative; overflow: hidden; }
         .btn-primary::before { content:''; position:absolute; inset:0; background:var(--accent); transform:translateY(100%); transition:transform 0.3s ease; z-index:-1; }
         .btn-primary:hover::before { transform:translateY(0); }
         .btn-primary:hover { border-color:var(--accent); transform:translateY(-2px); }
-        
         .btn-ghost { background:transparent; color:var(--text-main); padding:0.9rem 2.2rem; border:1px solid var(--text-main); border-radius:2px; font-weight:700; font-size:0.75rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; text-decoration:none; display:inline-block; transition:all 0.35s ease; }
         .btn-ghost:hover { background:var(--text-main); color:#fff; transform:translateY(-2px); }
 
-        /* Collage Elements (Resized to be smaller) */
         .hero-collage { position: relative; height: 420px; z-index: 2; }
         .collage-card { position: absolute; background: #fff; padding: 8px; border-radius: 10px; box-shadow: 0 15px 30px rgba(0,0,0,0.1); border: 1px solid #eee; transition: transform 0.3s ease; }
         .collage-card:hover { transform: scale(1.05) rotate(0deg) !important; z-index: 10; }
         .collage-card img { width: 100%; height: 100%; object-fit: cover; border-radius: 6px; display: block; }
-        
         .card-1 { top: 0; right: 10%; width: 220px; height: 280px; transform: rotate(5deg); animation: float 6s ease-in-out infinite; --r: 5deg; }
         .card-2 { bottom: 0; left: 0; width: 190px; height: 240px; transform: rotate(-5deg); z-index: 2; animation: float 6s ease-in-out infinite 1.5s; --r: -5deg; }
-
         .sticker { position: absolute; z-index: 5; display: flex; align-items: center; justify-content: center; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.15); font-weight: 800; }
         .sticker-circle { width: 90px; height: 90px; border-radius: 50%; background: var(--accent); color: #0a0a0a; flex-direction: column; transform: rotate(15deg); top: 30%; left: 0%; animation: float 5s ease-in-out infinite; --r: 15deg; }
         .sticker-circle span { font-size: 1rem; line-height: 1; }
         .sticker-circle small { font-size: 0.6rem; font-weight: 600; margin-top: 4px; text-transform: uppercase; letter-spacing: 1px; }
-
         .sticker-badge { background: #0a0a0a; color: #fff; padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.75rem; letter-spacing: 1px; top: 5%; right: 0%; transform: rotate(-10deg); animation: float 5s ease-in-out infinite 1s; --r: -10deg; }
-
         .speech-bubble { position: absolute; background: #fff; border: 2px solid #0a0a0a; padding: 0.75rem 1.2rem; border-radius: 20px 20px 20px 4px; font-weight: 700; font-size: 0.8rem; color: #0a0a0a; bottom: 10%; right: 0%; transform: rotate(3deg); z-index: 5; box-shadow: 5px 5px 0px #bfa15f; animation: float 5s ease-in-out infinite 0.5s; --r: 3deg; }
+        @keyframes float { 0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); } 50% { transform: translateY(-10px) rotate(var(--r, 0deg)); } }
 
-        @keyframes float {
-            0%, 100% { transform: translateY(0) rotate(var(--r, 0deg)); }
-            50% { transform: translateY(-10px) rotate(var(--r, 0deg)); }
-        }
+        .promo-banner { background: #0a0a0a; padding: 0; text-align: center; border-bottom: 1px solid var(--border); overflow: hidden; }
+        .promo-banner img { max-width: 1400px; width: 100%; height: auto; display: block; margin: 0 auto; }
 
-        /* ===== Promo Banner ===== */
-        .promo-banner {
-            background: #0a0a0a;
-            padding: 0;
-            text-align: center;
-            border-bottom: 1px solid var(--border);
-            overflow: hidden;
-        }
-        .promo-banner img {
-            max-width: 1400px;
-            width: 100%;
-            height: auto;
-            display: block;
-            margin: 0 auto;
-        }
-
-        /* ===== Trust Bar ===== */
         .trust-bar { display:grid; grid-template-columns:repeat(4,1fr); gap:1.5rem; padding:2.5rem clamp(1rem,5vw,4rem); border-bottom:1px solid var(--border); background:var(--bg-alt); }
         .trust-item { display:flex; align-items:center; gap:1rem; justify-content:center; padding:0.5rem; }
         .trust-icon { width:42px; height:42px; flex-shrink:0; background:#0a0a0a; color:#fff; border-radius:50%; display:flex; align-items:center; justify-content:center; font-size:1.1rem; }
         .trust-item h4 { font-size:0.78rem; font-weight:700; text-transform:uppercase; letter-spacing:1.5px; margin-bottom:2px; }
         .trust-item p { font-size:0.72rem; color:var(--text-muted); letter-spacing:0.5px; }
 
-        /* ===== Section Defaults ===== */
         .section { padding:5rem clamp(1rem,5vw,4rem); }
         .section-header { text-align:center; margin-bottom:3.5rem; }
         .section-header .eyebrow { font-size:0.7rem; font-weight:700; color:var(--accent); letter-spacing:4px; text-transform:uppercase; margin-bottom:0.85rem; display:inline-block; }
         .section-header h2 { font-family:'Inter',sans-serif; font-size:clamp(1.9rem,4.5vw,2.8rem); margin-bottom:0.75rem; letter-spacing:1px; font-weight:900; }
         .section-header p { color:var(--text-muted); font-size:0.85rem; letter-spacing:2px; text-transform:uppercase; max-width:560px; margin:0 auto; }
 
-        /* ===== Product Grid ===== */
         .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:2rem 1.5rem; max-width:1400px; margin:0 auto; }
         .product-card { text-decoration:none; color:inherit; display:flex; flex-direction:column; cursor:pointer; position:relative; }
         .product-img-wrapper { position:relative; width:100%; aspect-ratio:1/1.2; background:var(--bg-alt); border-radius:4px; overflow:hidden; margin-bottom:1rem; }
@@ -183,7 +113,6 @@
         .star-rating span { color:var(--text-muted); font-size:0.72rem; font-weight:400; }
         .view-all-row { text-align:center; margin-top:3.5rem; }
 
-        /* ===== Manifesto ===== */
         .manifesto { background:#0a0a0a; color:#fff; text-align:center; padding:7rem 2rem; position:relative; overflow:hidden; }
         .manifesto::before, .manifesto::after { content:''; position:absolute; width:300px; height:300px; border-radius:50%; background:radial-gradient(circle, rgba(191,161,95,0.15) 0%, transparent 70%); }
         .manifesto::before { top:-150px; left:-150px; }
@@ -194,7 +123,6 @@
         .manifesto .btn-primary { background: var(--accent); border-color: var(--accent); color: #ffffff; position:relative; z-index:2; }
         .manifesto .btn-primary:hover { background: #ffffff; color: #0a0a0a; border-color: #ffffff; }
 
-        /* ===== Lookbook ===== */
         .lookbook { display:grid; grid-template-columns:1fr 1fr; gap:1.5rem; max-width:1400px; margin:0 auto; }
         .lookbook-item { position:relative; aspect-ratio:4/5; overflow:hidden; border-radius:4px; cursor:pointer; }
         .lookbook-item.tall { aspect-ratio:4/6; grid-row:span 2; }
@@ -206,7 +134,6 @@
         .lookbook-caption .btn-link { color:#fff; font-size:0.72rem; letter-spacing:2px; text-transform:uppercase; text-decoration:none; font-weight:600; border-bottom:1px solid #fff; padding-bottom:3px; display:inline-block; transition:color 0.3s, border-color 0.3s; }
         .lookbook-caption .btn-link:hover { color:var(--accent); border-color:var(--accent); }
 
-        /* ===== Testimonials ===== */
         .testimonials { background:var(--bg-alt); }
         .testimonial-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:1.5rem; max-width:1200px; margin:0 auto; }
         .testimonial-card { background:#fff; padding:2.25rem; border:1px solid var(--border); border-radius:4px; transition:transform 0.3s, box-shadow 0.3s; }
@@ -219,7 +146,6 @@
         .author-info span { font-size:0.75rem; color:var(--text-muted); }
         .verified-badge { display:inline-flex; align-items:center; gap:4px; font-size:0.7rem; color:#2d8a4e; font-weight:600; margin-top:4px; }
 
-        /* ===== Instagram ===== */
         .insta-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:4px; max-width:1200px; margin:0 auto; }
         .insta-item { position:relative; aspect-ratio:3/4; overflow:hidden; cursor:pointer; }
         .insta-item img { width:100%; height:100%; object-fit:cover; object-position: center; transition:transform 0.5s ease; }
@@ -227,7 +153,6 @@
         .insta-item::after { content:'Instagram'; position:absolute; inset:0; background:rgba(0,0,0,0.55); color:#fff; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:600; letter-spacing:2px; text-transform:uppercase; opacity:0; transition:opacity 0.3s; }
         .insta-item:hover::after { opacity:1; }
 
-        /* ===== Newsletter ===== */
         .newsletter { background:#0a0a0a; color:#fff; padding:5rem 2rem; text-align:center; }
         .newsletter-inner { max-width:580px; margin:0 auto; }
         .newsletter .eyebrow { font-size:0.7rem; color:var(--accent); letter-spacing:4px; text-transform:uppercase; margin-bottom:1.25rem; display:inline-block; }
@@ -243,7 +168,6 @@
         .perk { display:flex; align-items:center; gap:8px; font-size:0.78rem; color:#888; letter-spacing:1px; }
         .perk::before { content:'✓'; color:var(--accent); font-weight:800; }
 
-        /* ===== Footer ===== */
         footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
         .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3.5rem; }
         .footer-grid h5 { font-size:0.78rem; font-weight:800; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:2px; color:#fff; }
@@ -252,7 +176,7 @@
         .footer-grid a:hover { color:var(--accent); padding-left:5px; }
         .footer-brand p { color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem; max-width:340px; }
         .footer-socials { display:flex; gap:0.85rem; margin-top:1.5rem; }
-        .footer-socials a { width:38px; height:38px; border:1px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; transition:all 0.3s; }
+        .footer-socials a { width:38px; height:38px; border:1px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:0.85rem; transition:all 0.3s; }
         .footer-socials a svg { width:16px; height:16px; fill:#fff; transition: fill 0.3s; }
         .footer-socials a:hover { background:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
         .footer-socials a:hover svg { fill:#0a0a0a; }
@@ -261,16 +185,13 @@
         .payment-icons { display:flex; gap:8px; align-items:center; }
         .payment-icon { background:#fff; color:#0a0a0a; padding:4px 8px; border-radius:3px; font-size:0.6rem; font-weight:800; letter-spacing:0.5px; }
 
-        /* ===== Back to Top ===== */
         .back-to-top { position:fixed; bottom:2rem; right:2rem; width:48px; height:48px; background:#0a0a0a; color:#fff; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem; opacity:0; visibility:hidden; transition:all 0.3s; z-index:90; box-shadow:0 10px 30px rgba(0,0,0,0.25); }
         .back-to-top.visible { opacity:1; visibility:visible; }
         .back-to-top:hover { background:var(--accent); transform:translateY(-3px); }
 
-        /* ===== Reveal Animation ===== */
         .reveal { opacity:0; transform:translateY(40px); transition:opacity 0.8s ease, transform 0.8s ease; }
         .reveal.visible { opacity:1; transform:translateY(0); }
 
-        /* ===== Responsive ===== */
         @media (max-width: 1024px) {
             .hero-poster { grid-template-columns: 1fr; text-align: center; padding-top: 3rem; }
             .hero-text { max-width: 600px; margin: 0 auto; }
@@ -304,60 +225,31 @@
 </head>
 <body>
     <div class="toast-container"></div>
-
-    <!-- Header -->
     <header id="main-header">
         <div class="nav-left"></div>
         <a href="index.html" class="brand-logo">
-            <img src="https://i.postimg.cc/N0g8X9mx/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
+            <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
         </a>
-
         <div class="nav-actions">
             <a href="cart.html" class="icon-btn" aria-label="Cart">
                 <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="cart-count" id="nav-cart-count">0</span>
             </a>
-
             <div class="dropdown-wrapper">
                 <button class="menu-toggle-btn" onclick="toggleDropdown()" aria-label="Toggle navigation menu">☰</button>
                 <div class="dropdown-menu" id="dropdown-menu">
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Navigation</div>
-                        <ul class="dropdown-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Shop All</a></li>
-                            <li><a href="track.html">Track Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Support</div>
-                        <ul class="dropdown-links">
-                            <li><a href="shop.html">Shipping Info</a></li>
-                            <li><a href="shop.html">Returns & Exchanges</a></li>
-                            <li><a href="shop.html">FAQ</a></li>
-                            <li><a href="shop.html">Size Guide</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">The Egyptian King</div>
-                        <p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
-                        <ul class="dropdown-links">
-                            <li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li>
-                            <li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li>
-                            <li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li>
-                        </ul>
-                    </div>
+                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li><li><a href="track.html">Track Order</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">Support</div><ul class="dropdown-links"><li><a href="shop.html">Shipping Info</a></li><li><a href="shop.html">Returns & Exchanges</a></li><li><a href="shop.html">FAQ</a></li><li><a href="shop.html">Size Guide</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">The Egyptian King</div><p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p><ul class="dropdown-links"><li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li><li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li><li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li></ul></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Poster Hero -->
     <section class="hero-poster">
         <div class="hero-bg-shape shape-circle"></div>
         <div class="hero-bg-shape shape-triangle"></div>
         <div class="hero-bg-shape shape-rect"></div>
-
         <div class="hero-text">
             <span class="hero-badge">New PW Collection</span>
             <h1 class="hero-title">Wear The Crown.<br><span>Rule The Streets.</span></h1>
@@ -367,29 +259,23 @@
                 <a href="#lookbook" class="btn-ghost">Explore Lookbook</a>
             </div>
         </div>
-
         <div class="hero-collage">
             <div class="collage-card card-1">
-                <img src="https://i.postimg.cc/hvYLkcyb/model-1.png" alt="PW Collection Model">
+                <img src="https://i.postimg.cc/k4RXYn9B/model-1.png" alt="PW Collection Model">
             </div>
             <div class="collage-card card-2">
-                <img src="https://i.postimg.cc/05SHs4dN/dlm40ahge5p9qdu5up.png" alt="History Edition Model">
+                <img src="https://i.postimg.cc/pybv68C0/316f4610-c17c-4f71-896f-7f1a7fbc3479-display.jpg" alt="History Edition Model">
             </div>
-            <div class="sticker sticker-circle">
-                <span>500 GSM</span>
-                <small>Premium Fleece</small>
-            </div>
+            <div class="sticker sticker-circle"><span>500 GSM</span><small>Premium Fleece</small></div>
             <div class="sticker sticker-badge">Designed in Cairo</div>
             <div class="speech-bubble">Built for Royalty. 👑</div>
         </div>
     </section>
 
-    <!-- NEW Promo Banner (Moved to AFTER Hero) -->
     <section class="promo-banner">
         <img src="https://z-cdn-media.chatglm.cn/files/49f091ce-1480-478d-b918-affb331f62fe.png?auth_key=1891480085-7964950387174705b8aac8d38c8c6d07-0-224cc628aca01df9408b763ebf99df87" alt="Apart But Together For Change">
     </section>
 
-    <!-- Trust Bar -->
     <div class="trust-bar">
         <div class="trust-item"><span class="trust-icon">🚚</span><div><h4>Fast Shipping</h4><p>Worldwide delivery</p></div></div>
         <div class="trust-item"><span class="trust-icon">🔒</span><div><h4>Secure Checkout</h4><p>100% protected</p></div></div>
@@ -397,7 +283,6 @@
         <div class="trust-item"><span class="trust-icon">↩️</span><div><h4>Easy Returns</h4><p>14-day policy</p></div></div>
     </div>
 
-    <!-- Best Sellers -->
     <section class="section">
         <div class="section-header reveal">
             <p class="eyebrow">Top Rated Drops</p>
@@ -410,7 +295,6 @@
         </div>
     </section>
 
-    <!-- Manifesto -->
     <div class="manifesto">
         <p class="eyebrow">The Manifesto</p>
         <h2>Quality Is<br>Everything</h2>
@@ -418,7 +302,6 @@
         <a href="shop.html" class="btn-primary">Explore Full Catalog</a>
     </div>
 
-    <!-- Lookbook -->
     <section class="section" id="lookbook">
         <div class="section-header reveal">
             <p class="eyebrow">Editorial</p>
@@ -428,32 +311,19 @@
         <div class="lookbook">
             <div class="lookbook-item tall reveal">
                 <img src="https://z-cdn-media.chatglm.cn/files/b06cde05-de7e-4c47-9392-eecb3a49ee0e.png?auth_key=1890107979-b90c52aeceee48338561ce25d407c5fe-0-ef2c7e94f9f792df90a158f39366149a" alt="Street Sovereign">
-                <div class="lookbook-caption">
-                    <span class="eyebrow">Chapter 01</span>
-                    <h3>Street Sovereign</h3>
-                    <a href="shop.html" class="btn-link">View The Edit →</a>
-                </div>
+                <div class="lookbook-caption"><span class="eyebrow">Chapter 01</span><h3>Street Sovereign</h3><a href="shop.html" class="btn-link">View The Edit →</a></div>
             </div>
             <div class="lookbook-item reveal">
                 <img src="https://z-cdn-media.chatglm.cn/files/967b798a-ed01-401a-b2d9-f95e0c4237ee.png?auth_key=1890107979-522a56d015234587b4debd078073dfc8-0-63bcd09ce8c518cbc098d72d13cce536" alt="Leave Your Mark">
-                <div class="lookbook-caption">
-                    <span class="eyebrow">Chapter 02</span>
-                    <h3>Leave Your Mark</h3>
-                    <a href="shop.html" class="btn-link">View The Edit →</a>
-                </div>
+                <div class="lookbook-caption"><span class="eyebrow">Chapter 02</span><h3>Leave Your Mark</h3><a href="shop.html" class="btn-link">View The Edit →</a></div>
             </div>
             <div class="lookbook-item reveal">
                 <img src="https://z-cdn-media.chatglm.cn/files/bcad1bb4-ca5a-40a3-b2cf-d76e99b59d48.png?auth_key=1890107979-ba587458931c468fa835f6cbfc5a2404-0-1716a8044506af24117ed68e5f30d800" alt="The Movement">
-                <div class="lookbook-caption">
-                    <span class="eyebrow">Chapter 03</span>
-                    <h3>The Movement</h3>
-                    <a href="shop.html" class="btn-link">View The Edit →</a>
-                </div>
+                <div class="lookbook-caption"><span class="eyebrow">Chapter 03</span><h3>The Movement</h3><a href="shop.html" class="btn-link">View The Edit →</a></div>
             </div>
         </div>
     </section>
 
-    <!-- Testimonials -->
     <section class="section testimonials">
         <div class="section-header reveal">
             <p class="eyebrow">Customer Voices</p>
@@ -464,43 +334,21 @@
             <div class="testimonial-card reveal">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">"The quality is unreal. The 500 GSM fleece feels heavy in the best way possible — like wearing armor. Worth every penny."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">AM</div>
-                    <div class="author-info">
-                        <strong>Ahmed M.</strong>
-                        <span>Cairo, Egypt</span>
-                        <div class="verified-badge">✓ Verified Purchase</div>
-                    </div>
-                </div>
+                <div class="testimonial-author"><div class="author-avatar">AM</div><div class="author-info"><strong>Ahmed M.</strong><span>Cairo, Egypt</span><div class="verified-badge">✓ Verified Purchase</div></div></div>
             </div>
             <div class="testimonial-card reveal">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">"I've copped from Kith, Fear of God, and this is on the same level. The Cinzel embroidery alone makes it feel like a luxury piece."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">JS</div>
-                    <div class="author-info">
-                        <strong>Jordan S.</strong>
-                        <span>London, UK</span>
-                        <div class="verified-badge">✓ Verified Purchase</div>
-                    </div>
-                </div>
+                <div class="testimonial-author"><div class="author-avatar">JS</div><div class="author-info"><strong>Jordan S.</strong><span>London, UK</span><div class="verified-badge">✓ Verified Purchase</div></div></div>
             </div>
             <div class="testimonial-card reveal">
                 <div class="testimonial-stars">★★★★★</div>
                 <p class="testimonial-text">"Shipping was fast, packaging was premium, and the fit is perfect. The Egyptian King is now my go-to streetwear brand."</p>
-                <div class="testimonial-author">
-                    <div class="author-avatar">MK</div>
-                    <div class="author-info">
-                        <strong>Malik K.</strong>
-                        <span>Dubai, UAE</span>
-                        <div class="verified-badge">✓ Verified Purchase</div>
-                    </div>
-                </div>
+                <div class="testimonial-author"><div class="author-avatar">MK</div><div class="author-info"><strong>Malik K.</strong><span>Dubai, UAE</span><div class="verified-badge">✓ Verified Purchase</div></div></div>
             </div>
         </div>
     </section>
 
-    <!-- Instagram Feed -->
     <section class="section">
         <div class="section-header reveal">
             <p class="eyebrow">Follow The Movement</p>
@@ -508,28 +356,15 @@
             <p>Tag us in your fits — featured on our page weekly</p>
         </div>
         <div class="insta-grid">
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/aab5ad74-5fe0-4bf2-ac45-0f526bc7c22c.PNG?auth_key=1890108924-644365cd76c04987976e72dd8a50c7ac-0-ea46d595f286d793dea2305e4b15509e" alt="Insta 1">
-            </a>
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/85028ec8-e9c8-4184-b8f7-0a6f3abf9f20.PNG?auth_key=1890108924-57cc9e5bcbe6457bacf8404a77a34aef-0-0435b34ba16007c9b8c20c0acc497ef4" alt="Insta 2">
-            </a>
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/666be9ec-a5a3-474e-a53f-3877ceaf70dd.PNG?auth_key=1890108924-c60f7641f8854a6981d0bf91f3fcbd05-0-accc3cb2de554cedeafc7f1ef396f41c" alt="Insta 3">
-            </a>
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/5b7d8e4a-475d-4deb-8092-8f1cb5ae48b6.PNG?auth_key=1890108924-cd1354e82c4d4fbeb0608d5b9d1db943-0-04dc4b71aa39e67f7906a0a7e54f91f2" alt="Insta 4">
-            </a>
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/9e589a3f-8be4-4dc2-8a53-0347f8c4fb3e.PNG?auth_key=1890108924-d0f90898fccf430fa4d0ceb496c435b8-0-b3e57ccb9abeb31413f11c2b89d55441" alt="Insta 5">
-            </a>
-            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank">
-                <img src="https://z-cdn-media.chatglm.cn/files/570f3565-9aab-40c1-b972-5e860ccec148.PNG?auth_key=1890108924-11a7dd92e48f4c0ba4364aedf0268050-0-a997f47b303161a7e53fd4eb7be505dd" alt="Insta 6">
-            </a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/aab5ad74-5fe0-4bf2-ac45-0f526bc7c22c.PNG?auth_key=1890108924-644365cd76c04987976e72dd8a50c7ac-0-ea46d595f286d793dea2305e4b15509e" alt="Insta 1"></a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/85028ec8-e9c8-4184-b8f7-0a6f3abf9f20.PNG?auth_key=1890108924-57cc9e5bcbe6457bacf8404a77a34aef-0-0435b34ba16007c9b8c20c0acc497ef4" alt="Insta 2"></a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/666be9ec-a5a3-474e-a53f-3877ceaf70dd.PNG?auth_key=1890108924-c60f7641f8854a6981d0bf91f3fcbd05-0-accc3cb2de554cedeafc7f1ef396f41c" alt="Insta 3"></a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/5b7d8e4a-475d-4deb-8092-8f1cb5ae48b6.PNG?auth_key=1890108924-cd1354e82c4d4fbeb0608d5b9d1db943-0-04dc4b71aa39e67f7906a0a7e54f91f2" alt="Insta 4"></a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/9e589a3f-8be4-4dc2-8a53-0347f8c4fb3e.PNG?auth_key=1890108924-d0f90898fccf430fa4d0ceb496c435b8-0-b3e57ccb9abeb31413f11c2b89d55441" alt="Insta 5"></a>
+            <a href="https://www.instagram.com/the_egyptian_king10" class="insta-item reveal" target="_blank"><img src="https://z-cdn-media.chatglm.cn/files/570f3565-9aab-40c1-b972-5e860ccec148.PNG?auth_key=1890108924-11a7dd92e48f4c0ba4364aedf0268050-0-a997f47b303161a7e53fd4eb7be505dd" alt="Insta 6"></a>
         </div>
     </section>
 
-    <!-- Newsletter -->
     <section class="newsletter">
         <div class="newsletter-inner">
             <p class="eyebrow">Join The Kingdom</p>
@@ -540,216 +375,78 @@
                 <button type="submit">Subscribe</button>
             </form>
             <div class="newsletter-perks">
-                <span class="perk">10% Off First Order</span>
-                <span class="perk">Early Access Drops</span>
-                <span class="perk">Members Only Content</span>
+                <span class="perk">10% Off First Order</span><span class="perk">Early Access Drops</span><span class="perk">Members Only Content</span>
             </div>
         </div>
     </section>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
                 <h5>The Egyptian King</h5>
                 <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
                 <div class="footer-socials">
-                    <!-- SVG Logos -->
-                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg>
-                    </a>
-                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
-                    </a>
-                    <a href="#" aria-label="TikTok">
-                        <svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.08v11.85a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 .89.13V6.83a6 6 0 0 0-1-.05A6 6 0 0 0 3.6 18.7a6 6 0 0 0 10.74-3.69V8.46a7.84 7.84 0 0 0 4.85 1.66v-3a4.85 4.85 0 0 1-1.6-.43z"/></svg>
-                    </a>
+                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.919-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></a>
+                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M9 8h-3v4h3v12h5v-12h3.642l.358-4h-4v-1.667c0-.955.192-1.333 1.115-1.333h2.885v-5h-3.808c-3.596 0-5.192 1.583-5.192 4.615v3.385z"/></svg></a>
+                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
+                    <a href="#" aria-label="TikTok"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.08v11.85a3 3 0 0 1-3 3 3 3 0 0 1-3-3 3 3 0 0 1 3-3 3 3 0 0 1 .89.13V6.83a6 6 0 0 0-1-.05A6 6 0 0 0 3.6 18.7a6 6 0 0 0 10.74-3.69V8.46a7.84 7.84 0 0 0 4.85 1.66v-3a4.85 4.85 0 0 1-1.6-.43z"/></svg></a>
                 </div>
             </div>
-            <div>
-                <h5>Shop</h5>
-                <ul>
-                    <li><a href="shop.html">All Products</a></li>
-                    <li><a href="shop.html">Hoodies</a></li>
-                    <li><a href="shop.html">T-Shirts</a></li>
-                    <li><a href="shop.html">New Arrivals</a></li>
-                    <li><a href="shop.html">Best Sellers</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="track.html">Track Order</a></li>
-                    <li><a href="shop.html">Shipping Info</a></li>
-                    <li><a href="shop.html">Returns</a></li>
-                    <li><a href="shop.html">Size Guide</a></li>
-                    <li><a href="shop.html">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Wholesale</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="shop.html">Hoodies</a></li><li><a href="shop.html">T-Shirts</a></li><li><a href="shop.html">New Arrivals</a></li><li><a href="shop.html">Best Sellers</a></li></ul></div>
+            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="shop.html">Shipping Info</a></li><li><a href="shop.html">Returns</a></li><li><a href="shop.html">Size Guide</a></li><li><a href="shop.html">FAQ</a></li></ul></div>
+            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Careers</a></li><li><a href="#">Wholesale</a></li><li><a href="#">Contact</a></li></ul></div>
         </div>
         <div class="footer-bottom">
             <span class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved. WB 5.4</span>
-            <div class="payment-icons">
-                <span class="payment-icon">VISA</span>
-                <span class="payment-icon">MC</span>
-                <span class="payment-icon">AMEX</span>
-                <span class="payment-icon">PAYPAL</span>
-                <span class="payment-icon">APPLE</span>
-            </div>
+            <div class="payment-icons"><span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">APPLE</span></div>
         </div>
     </footer>
 
     <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">↑</button>
 
     <script>
-        // ===== Dropdown =====
-        function toggleDropdown() {
-            document.getElementById('dropdown-menu').classList.toggle('active');
-        }
-        window.addEventListener('click', function(e) {
-            const wrapper = document.querySelector('.dropdown-wrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                document.getElementById('dropdown-menu').classList.remove('active');
-            }
-        });
-
-        // ===== Toast =====
-        function showToast(message) {
-            let container = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.innerText = message;
-            container.appendChild(toast);
-            void toast.offsetWidth;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => { toast.remove(); }, 400);
-            }, 3000);
-        }
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
+        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) { document.getElementById('dropdown-menu').classList.remove('active'); } });
+        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); void toast.offsetWidth; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000); }
         window.showToast = showToast;
-
-        // ===== Newsletter =====
-        function subscribeNewsletter(e) {
-            e.preventDefault();
-            const input = e.target.querySelector('input');
-            showToast('Welcome to the kingdom! Check your inbox for 10% off 👑');
-            input.value = '';
-        }
-
-        // ===== Products =====
-        const products = [
-            { id: 1, name: "3esh w mal7 Hoodie", price: 950, oldPrice: 1200, rating: 5.0, reviews: 456, img: "https://i.postimg.cc/RZ4BDMW0/Untitled-design-(8).png", badge: "bestseller" },
-            { id: 2, name: "8azl banaat Hoodie", price: 950, rating: 4.9, reviews: 456, img: "https://i.postimg.cc/qv0qz0Jb/Untitled-design-(2).png", badge: "new" },
-            { id: 3, name: "yomak 3asal Hoodie", price: 950, oldPrice: 1100, rating: 4.7, reviews: 456, img: "https://i.postimg.cc/4xdC8FBJ/Untitled-design-(3).png", badge: "sale" },
-            { id: 4, name: "safynet el bo7era Hoodie", price: 950, rating: 4.9, reviews: 456, img: "https://i.postimg.cc/htkn3Rv7/Untitled-design-(4).png", badge: "new" },
-        ];
-
-        function getStars(rating) {
-            let r = Math.round(rating);
-            return '★'.repeat(r) + '☆'.repeat(5 - r);
-        }
+        function subscribeNewsletter(e) { e.preventDefault(); const input = e.target.querySelector('input'); showToast('Welcome to the kingdom! Check your inbox for 10% off 👑'); input.value = ''; }
 
         function renderFeatured() {
             const grid = document.getElementById('featured-grid');
-            grid.innerHTML = products.map(p => `
-                <div class="product-card" onclick="quickAdd(${p.id})">
+            // Fetch 4 bestsellers from the global products.js array
+            const featured = products.filter(p => p.rating >= 4.9).slice(0, 4);
+            grid.innerHTML = featured.map(p => `
+                <div class="product-card" onclick="window.location.href='product.html?id=${p.id}'">
                     <div class="product-img-wrapper">
                         <div class="product-badges">
                             ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
                             ${p.badge === 'sale' ? '<span class="badge sale">Sale</span>' : ''}
                             ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
                         </div>
-                        <img src="${p.img}" alt="${p.name}">
-                        <button class="quick-add" onclick="event.stopPropagation(); quickAdd(${p.id});">+ Quick Add</button>
+                        <img src="${p.images[0]}" alt="${p.name}">
+                        <button class="quick-add" onclick="event.stopPropagation(); window.location.href='product.html?id=${p.id}';">View Product</button>
                     </div>
                     <div class="product-info">
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
                         <h3 class="product-title">${p.name}</h3>
-                        <p class="product-price">
-                            E£${p.price}.00 EGP
-                            ${p.oldPrice ? `<span class="old-price">E£${p.oldPrice}.00</span>` : ''}
-                        </p>
+                        <p class="product-price">E£${p.price}.00 EGP</p>
                     </div>
                 </div>
             `).join('');
         }
 
-        function quickAdd(id) {
-            const product = products.find(p => p.id === id);
-            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const existing = cart.find(item => item.id === id);
-            if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({ ...product, qty: 1 }); }
-            localStorage.setItem('kingCart', JSON.stringify(cart));
-            updateCartCount();
-            showToast(`${product.name} added to bag!`);
-            if (typeof saveCartToBackend === 'function') saveCartToBackend();
-        }
-
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const totalCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            document.getElementById('nav-cart-count').innerText = totalCount;
-        }
-
-        // ===== Scroll Effects =====
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            const backTop = document.getElementById('back-to-top');
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-            if (window.scrollY > 600) backTop.classList.add('visible');
-            else backTop.classList.remove('visible');
-        });
-
-        // ===== Reveal on Scroll =====
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('visible');
-                    observer.unobserve(entry.target);
-                }
-            });
-        }, { threshold: 0.12 });
-        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-        window.addEventListener('DOMContentLoaded', () => {
-            renderFeatured();
-            updateCartCount();
-            setTimeout(() => {
-                document.querySelectorAll('.product-card').forEach(el => {
-                    el.classList.add('reveal');
-                    observer.observe(el);
-                });
-            }, 100);
-        });
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; const totalCount = cart.reduce((sum, item) => sum + (item.qty || 1), 0); document.getElementById('nav-cart-count').innerText = totalCount; }
+        window.addEventListener('scroll', () => { const header = document.getElementById('main-header'); const backTop = document.getElementById('back-to-top'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); if (window.scrollY > 600) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
+        const observer = new IntersectionObserver((entries) => { entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); } }); }, { threshold: 0.12 }); document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+        window.addEventListener('DOMContentLoaded', () => { renderFeatured(); updateCartCount(); setTimeout(() => { document.querySelectorAll('.product-card').forEach(el => { el.classList.add('reveal'); observer.observe(el); }); }, 100); });
     </script>
 
     <!-- Receipt Modal -->
     <div id="receipt-modal-overlay" class="receipt-overlay">
         <div class="receipt-modal-card">
-            <div id="receipt-loader" class="receipt-loader-box">
-                <div class="spinner"></div>
-                <h3>LOADING YOUR RECEIPT...</h3>
-                <p>Generating your official order confirmation image.</p>
-            </div>
+            <div id="receipt-loader" class="receipt-loader-box"><div class="spinner"></div><h3>LOADING YOUR RECEIPT...</h3><p>Generating your official order confirmation image.</p></div>
             <div id="receipt-content-box" class="receipt-content-box" style="display: none;">
-                <div class="receipt-preview-wrapper">
-                    <img id="generated-receipt-img" src="" alt="Order Receipt">
-                </div>
+                <div class="receipt-preview-wrapper"><img id="generated-receipt-img" src="" alt="Order Receipt"></div>
                 <div class="receipt-actions">
                     <button id="btn-save-receipt" class="btn-receipt primary">Save Receipt</button>
                     <button id="btn-copy-receipt" class="btn-receipt secondary">Copy Receipt</button>
@@ -758,36 +455,18 @@
             </div>
         </div>
     </div>
-
     <div id="receipt-capture-node" class="receipt-node">
         <div class="watermark-bg">THE EGYPTIAN KING</div>
-        <div class="node-header">
-            <h2>THE EGYPTIAN KING</h2>
-            <p class="node-tagline">OFFICIAL ORDER RECEIPT</p>
-        </div>
+        <div class="node-header"><h2>THE EGYPTIAN KING</h2><p class="node-tagline">OFFICIAL ORDER RECEIPT</p></div>
         <hr class="node-divider">
-        <div class="node-meta">
-            <div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div>
-            <div><strong>Date:</strong> <span id="node-order-date">---</span></div>
-        </div>
-        <div class="node-customer">
-            <p><strong>Customer:</strong> <span id="node-customer-name">---</span></p>
-            <p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p>
-            <p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p>
-        </div>
+        <div class="node-meta"><div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div><div><strong>Date:</strong> <span id="node-order-date">---</span></div></div>
+        <div class="node-customer"><p><strong>Customer:</strong> <span id="node-customer-name">---</span></p><p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p><p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p></div>
         <hr class="node-divider">
         <div id="node-items-list" class="node-items"></div>
         <hr class="node-divider">
-        <div class="node-total">
-            <span>TOTAL PAID:</span>
-            <span id="node-total-price">E£0.00</span>
-        </div>
-        <div class="node-footer">
-            <p>Thank you for shopping with THE EGYPTIAN KING.</p>
-            <p>Keep this receipt image for delivery verification.</p>
-        </div>
+        <div class="node-total"><span>TOTAL PAID:</span><span id="node-total-price">E£0.00</span></div>
+        <div class="node-footer"><p>Thank you for shopping with THE EGYPTIAN KING.</p><p>Keep this receipt image for delivery verification.</p></div>
     </div>
-
     <style>
     .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; justify-content:center; align-items:center; z-index:99999; }
     .receipt-overlay.active { display:flex; }
@@ -812,32 +491,22 @@
     .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
     .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
     </style>
-
     <script>
         function checkAndRenderOrderReceipt() {
             const urlParams = new URLSearchParams(window.location.search);
             if (!urlParams.has('orderSuccess')) return;
             const lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
             if (!lastOrder) return;
-
             const overlay = document.getElementById('receipt-modal-overlay');
             overlay.classList.add('active');
-
             document.getElementById('node-order-id').innerText = lastOrder.orderId;
             document.getElementById('node-order-date').innerText = lastOrder.date;
             document.getElementById('node-customer-name').innerText = lastOrder.customer.name;
             document.getElementById('node-customer-phone').innerText = lastOrder.customer.phone;
             document.getElementById('node-customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city}`;
             document.getElementById('node-total-price').innerText = lastOrder.total;
-
             const itemsContainer = document.getElementById('node-items-list');
-            itemsContainer.innerHTML = lastOrder.items.map(item => `
-                <div class="node-item-row">
-                    <span>${item.name} (x${item.qty})</span>
-                    <span>E£${(item.price * item.qty).toFixed(2)}</span>
-                </div>
-            `).join('');
-
+            itemsContainer.innerHTML = lastOrder.items.map(item => `<div class="node-item-row"><span>${item.name} (x${item.qty})</span><span>E£${(item.price * item.qty).toFixed(2)}</span></div>`).join('');
             setTimeout(() => {
                 const receiptNode = document.getElementById('receipt-capture-node');
                 html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
@@ -846,37 +515,15 @@
                     imgElement.src = imageDataUrl;
                     document.getElementById('receipt-loader').style.display = 'none';
                     document.getElementById('receipt-content-box').style.display = 'block';
-
-                    document.getElementById('btn-save-receipt').onclick = function() {
-                        const a = document.createElement('a');
-                        a.href = imageDataUrl;
-                        a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`;
-                        a.click();
-                    };
-
-                    document.getElementById('btn-copy-receipt').onclick = function() {
-                        canvas.toBlob(blob => {
-                            if (navigator.clipboard && window.ClipboardItem) {
-                                const item = new ClipboardItem({ 'image/png': blob });
-                                navigator.clipboard.write([item]).then(() => {
-                                    alert('Receipt image copied to clipboard!');
-                                });
-                            } else {
-                                alert('Copy to clipboard is not supported on this browser.');
-                            }
-                        });
-                    };
+                    document.getElementById('btn-save-receipt').onclick = function() { const a = document.createElement('a'); a.href = imageDataUrl; a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`; a.click(); };
+                    document.getElementById('btn-copy-receipt').onclick = function() { canvas.toBlob(blob => { if (navigator.clipboard && window.ClipboardItem) { const item = new ClipboardItem({ 'image/png': blob }); navigator.clipboard.write([item]).then(() => { alert('Receipt image copied to clipboard!'); }); } else { alert('Copy to clipboard is not supported on this browser.'); } }); });
                 });
             }, 1200);
         }
-
-        function closeReceiptModal() {
-            document.getElementById('receipt-modal-overlay').classList.remove('active');
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
+        function closeReceiptModal() { document.getElementById('receipt-modal-overlay').classList.remove('active'); window.history.replaceState({}, document.title, window.location.pathname); }
         window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
     </script>
+    <script src="products.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
