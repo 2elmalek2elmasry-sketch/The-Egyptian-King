@@ -5,564 +5,118 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <title>Shop All — THE EGYPTIAN KING</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    
-    <!-- ===== FIREBASE SDK (Moved to top so it loads before the page) ===== -->
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-    <script src="auth.js"></script>
-
-    <!-- ===== GOOGLE ANALYTICS 4 (GA4) ===== -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR0FBN0PRV"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZR0FBN0PRV');
-    </script>
-
-    <!-- ===== META PIXEL CODE ===== -->
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1099053245985344');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1099053245985344&ev=PageView&noscript=1"
-    /></noscript>
-    <!-- End Meta Pixel Code -->
-
-    <!-- Live PayPal SDK Integration -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
-
     <style>
-        :root {
-            --bg:#ffffff;
-            --bg-alt:#faf9f7;
-            --text-main:#0a0a0a;
-            --text-muted:#6b6b6b;
-            --accent:#bfa15f;
-            --accent-dark:#9a7f3e;
-            --border:#e8e6e1;
-            --btn-bg:#0a0a0a;
-            --btn-text:#fff;
-            --sale:#c8102e;
-        }
-
+        :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --sale:#c8102e; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
         html { scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
         body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
         a { text-decoration: none; color: inherit; }
-
-        /* ===== Toast ===== */
         .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
         .toast-message.show { opacity:1; transform:translateY(0); }
-
-        /* ===== Header ===== */
-        header {
-            background:rgba(255,255,255,0.98);
-            backdrop-filter:blur(20px);
-            -webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid var(--border);
-            padding:1.1rem clamp(1.2rem,5vw,3.5rem);
-            position:sticky;
-            top:0;
-            z-index:100;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            transition:padding 0.3s ease;
-        }
+        header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
         header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
-        
         .nav-left { flex: 1; }
-        
         .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
-        .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
-        header.scrolled .logo-img { height: 22px; }
-        .brand-logo:hover .logo-img { opacity: 0.8; }
-
+        .logo-img { height: 26px; width: auto; object-fit: contain; }
         .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
-        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
-        .icon-btn:hover { opacity:0.65; transform:translateY(-1px); }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
         .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
-        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; padding:0 4px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
-
+        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
         .dropdown-wrapper { position:relative; }
-        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:transform 0.3s; }
-        .menu-toggle-btn:hover { transform:rotate(90deg); }
-
-        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; text-align:left; opacity:0; transform:translateY(-10px); transition:opacity 0.3s, transform 0.3s; }
-        .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
+        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; }
+        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; }
+        .dropdown-menu.active { display:flex; }
         .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
         .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
-        .dropdown-title { font-family:'Inter',sans-serif; font-weight:800; font-size:0.7rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-title { font-weight:800; font-size:0.7rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
         .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
-        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; transition:color 0.3s, padding-left 0.3s; display:inline-block; }
-        .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
+        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; }
         .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
 
-        /* ===== Shop Hero ===== */
-        .shop-hero {
-            background: #0a0a0a;
-            color: #fff;
-            text-align: center;
-            padding: 6rem 2rem 5rem;
-            position: relative;
-            overflow: hidden;
-        }
-        .shop-hero::after {
-            content: '';
-            position: absolute;
-            bottom: -100px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 400px;
-            height: 400px;
-            background: radial-gradient(circle, rgba(191,161,95,0.15) 0%, transparent 70%);
-            z-index: 1;
-        }
-        .shop-hero h1 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 900;
-            font-size: clamp(2.5rem, 6vw, 4.5rem);
-            letter-spacing: 4px;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-            position: relative;
-            z-index: 2;
-        }
-        .shop-hero p {
-            color: #aaa;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-            font-size: 0.8rem;
-            font-weight: 500;
-            position: relative;
-            z-index: 2;
-        }
+        .shop-hero { background: #0a0a0a; color: #fff; text-align: center; padding: 6rem 2rem 5rem; }
+        .shop-hero h1 { font-weight: 900; font-size: clamp(2.5rem, 6vw, 4.5rem); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1rem; }
+        .shop-hero p { color: #aaa; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; }
 
-        /* ===== Shop Layout ===== */
-        .shop-layout {
-            display: grid;
-            grid-template-columns: 240px 1fr;
-            gap: 3rem;
-            max-width: 1500px;
-            margin: 0 auto;
-            padding: 4rem clamp(1.2rem, 5vw, 3.5rem);
-        }
-
-        .sidebar {
-            border-right: 1px solid var(--border);
-            padding-right: 2rem;
-            position: sticky;
-            top: 100px;
-            height: fit-content;
-        }
-        .sidebar h3 {
-            font-family: 'Inter', sans-serif;
-            font-weight: 800;
-            font-size: 0.9rem;
-            letter-spacing: 2px;
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
+        .shop-layout { display: grid; grid-template-columns: 240px 1fr; gap: 3rem; max-width: 1500px; margin: 0 auto; padding: 4rem clamp(1.2rem, 5vw, 3.5rem); }
+        .sidebar { border-right: 1px solid var(--border); padding-right: 2rem; position: sticky; top: 100px; height: fit-content; }
+        .sidebar h3 { font-weight: 800; font-size: 0.9rem; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
         .filter-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
-        .filter-btn {
-            background: none;
-            border: none;
-            text-align: left;
-            cursor: pointer;
-            color: var(--text-muted);
-            font-size: 0.85rem;
-            font-weight: 600;
-            letter-spacing: 1px;
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            padding: 2px 0;
-        }
+        .filter-btn { background: none; border: none; text-align: left; cursor: pointer; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; padding: 2px 0; }
         .filter-btn:hover { color: var(--accent); padding-left: 5px; }
         .filter-btn.active { color: var(--text-main); font-weight: 800; }
         .filter-btn.active::before { content: '— '; color: var(--accent); }
-
         .sidebar-block { margin-top: 2.5rem; }
-        .size-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 0.5rem;
-        }
-        .size-btn {
-            padding: 0.6rem;
-            border: 1px solid var(--border);
-            background: #fff;
-            cursor: pointer;
-            font-weight: 700;
-            font-size: 0.75rem;
-            transition: all 0.2s;
-            border-radius: 2px;
-        }
+        .size-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.5rem; }
+        .size-btn { padding: 0.6rem; border: 1px solid var(--border); background: #fff; cursor: pointer; font-weight: 700; font-size: 0.75rem; transition: all 0.2s; border-radius: 2px; }
         .size-btn:hover { border-color: var(--text-main); }
         .size-btn.active { background: var(--text-main); color: #fff; border-color: var(--text-main); }
 
-        /* ===== Toolbar ===== */
-        .toolbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
+        .toolbar { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); flex-wrap: wrap; gap: 1rem; }
         .toolbar-left p { font-size: 0.85rem; color: var(--text-muted); letter-spacing: 1px; }
-        .toolbar-right { display: flex; align-items: center; gap: 0.5rem; }
-        .sort-dropdown {
-            padding: 0.6rem 1rem;
-            border: 1px solid var(--border);
-            background: #fff;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.8rem;
-            font-weight: 600;
-            cursor: pointer;
-            outline: none;
-            border-radius: 2px;
-            transition: border-color 0.3s;
-        }
-        .sort-dropdown:hover { border-color: var(--text-main); }
+        .sort-dropdown { padding: 0.6rem 1rem; border: 1px solid var(--border); background: #fff; font-size: 0.8rem; font-weight: 600; cursor: pointer; outline: none; border-radius: 2px; }
 
-        /* ===== Product Grid ===== */
-        .product-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
-            gap: 2.5rem 1.5rem;
-        }
-        .product-card {
-            display: flex;
-            flex-direction: column;
-            cursor: pointer;
-            position: relative;
-        }
-        .product-img-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 1/1.2;
-            background: var(--bg-alt);
-            border-radius: 4px;
-            overflow: hidden;
-            margin-bottom: 1rem;
-        }
-        .product-img-wrapper img {
-            width: 100%; height: 100%; object-fit: cover;
-            transition: transform 0.6s ease;
-        }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap: 2.5rem 1.5rem; }
+        .product-card { display: flex; flex-direction: column; cursor: pointer; position: relative; }
+        .product-img-wrapper { position: relative; width: 100%; aspect-ratio: 1/1.2; background: var(--bg-alt); border-radius: 4px; overflow: hidden; margin-bottom: 1rem; }
+        .product-img-wrapper img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s ease; }
         .product-card:hover .product-img-wrapper img { transform: scale(1.06); }
-
-        .product-badges {
-            position: absolute; top: 12px; left: 12px;
-            display: flex; flex-direction: column; gap: 6px; z-index: 2;
-        }
-        .badge {
-            font-size: 0.6rem; font-weight: 800;
-            letter-spacing: 1.5px; text-transform: uppercase;
-            padding: 4px 10px; border-radius: 2px;
-        }
+        .product-badges { position: absolute; top: 12px; left: 12px; display: flex; flex-direction: column; gap: 6px; z-index: 2; }
+        .badge { font-size: 0.6rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
         .badge.new { background: #0a0a0a; color: #fff; }
-        .badge.sale { background: var(--sale); color: #fff; }
         .badge.bestseller { background: var(--accent); color: #fff; }
-
-        .quick-add {
-            position: absolute; bottom: 0; left: 0; right: 0;
-            background: rgba(10,10,10,0.95); color: #fff;
-            backdrop-filter: blur(5px); padding: 0.95rem;
-            text-align: center; font-weight: 700; font-size: 0.72rem;
-            text-transform: uppercase; letter-spacing: 2px;
-            transform: translateY(100%);
-            transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-            border: none; cursor: pointer; width: 100%;
-        }
+        .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); color: #fff; backdrop-filter: blur(5px); padding: 0.95rem; text-align: center; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; transform: translateY(100%); transition: transform 0.4s; border: none; cursor: pointer; width: 100%; }
         .product-card:hover .quick-add { transform: translateY(0); }
         .quick-add:hover { background: var(--accent); }
-
         .product-info { padding: 0 0.25rem; }
-        .product-title {
-            font-size: 0.95rem; font-weight: 700;
-            margin-bottom: 0.4rem; letter-spacing: 0.3px;
-            transition: color 0.3s;
-        }
+        .product-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; transition: color 0.3s; }
         .product-card:hover .product-title { color: var(--accent); }
-        .product-price {
-            font-size: 0.92rem; color: var(--text-main);
-            font-weight: 700; display: flex; gap: 8px; align-items: center;
-        }
-        .product-price .old-price {
-            color: var(--text-muted); text-decoration: line-through;
-            font-weight: 400; font-size: 0.85rem;
-        }
-        .star-rating {
-            font-size: 0.75rem; margin-bottom: 0.45rem;
-            color: var(--accent); letter-spacing: 1px;
-            display: flex; align-items: center; gap: 6px;
-        }
+        .product-price { font-size: 0.92rem; color: var(--text-main); font-weight: 700; }
+        .star-rating { font-size: 0.75rem; margin-bottom: 0.45rem; color: var(--accent); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
         .star-rating span { color: var(--text-muted); font-size: 0.72rem; font-weight: 400; }
 
-        /* ===== Membership Section ===== */
-        .membership-section {
-            background: #0a0a0a;
-            color: #fff;
-            padding: 6rem 2rem;
-            margin-top: 6rem;
-            width: 100%;
-            box-sizing: border-box;
-            display: block;
-            overflow: hidden;
-        }
-        .membership-inner { 
-            max-width: 1200px; 
-            margin: 0 auto; 
-            display: block;
-        }
-        .membership-header { 
-            text-align: center; 
-            margin-bottom: 4rem; 
-            display: block;
-            width: 100%;
-        }
-        .membership-header .eyebrow { font-size: 0.7rem; color: var(--accent); letter-spacing: 4px; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
-        .membership-header h2 { font-family: 'Inter', sans-serif; font-weight: 900; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: 2px; margin-bottom: 1rem; }
-        .membership-header p { color: #888; font-size: 0.9rem; letter-spacing: 1px; }
-
-        .plan-grid { 
-            display: grid; 
-            grid-template-columns: repeat(3, 1fr); 
-            gap: 1.5rem; 
-            align-items: stretch;
-        }
-        .plan-card {
-            background: #111; 
-            border: 1px solid #222; 
-            border-radius: 4px;
-            padding: 2.5rem 2rem; 
-            text-align: center; 
-            position: relative;
-            transition: all 0.3s ease; 
-            display: flex; 
-            flex-direction: column;
-            min-height: 420px;
-        }
-        .plan-card:hover { border-color: #333; transform: translateY(-5px); }
-        .plan-card.premium { border-color: var(--accent); background: linear-gradient(180deg, rgba(191,161,95,0.05) 0%, #111 100%); }
-
-        .plan-badge {
-            position: absolute; top: -12px; left: 50%; transform: translateX(-50%);
-            background: var(--accent); color: #000; font-size: 0.65rem; font-weight: 800;
-            padding: 6px 16px; border-radius: 2px; letter-spacing: 1.5px; text-transform: uppercase;
-            opacity: 0; transition: opacity 0.3s ease; white-space: nowrap;
-        }
-        .plan-card.active-plan .plan-badge { opacity: 1; }
-
-        .plan-name { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.4rem; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.5rem; }
-        .plan-price { font-size: 2.2rem; font-weight: 800; margin-bottom: 0.25rem; display: block; }
-        .plan-price span { font-size: 0.8rem; font-weight: 400; color: #888; }
-        .plan-desc { font-size: 0.8rem; color: #666; margin-bottom: 2rem; min-height: 35px; display: block; }
-
-        .plan-features { list-style: none; text-align: left; margin-bottom: 2rem; flex-grow: 1; padding: 0; }
-        .plan-features li { font-size: 0.85rem; color: #aaa; margin-bottom: 0.85rem; display: flex; align-items: flex-start; gap: 10px; }
-        .plan-features li::before { content: '✓'; color: var(--accent); font-weight: 800; flex-shrink: 0; }
-        .plan-features li.disabled { color: #444; }
-        .plan-features li.disabled::before { content: '✕'; color: #444; }
-
-        .btn-plan {
-            width: 100%; padding: 1rem; border-radius: 2px; font-weight: 700; font-size: 0.75rem;
-            text-transform: uppercase; letter-spacing: 2px; cursor: pointer; border: 1px solid #333;
-            background: transparent; color: #fff; transition: all 0.3s ease;
-            margin-top: auto;
-            display: block;
-            text-align: center;
-            text-decoration: none;
-        }
-        .btn-plan:hover { background: #fff; color: #000; border-color: #fff; }
-        .btn-plan.btn-upgrade { background: var(--accent); color: #000; border-color: var(--accent); }
-        .btn-plan.btn-upgrade:hover { background: #fff; border-color: #fff; }
-        .btn-plan.btn-current { background: #1c1c1c; color: #666; cursor: not-allowed; border-color: #1c1c1c; }
-
-        @media (max-width: 900px) { 
-            .plan-grid { grid-template-columns: 1fr; max-width: 400px; margin: 0 auto; } 
-        }
-
-        /* ===== Footer ===== */
         footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
         .footer-grid h5 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 2px; color: #fff; }
         .footer-grid ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-        .footer-grid a { color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.3s, padding-left 0.3s; }
-        .footer-grid a:hover { color: var(--accent); padding-left: 5px; }
-        .footer-brand p { color: #888; font-size: 0.88rem; line-height: 1.7; margin-top: 1rem; max-width: 340px; }
-        .footer-socials { display: flex; gap: 0.85rem; margin-top: 1.5rem; }
-        .footer-socials a { width: 38px; height: 38px; border: 1px solid #333; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; text-decoration: none; font-size: 0.85rem; transition: all 0.3s; }
-        .footer-socials a:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-        .footer-bottom { border-top: 1px solid #1c1c1c; padding-top: 2rem; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem; max-width: 1300px; margin: 0 auto; }
-        .footer-bottom .copyright { color: #666; font-size: 0.78rem; letter-spacing: 0.5px; }
-        .payment-icons { display: flex; gap: 8px; align-items: center; }
-        .payment-icon { background: #fff; color: #0a0a0a; padding: 4px 8px; border-radius: 3px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; }
-
-        /* ===== Back to Top ===== */
-        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: #0a0a0a; color: #fff; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
+        .footer-grid a { color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
+        .footer-grid a:hover { color: var(--accent); }
+        .footer-bottom { border-top: 1px solid #1c1c1c; padding-top: 2rem; text-align: center; color: #666; font-size: 0.78rem; }
+        .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: #0a0a0a; color: #fff; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 90; }
         .back-to-top.visible { opacity: 1; visibility: visible; }
-        .back-to-top:hover { background: var(--accent); transform: translateY(-3px); }
-
-        /* ===== Upgrade Modal ===== */
-        .upgrade-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
-            display: none; justify-content: center; align-items: center; z-index: 99999; padding: 1rem;
-        }
-        .upgrade-overlay.active { display: flex; }
-        .upgrade-card {
-            background: #fff; width: 100%; max-width: 450px; border-radius: 12px;
-            padding: 3rem; box-shadow: 0 20px 50px rgba(0,0,0,0.5); text-align: center;
-            position: relative; max-height: 90vh; overflow-y: auto;
-        }
-        .upgrade-close { position: absolute; top: 1rem; right: 1rem; background: none; border: none; font-size: 1.5rem; cursor: pointer; color: #666; transition: color 0.2s; }
-        .upgrade-close:hover { color: #0a0a0a; }
-        .upgrade-title { font-family: 'Inter', sans-serif; font-weight: 900; font-size: 1.8rem; margin-bottom: 0.5rem; text-transform: uppercase; letter-spacing: 1px; }
-        .upgrade-subtitle { font-size: 0.85rem; color: #666; margin-bottom: 1.5rem; }
-        .upgrade-price { font-size: 1.2rem; font-weight: 700; color: var(--accent); margin-bottom: 2rem; }
-
-        /* ===== Payment Options (Matching Checkout) ===== */
-        .payment-options { display:flex; flex-direction:column; gap:0.8rem; text-align: left; }
-        .payment-tab {
-            display:flex; align-items:center; gap:0.75rem; padding:1.5rem;
-            border:1px solid var(--border); border-radius:4px; cursor:pointer;
-            transition:all 0.3s ease; background:#fff;
-        }
-        .payment-tab:hover { border-color: var(--text-muted); }
-        .payment-tab.active {
-            border-color: var(--text-main);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-        }
-        .radio-dot {
-            width:20px; height:20px; border:2px solid #ccc; border-radius:50%;
-            display:flex; align-items:center; justify-content:center; flex-shrink:0;
-            transition:all 0.2s;
-        }
-        .payment-tab.active .radio-dot {
-            border-color: var(--text-main);
-            background: var(--text-main);
-            box-shadow: inset 0 0 0 4px #fff;
-        }
-        .payment-tab-label { font-weight:700; font-size:0.95rem; color: var(--text-main); flex: 1; }
-        .brand-logos { display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left: auto; }
-        .brand-logos svg { display:block; height:20px; width:auto; }
-
-        .payment-content { display:none; margin-top:1.2rem; padding:1.5rem; background:var(--bg-alt); border:1px solid var(--border); border-radius:4px; }
-        .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
-
-        /* ===== Responsive ===== */
-        @media (max-width: 1024px) {
-            .shop-layout { grid-template-columns: 1fr; gap: 2rem; }
-            .sidebar {
-                position: static;
-                border-right: none;
-                border-bottom: 1px solid var(--border);
-                padding-right: 0;
-                padding-bottom: 2rem;
-            }
-            .filter-list { flex-direction: row; flex-wrap: wrap; gap: 1rem; }
-            .sidebar-block { display: none; } 
-            .product-grid { grid-template-columns: repeat(3, 1fr); }
-            .footer-grid { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-            .footer-brand { grid-column: 1 / -1; text-align: center; }
-            .footer-brand p { max-width: 500px; margin: 1rem auto 0; }
-            .footer-socials { justify-content: center; }
-        }
-
-        @media (max-width: 768px) {
-            .product-grid { grid-template-columns: repeat(2, 1fr); gap: 2rem 1rem; }
-            .footer-bottom { justify-content: center; text-align: center; flex-direction: column; gap: 1.5rem; }
-        }
-
-        @media (max-width: 480px) {
-            .shop-hero { padding: 4rem 1.5rem 3rem; }
-            .shop-layout { padding: 3rem 1.25rem; }
-            .product-grid { grid-template-columns: 1fr; max-width: 320px; margin: 0 auto; }
-            .footer-grid { grid-template-columns: 1fr; gap: 2rem; text-align: center; }
-            .footer-grid ul { align-items: center; }
-            .dropdown-menu { width: calc(100vw - 2rem); right: -0.5rem; }
-            .upgrade-card { padding: 2rem 1.5rem; }
-        }
+        @media (max-width: 1024px) { .shop-layout { grid-template-columns: 1fr; } .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 2rem; } .filter-list { flex-direction: row; flex-wrap: wrap; gap: 1rem; } .sidebar-block { display: none; } .product-grid { grid-template-columns: repeat(3, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
     <div class="toast-container"></div>
-
-    <!-- Header -->
     <header id="main-header">
         <div class="nav-left"></div>
         <a href="index.html" class="brand-logo">
-            <img src="https://i.postimg.cc/N0g8X9mx/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
+            <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
         </a>
-
         <div class="nav-actions">
             <a href="cart.html" class="icon-btn" aria-label="Cart">
                 <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="cart-count" id="nav-cart-count">0</span>
             </a>
-
             <div class="dropdown-wrapper">
-                <button class="menu-toggle-btn" onclick="toggleDropdown()" aria-label="Toggle navigation menu">☰</button>
+                <button class="menu-toggle-btn" onclick="toggleDropdown()">☰</button>
                 <div class="dropdown-menu" id="dropdown-menu">
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Navigation</div>
-                        <ul class="dropdown-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Shop All</a></li>
-                            <li><a href="track.html">Track Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Support</div>
-                        <ul class="dropdown-links">
-                            <li><a href="terms.html">Shipping Info</a></li>
-                            <li><a href="terms.html">Returns & Exchanges</a></li>
-                            <li><a href="terms.html">FAQ</a></li>
-                            <li><a href="terms.html">Size Guide</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">The Egyptian King</div>
-                        <p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
-                        <ul class="dropdown-links">
-                            <li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li>
-                            <li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li>
-                            <li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li>
-                        </ul>
-                    </div>
+                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li><li><a href="track.html">Track Order</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">Support</div><ul class="dropdown-links"><li><a href="terms.html">Shipping Info</a></li><li><a href="terms.html">Returns</a></li></ul></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Shop Hero -->
     <section class="shop-hero">
         <h1>Shop All</h1>
         <p>Heavyweight Essentials & Premium Streetwear</p>
     </section>
 
-    <!-- Shop Layout -->
     <div class="shop-layout">
-        <!-- Sidebar -->
         <aside class="sidebar">
             <h3>Categories</h3>
             <ul class="filter-list">
@@ -571,26 +125,17 @@
                 <li><button class="filter-btn" data-filter="basic" onclick="filterProducts('basic')">Basic Core</button></li>
                 <li><button class="filter-btn" data-filter="best" onclick="filterProducts('best')">Best Sellers</button></li>
             </ul>
-
             <div class="sidebar-block">
                 <h3>Sizes</h3>
                 <div class="size-grid">
-                    <button class="size-btn">S</button>
-                    <button class="size-btn active">M</button>
-                    <button class="size-btn">L</button>
-                    <button class="size-btn">XL</button>
-                    <button class="size-btn">XXL</button>
-                    <button class="size-btn">3XL</button>
+                    <button class="size-btn">S</button><button class="size-btn active">M</button><button class="size-btn">L</button><button class="size-btn">XL</button><button class="size-btn">XXL</button><button class="size-btn">3XL</button>
                 </div>
             </div>
         </aside>
 
-        <!-- Main Content -->
         <main>
             <div class="toolbar">
-                <div class="toolbar-left">
-                    <p id="product-count">Showing all products</p>
-                </div>
+                <div class="toolbar-left"><p id="product-count">Showing all products</p></div>
                 <div class="toolbar-right">
                     <select class="sort-dropdown" onchange="sortProducts(this.value)">
                         <option value="featured">Sort by: Featured</option>
@@ -600,278 +145,79 @@
                     </select>
                 </div>
             </div>
-
             <div class="product-grid" id="shop-grid"></div>
         </main>
     </div>
 
-    <!-- Membership Plans -->
-    <section class="membership-section" id="membership-plans">
-        <div class="membership-inner">
-            <div class="membership-header">
-                <p class="eyebrow">Join The Kingdom</p>
-                <h2>Membership Tiers</h2>
-                <p>Unlock exclusive discounts and premium perks.</p>
-            </div>
-            <div class="plan-grid">
-                <!-- Basic Plan -->
-                <div class="plan-card" id="card-basic">
-                    <div class="plan-badge">UR CURRENT PLAN</div>
-                    <h3 class="plan-name">Basic</h3>
-                    <div class="plan-price">Free<span> /forever</span></div>
-                    <p class="plan-desc">The standard citizen experience.</p>
-                    <ul class="plan-features">
-                        <li>Account & Order History</li>
-                        <li>Standard Shipping Rates</li>
-                        <li>Access to General Drops</li>
-                        <li class="disabled">Product Discounts</li>
-                        <li class="disabled">Exclusive Gold Tags</li>
-                    </ul>
-                    <button class="btn-plan btn-current" onclick="upgradePlan('Basic')">Current Plan</button>
-                </div>
-
-                <!-- Standard Plan -->
-                <div class="plan-card" id="card-standard">
-                    <div class="plan-badge">UR CURRENT PLAN</div>
-                    <h3 class="plan-name">Standard</h3>
-                    <div class="plan-price">150 EGP<span> /month</span></div>
-                    <p class="plan-desc">For the regular streetwear enthusiast.</p>
-                    <ul class="plan-features">
-                        <li>Everything in Basic</li>
-                        <li><strong>10% Off</strong> All Products</li>
-                        <li>Free Standard Shipping</li>
-                        <li>2x Reward Points</li>
-                        <li class="disabled">Exclusive Gold Tags</li>
-                    </ul>
-                    <button class="btn-plan btn-upgrade" onclick="upgradePlan('Standard')">Upgrade to Standard</button>
-                </div>
-
-                <!-- Premium Plan -->
-                <div class="plan-card premium" id="card-premium">
-                    <div class="plan-badge">UR CURRENT PLAN</div>
-                    <h3 class="plan-name">Premium</h3>
-                    <div class="plan-price">300 EGP<span> /month</span></div>
-                    <p class="plan-desc">The ultimate monarch experience.</p>
-                    <ul class="plan-features">
-                        <li>Everything in Standard</li>
-                        <li><strong>20% Off</strong> All Products</li>
-                        <li>Free Express Shipping</li>
-                        <li>3x Reward Points</li>
-                        <li><strong>Exclusive Gold Tag</strong> on Hoodies</li>
-                    </ul>
-                    <button class="btn-plan btn-upgrade" onclick="upgradePlan('Premium')">Upgrade to Premium</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
     <footer>
         <div class="footer-grid">
-            <div class="footer-brand">
-                <h5>The Egyptian King</h5>
-                <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
-                <div class="footer-socials">
-                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">IG</a>
-                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">FB</a>
-                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">X</a>
-                    <a href="#" aria-label="TikTok">TT</a>
-                </div>
-            </div>
-            <div>
-                <h5>Shop</h5>
-                <ul>
-                    <li><a href="shop.html">All Products</a></li>
-                    <li><a href="shop.html">Hoodies</a></li>
-                    <li><a href="shop.html">New Arrivals</a></li>
-                    <li><a href="shop.html">Best Sellers</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="track.html">Track Order</a></li>
-                    <li><a href="terms.html">Shipping Info</a></li>
-                    <li><a href="terms.html">Returns</a></li>
-                    <li><a href="terms.html">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+            <div><h5>The Egyptian King</h5><p style="color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
+            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="shop.html">Hoodies</a></li></ul></div>
+            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="terms.html">Returns</a></li></ul></div>
+            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Contact</a></li></ul></div>
         </div>
-        <div class="footer-bottom">
-            <span class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved. WB 5.4</span>
-            <div class="payment-icons">
-                <span class="payment-icon">VISA</span>
-                <span class="payment-icon">MC</span>
-                <span class="payment-icon">AMEX</span>
-                <span class="payment-icon">PAYPAL</span>
-                <span class="payment-icon">APPLE</span>
-            </div>
-        </div>
+        <div class="footer-bottom">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
     </footer>
 
-    <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">↑</button>
-
-    <!-- Upgrade Modal -->
-    <div class="upgrade-overlay" id="upgrade-overlay">
-        <div class="upgrade-card">
-            <button class="upgrade-close" onclick="closeUpgradeModal()">✕</button>
-            <h2 class="upgrade-title" id="upgrade-plan-name">Standard</h2>
-            <p class="upgrade-subtitle">Unlock exclusive perks and discounts.</p>
-            <div class="upgrade-price" id="upgrade-plan-price">150 EGP / month</div>
-            
-            <div class="payment-options">
-                <!-- 1. Debit or Credit Card -->
-                <div class="payment-tab active" onclick="selectUpgradePayment('card')">
-                    <div class="radio-dot"></div>
-                    <span class="payment-tab-label">Debit or Credit Card</span>
-                    <div class="brand-logos">
-                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><path fill="#FFF" d="M13.8 16.5l1.6-9.6h2.6l-1.6 9.6h-2.6zm8.8-9.4c-.5-.2-1.4-.4-2.4-.4-2.7 0-4.6 1.4-4.6 3.4 0 1.5 1.3 2.3 2.3 2.8 1 .5 1.4.8 1.4 1.3 0 .7-.9 1-1.7 1-.1 0-1.7-.1-2.6-.5l-.4-.2-.4 2.4c.7.3 2 .6 3.3.6 3 0 4.9-1.4 4.9-3.6 0-1.2-.7-2.1-2.3-2.9-.9-.5-1.5-.8-1.5-1.3 0-.4.5-.9 1.5-.9.9 0 1.6.2 2.1.4l.3.1.5-2.2zm6.2-.2h-2c-.6 0-1.1.2-1.3.8l-3.7 8.8h2.8l.6-1.5h3.4l.3 1.5h2.5l-2.2-9.6zm-2.4 6.2l1.1-2.9.6 2.9h-1.7zM11.9 6.9L9.4 13.5l-.3-1.4c-.5-1.7-2-3.5-3.7-4.4l2.4 8.8h2.8l4.1-9.6h-2.8z"/></svg>
-                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><circle cx="13" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M18 6.6a6.9 6.9 0 000 10.8 6.9 6.9 0 000-10.8z" fill="#FF5F00"/></svg>
-                    </div>
-                </div>
-                <div class="payment-content active" id="upgrade-content-card">
-                    <div id="upgrade-card-button-container"></div>
-                </div>
-
-                <!-- 2. PayPal -->
-                <div class="payment-tab" onclick="selectUpgradePayment('paypal')">
-                    <div class="radio-dot"></div>
-                    <span class="payment-tab-label">PayPal</span>
-                    <div class="brand-logos">
-                        <svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"/><path fill="#0079C1" d="M13.5 6h-3.2c-.2 0-.4.2-.4.4l-2 12.8c0 .2.1.3.3.3h1.6c.2 0 .4-.2.4-.4l.6-3.8c0-.2.2-.4.4-.4h1.1c2.2 0 3.8-1.1 4.1-3.2.2-1 0-1.7-.4-2.2-.6-.6-1.5-.8-2.5-.8zm.6 3.2c-.2 1.1-1 1.1-1.8 1.1h-.5l.3-2c0-.1.2-.2.3-.2h.3c.6 0 1.1 0 1.3.3.2.1.2.5.1.8z"/></svg>
-                    </div>
-                </div>
-                <div class="payment-content" id="upgrade-content-paypal">
-                    <div id="upgrade-paypal-button-container"></div>
-                </div>
-            </div>
-            <p style="font-size: 0.7rem; color: #999; margin-top: 1rem; text-align: center;">Secure payment powered by PayPal</p>
-        </div>
-    </div>
+    <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
 
     <script>
-        // ===== Dropdown =====
-        function toggleDropdown() {
-            document.getElementById('dropdown-menu').classList.toggle('active');
-        }
-        window.addEventListener('click', function(e) {
-            const wrapper = document.querySelector('.dropdown-wrapper');
-            if (wrapper && !wrapper.contains(e.target)) {
-                document.getElementById('dropdown-menu').classList.remove('active');
-            }
-        });
-
-        // ===== Toast =====
-        function showToast(message) {
-            let container = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.innerText = message;
-            container.appendChild(toast);
-            void toast.offsetWidth;
-            toast.classList.add('show');
-            setTimeout(() => {
-                toast.classList.remove('show');
-                setTimeout(() => { toast.remove(); }, 400);
-            }, 3000);
-        }
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
+        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) document.getElementById('dropdown-menu').classList.remove('active'); });
+        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000); }
         window.showToast = showToast;
 
-        // ===== Products Data (All 24 Items Included) =====
-        const rawProducts = [
-            { id: 1, name: "5amarty baladi Hoodie", price: 950, rating: 4.8, reviews: 124, img: "https://i.postimg.cc/TY3Zx8MX/Add-a-subheading-12.png" },
-            { id: 2, name: "2ahaan el 2asab", price: 950, rating: 4.6, reviews: 89, img: "https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png" },
-            { id: 3, name: "2awraka wa2fa Hoodie", price: 950, rating: 4.9, reviews: 201, img: "https://i.postimg.cc/C1mt9JKw/Add-a-subheading-10.png" },
-            { id: 4, name: "2ahwa masreya Hoodie", price: 950, rating: 4.3, reviews: 45, img: "https://i.postimg.cc/GpP6xbwg/Add-a-subheading-9.png" },
-            { id: 5, name: "Forn balady Hoodie", price: 950, rating: 4.7, reviews: 155, img: "https://i.postimg.cc/gcMF7cwD/Add-a-subheading-8.png" },
-            { id: 6, name: "Malekt 3omry Hoodie", price: 950, rating: 4.2, reviews: 32, img: "https://i.postimg.cc/500V5LHd/Add-a-subheading-7.png" },
-            { id: 8, name: "radyo 3ala el ba7r Hoodie", price: 950, rating: 4.8, reviews: 110, img: "https://i.postimg.cc/05zq45b6/Add-a-subheading-2.png" },
-            { id: 7, name: "masr om el donya Hoodie", price: 950, rating: 4.5, reviews: 78, img: "https://i.postimg.cc/3wmp8QSr/Add-a-subheading-6.png" }, 
-            { id: 9, name: "7aflet share3 Hoodie", price: 980, rating: 5.0, reviews: 312, img: "https://i.postimg.cc/MHQNpTQb/Add-a-subheading-3.png" },
-            { id: 10, name: "sou2 el 8alaaba Hoodie", price: 950, rating: 4.6, reviews: 65, img: "https://i.postimg.cc/8zH35xjW/Add-a-subheading-4.png" },
-            { id: 11, name: "2aa5r malek Hoodie", price: 950, rating: 4.4, reviews: 29, img: "https://i.postimg.cc/s2HNPSP7/Add-a-subheading-5.png" },
-            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, rating: 4.9, reviews: 140, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
-            { id: 13, name: "3esh w mal7 Hoodie", price: 950, rating: 5.0, reviews: 456, img: "https://i.postimg.cc/RZ4BDMW0/Untitled-design-8.png" },
-            { id: 14, name: "8azl banaat Hoodie", price: 950, rating: 4.9, reviews: 256, img: "https://i.postimg.cc/qv0qz0Jb/Untitled-design-2.png" },
-            { id: 15, name: "yomak 3asal Hoodie", price: 950, rating: 4.7, reviews: 416, img: "https://i.postimg.cc/4xdC8FBJ/Untitled-design-3.png" },
-            { id: 16, name: "safynet el bo7era Hoodie", price: 950, rating: 4.9, reviews: 456, img: "https://i.postimg.cc/htkn3Rv7/Untitled-design-4.png" },
-            { id: 18, name: "Basic H Core — Black", price: 900, rating: 4.0, reviews: 88, img: "https://i.postimg.cc/jjkWqJMt/Add-a-subheading-1.png" },
-            { id: 19, name: "Basic H Core — Grey", price: 900, rating: 4.4, reviews: 88, img: "https://i.postimg.cc/3rGy7NpV/663e9920-b6b9-4d91-a767-09e60a6b1acd-cleanup.png" },
-            { id: 20, name: "Basic H Core — Pink", price: 900, rating: 4.6, reviews: 88, img: "https://i.postimg.cc/d0D1fVwf/f64904bd-8528-4978-ab56-e81fdb0d52b8-Photoroom.png" },
-            { id: 21, name: "Basic H Core — Brown", price: 900, rating: 4.6, reviews: 118, img: "https://i.postimg.cc/kGPgDNK3/31b86ef0-140e-47c7-85bd-9be725e3a658-Photoroom.png" },
-            { id: 22, name: "Basic H Core — White", price: 900, rating: 4.1, reviews: 116, img: "https://i.postimg.cc/dtv0YBJG/efebf771-41d0-46da-94d9-b2d7b409ff2d-Photoroom.png" },
-            { id: 23, name: "Basic H Core — Parchment", price: 900, rating: 4.9, reviews: 116, img: "https://i.postimg.cc/1t7wnjM6/f280669e-3ee5-4a09-b482-77686d9737fd.jpg" },
-            { id: 24, name: "Basic H Core — Sage Green", price: 900, rating: 5.0, reviews: 116, img: "https://i.postimg.cc/fbWT1jQP/505271d6-08b6-4ee7-b794-39724af608fc.jpg" },
-            { id: 25, name: "Basic H Core — Tand", price: 900, rating: 5.0, reviews: 116, img: "https://i.postimg.cc/hjYQP7P5/3d48799a-a54f-4dfd-8222-bd11ae69ffa9.jpg" }
+        // PRODUCTS HARDCODED WITH THEIR GALLERY IMAGES
+        const products = [
+            { id: 1, name: "5amarty baladi Hoodie", price: 950, rating: 4.8, reviews: 124, category: "graphic", badge: "", img: "https://i.postimg.cc/TY3Zx8MX/Add-a-subheading-12.png", images: ["https://i.postimg.cc/TY3Zx8MX/Add-a-subheading-12.png", "https://i.postimg.cc/mgB15FtC/koozee-udy0kzo66cpjc7ki.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 2, name: "2ahaan el 2asab", price: 950, rating: 4.6, reviews: 89, category: "graphic", badge: "", img: "https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", images: ["https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", "https://i.postimg.cc/MZfBMSCg/5f31dc59-e556-41b8-9ab5-fcd5e808780b.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 3, name: "2awraka wa2fa Hoodie", price: 950, rating: 4.9, reviews: 201, category: "graphic", badge: "new", img: "https://i.postimg.cc/C1mt9JKw/Add-a-subheading-10.png", images: ["https://i.postimg.cc/C1mt9JKw/Add-a-subheading-10.png", "https://i.postimg.cc/kXxtsyXQ/d3490dcb-3ee5-4eb7-bcbd-2954dc14e634.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 4, name: "2ahwa masreya Hoodie", price: 950, rating: 4.3, reviews: 45, category: "graphic", badge: "", img: "https://i.postimg.cc/GpP6xbwg/Add-a-subheading-9.png", images: ["https://i.postimg.cc/GpP6xbwg/Add-a-subheading-9.png", "https://i.postimg.cc/nhp9PQC4/koozee-uwudodya8xy6ip8r.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 5, name: "Forn balady Hoodie", price: 950, rating: 4.7, reviews: 155, category: "graphic", badge: "", img: "https://i.postimg.cc/gcMF7cwD/Add-a-subheading-8.png", images: ["https://i.postimg.cc/gcMF7cwD/Add-a-subheading-8.png", "https://i.postimg.cc/sDFh5LyD/81ae3d24-1147-4ab8-8d39-76c303fbe7a1.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 6, name: "Malekt 3omry Hoodie", price: 950, rating: 4.2, reviews: 32, category: "graphic", badge: "", img: "https://i.postimg.cc/500V5LHd/Add-a-subheading-7.png", images: ["https://i.postimg.cc/500V5LHd/Add-a-subheading-7.png", "https://i.postimg.cc/TY8DnsGf/72aacaa5-fb81-4787-89de-a68acc106d15.png", "https://i.postimg.cc/Dyqb6cys/c8018f7d-4427-417d-8d05-f478eb566d4d.png"] },
+            { id: 7, name: "masr om el donya Hoodie", price: 950, rating: 4.5, reviews: 78, category: "graphic", badge: "", img: "https://i.postimg.cc/3wmp8QSr/Add-a-subheading-6.png", images: ["https://i.postimg.cc/3wmp8QSr/Add-a-subheading-6.png", "https://i.postimg.cc/dt8T69tt/ac70b116-a99e-499e-8f04-4b6a7b731b90.png", "https://i.postimg.cc/Dyqb6cys/c8018f7d-4427-417d-8d05-f478eb566d4d.png"] }, 
+            { id: 8, name: "radyo 3ala el ba7r Hoodie", price: 950, rating: 4.8, reviews: 110, category: "graphic", badge: "", img: "https://i.postimg.cc/05zq45b6/Add-a-subheading-2.png", images: ["https://i.postimg.cc/05zq45b6/Add-a-subheading-2.png", "https://i.postimg.cc/WbRk0yj1/36780b8f-a409-429b-bd8e-81fbe038f1df.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 9, name: "7aflet share3 Hoodie", price: 980, rating: 5.0, reviews: 312, category: "graphic", badge: "bestseller", img: "https://i.postimg.cc/MHQNpTQb/Add-a-subheading-3.png", images: ["https://i.postimg.cc/MHQNpTQb/Add-a-subheading-3.png", "https://i.postimg.cc/tChVkzCn/b24f365d-e347-4037-9d29-28c876367891.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 10, name: "sou2 el 8alaaba Hoodie", price: 950, rating: 4.6, reviews: 65, category: "graphic", badge: "", img: "https://i.postimg.cc/8zH35xjW/Add-a-subheading-4.png", images: ["https://i.postimg.cc/8zH35xjW/Add-a-subheading-4.png", "https://i.postimg.cc/65dGch5y/b16c4593-0428-4b9b-970b-6a1517b51a6b.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 11, name: "2aa5r malek Hoodie", price: 950, rating: 4.4, reviews: 29, category: "graphic", badge: "", img: "https://i.postimg.cc/s2HNPSP7/Add-a-subheading-5.png", images: ["https://i.postimg.cc/s2HNPSP7/Add-a-subheading-5.png", "https://i.postimg.cc/dVwZxTLR/mawlah65731.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, rating: 4.9, reviews: 140, category: "graphic", badge: "new", img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png", images: ["https://i.postimg.cc/ZKC1zyjb/Untitled-design.png", "https://i.postimg.cc/TY8DnsG2/4551de3d-1a9a-4c23-a899-95defb9539b1.png", "https://i.postimg.cc/CLjf74L1/aeb4b7f9-50ce-46d5-b30b-ffd982fe51a9.png"] },
+            { id: 13, name: "3esh w mal7 Hoodie", price: 950, rating: 5.0, reviews: 456, category: "graphic", badge: "bestseller", img: "https://i.postimg.cc/RZ4BDMW0/Untitled-design-8.png", images: ["https://i.postimg.cc/RZ4BDMW0/Untitled-design-8.png", "https://i.postimg.cc/PrGw17hP/734776c1-8372-452f-bbd2-a85dba8921a3-cleanup.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 14, name: "8azl banaat Hoodie", price: 950, rating: 4.9, reviews: 256, category: "graphic", badge: "new", img: "https://i.postimg.cc/jC0pqbGM/Untitled-design-(7).jpg", images: ["https://i.postimg.cc/jC0pqbGM/Untitled-design-(7).jpg", "https://i.postimg.cc/02pJnC2x/8878018f-3dce-4b58-a7b5-2cdfb6f9d304.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 15, name: "yomak 3asal Hoodie", price: 950, rating: 4.7, reviews: 416, category: "graphic", badge: "", img: "https://i.postimg.cc/MX2CZShs/Untitled-design-(6).jpg", images: ["https://i.postimg.cc/MX2CZShs/Untitled-design-(6).jpg", "https://i.postimg.cc/65dGch57/b351fe37-0ffb-4cf7-b62b-02bdae7a1fde.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 16, name: "safynet el bo7era Hoodie", price: 950, rating: 4.9, reviews: 456, category: "graphic", badge: "", img: "https://i.postimg.cc/htkn3Rv7/Untitled-design-4.png", images: ["https://i.postimg.cc/htkn3Rv7/Untitled-design-4.png", "https://i.postimg.cc/yYFSjTYs/a7bbc4c1-53e7-49ee-9600-c05863eab62d.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 18, name: "Basic H Core — Black", price: 900, rating: 4.0, reviews: 88, category: "basic", badge: "", img: "https://i.postimg.cc/jjkWqJMt/Add-a-subheading-1.png", images: ["https://i.postimg.cc/jjkWqJMt/Add-a-subheading-1.png", "https://i.postimg.cc/c4Q8hc4m/f5753ec9-1d18-4ae1-a9e7-e1b48be5e079.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 19, name: "Basic H Core — Grey", price: 900, rating: 4.4, reviews: 88, category: "basic", badge: "", img: "https://i.postimg.cc/3rGy7NpV/663e9920-b6b9-4d91-a767-09e60a6b1acd-cleanup.png", images: ["https://i.postimg.cc/3rGy7NpV/663e9920-b6b9-4d91-a767-09e60a6b1acd-cleanup.png", "https://i.postimg.cc/xTrzLZQF/51e9c1e6-18b7-4755-a37a-2471a3f0ce3a.png", "https://i.postimg.cc/5NwFgmNg/koozee-7k4ttkazyk7h7rrz.png"] },
+            { id: 20, name: "Basic H Core — Pink", price: 900, rating: 4.6, reviews: 88, category: "basic", badge: "", img: "https://i.postimg.cc/d0D1fVwf/f64904bd-8528-4978-ab56-e81fdb0d52b8-Photoroom.png", images: ["https://i.postimg.cc/d0D1fVwf/f64904bd-8528-4978-ab56-e81fdb0d52b8-Photoroom.png", "https://i.postimg.cc/wTKmDrzG/56a9ad77-941c-41a6-9361-25296a81b73c.png", "https://i.postimg.cc/G3TD8CWW/4edb013c-ed27-4a22-a7da-a46417c4f722.png"] },
+            { id: 21, name: "Basic H Core — Brown", price: 900, rating: 4.6, reviews: 118, category: "basic", badge: "", img: "https://i.postimg.cc/kGPgDNK3/31b86ef0-140e-47c7-85bd-9be725e3a658-Photoroom.png", images: ["https://i.postimg.cc/kGPgDNK3/31b86ef0-140e-47c7-85bd-9be725e3a658-Photoroom.png", "https://i.postimg.cc/9F37ykVz/141078d7-5ed4-4fc5-ad04-d19fb17c614b.png", "https://i.postimg.cc/65dGch5G/be9c9281-2516-4135-838a-ba299e914cbb.png"] },
+            { id: 22, name: "Basic H Core — White", price: 900, rating: 4.1, reviews: 116, category: "basic", badge: "", img: "https://i.postimg.cc/dtv0YBJG/efebf771-41d0-46da-94d9-b2d7b409ff2d-Photoroom.png", images: ["https://i.postimg.cc/dtv0YBJG/efebf771-41d0-46da-94d9-b2d7b409ff2d-Photoroom.png"] },
+            { id: 23, name: "Basic H Core — Parchment", price: 900, rating: 4.9, reviews: 116, category: "basic", badge: "", img: "https://i.postimg.cc/1t7wnjM6/f280669e-3ee5-4a09-b482-77686d9737fd.jpg", images: ["https://i.postimg.cc/1t7wnjM6/f280669e-3ee5-4a09-b482-77686d9737fd.jpg", "https://i.postimg.cc/3r0G4TsP/3e5e4e98-97a6-402d-bf36-e7ba3d59dd35.png", "https://i.postimg.cc/sDFh5LzL/64e2594b-285b-473b-840d-d11d8dbdcd36.png"] },
+            { id: 24, name: "Basic H Core — Sage Green", price: 900, rating: 5.0, reviews: 116, category: "basic", badge: "", img: "https://i.postimg.cc/fbWT1jQP/505271d6-08b6-4ee7-b794-39724af608fc.jpg", images: ["https://i.postimg.cc/fbWT1jQP/505271d6-08b6-4ee7-b794-39724af608fc.jpg", "https://i.postimg.cc/vHRV5KyX/12baf63e-812b-4e3f-aee4-2069def34c1e.png", "https://i.postimg.cc/GhksKjhJ/d9232002-5f59-4938-ab4b-dd9c61e16dce.png"] },
+            { id: 25, name: "Basic H Core — Tand", price: 900, rating: 5.0, reviews: 116, category: "basic", badge: "", img: "https://i.postimg.cc/hjYQP7P5/3d48799a-a54f-4dfd-8222-bd11ae69ffa9.jpg", images: ["https://i.postimg.cc/hjYQP7P5/3d48799a-a54f-4dfd-8222-bd11ae69ffa9.jpg", "https://i.postimg.cc/zXmgTQN2/22bce723-3a8b-435d-9942-c93c1b5b872a.png", "https://i.postimg.cc/TYrW0cYn/Capture.png"] }
         ];
 
-        // Assign categories and badges dynamically
-        const products = rawProducts.map(p => {
-            let category = p.name.includes("Basic H Core") ? "basic" : "graphic";
-            let badge = "";
-            if (p.rating >= 4.9) badge = "bestseller";
-            else if (p.id % 3 === 0) badge = "new";
-            return { ...p, category, badge };
-        });
-
-        let currentFilter = 'all';
-        let currentSort = 'featured';
-        let selectedUpgradePlan = '';
-
-        function getStars(rating) {
-            let r = Math.round(rating);
-            return '★'.repeat(r) + '☆'.repeat(5 - r);
-        }
+        function getStars(rating) { let r = Math.round(rating); return '★'.repeat(r) + '☆'.repeat(5 - r); }
+        let currentFilter = 'all'; let currentSort = 'featured';
 
         function renderProducts() {
             let filtered = [...products];
-
-            // Filter
-            if (currentFilter === 'best') {
-                filtered = filtered.filter(p => p.badge === 'bestseller');
-            } else if (currentFilter !== 'all') {
-                filtered = filtered.filter(p => p.category === currentFilter);
-            }
-
-            // Sort
-            if (currentSort === 'price-asc') {
-                filtered.sort((a, b) => a.price - b.price);
-            } else if (currentSort === 'price-desc') {
-                filtered.sort((a, b) => b.price - a.price);
-            } else if (currentSort === 'rating') {
-                filtered.sort((a, b) => b.rating - a.rating);
-            }
+            if (currentFilter === 'best') { filtered = filtered.filter(p => p.badge === 'bestseller'); } 
+            else if (currentFilter !== 'all') { filtered = filtered.filter(p => p.category === currentFilter); }
+            if (currentSort === 'price-asc') { filtered.sort((a, b) => a.price - b.price); } 
+            else if (currentSort === 'price-desc') { filtered.sort((a, b) => b.price - a.price); } 
+            else if (currentSort === 'rating') { filtered.sort((a, b) => b.rating - a.rating); }
 
             const grid = document.getElementById('shop-grid');
-            const countEl = document.getElementById('product-count');
-
-            if (filtered.length === 0) {
-                grid.innerHTML = `<p style="text-align: center; padding: 4rem 0; color: var(--text-muted); grid-column: 1 / -1;">No products found in this category.</p>`;
-                countEl.innerText = '0 products';
-                return;
-            }
-
-            countEl.innerText = `${filtered.length} product${filtered.length > 1 ? 's' : ''}`;
+            document.getElementById('product-count').innerText = `${filtered.length} product${filtered.length > 1 ? 's' : ''}`;
             
             grid.innerHTML = filtered.map(p => `
-                <div class="product-card" onclick="quickAdd(${p.id})">
+                <div class="product-card" onclick="viewProduct(${p.id})">
                     <div class="product-img-wrapper">
                         <div class="product-badges">
                             ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
-                            ${p.badge === 'sale' ? '<span class="badge sale">Sale</span>' : ''}
                             ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
                         </div>
                         <img src="${p.img}" alt="${p.name}">
-                        <button class="quick-add" onclick="event.stopPropagation(); quickAdd(${p.id});">+ Quick Add</button>
+                        <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">View Product</button>
                     </div>
                     <div class="product-info">
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
@@ -882,246 +228,24 @@
             `).join('');
         }
 
-        function filterProducts(category) {
-            currentFilter = category;
-            document.querySelectorAll('.filter-btn').forEach(btn => {
-                btn.classList.toggle('active', btn.dataset.filter === category);
-            });
-            renderProducts();
-        }
-
-        function sortProducts(method) {
-            currentSort = method;
-            renderProducts();
-        }
-
-        function quickAdd(id) {
-            const product = products.find(p => p.id === id);
-            const activeSizeBtn = document.querySelector('.size-btn.active');
-            const selectedSize = activeSizeBtn ? activeSizeBtn.innerText : 'One Size';
-
-            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const existing = cart.find(item => item.id === id && item.size === selectedSize);
-            if (existing) { existing.qty = (existing.qty || 1) + 1; } 
-            else { cart.push({ ...product, qty: 1, size: selectedSize }); }
-            
-            localStorage.setItem('kingCart', JSON.stringify(cart));
-            updateCartCount();
-            
-            // --- ANALYTICS & PIXEL TRACKING ---
-            if (typeof fbq !== 'undefined') fbq('track', 'AddToCart', { value: product.price, currency: 'USD' });
-            if (typeof gtag !== 'undefined') gtag('event', 'add_to_cart', { items: [{ id: product.id, name: product.name, price: product.price }] });
-
-            showToast(`${product.name} (Size: ${selectedSize}) added to bag!`);
-            if (typeof saveCartToBackend === 'function') saveCartToBackend();
-        }
-
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            const navCount = document.getElementById('nav-cart-count');
-            if (navCount) navCount.innerText = count;
-        }
-
-        // ===== Scroll Effects =====
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            const backTop = document.getElementById('back-to-top');
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-            if (window.scrollY > 600) backTop.classList.add('visible');
-            else backTop.classList.remove('visible');
-        });
-
-        // Size buttons interaction
-        document.querySelectorAll('.size-btn').forEach(btn => {
-            btn.addEventListener('click', () => {
-                document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-            });
-        });
-
-        // ===== Membership Plan Logic =====
-        function checkUserPlan() {
-            if (typeof firebase === 'undefined' || !firebase.auth) {
-                updatePlanUI('Basic');
-                return;
-            }
-
-            firebase.auth().onAuthStateChanged(user => {
-                if (user) {
-                    firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
-                        if (doc.exists) {
-                            const currentPlan = doc.data().subscriptionTier || 'Basic';
-                            updatePlanUI(currentPlan);
-                        } else {
-                            updatePlanUI('Basic');
-                        }
-                    });
-                } else {
-                    updatePlanUI('Basic'); // Logged out users see Basic as active
-                }
-            });
-        }
-
-        function updatePlanUI(plan) {
-            const plans = ['basic', 'standard', 'premium'];
-            plans.forEach(p => {
-                const card = document.getElementById(`card-${p}`);
-                if (!card) return;
-                
-                card.classList.remove('active-plan');
-                const btn = card.querySelector('button');
-                
-                if (p.toLowerCase() === plan.toLowerCase()) {
-                    card.classList.add('active-plan');
-                    btn.className = 'btn-plan btn-current';
-                    btn.innerText = 'Current Plan';
-                    btn.onclick = null;
-                } else {
-                    const planName = p.charAt(0).toUpperCase() + p.slice(1);
-                    btn.className = 'btn-plan btn-upgrade';
-                    btn.innerText = `Upgrade to ${planName}`;
-                    btn.onclick = () => upgradePlan(planName);
-                }
-            });
-        }
-
-        function upgradePlan(planName) {
-            if (planName === 'Basic') return; // Can't "upgrade" to basic
-
-            selectedUpgradePlan = planName;
-            let egpPrice = planName === 'Standard' ? 150 : 300;
-            let usdPrice = (egpPrice / 50).toFixed(2); // Convert EGP to USD for PayPal
-
-            // Update modal text
-            document.getElementById('upgrade-plan-name').innerText = planName;
-            document.getElementById('upgrade-plan-price').innerText = `${egpPrice} EGP / month (~$${usdPrice})`;
-            
-            // Open the popup instantly
-            document.getElementById('upgrade-overlay').classList.add('active');
-            
-            const user = typeof firebase !== 'undefined' && firebase.auth ? firebase.auth().currentUser : null;
-            const cardContainer = document.getElementById('upgrade-card-button-container');
-            const paypalContainer = document.getElementById('upgrade-paypal-button-container');
-            
-            if (cardContainer) cardContainer.innerHTML = '';
-            if (paypalContainer) paypalContainer.innerHTML = '';
-
-            if (!user) {
-                // If not logged in, show login prompt inside the popup
-                cardContainer.innerHTML = `
-                    <div style="text-align: center; padding: 2rem 0;">
-                        <p style="color: #0a0a0a; font-weight: 700; margin-bottom: 1.5rem; font-size: 0.9rem;">Please login to your Egyptian King account to activate your membership.</p>
-                        <button onclick="window.location.href='login.html'" style="width: 100%; padding: 1rem; background: #0a0a0a; color: #fff; border: none; border-radius: 2px; font-weight: 700; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 1px; cursor: pointer;">Login / Sign Up</button>
-                    </div>
-                `;
-            } else {
-                // If logged in, render PayPal buttons
-                renderUpgradePayPal(usdPrice);
+        function viewProduct(id) {
+            const p = products.find(prod => prod.id === id);
+            if (p) {
+                localStorage.setItem('viewingProduct', JSON.stringify(p));
+                window.location.href = 'product.html';
             }
         }
 
-        function closeUpgradeModal() {
-            document.getElementById('upgrade-overlay').classList.remove('active');
-        }
-
-        function selectUpgradePayment(method) {
-            document.querySelectorAll('.upgrade-overlay .payment-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.upgrade-overlay .payment-content').forEach(c => c.classList.remove('active'));
-            document.querySelector(`.upgrade-overlay [onclick="selectUpgradePayment('${method}')"]`).classList.add('active');
-            document.getElementById(`upgrade-content-${method}`).classList.add('active');
-        }
-
-        function renderUpgradePayPal(usdPrice) {
-            const cardContainer = document.getElementById('upgrade-card-button-container');
-            const paypalContainer = document.getElementById('upgrade-paypal-button-container');
-            
-            if (window.paypal) {
-                // 1. Debit/Credit Card Button
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.CARD,
-                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({ 
-                            purchase_units: [{ 
-                                amount: { value: usdPrice, currency: 'USD' }, 
-                                description: `${selectedUpgradePlan} Membership (Monthly)` 
-                            }] 
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            confirmUpgradeFirebase(selectedUpgradePlan);
-                        });
-                    },
-                    onError: function(err) {
-                        showToast("Card payment failed or cancelled.");
-                    }
-                }).render(cardContainer).catch(err => console.error("PayPal Card Render Error:", err));
-
-                // 2. PayPal Button
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.PAYPAL,
-                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
-                    createOrder: function(data, actions) {
-                        return actions.order.create({ 
-                            purchase_units: [{ 
-                                amount: { value: usdPrice, currency: 'USD' }, 
-                                description: `${selectedUpgradePlan} Membership (Monthly)` 
-                            }] 
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            confirmUpgradeFirebase(selectedUpgradePlan);
-                        });
-                    },
-                    onError: function(err) {
-                        showToast("PayPal payment failed or cancelled.");
-                    }
-                }).render(paypalContainer).catch(err => console.error("PayPal Button Render Error:", err));
-
-            } else {
-                cardContainer.innerHTML = '<p style="color:red; text-align:center;">Payment system failed to load. Please refresh the page.</p>';
-            }
-        }
-
-        function confirmUpgradeFirebase(planName) {
-            const user = firebase.auth().currentUser;
-            firebase.firestore().collection('users').doc(user.uid).set({
-                subscriptionTier: planName
-            }, { merge: true }).then(() => {
-                showToast(`Successfully upgraded to ${planName}! 👑`);
-                updatePlanUI(planName);
-                applyMembershipDiscount(planName);
-                closeUpgradeModal();
-            }).catch(err => {
-                showToast("Error upgrading plan.");
-                closeUpgradeModal();
-            });
-        }
-
-        function applyMembershipDiscount(planName) {
-            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            if (cart.length === 0) return;
-            
-            cart.forEach(item => {
-                let basePrice = item.originalPrice || item.price; 
-                if (planName === 'Standard') item.price = Math.round(basePrice * 0.9); // 10% off
-                if (planName === 'Premium') item.price = Math.round(basePrice * 0.8); // 20% off
-            });
-            
-            localStorage.setItem('kingCart', JSON.stringify(cart));
-            updateCartCount();
-        }
-
-        // Run on load
-        window.addEventListener('DOMContentLoaded', () => {
-            renderProducts();
-            updateCartCount();
-            checkUserPlan();
-        });
+        function filterProducts(category) { currentFilter = category; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === category)); renderProducts(); }
+        function sortProducts(method) { currentSort = method; renderProducts(); }
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; document.getElementById('nav-cart-count').innerText = cart.reduce((sum, item) => sum + (item.qty || 1), 0); }
+        window.addEventListener('scroll', () => { const header = document.getElementById('main-header'); const backTop = document.getElementById('back-to-top'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); if (window.scrollY > 600) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
+        document.querySelectorAll('.size-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }); });
+        window.addEventListener('DOMContentLoaded', () => { renderProducts(); updateCartCount(); });
     </script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
