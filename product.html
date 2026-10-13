@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Product — THE EGYPTIAN KING</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --btn-text:#fff; }
+        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
+        html { scroll-behavior:smooth; } body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+        a { text-decoration: none; color: inherit; }
+        header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
+        .nav-left { flex: 1; }
+        .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
+        .logo-img { height: 26px; width: auto; object-fit: contain; }
+        .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
+        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
+        .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
+        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+        .dropdown-wrapper { position:relative; }
+        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:#0a0a0a; display:flex; align-items:center; padding:0.25rem; }
+        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; }
+        .dropdown-menu.active { display:flex; }
+        .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
+        .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
+        .dropdown-title { font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; }
+
+        /* Back Arrow */
+        .back-arrow-container { max-width: 1200px; margin: 2rem auto 0; padding: 0 2rem; }
+        .back-arrow { display: inline-flex; align-items: center; gap: 8px; text-decoration: none; color: var(--text-main); font-weight: 700; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; transition: gap 0.3s, color 0.3s; }
+        .back-arrow:hover { color: var(--accent); gap: 12px; }
+        .back-arrow svg { width: 20px; height: 20px; fill: currentColor; }
+
+        .product-layout { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; max-width: 1200px; margin: 2rem auto; padding: 0 2rem 4rem; }
+        .gallery { display: flex; flex-direction: column; gap: 1rem; }
+        .main-image-wrapper { width: 100%; aspect-ratio: 1/1.2; background: var(--bg-alt); border-radius: 8px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
+        .main-image { width: 100%; height: 100%; object-fit: cover; transition: opacity 0.3s ease; }
+        .thumbnails { display: flex; gap: 1rem; flex-wrap: wrap; }
+        .thumb { width: 80px; height: 100px; border-radius: 6px; overflow: hidden; cursor: pointer; border: 2px solid transparent; transition: border-color 0.3s; background: var(--bg-alt); }
+        .thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .thumb.active { border-color: var(--text-main); }
+        .thumb:hover { border-color: var(--accent); }
+
+        .product-details { display: flex; flex-direction: column; justify-content: center; }
+        .product-title { font-size: 2.5rem; font-weight: 900; margin-bottom: 0.5rem; line-height: 1.1; }
+        .star-rating { font-size: 1rem; margin-bottom: 1.5rem; color: var(--accent); display: flex; align-items: center; gap: 8px; }
+        .star-rating span { color: var(--text-muted); font-size: 0.85rem; font-weight: 400; }
+        .product-price { font-size: 1.8rem; font-weight: 800; margin-bottom: 2rem; }
+        .product-desc { font-size: 1rem; color: var(--text-muted); line-height: 1.8; margin-bottom: 2rem; padding-bottom: 2rem; border-bottom: 1px solid var(--border); }
+        .size-selector { margin-bottom: 2rem; }
+        .size-label { display: block; font-size: 0.85rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1rem; }
+        .size-grid { display: flex; gap: 0.75rem; flex-wrap: wrap; }
+        .size-btn { min-width: 60px; padding: 0.85rem 1rem; border: 1px solid var(--border); background: #fff; cursor: pointer; font-weight: 700; font-size: 0.9rem; border-radius: 4px; transition: all 0.2s; }
+        .size-btn:hover { border-color: var(--text-main); }
+        .size-btn.active { background: var(--text-main); color: #fff; border-color: var(--text-main); }
+        .add-to-cart-btn { width: 100%; background: var(--btn-bg); color: var(--btn-text); padding: 1.25rem; border: none; border-radius: 4px; font-weight: 700; font-size: 0.85rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; transition: background 0.3s; margin-top: 1rem; }
+        .add-to-cart-btn:hover { background: var(--accent); }
+
+        footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
+        .footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3.5rem; }
+        .footer-grid h5 { font-size:0.78rem; font-weight:800; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:2px; color:#fff; }
+        .footer-grid ul { list-style:none; display:flex; flex-direction:column; gap:0.85rem; }
+        .footer-grid a { color:#888; text-decoration:none; font-size:0.85rem; }
+        .footer-bottom { border-top:1px solid #1c1c1c; padding-top:2rem; text-align:center; color:#666; font-size:0.78rem; }
+        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; }
+        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; box-shadow:0 20px 40px rgba(0,0,0,0.25); border-left:3px solid var(--accent); }
+        @media (max-width: 768px) { .product-layout { grid-template-columns: 1fr; gap: 2rem; } .product-title { font-size: 2rem; } }
+    </style>
+</head>
+<body>
+    <header id="main-header">
+        <div class="nav-left"></div>
+        <a href="index.html" class="brand-logo">
+            <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
+        </a>
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn" aria-label="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="cart-count" id="nav-cart-count">0</span>
+            </a>
+            <div class="dropdown-wrapper">
+                <button class="menu-toggle-btn" onclick="toggleDropdown()">☰</button>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li></ul></div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Back to Shop Arrow -->
+    <div class="back-arrow-container">
+        <a href="shop.html" class="back-arrow">
+            <svg viewBox="0 0 24 24"><path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/></svg>
+            Back to Shop
+        </a>
+    </div>
+
+    <div class="product-layout">
+        <div class="gallery">
+            <div class="main-image-wrapper"><img id="main-img" src="" alt="Product Image" class="main-image"></div>
+            <div class="thumbnails" id="thumbs"></div>
+        </div>
+        <div class="product-details">
+            <h1 class="product-title" id="p-title">Loading...</h1>
+            <div class="star-rating" id="p-stars"></div>
+            <div class="product-price" id="p-price">E£0.00</div>
+            <p class="product-desc">Crafted for those who refuse to blend in. Premium 500 GSM heavyweight fleece engineered for the modern monarch. Designed with intent in Cairo, crafted for longevity. This isn't just clothing — it's armor for the modern monarch.</p>
+            <div class="size-selector">
+                <label class="size-label">Select Size</label>
+                <div class="size-grid" id="size-grid">
+                    <button class="size-btn">S</button><button class="size-btn active">M</button><button class="size-btn">L</button><button class="size-btn">XL</button><button class="size-btn">XXL</button>
+                </div>
+            </div>
+            <button class="add-to-cart-btn" onclick="addToCart()">Add to Bag</button>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div><h5>The Egyptian King</h5><p style="color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
+            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li></ul></div>
+            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li></ul></div>
+            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
+    </footer>
+
+    <div class="toast-container"></div>
+
+    <script>
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
+        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) document.getElementById('dropdown-menu').classList.remove('active'); });
+        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000); }
+
+        let currentProduct = null;
+        let selectedSize = 'M';
+
+        function loadProduct() {
+            // Read the product data saved by shop.html
+            const pData = localStorage.getItem('viewingProduct');
+            if (!pData) { window.location.href = 'shop.html'; return; } // Go back if no product selected
+            
+            currentProduct = JSON.parse(pData);
+
+            document.getElementById('p-title').innerText = currentProduct.name;
+            document.getElementById('p-price').innerText = `E£${currentProduct.price}.00 EGP`;
+            
+            // Calculate stars
+            let r = Math.round(currentProduct.rating);
+            document.getElementById('p-stars').innerHTML = '★'.repeat(r) + '☆'.repeat(5 - r) + ` <span>(${currentProduct.reviews} reviews)</span>`;
+            
+            document.getElementById('main-img').src = currentProduct.images[0];
+            
+            // Generate thumbnails if there are multiple images
+            const thumbsContainer = document.getElementById('thumbs');
+            thumbsContainer.innerHTML = '';
+            if (currentProduct.images.length > 1) {
+                currentProduct.images.forEach((imgUrl, index) => {
+                    const thumb = document.createElement('div');
+                    thumb.className = 'thumb' + (index === 0 ? ' active' : '');
+                    thumb.innerHTML = `<img src="${imgUrl}" alt="Thumb ${index + 1}">`;
+                    thumb.onclick = () => { 
+                        document.getElementById('main-img').src = imgUrl; 
+                        document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active')); 
+                        thumb.classList.add('active'); 
+                    };
+                    thumbsContainer.appendChild(thumb);
+                });
+            }
+        }
+
+        document.querySelectorAll('.size-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); selectedSize = btn.innerText; }); });
+
+        function addToCart() {
+            if (!currentProduct) return;
+            let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const existing = cart.find(item => item.id === currentProduct.id && item.size === selectedSize);
+            if (existing) { existing.qty = (existing.qty || 1) + 1; } else { cart.push({ ...currentProduct, qty: 1, size: selectedSize, img: currentProduct.images[0] }); }
+            localStorage.setItem('kingCart', JSON.stringify(cart));
+            updateCartCount();
+            showToast(`${currentProduct.name} (Size: ${selectedSize}) added to bag!`);
+            if (typeof saveCartToBackend === 'function') saveCartToBackend();
+        }
+
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; document.getElementById('nav-cart-count').innerText = cart.reduce((sum, item) => sum + (item.qty || 1), 0); }
+        window.addEventListener('DOMContentLoaded', () => { loadProduct(); updateCartCount(); });
+    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
+</body>
+</html>
