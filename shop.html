@@ -65,15 +65,20 @@
         .badge { font-size: 0.6rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
         .badge.new { background: #0a0a0a; color: #fff; }
         .badge.bestseller { background: var(--accent); color: #fff; }
-        .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.95); color: #fff; backdrop-filter: blur(5px); padding: 0.95rem; text-align: center; font-weight: 700; font-size: 0.72rem; text-transform: uppercase; letter-spacing: 2px; transform: translateY(100%); transition: transform 0.4s; border: none; cursor: pointer; width: 100%; }
+        .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.98); color: #fff; backdrop-filter: blur(5px); padding: 1.1rem; text-align: center; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; transform: translateY(100%); transition: transform 0.4s; border: none; cursor: pointer; width: 100%; }
         .product-card:hover .quick-add { transform: translateY(0); }
-        .quick-add:hover { background: var(--accent); }
+        .quick-add:hover { background: var(--accent); color: #0a0a0a; }
+        
         .product-info { padding: 0 0.25rem; }
+        .star-rating { font-size: 0.75rem; margin-bottom: 0.45rem; color: var(--accent); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
+        .star-rating span { color: var(--text-muted); font-size: 0.72rem; font-weight: 400; }
+        
+        /* NEW: Thin small brand text */
+        .brand-name { font-size: 0.65rem; font-weight: 300; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 0.25rem; }
+        
         .product-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; transition: color 0.3s; }
         .product-card:hover .product-title { color: var(--accent); }
         .product-price { font-size: 0.92rem; color: var(--text-main); font-weight: 700; }
-        .star-rating { font-size: 0.75rem; margin-bottom: 0.45rem; color: var(--accent); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
-        .star-rating span { color: var(--text-muted); font-size: 0.72rem; font-weight: 400; }
 
         footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
@@ -167,7 +172,6 @@
         function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000); }
         window.showToast = showToast;
 
-        // PRODUCTS HARDCODED WITH THEIR GALLERY IMAGES
         const products = [
             { id: 1, name: "5amarty baladi Hoodie", price: 950, rating: 4.8, reviews: 124, category: "graphic", badge: "", img: "https://i.postimg.cc/TY3Zx8MX/Add-a-subheading-12.png", images: ["https://i.postimg.cc/TY3Zx8MX/Add-a-subheading-12.png", "https://i.postimg.cc/mgB15FtC/koozee-udy0kzo66cpjc7ki.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
             { id: 2, name: "2ahaan el 2asab", price: 950, rating: 4.6, reviews: 89, category: "graphic", badge: "", img: "https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", images: ["https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", "https://i.postimg.cc/MZfBMSCg/5f31dc59-e556-41b8-9ab5-fcd5e808780b.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
@@ -217,10 +221,11 @@
                             ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
                         </div>
                         <img src="${p.img}" alt="${p.name}">
-                        <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">View Product</button>
+                        <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">QUICK VIEW</button>
                     </div>
                     <div class="product-info">
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
+                        <p class="brand-name">THE EGYPTIAN KING</p>
                         <h3 class="product-title">${p.name}</h3>
                         <p class="product-price">E£${p.price}.00 EGP</p>
                     </div>
