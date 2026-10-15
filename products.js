@@ -92,6 +92,10 @@ const products = [
     { id: 23, name: "2aa5r malek Hoodie", price: 950, rating: 4.4, reviews: 29, category: "graphic", badge: "", images: [
         "https://i.postimg.cc/dVwZxTLR/mawlah65731.png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
+    ]},
+    { id: 24, name: "el sfyncs Hoodie", price: 950, rating: 4.3, reviews: 30, category: "graphic", badge: "", images: [
+        "https://i.postimg.cc/76XsRG3f/098736d5-5247-42e3-b42d-7711db20f58e.png",
+        "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]}
 ];
 
