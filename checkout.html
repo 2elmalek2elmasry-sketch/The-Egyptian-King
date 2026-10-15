@@ -2,662 +2,461 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Checkout — THE EGYPTIAN KING</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-ZR0FBN0PRV"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-ZR0FBN0PRV');
-    </script>
-    <script>
-    !function(f,b,e,v,n,t,s)
-    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-    n.queue=[];t=b.createElement(e);t.async=!0;
-    t.src=v;s=b.getElementsByTagName(e)[0];
-    s.parentNode.insertBefore(t,s)}(window, document,'script',
-    'https://connect.facebook.net/en_US/fbevents.js');
-    fbq('init', '1099053245985344');
-    fbq('track', 'PageView');
-    </script>
-    <noscript><img height="1" width="1" style="display:none"
-    src="https://www.facebook.com/tr?id=1099053245985344&ev=PageView&noscript=1"
-    /></noscript>
     
-    <!-- Added intent=capture to ensure payment processes correctly -->
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields&intent=capture"></script>
-    <script src="https://pay.google.com/gp/p/js/pay.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-    
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+    <script type="module">
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-app.js";
+      import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.16.0/firebase-analytics.js";
+
+      const firebaseConfig = {
+        apiKey: "AIzaSyAOtDF71w3oXICE04c9CGtz_prRHBnMq6c",
+        authDomain: "the-egyptian-king-68e45.firebaseapp.com",
+        projectId: "the-egyptian-king-68e45",
+        storageBucket: "the-egyptian-king-68e45.firebasestorage.app",
+        messagingSenderId: "94881816710",
+        appId: "1:94881816710:web:10fca569f1b43c583ab107",
+        measurementId: "G-ZR0FBN0PRV"
+      };
+
+      const app = initializeApp(firebaseConfig);
+      const analytics = getAnalytics(app);
+    </script>
+
     <style>
-        :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --btn-text:#fff; --sale:#c8102e; }
-        * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
-        html { scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
-        body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
-        a { text-decoration: none; color: inherit; }
-        .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
-        .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
-        .toast-message.show { opacity:1; transform:translateY(0); }
-        header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; transition:padding 0.3s ease; }
-        header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
-        .nav-left { flex: 1; }
-        .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
-        .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
-        header.scrolled .logo-img { height: 22px; }
-        .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
-        .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
-        .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
-        .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
-        .dropdown-wrapper { position:relative; }
-        .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; }
-        .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; }
-        .dropdown-menu.active { display:flex; }
-        .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
-        .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
-        .dropdown-title { font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
-        .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
-        .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; }
-        .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
+        :root {
+            --bg: #08080c;
+            --sidebar-bg: #0f0f17;
+            --card-bg: rgba(22, 22, 32, 0.8);
+            --border-glow: rgba(255, 255, 255, 0.12);
+            --text-main: #ffffff;
+            --text-muted: #8e8e9e;
+            --accent-primary: #38bdf8;
+            --input-bg: rgba(255, 255, 255, 0.04);
+        }
 
-        .checkout-layout { display: grid; grid-template-columns: 1fr 400px; gap: 4rem; max-width: 1400px; margin: 0 auto; padding: 4rem clamp(1.2rem, 5vw, 3.5rem); }
-        .section-box { margin-bottom: 3rem; }
-        .section-title { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
-        .form-group { margin-bottom: 1rem; }
-        .form-row { display:grid; grid-template-columns:1fr 1fr; gap:1rem; }
-        .input-field { width: 100%; background: #fff; border: 1px solid var(--border); border-radius: 2px; padding: 1rem 1.25rem; color: var(--text-main); font-size: 0.85rem; font-family: 'Inter', sans-serif; outline: none; transition: border-color 0.3s; }
-        .input-field:focus { border-color: var(--text-main); }
-        .input-field::placeholder { color: #999; }
+        body[data-theme="neon"] {
+            --bg: #090014;
+            --sidebar-bg: #0e021e;
+            --card-bg: rgba(24, 9, 43, 0.85);
+            --border-glow: rgba(236, 72, 153, 0.3);
+            --accent-primary: #ec4899;
+        }
 
-        .payment-options { display:flex; flex-direction:column; gap:0.8rem; }
-        .payment-tab { display:flex; align-items:center; gap:0.75rem; padding:1.5rem; border:1px solid var(--border); border-radius:4px; cursor:pointer; transition:all 0.3s ease; background:#fff; }
-        .payment-tab:hover { border-color: var(--text-muted); }
-        .payment-tab.active { border-color: var(--text-main); box-shadow: 0 10px 30px rgba(0,0,0,0.05); }
-        .payment-tab.disabled-tab { opacity:0.5; cursor:not-allowed; background:var(--bg-alt); }
-        .radio-dot { width:20px; height:20px; border:2px solid #ccc; border-radius:50%; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.2s; }
-        .payment-tab.active .radio-dot { border-color: var(--text-main); background: var(--text-main); box-shadow: inset 0 0 0 4px #fff; }
-        .payment-tab-label { font-weight:700; font-size:0.95rem; color: var(--text-main); flex: 1; }
-        .brand-logos { display:flex; align-items:center; gap:6px; flex-shrink:0; margin-left: auto; }
-        .brand-logos svg { display:block; height:20px; width:auto; }
-        .payment-content { display:none; margin-top:1.2rem; padding:1.5rem; background:var(--bg-alt); border:1px solid var(--border); border-radius:4px; }
-        .payment-content.active { display:block; animation:fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity:0; transform:translateY(-5px); } to { opacity:1; transform:translateY(0); } }
-        .btn-pay { width: 100%; padding: 1.1rem 2.5rem; border: none; border-radius: 2px; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; cursor: pointer; transition: all 0.35s ease; display: flex; align-items: center; justify-content: center; gap: 0.5rem; }
-        .btn-cod { background: #fff; color: var(--text-main); border: 1px solid var(--text-main); }
-        .btn-cod:hover { background: var(--text-main); color: #fff; transform: translateY(-2px); }
+        body[data-theme="royalty"] {
+            --bg: #0a0802;
+            --sidebar-bg: #120e04;
+            --card-bg: rgba(28, 23, 13, 0.85);
+            --border-glow: rgba(234, 179, 8, 0.3);
+            --accent-primary: #eab308;
+        }
 
-        .sidebar { background: var(--bg-alt); padding: 2.5rem; border-radius: 4px; border: 1px solid var(--border); height: fit-content; position: sticky; top: 100px; }
-        .summary-item { display:flex; gap:1rem; margin-bottom:1.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); }
-        .summary-item img { width:60px; height:70px; object-fit:cover; border-radius:2px; background: #fff; }
-        .summary-item h4 { font-size:0.9rem; font-weight:700; margin-bottom:0.2rem; }
-        .summary-item p { font-size:0.78rem; color:var(--text-muted); letter-spacing: 0.5px; margin-bottom: 2px; }
-        .cost-row { display:flex; justify-content:space-between; margin-bottom:1rem; font-size:0.85rem; color: var(--text-muted); }
-        .cost-row.total { font-size:1.2rem; font-weight:800; color: var(--text-main); border-top:1px solid var(--border); padding-top:1.5rem; margin-top:1.5rem; }
-        
-        .promo-box { margin-top: 1.5rem; border-top: 1px solid var(--border); padding-top: 1.5rem; }
-        .promo-label { font-size: 0.8rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 0.75rem; display: block; }
-        .promo-input-group { display: flex; gap: 0.5rem; }
-        .promo-input { flex: 1; padding: 0.85rem 1rem; border: 1px solid var(--border); background: #fff; border-radius: 2px; font-size: 0.85rem; text-transform: uppercase; outline: none; transition: border-color 0.3s; }
-        .promo-input:focus { border-color: var(--text-main); }
-        .promo-btn { background: var(--text-main); color: #fff; border: none; padding: 0 1.5rem; border-radius: 2px; font-weight: 700; font-size: 0.75rem; text-transform: uppercase; cursor: pointer; transition: background 0.3s; }
-        .promo-btn:hover { background: var(--accent); }
-        .promo-msg { font-size: 0.8rem; font-weight: 600; margin-top: 0.75rem; height: 1rem; }
-        .promo-msg.success { color: #2d8a4e; }
-        .promo-msg.error { color: var(--sale); }
-        .discount-row { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.85rem; color: #2d8a4e; font-weight: 600; }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-main); min-height: 100vh; overflow-x: hidden; width: 100%; }
 
-        footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; margin-top: 4rem; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
-        .footer-grid h5 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 2px; color: #fff; }
-        .footer-grid ul { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-        .footer-grid a { color: #888; text-decoration: none; font-size: 0.85rem; transition: color 0.3s; }
-        .footer-grid a:hover { color: var(--accent); }
-        .footer-bottom { border-top: 1px solid #1c1c1c; padding-top: 2rem; text-align: center; color: #666; font-size: 0.78rem; }
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 450px;
+            min-height: 100vh;
+        }
 
-        @media (max-width: 1024px) { .checkout-layout { grid-template-columns: 1fr; gap: 3rem; } .sidebar { position: static; max-width: 600px; margin: 0 auto; width: 100%; } .footer-grid { grid-template-columns: 1fr 1fr; } }
-        @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; text-align: center; } }
+        .main-content {
+            padding: 3rem clamp(1rem, 5vw, 5rem);
+            max-width: 750px;
+            margin-left: auto;
+            width: 100%;
+        }
+
+        .brand-header {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand-title {
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .section-box { margin-bottom: 2.2rem; }
+
+        .section-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .sign-in-link { font-size: 0.8rem; color: var(--accent-primary); text-decoration: none; font-weight: 600; }
+
+        .form-group { margin-bottom: 0.9rem; position: relative; }
+
+        .input-field, .select-field {
+            width: 100%;
+            background: var(--input-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 0.85rem 1rem;
+            color: #fff;
+            font-size: 0.9rem;
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus, .select-field:focus {
+            border-color: var(--accent-primary);
+        }
+
+        .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.9rem; }
+        .form-row-3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.9rem; }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-top: 0.8rem;
+            cursor: pointer;
+        }
+
+        .notice-box {
+            background: var(--input-bg);
+            border: 1px solid var(--border-glow);
+            border-radius: 8px;
+            padding: 1rem;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+        }
+
+        .payment-option-box {
+            background: var(--card-bg);
+            border: 1px solid var(--accent-primary);
+            border-radius: 8px;
+            padding: 1rem;
+            font-weight: 600;
+            font-size: 0.9rem;
+        }
+
+        .btn-complete {
+            width: 100%;
+            background: var(--accent-primary);
+            color: #000;
+            border: none;
+            padding: 1.1rem;
+            border-radius: 8px;
+            font-weight: 800;
+            font-size: 0.95rem;
+            letter-spacing: 1px;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: transform 0.2s ease;
+        }
+
+        .btn-complete:hover { transform: translateY(-2px); }
+
+        .checkout-footer {
+            margin-top: 4rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-glow);
+            display: flex;
+            gap: 1.5rem;
+            font-size: 0.75rem;
+            flex-wrap: wrap;
+        }
+
+        .checkout-footer a { color: var(--text-muted); text-decoration: none; }
+
+        .sidebar {
+            background: var(--sidebar-bg);
+            border-left: 1px solid var(--border-glow);
+            padding: 3rem clamp(1rem, 4vw, 3rem) 3rem clamp(1rem, 4vw, 2.5rem);
+        }
+
+        .summary-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .summary-item-left { display: flex; align-items: center; gap: 1rem; position: relative; min-width: 0; }
+
+        .item-img-wrapper {
+            position: relative;
+            width: 64px;
+            height: 64px;
+            background: #1a1a24;
+            border-radius: 8px;
+            border: 1px solid var(--border-glow);
+            flex-shrink: 0;
+        }
+
+        .item-img-wrapper img { width: 100%; height: 100%; object-fit: cover; border-radius: 8px; }
+
+        .item-badge {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--text-muted);
+            color: #000;
+            font-size: 0.7rem;
+            font-weight: 900;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .item-details { min-width: 0; }
+        .item-details h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 3px; word-wrap: break-word; }
+        .item-details p { font-size: 0.75rem; color: var(--text-muted); }
+
+        .item-price { font-weight: 700; font-size: 0.95rem; white-space: nowrap; }
+
+        .cost-row {
+            display: flex;
+            justify-content: space-between;
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 0.8rem;
+            gap: 1rem;
+        }
+
+        .cost-row.total {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 800;
+            border-top: 1px solid var(--border-glow);
+            padding-top: 1.2rem;
+            margin-top: 1.2rem;
+        }
+
+        @media (max-width: 900px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+            .main-content { padding: 2rem 1.5rem; }
+            .sidebar { padding: 2rem 1.5rem; order: -1; border-left: none; border-bottom: 1px solid var(--border-glow); }
+            .form-row, .form-row-3 { grid-template-columns: 1fr; }
+        }
     </style>
 </head>
 <body>
-    <div class="toast-container"></div>
-    <header id="main-header">
-        <div class="nav-left"></div>
-        <a href="index.html" class="brand-logo"><img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img"></a>
-        <div class="nav-actions">
-            <a href="cart.html" class="icon-btn" aria-label="Cart">
-                <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
-                <span class="cart-count" id="nav-cart-count">0</span>
-            </a>
-            <div class="dropdown-wrapper">
-                <button class="menu-toggle-btn" onclick="toggleDropdown()">☰</button>
-                <div class="dropdown-menu" id="dropdown-menu">
-                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li><li><a href="track.html">Track Order</a></li></ul></div>
-                    <div class="dropdown-section"><div class="dropdown-title">Support</div><ul class="dropdown-links"><li><a href="terms.html">Shipping Info</a></li><li><a href="terms.html">Returns</a></li><li><a href="terms.html">FAQ</a></li></ul></div>
-                </div>
-            </div>
-        </div>
-    </header>
 
-    <div class="checkout-layout" id="checkout-container">
-        <div class="checkout-main">
+    <div class="checkout-layout">
+        
+        <main class="main-content">
+            <div class="brand-header">
+                <div class="brand-title">THE EGYPTIAN KING</div>
+            </div>
+
             <div class="section-box">
-                <h2 class="section-title">Contact Information</h2>
-                <div class="form-group"><input type="email" id="email" class="input-field" placeholder="Email address" required></div>
+                <div class="section-title">
+                    Contact
+                    <a href="#" class="sign-in-link">Sign in</a>
+                </div>
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Email or mobile phone number">
+                </div>
+                <label class="checkbox-label">
+                    <input type="checkbox" checked> Email me with news and offers
+                </label>
             </div>
+
             <div class="section-box">
-                <h2 class="section-title">Shipping Address</h2>
-                <div class="form-row"><div class="form-group"><input type="text" id="first-name" class="input-field" placeholder="First name" required></div><div class="form-group"><input type="text" id="last-name" class="input-field" placeholder="Last name" required></div></div>
-                <div class="form-group"><input type="text" id="address" class="input-field" placeholder="Address" required></div>
-                <div class="form-row"><div class="form-group"><input type="text" id="city" class="input-field" placeholder="City" required></div><div class="form-group"><input type="text" id="postal-code" class="input-field" placeholder="Postal code (optional)"></div></div>
-                <div class="form-group"><input type="text" id="phone" class="input-field" placeholder="Phone number" required></div>
+                <div class="section-title">Delivery</div>
+                
+                <div class="form-group">
+                    <select class="select-field">
+                        <option value="Egypt">Egypt</option>
+                        <option value="UAE">United Arab Emirates</option>
+                        <option value="Saudi Arabia">Saudi Arabia</option>
+                        <option value="Worldwide">Worldwide Delivery</option>
+                    </select>
+                </div>
+
+                <div class="form-row form-group">
+                    <input type="text" class="input-field" placeholder="First name">
+                    <input type="text" class="input-field" placeholder="Last name">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Address">
+                </div>
+
+                <div class="form-row-3 form-group">
+                    <input type="text" class="input-field" placeholder="City">
+                    <select class="select-field">
+                        <option value="">Governorate</option>
+                        <option value="Cairo">Cairo</option>
+                        <option value="Alexandria">Alexandria</option>
+                        <option value="Giza">Giza</option>
+                    </select>
+                    <input type="text" class="input-field" placeholder="Postal code (optional)">
+                </div>
+
+                <div class="form-group">
+                    <input type="text" class="input-field" placeholder="Phone">
+                </div>
+
+                <label class="checkbox-label">
+                    <input type="checkbox"> Save this information for next time
+                </label>
             </div>
+
             <div class="section-box">
-                <h2 class="section-title">Payment</h2>
-                <p style="font-size:0.78rem; color:var(--text-muted); margin-bottom:1.5rem; letter-spacing: 1px; text-transform: uppercase;">All transactions are secure and encrypted.</p>
-                <div class="payment-options">
-                    <div class="payment-tab active" onclick="selectPayment('card')"><div class="radio-dot"></div><span class="payment-tab-label">Credit / Debit Card</span><div class="brand-logos"><svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><path fill="#FFF" d="M13.8 16.5l1.6-9.6h2.6l-1.6 9.6h-2.6zm8.8-9.4c-.5-.2-1.4-.4-2.4-.4-2.7 0-4.6 1.4-4.6 3.4 0 1.5 1.3 2.3 2.3 2.8 1 .5 1.4.8 1.4 1.3 0 .7-.9 1-1.7 1-.1 0-1.7-.1-2.6-.5l-.4-.2-.4 2.4c.7.3 2 .6 3.3.6 3 0 4.9-1.4 4.9-3.6 0-1.2-.7-2.1-2.3-2.9-.9-.5-1.5-.8-1.5-1.3 0-.4.5-.9 1.5-.9.9 0 1.6.2 2.1.4l.3.1.5-2.2zm6.2-.2h-2c-.6 0-1.1.2-1.3.8l-3.7 8.8h2.8l.6-1.5h3.4l.3 1.5h2.5l-2.2-9.6zm-2.4 6.2l1.1-2.9.6 2.9h-1.7zM11.9 6.9L9.4 13.5l-.3-1.4c-.5-1.7-2-3.5-3.7-4.4l2.4 8.8h2.8l4.1-9.6h-2.8z"/></svg><svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#0A2540"/><circle cx="13" cy="12" r="7" fill="#EB001B"/><circle cx="23" cy="12" r="7" fill="#F79E1B"/><path d="M18 6.6a6.9 6.9 0 000 10.8 6.9 6.9 0 000-10.8z" fill="#FF5F00"/></svg></div></div>
-                    <div class="payment-content active" id="content-card"><div id="card-button-container"></div></div>
-                    <div class="payment-tab" onclick="selectPayment('googlepay')"><div class="radio-dot"></div><span class="payment-tab-label">Google Pay</span><div class="brand-logos"><svg viewBox="0 0 36 24" fill="none"><rect width="36" height="24" rx="3" fill="#000"/><path fill="#fff" d="M11.5 15.2v-6.4h1.9v6.4h-1.9zm4.7-.1c-.4 0-.8-.1-1.1-.3-.3-.2-.5-.5-.7-.8-.2-.3-.3-.7-.3-1.1s.1-.8.3-1.1c.2-.3.4-.6.7-.8.3-.2.7-.3 1.1-.3.4 0 .8.1 1.1.3.3.2.5.5.7.8.2.3.3.7.3 1.1s-.1.8-.3 1.1-.2.3-.4.6-.7.8-.3.2-.7.3-1.1.3zm0-1.4c.2 0 .4-.1.6-.2.2-.1.3-.3.4-.5.1-.2.2-.5.2-.8 0-.3-.1-.6-.2-.8-.1-.2-.2-.4-.4-.5-.2-.1-.4-.2-.6-.2s-.4.1-.6.2c-.2.1-.3.3-.4.5-.1.2-.2.5-.2.8 0 .3.1.6.2.8.1.2.2.4.4.5.2.1.4.2.6.2zm4.2 1.5l-.2-1h-.1c-.2.4-.5.7-.9.9-.4.2-.8.3-1.2.3-.5 0-.9-.1-1.3-.3-.4-.2-.7-.5-.9-.9-.2-.4-.3-.9-.3-1.4 0-.5.1-1 .3-1.4.2-.4.5-.7.9-.9.4-.2.8-.3 1.3-.3.4 0 .8.1 1.1.3.3.2.6.5.7.8h.1l-.1-1v-2.3h1.8v8.3h-1.6zm-1.2-1.4c.2 0 .4-.1.6-.2.2-.1.3-.3.4-.5.1-.2.2-.5.2-.8 0-.4-.1-.7-.3-.9-.2-.2-.4-.3-.7-.3-.3 0-.6.1-.8.3-.2.2-.3.5-.3.9 0 .3.1.6.3.8.2.2.4.3.8.3zm7.3 1.5c-.5 0-.9-.1-1.3-.3-.4-.2-.7-.5-.9-.9-.2-.4-.3-.9-.3-1.4 0-.5.1-1 .3-1.4.2-.4.5-.7.9-.9.4-.2.8-.3 1.3-.3.5 0 .9.1 1.2.3.3.2.6.5.8.8l-1.2.7c-.1-.2-.3-.4-.5-.5-.2-.1-.4-.2-.7-.2-.3 0-.6.1-.8.3-.2.2-.3.5-.4.8h3.3c0 .2.0.4.0.5 0 .8-.2 1.4-.6 1.8-.4.4-1 .6-1.7.6zm-.1-4c-.3 0-.6.1-.8.3-.2.2-.3.4-.4.7h2.4c0-.3-.1-.5-.3-.7-.2-.2-.5-.3-.9-.3z"/></svg></div></div>
-                    <div class="payment-content" id="content-googlepay"><div id="gpay-button-container"></div></div>
-                    <div class="payment-tab disabled-tab" onclick="selectPayment('applepay')"><div class="radio-dot"></div><span class="payment-tab-label">Apple Pay</span><span style="background:#eee; color:#666; font-size:0.65rem; font-weight:800; padding:4px 8px; border-radius:2px; text-transform:uppercase;">Coming Soon</span></div>
-                    <div class="payment-content" id="content-applepay"><p style="font-size:0.85rem; color:var(--text-muted); text-align:center;">Apple Pay integration is currently under development.</p></div>
-                    <div class="payment-tab" onclick="selectPayment('paypal')"><div class="radio-dot"></div><span class="payment-tab-label">PayPal</span><div class="brand-logos"><svg viewBox="0 0 36 24"><rect width="36" height="24" rx="3" fill="#003087"/><path fill="#0079C1" d="M13.5 6h-3.2c-.2 0-.4.2-.4.4l-2 12.8c0 .2.1.3.3.3h1.6c.2 0 .4-.2.4-.4l.6-3.8c0-.2.2-.4.4-.4h1.1c2.2 0 3.8-1.1 4.1-3.2.2-1 0-1.7-.4-2.2-.6-.6-1.5-.8-2.5-.8zm.6 3.2c-.2 1.1-1 1.1-1.8 1.1h-.5l.3-2c0-.1.2-.2.3-.2h.3c.6 0 1.1 0 1.3.3.2.1.2.5.1.8z"/></svg></div></div>
-                    <div class="payment-content" id="content-paypal"><div id="paypal-button-container"></div></div>
-                    <div class="payment-tab" onclick="selectPayment('cod')"><div class="radio-dot"></div><span class="payment-tab-label">Cash on Delivery (COD)</span></div>
-                    <div class="payment-content" id="content-cod"><button class="btn-pay btn-cod" id="btn-cod" onclick="processPayment('Cash on Delivery')">Place Order</button></div>
+                <div class="section-title">Shipping method</div>
+                <div class="notice-box">
+                    Enter your shipping address to view available shipping methods.
                 </div>
             </div>
-        </div>
 
-        <div class="sidebar">
-            <h2 class="section-title" style="margin-bottom: 2rem;">Order Summary</h2>
-            <div id="checkout-items-list"></div>
-            <div class="cost-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
-            <div class="cost-row"><span>Shipping <small id="shipping-reason" style="color:var(--text-muted); font-size:0.75rem; display:block; margin-top:2px;"></small></span><span id="shipping-val">E£0.00</span></div>
-            
-            <div class="discount-row" id="discount-row" style="display: none;"><span>Discount (<span id="promo-code-display"></span>)</span><span id="discount-val">E£0.00</span></div>
-            
-            <div class="cost-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
-
-            <div class="promo-box">
-                <label class="promo-label">Promo Code</label>
-                <div class="promo-input-group">
-                    <input type="text" id="promo-code-input" class="promo-input" placeholder="Enter code">
-                    <button class="promo-btn" onclick="applyPromoCode()">Apply</button>
-                </div>
-                <p class="promo-msg" id="promo-message"></p>
-            </div>
-        </div>
-    </div>
-
-    <footer>
-        <div class="footer-grid">
-            <div><h5>The Egyptian King</h5><p style="color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
-            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="shop.html">Hoodies</a></li></ul></div>
-            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="terms.html">Returns</a></li></ul></div>
-            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Contact</a></li></ul></div>
-        </div>
-        <div class="footer-bottom">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
-    </footer>
-
-    <!-- Receipt Modal -->
-    <div id="receipt-modal-overlay" class="receipt-overlay">
-        <div class="receipt-modal-card">
-            <div id="receipt-loader" class="receipt-loader-box"><div class="spinner"></div><h3>LOADING YOUR RECEIPT...</h3><p>Generating your official order confirmation image.</p></div>
-            <div id="receipt-content-box" class="receipt-content-box" style="display: none;">
-                <div class="receipt-preview-wrapper"><img id="generated-receipt-img" src="" alt="Order Receipt"></div>
-                <div class="receipt-actions">
-                    <button id="btn-save-receipt" class="btn-receipt primary">Save Receipt</button>
-                    <button id="btn-copy-receipt" class="btn-receipt secondary">Copy Receipt</button>
-                    <button onclick="closeReceiptModal()" class="btn-receipt close">Close</button>
+            <div class="section-box">
+                <div class="section-title">Payment</div>
+                <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 0.8rem;">All transactions are secure and encrypted.</p>
+                
+                <div class="payment-option-box">
+                    Cash on Delivery (COD)
                 </div>
             </div>
-        </div>
+
+            <div class="section-box">
+                <div class="section-title">Billing address</div>
+                <div class="payment-option-box" style="margin-bottom: 0.6rem;">
+                    🔴 Same as shipping address
+                </div>
+                <div class="notice-box">
+                    ⚪ Use a different billing address
+                </div>
+            </div>
+
+            <button class="btn-complete" onclick="completeOrder()">Complete order</button>
+
+            <div class="checkout-footer">
+                <a href="terms.html">Refund policy</a>
+                <a href="terms.html">Shipping</a>
+                <a href="terms.html">Contact</a>
+            </div>
+        </main>
+
+        <aside class="sidebar">
+            <div id="checkout-items-list">
+                <!-- LOADED DYNAMICALLY -->
+            </div>
+
+            <div style="border-top: 1px solid var(--border-glow); padding-top: 1.5rem; margin-top: 1.5rem;">
+                <div class="cost-row">
+                    <span>Subtotal</span>
+                    <span id="subtotal-val">E£0.00</span>
+                </div>
+                <div class="cost-row">
+                    <span>Shipping</span>
+                    <span>Enter shipping address</span>
+                </div>
+                <div class="cost-row total">
+                    <span>Total</span>
+                    <span id="total-val">E£0.00</span>
+                </div>
+            </div>
+        </aside>
+
     </div>
-    <div id="receipt-capture-node" class="receipt-node">
-        <div class="watermark-bg">THE EGYPTIAN KING</div>
-        <div class="node-header"><h2>THE EGYPTIAN KING</h2><p class="node-tagline">OFFICIAL ORDER RECEIPT</p></div>
-        <hr class="node-divider">
-        <div class="node-meta"><div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div><div><strong>Date:</strong> <span id="node-order-date">---</span></div><div><strong>Payment:</strong> <span id="node-payment-method">---</span></div></div>
-        <div class="node-customer"><p><strong>Customer:</strong> <span id="node-customer-name">---</span></p><p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p><p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p></div>
-        <hr class="node-divider">
-        <div id="node-items-list" class="node-items"></div>
-        <hr class="node-divider">
-        <div class="node-total"><span>TOTAL PAID:</span><span id="node-total-price">E£0.00</span></div>
-        <div class="node-footer"><p>Thank you for shopping with THE EGYPTIAN KING.</p><p>Keep this receipt image for delivery verification.</p></div>
-    </div>
-    <style>
-    .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; justify-content:center; align-items:center; z-index:99999; }
-    .receipt-overlay.active { display:flex; }
-    .receipt-modal-card { background:#fff; width:100%; max-width:480px; border-radius:12px; padding:2rem; box-shadow:0 20px 50px rgba(0,0,0,0.5); text-align:center; max-height:90vh; overflow-y:auto; }
-    .receipt-loader-box { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2rem 0; }
-    .spinner { width:48px; height:48px; border:4px solid #e5e5e5; border-top:4px solid #0a0a0a; border-radius:50%; animation:spin 0.9s linear infinite; }
-    @keyframes spin { 0%{transform:rotate(0deg);} 100%{transform:rotate(360deg);} }
-    .receipt-preview-wrapper img { width:100%; border-radius:8px; border:1px solid #e5e5e5; box-shadow:0 4px 15px rgba(0,0,0,0.1); margin-bottom:1.5rem; }
-    .btn-receipt { width:100%; padding:0.9rem; border-radius:6px; font-weight:800; font-size:0.85rem; text-transform:uppercase; cursor:pointer; border:none; }
-    .btn-receipt.primary { background:#0a0a0a; color:#fff; }
-    .btn-receipt.secondary { background:#f0f0f0; color:#0a0a0a; border:1px solid #ccc; }
-    .btn-receipt.close { background:transparent; color:#666; text-decoration:underline; }
-    .receipt-node { position:absolute; left:-9999px; top:-9999px; width:420px; background:#fff; color:#0a0a0a; padding:2.5rem; font-family:'Inter',sans-serif; border:2px solid #0a0a0a; box-sizing:border-box; overflow:hidden; }
-    .watermark-bg { position:absolute; top:50%; left:50%; transform:translate(-50%,-50%) rotate(-30deg); font-size:3.2rem; font-weight:900; color:rgba(0, 0,0,0.04); white-space:nowrap; pointer-events:none; font-family:'Inter',sans-serif; letter-spacing:4px; }
-    .node-header h2 { font-family:'Inter',sans-serif; font-size:1.5rem; font-weight:900; letter-spacing:2px; }
-    .node-tagline { font-size:0.75rem; letter-spacing:1.5px; color:#666; font-weight:700; margin-top:4px; }
-    .node-divider { border:0; border-top:1px dashed #ccc; margin:1rem 0; }
-    .node-meta, .node-customer { font-size:0.85rem; text-align:left; line-height:1.6; }
-    .node-items { text-align:left; font-size:0.85rem; }
-    .node-item-row { display:flex; justify-content:space-between; margin-bottom:0.4rem; font-weight:600; }
-    .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
-    .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
-    </style>
 
     <script>
-        let currentTotal = 0;
-        let shippingFee = 0;
-        let shippingReason = "";
-        let paymentsClient = null;
-        let paypalRendered = { card: false, paypal: false };
-        
-        let appliedDiscount = 0;
-        let appliedPromoCode = null;
-
-        // YOUR ACTIVE PROMO CODE
-        const validPromoCodes = {
-            'HOLLOWEENMKSY26': { type: 'percent', value: 10, expiry: '2026-11-01' } // 10% off, expires Nov 1, 2026
-        };
-
-        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
-        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) document.getElementById('dropdown-menu').classList.remove('active'); });
-        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000); }
-        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; document.getElementById('nav-cart-count').innerText = cart.reduce((sum, item) => sum + (item.qty || 1), 0); }
-
-        function validateAddressForm() {
-            const email = document.getElementById('email').value.trim();
-            const firstName = document.getElementById('first-name').value.trim();
-            const lastName = document.getElementById('last-name').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            if (!email || !firstName || !lastName || !address || !city || !phone) { showToast("Please fill in all required contact & address fields first."); return false; }
-            return true;
-        }
-
-        function calculateShipping(cart) {
-            if (!cart || cart.length === 0) { shippingFee = 0; shippingReason = ""; return; }
-            const hasHoodie = cart.some(item => item.name && item.name.toLowerCase().includes('hoodie'));
-            if (hasHoodie) { shippingFee = 50; shippingReason = "Hoodie Flat Rate"; } else { shippingFee = 150; shippingReason = "Standard T-Shirt Rate"; }
-        }
-
-        // FIXED: Google Pay set to TEST environment to bypass strict production merchant validation
-        function getGooglePaymentsClient() {
-            if (paymentsClient === null) {
-                paymentsClient = new google.payments.api.PaymentsClient({
-                    environment: 'TEST',
-                    merchantInfo: {
-                        merchantName: 'THE EGYPTIAN KING'
-                    }
-                });
-            }
-            return paymentsClient;
-        }
-
-        function onGooglePayLoaded() {
-            const container = document.getElementById('gpay-button-container'); if (!container || container.children.length > 0) return;
-            const paymentsClient = getGooglePaymentsClient();
-            const baseRequest = {
-                apiVersion: 2,
-                apiVersionMinor: 0,
-                allowedPaymentMethods: [{
-                    type: 'CARD',
-                    parameters: {
-                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                        allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
-                    },
-                    tokenizationSpecification: {
-                        type: 'PAYMENT_GATEWAY',
-                        parameters: {
-                            gateway: 'paypal',
-                            gatewayMerchantId: 'exampleGatewayMerchantId' // Allowed in TEST mode
-                        }
-                    }
-                }]
-            };
-            paymentsClient.isReadyToPay(baseRequest).then(function(response) {
-                if (response.result) {
-                    const button = paymentsClient.createButton({
-                        onClick: onGooglePayButtonClicked,
-                        buttonColor: 'black',
-                        buttonType: 'buy',
-                        buttonSizeMode: 'fill'
-                    });
-                    container.appendChild(button);
-                }
-            }).catch(function(err) { console.error('Google Pay Ready error:', err); });
-        }
-
-        function onGooglePayButtonClicked() {
-            if (!validateAddressForm()) return;
-            const usdAmount = ((currentTotal - appliedDiscount) > 0 ? ((currentTotal - appliedDiscount) / 50) : 10.00).toFixed(2);
-            const paymentDataRequest = {
-                apiVersion: 2,
-                apiVersionMinor: 0,
-                allowedPaymentMethods: [{
-                    type: 'CARD',
-                    parameters: {
-                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
-                        allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
-                    },
-                    tokenizationSpecification: {
-                        type: 'PAYMENT_GATEWAY',
-                        parameters: {
-                            gateway: 'paypal',
-                            gatewayMerchantId: 'exampleGatewayMerchantId'
-                        }
-                    }
-                }],
-                merchantInfo: {
-                    merchantName: 'THE EGYPTIAN KING'
-                },
-                transactionInfo: {
-                    totalPriceStatus: 'FINAL',
-                    totalPrice: usdAmount,
-                    currencyCode: 'USD',
-                    countryCode: 'US'
-                }
-            };
-
-            const paymentsClient = getGooglePaymentsClient();
-            paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData) {
-                processPayment('Google Pay');
-            }).catch(function(err) {
-                if (err.statusCode !== 'CANCELED') {
-                    console.error('Google Pay error:', err);
-                    showToast("Google Pay failed: " + (err.statusMessage || "Unknown error"));
-                }
-            });
-        }
+        const products = [
+            { id: 1, name: "Queen Nefertiti Hoodie", price: 950, img: "https://i.postimg.cc/Y0QxV6g3/516715712-17866882896411646-829132566278910828-n.jpg" },
+            { id: 2, name: "Khaby Lame Hoodie", price: 950, img: "https://i.postimg.cc/zXB9x1w5/472608428-17843821857411646-5190413624021546847-n.jpg" },
+            { id: 3, name: "LeBron James Hoodie", price: 950, img: "https://i.postimg.cc/SKqdt60g/472633368-17843821560411646-1301946515224713514-n.jpg" },
+            { id: 4, name: "Dwayne Johnson Hoodie", price: 950, img: "https://i.postimg.cc/zGmYvcWH/472640130-17843821824411646-6190914740358970487-n.jpg" },
+            { id: 5, name: "Jude Bellingham Hoodie", price: 950, img: "https://i.postimg.cc/ydXfJtXr/470948200-17843821491411646-2530782776797434651-n.jpg" },
+            { id: 6, name: "Social Media Hoodie", price: 950, img: "https://i.postimg.cc/kGWtXPxZ/472698557-17843821893411646-1529126455755902565-n.jpg" },
+            { id: 7, name: "Egyptian Rulers Hoodie", price: 950, img: "https://i.postimg.cc/4NFDZGb6/472626436-17843821371411646-4896956000507693153-n.jpg" },
+            { id: 8, name: "Egyptian Culture Hoodie", price: 950, img: "https://i.postimg.cc/pLSSzx93/606046002-17886492576411646-3278374060857878734-n.jpg" },
+            { id: 9, name: "FIFA World Cup Hoodie", price: 980, img: "https://i.postimg.cc/qRHPBMmP/unnamed.png" },
+            { id: 10, name: "Algerian Culture Hoodie", price: 950, img: "https://i.postimg.cc/3rZnLTjD/IMG-5187.png" },
+            { id: 11, name: "Tunisia Culture Hoodie", price: 950, img: "https://i.postimg.cc/cCZv3NHh/IMG-5259.jpg" },
+            { id: 12, name: "Rewayet El 3omr Hoodie", price: 950, img: "https://i.postimg.cc/ZKC1zyjb/Untitled-design.png" },
+            { id: 13, name: "El Donya Raby3 T-Shirt", price: 550, img: "https://i.postimg.cc/J4FSGRPh/Untitled-design-(1).png" },
+            { id: 14, name: "El R7la Wl Fekr T-Shirt", price: 550, img: "https://i.postimg.cc/wMGX0HkZ/Untitled-design-2.png" },
+            { id: 15, name: "Zkrayat 3310 T-Shirt", price: 550, img: "https://i.postimg.cc/6qbrYRKJ/Untitled-design-(4).png" },
+            { id: 16, name: "Sa7et El Syf T-Shirt", price: 550, img: "https://i.postimg.cc/XYJgrdmV/Untitled-design-(5).png" },
+            { id: 17, name: "2skndereya T-Shirt", price: 550, img: "https://i.postimg.cc/RVgJBSCq/Untitled-design-(7).png" },
+            { id: 18, name: "Basic Core — Black", price: 450, img: "https://i.postimg.cc/CxRFZDkV/Untitled-design-(9).png" },
+            { id: 19, name: "Basic Core — Grey", price: 450, img: "https://i.postimg.cc/MH3CxPsq/Untitled-design-(10).png" },
+            { id: 20, name: "Basic Core — Pink", price: 450, img: "https://i.postimg.cc/G2qNJgng/Untitled-design-(11).png" },
+            { id: 21, name: "Basic Core — Blue", price: 450, img: "https://i.postimg.cc/5tJRcW4f/Untitled-design-(13).png" },
+            { id: 22, name: "Basic Core — Brown", price: 450, img: "https://i.postimg.cc/ncQRChry/Untitled-design-(12).png" }
+        ];
 
         function loadCheckout() {
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
+            const urlParams = new URLSearchParams(window.location.search);
+            const buyId = parseInt(urlParams.get('buyId'));
+
+            let checkoutItems = [];
+
+            if (buyId) {
+                const singleItem = products.find(p => p.id === buyId);
+                if (singleItem) checkoutItems = [{ ...singleItem, qty: 1 }];
+            } else {
+                checkoutItems = JSON.parse(localStorage.getItem('kingCart')) || [];
+            }
+
             const listContainer = document.getElementById('checkout-items-list');
             let subtotal = 0;
-            if (cart.length === 0) { listContainer.innerHTML = `<p style="color:var(--text-muted); font-size:0.9rem;">No items selected for checkout.</p>`; } 
-            else {
-                listContainer.innerHTML = cart.map(item => {
-                    const itemTotal = item.price * item.qty; subtotal += itemTotal;
-                    return `<div class="summary-item"><img src="${item.img || item.images[0]}" alt="${item.name}"><div style="flex:1;"><h4>${item.name}</h4><p>Size: ${item.size || 'One Size'}</p><p>Qty: ${item.qty}</p><p style="color:#0a0a0a; font-weight:700; margin-top:4px;">E£${itemTotal.toFixed(2)}</p></div></div>`;
-                }).join('');
-            }
-            calculateShipping(cart);
-            currentTotal = subtotal + shippingFee;
-            
-            if (appliedPromoCode && validPromoCodes[appliedPromoCode]) {
-                appliedDiscount = (currentTotal * validPromoCodes[appliedPromoCode].value) / 100;
-            } else {
-                appliedDiscount = 0;
-            }
-            
-            renderTotals();
-            if (window.google && window.google.payments) { onGooglePayLoaded(); }
-            renderPayPalButtons();
-            updateCartCount();
-        }
 
-        function renderTotals() {
-            document.getElementById('subtotal-val').innerText = `E£${currentTotal.toFixed(2)}`;
-            document.getElementById('shipping-val').innerText = `E£${shippingFee.toFixed(2)}`;
-            document.getElementById('shipping-reason').innerText = shippingReason ? `(${shippingReason})` : '';
-            
-            const discountRow = document.getElementById('discount-row');
-            if (appliedDiscount > 0) {
-                discountRow.style.display = 'flex';
-                document.getElementById('promo-code-display').innerText = appliedPromoCode;
-                document.getElementById('discount-val').innerText = `-E£${appliedDiscount.toFixed(2)}`;
-            } else {
-                discountRow.style.display = 'none';
-            }
-            
-            const finalTotal = currentTotal - appliedDiscount;
-            document.getElementById('total-val').innerText = `E£${finalTotal.toFixed(2)}`;
-            document.querySelector('#btn-cod').innerText = `Place Order (E£${finalTotal.toFixed(2)})`;
-        }
-
-        function applyPromoCode() {
-            const codeInput = document.getElementById('promo-code-input').value.trim().toUpperCase();
-            const messageEl = document.getElementById('promo-message');
-            
-            if (!codeInput) { messageEl.textContent = "Please enter a code."; messageEl.className = "promo-msg error"; return; }
-
-            let usedCodes = JSON.parse(localStorage.getItem('usedPromoCodes')) || [];
-            if (usedCodes.includes(codeInput)) {
-                messageEl.textContent = "Code already used";
-                messageEl.className = "promo-msg error";
+            if (checkoutItems.length === 0) {
+                listContainer.innerHTML = `<p style="color:var(--text-muted)">No items selected for checkout.</p>`;
                 return;
             }
 
-            if (!validPromoCodes[codeInput]) {
-                messageEl.textContent = "Invalid code";
-                messageEl.className = "promo-msg error";
-                return;
-            }
-
-            const promo = validPromoCodes[codeInput];
-            
-            const today = new Date();
-            const expiryDate = new Date(promo.expiry);
-            if (today > expiryDate) {
-                messageEl.textContent = "Expired";
-                messageEl.className = "promo-msg error";
-                return;
-            }
-
-            appliedPromoCode = codeInput;
-            appliedDiscount = (currentTotal * promo.value) / 100;
-            
-            messageEl.textContent = `${promo.value}% discount applied!`;
-            messageEl.className = "promo-msg success";
-            
-            renderTotals();
-        }
-
-        function renderPayPalButtons() {
-            if (!window.paypal) return;
-            const finalTotal = currentTotal - appliedDiscount;
-            const usdAmount = (finalTotal > 0 ? (finalTotal / 50) : 10.00).toFixed(2);
-
-            if (!paypalRendered.card && document.getElementById('card-button-container')) {
-                paypal.Buttons({
-                    fundingSource: paypal.FUNDING.CARD,
-                    style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: usdAmount,
-                                    currency_code: 'USD'
-                                }
-                            }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('Credit/Debit Card');
-                        });
-                    },
-                    onError: function(err) {
-                        console.error("PayPal Card Error:", err);
-                        showToast("Card payment failed: " + (err.message || "Please check your details"));
-                    }
-                }).render('#card-button-container');
-                paypalRendered.card = true;
-            }
-
-            if (!paypalRendered.paypal && document.getElementById('paypal-button-container')) {
-                paypal.Buttons({
-                    style: { layout: 'vertical', color: 'gold', shape: 'rect' },
-                    createOrder: function(data, actions) {
-                        if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        return actions.order.create({
-                            purchase_units: [{
-                                amount: {
-                                    value: usdAmount,
-                                    currency_code: 'USD'
-                                }
-                            }]
-                        });
-                    },
-                    onApprove: function(data, actions) {
-                        return actions.order.capture().then(function(details) {
-                            processPayment('PayPal');
-                        });
-                    },
-                    onError: function(err) {
-                        console.error("PayPal Error:", err);
-                        showToast("PayPal payment failed: " + (err.message || "Please try again"));
-                    }
-                }).render('#paypal-button-container');
-                paypalRendered.paypal = true;
-            }
-        }
-
-        function selectPayment(method) {
-            if (method === 'applepay') return;
-            document.querySelectorAll('.payment-tab').forEach(t => t.classList.remove('active'));
-            document.querySelectorAll('.payment-content').forEach(c => c.classList.remove('active'));
-            document.querySelector(`[onclick="selectPayment('${method}')"]`).classList.add('active');
-            document.getElementById(`content-${method}`).classList.add('active');
-        }
-
-        function processPayment(method) {
-            if (!validateAddressForm()) return;
-
-            const email = document.getElementById('email').value.trim();
-            const firstName = document.getElementById('first-name').value.trim();
-            const lastName = document.getElementById('last-name').value.trim();
-            const address = document.getElementById('address').value.trim();
-            const city = document.getElementById('city').value.trim();
-            const phone = document.getElementById('phone').value.trim();
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-
-            let subtotal = 0;
-            cart.forEach(item => subtotal += (item.price * item.qty));
-
-            const generatedOrderId = `#EK-${Math.floor(10000 + Math.random() * 90000)}`;
-            
-            const finalTotal = currentTotal - appliedDiscount;
-            const usdAmount = (finalTotal > 0 ? (finalTotal / 50) : 10.00).toFixed(2);
-
-            const lastOrder = {
-                orderId: generatedOrderId,
-                date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
-                customer: { name: `${firstName} ${lastName}`, phone: phone, address: address, city: city, email: email },
-                paymentMethod: method,
-                items: cart,
-                subtotal: `E£${subtotal.toFixed(2)}`,
-                shippingFee: `E£${shippingFee.toFixed(2)}`,
-                shippingReason: shippingReason,
-                discount: appliedDiscount > 0 ? `E£${appliedDiscount.toFixed(2)} (${appliedPromoCode})` : "E£0.00",
-                total: `E£${finalTotal.toFixed(2)}`
-            };
-
-            if (typeof emailjs !== 'undefined') {
-                emailjs.init({ publicKey: "BoqwuUpiG0TN-KnN2" });
-                let itemsHtml = cart.map(item => `• ${item.name} ${item.size ? '(Size: '+item.size+')' : ''} (Qty: ${item.qty}) — E£${(item.price * item.qty).toFixed(2)}`).join('<br>');
-                const templateParams = { to_email: email, to_name: firstName, order_id: generatedOrderId, payment_method: method, total_amount: `E£${finalTotal.toFixed(2)}`, items_list: itemsHtml };
-                emailjs.send("service_hzjom7o", "template_b31wo7r", templateParams).then((response) => { console.log("Email sent successfully!", response); showToast("Email receipt sent to your inbox!"); }).catch((err) => { console.error("Email failed:", err); showToast("Email failed: " + (err.text || "Check EmailJS dashboard")); });
-            }
-
-            if (typeof fbq !== 'undefined') { fbq('track', 'Purchase', {value: usdAmount, currency: 'USD'}); }
-            if (typeof gtag !== 'undefined') { gtag('event', 'purchase', { transaction_id: generatedOrderId, value: usdAmount, currency: 'USD' }); }
-
-            if (appliedPromoCode) {
-                let usedCodes = JSON.parse(localStorage.getItem('usedPromoCodes')) || [];
-                if (!usedCodes.includes(appliedPromoCode)) {
-                    usedCodes.push(appliedPromoCode);
-                    localStorage.setItem('usedPromoCodes', JSON.stringify(usedCodes));
-                }
-            }
-
-            const targetPhoneNumber = "213698756936"; 
-            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n*Order ID:* ${generatedOrderId}\n\n*Customer:* ${firstName} ${lastName}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}, ${city}\n*Payment Method:* ${method}\n`;
-            if (appliedPromoCode) { message += `*Promo Code:* ${appliedPromoCode} (Discount: E£${appliedDiscount.toFixed(2)})\n`; }
-            message += `\n📦 *ORDER ITEMS:*\n`;
-            cart.forEach((item, index) => {
+            listContainer.innerHTML = checkoutItems.map(item => {
                 const itemTotal = item.price * item.qty;
-                const sizeText = item.size ? ` [Size: ${item.size}]` : '';
-                message += `${index + 1}. ${item.name}${sizeText} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
-            });
-            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
-            if (appliedDiscount > 0) message += `*Discount:* -E£${appliedDiscount.toFixed(2)}\n`;
-            message += `*Total Amount:* E£${finalTotal.toFixed(2)}\n`;
+                subtotal += itemTotal;
+                return `
+                    <div class="summary-item">
+                        <div class="summary-item-left">
+                            <div class="item-img-wrapper">
+                                <img src="${item.img}" alt="${item.name}">
+                                <div class="item-badge">${item.qty}</div>
+                            </div>
+                            <div class="item-details">
+                                <h4>"${item.name}"</h4>
+                                <p>Medium</p>
+                            </div>
+                        </div>
+                        <div class="item-price">E£${itemTotal.toFixed(2)}</div>
+                    </div>
+                `;
+            }).join('');
 
-            localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
+            document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)}`;
+            document.getElementById('total-val').innerText = `EGP E£${subtotal.toFixed(2)}`;
+        }
+
+        function completeOrder() {
+            alert('Order placed successfully! Thank you for purchasing from THE EGYPTIAN KING.');
             localStorage.removeItem('kingCart');
-            if (typeof saveCartToBackend === 'function') saveCartToBackend();
-
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
-            showToast("Payment confirmed! Sending receipt to your email...");
-            setTimeout(() => { window.open(whatsappURL, '_blank'); renderReceiptModal(lastOrder); }, 800);
+            window.location.href = 'index.html';
         }
-
-        function renderReceiptModal(orderData) {
-            const overlay = document.getElementById('receipt-modal-overlay');
-            overlay.classList.add('active');
-            document.getElementById('node-order-id').innerText = orderData.orderId;
-            document.getElementById('node-order-date').innerText = orderData.date;
-            document.getElementById('node-payment-method').innerText = orderData.paymentMethod;
-            document.getElementById('node-customer-name').innerText = orderData.customer.name;
-            document.getElementById('node-customer-phone').innerText = orderData.customer.phone;
-            document.getElementById('node-customer-address').innerText = `${orderData.customer.address}, ${orderData.customer.city}`;
-            document.getElementById('node-total-price').innerText = orderData.total;
-            const itemsContainer = document.getElementById('node-items-list');
-            itemsContainer.innerHTML = orderData.items.map(item => `<div class="node-item-row"><span>${item.name} ${item.size ? `(Size: ${item.size})` : ''} (x${item.qty})</span><span>E£${(item.price * item.qty).toFixed(2)}</span></div>`).join('');
-            setTimeout(() => {
-                const receiptNode = document.getElementById('receipt-capture-node');
-                html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
-                    const imageDataUrl = canvas.toDataURL('image/png');
-                    const imgElement = document.getElementById('generated-receipt-img');
-                    imgElement.src = imageDataUrl;
-                    document.getElementById('receipt-loader').style.display = 'none';
-                    document.getElementById('receipt-content-box').style.display = 'block';
-                    document.getElementById('btn-save-receipt').onclick = function() { const a = document.createElement('a'); a.href = imageDataUrl; a.download = `EGYPTIAN_KING_RECEIPT_${orderData.orderId}.png`; a.click(); };
-                    document.getElementById('btn-copy-receipt').onclick = function() { canvas.toBlob(blob => { if (navigator.clipboard && window.ClipboardItem) { const item = new ClipboardItem({ 'image/png': blob }); navigator.clipboard.write([item]).then(() => { showToast('Receipt image copied to clipboard!'); }); } else { showToast('Copy to clipboard is not supported on this browser.'); } }); };
-                });
-            }, 1200);
-        }
-
-        function closeReceiptModal() { document.getElementById('receipt-modal-overlay').classList.remove('active'); window.location.href = 'index.html'; }
-        window.addEventListener('scroll', () => { const header = document.getElementById('main-header'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); });
 
         window.addEventListener('DOMContentLoaded', () => {
-            if (typeof firebase !== 'undefined' && firebase.auth) {
-                firebase.auth().onAuthStateChanged(user => {
-                    if (user) {
-                        firebase.firestore().collection('users').doc(user.uid).get().then(doc => {
-                            if (doc.exists) {
-                                const d = doc.data();
-                                document.getElementById('email').value = d.email || user.email || '';
-                                document.getElementById('first-name').value = (d.name || user.displayName || '').split(' ')[0] || '';
-                                document.getElementById('last-name').value = (d.name || user.displayName || '').split(' ').slice(1).join(' ') || '';
-                                document.getElementById('phone').value = d.phone || '';
-                                document.getElementById('address').value = d.address || '';
-                                document.getElementById('city').value = d.city || '';
-                            }
-                        }).catch(err => console.error("Error fetching user data:", err));
-                    }
-                    loadCheckout();
-                });
-            } else { loadCheckout(); }
+            loadCheckout();
+            const savedTheme = localStorage.getItem('selectedTheme') || 'neon';
+            if (savedTheme !== 'basic') {
+                document.body.setAttribute('data-theme', savedTheme);
+            }
         });
     </script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
-    <script src="auth.js"></script>
 </body>
 </html>
