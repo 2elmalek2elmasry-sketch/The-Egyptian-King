@@ -8,188 +8,79 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <style>
         :root {
-            --bg:#ffffff;
-            --bg-alt:#faf9f7;
-            --text-main:#0a0a0a;
-            --text-muted:#6b6b6b;
-            --accent:#bfa15f;
-            --accent-dark:#9a7f3e;
-            --border:#e8e6e1;
-            --btn-bg:#0a0a0a;
-            --btn-text:#fff;
-            --sale:#c8102e;
+            --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b;
+            --accent:#bfa15f; --accent-dark:#9a7f3e; --border:#e8e6e1; --btn-bg:#0a0a0a;
+            --btn-text:#fff; --sale:#c8102e;
         }
-
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
         html { scroll-behavior:smooth; -webkit-text-size-adjust: 100%; }
         body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
         a { text-decoration: none; color: inherit; }
-
-        /* ===== Toast ===== */
         .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
         .toast-message.show { opacity:1; transform:translateY(0); }
-
-        /* ===== Header ===== */
-        header {
-            background:rgba(255,255,255,0.98);
-            backdrop-filter:blur(20px);
-            -webkit-backdrop-filter:blur(20px);
-            border-bottom:1px solid var(--border);
-            padding:1.1rem clamp(1.2rem,5vw,3.5rem);
-            position:sticky;
-            top:0;
-            z-index:100;
-            display:flex;
-            justify-content:space-between;
-            align-items:center;
-            transition:padding 0.3s ease;
-        }
+        header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; transition:padding 0.3s ease; }
         header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
-        
         .nav-left { flex: 1; }
-        
         .brand-logo { flex: 0 0 auto; text-decoration: none; display: flex; justify-content: center; align-items: center; }
         .logo-img { height: 26px; width: auto; object-fit: contain; transition: height 0.3s ease, opacity 0.3s ease; }
         header.scrolled .logo-img { height: 22px; }
-        .brand-logo:hover .logo-img { opacity: 0.8; }
-
         .nav-actions { flex: 1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content: flex-end; }
         .icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; transition:opacity 0.3s, transform 0.3s; }
         .icon-btn:hover { opacity:0.65; transform:translateY(-1px); }
         .icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
         .cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; padding:0 4px; border-radius:50%; display:flex; align-items:center; justify-content:center; font-family:'Inter',sans-serif; }
-
         .dropdown-wrapper { position:relative; }
         .menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; transition:transform 0.3s; }
         .menu-toggle-btn:hover { transform:rotate(90deg); }
-
         .dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; text-align:left; opacity:0; transform:translateY(-10px); transition:opacity 0.3s, transform 0.3s; }
         .dropdown-menu.active { display:flex; opacity:1; transform:translateY(0); }
         .dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
         .dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
-        .dropdown-title { font-family:'Inter',sans-serif; font-weight:800; font-size:0.7rem; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+        .dropdown-title { font-family:'Inter',sans-serif; font-size:0.7rem; font-weight:800; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
         .dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
         .dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; transition:color 0.3s, padding-left 0.3s; display:inline-block; }
         .dropdown-links a:hover { color:var(--accent); padding-left:6px; }
         .dropdown-text { font-size:0.78rem; color:#888; line-height:1.6; margin-bottom:0.85rem; }
 
-        /* ===== Cart Layout ===== */
-        .cart-layout {
-            display: grid;
-            grid-template-columns: 1fr 380px;
-            gap: 4rem;
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 4rem clamp(1.2rem, 5vw, 3.5rem);
-        }
-
-        .cart-main h1 {
-            font-family: 'Inter', sans-serif;
-            font-size: clamp(1.8rem, 4vw, 2.4rem);
-            font-weight: 900;
-            letter-spacing: 1px;
-            margin-bottom: 2.5rem;
-            padding-bottom: 1.5rem;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .cart-item {
-            display: flex;
-            gap: 1.5rem;
-            padding: 2rem 0;
-            border-bottom: 1px solid var(--border);
-        }
+        .cart-layout { display: grid; grid-template-columns: 1fr 380px; gap: 4rem; max-width: 1400px; margin: 0 auto; padding: 4rem clamp(1.2rem, 5vw, 3.5rem); }
+        .cart-main h1 { font-family: 'Inter', sans-serif; font-size: clamp(1.8rem, 4vw, 2.4rem); font-weight: 900; letter-spacing: 1px; margin-bottom: 2.5rem; padding-bottom: 1.5rem; border-bottom: 1px solid var(--border); }
+        .cart-item { display: flex; gap: 1.5rem; padding: 2rem 0; border-bottom: 1px solid var(--border); }
         .cart-item:first-child { padding-top: 0; }
-        
-        .cart-img {
-            width: 110px;
-            height: 130px;
-            border-radius: 4px;
-            object-fit: cover;
-            background: var(--bg-alt);
-        }
+        .cart-img { width: 110px; height: 130px; border-radius: 4px; object-fit: cover; background: var(--bg-alt); }
         .cart-info { flex: 1; display: flex; flex-direction: column; }
         .cart-info h3 { font-size: 1rem; font-weight: 700; margin-bottom: 0.5rem; letter-spacing: 0.3px; transition: color 0.3s; }
         .cart-info h3:hover { color: var(--accent); }
         .cart-price { font-size: 0.9rem; color: var(--text-muted); font-weight: 600; margin-bottom: 1.5rem; }
-        
         .cart-actions { display: flex; justify-content: space-between; align-items: center; margin-top: auto; }
-        .qty-controls {
-            display: inline-flex; align-items: center; gap: 1.5rem;
-            border: 1px solid var(--border); border-radius: 2px;
-            padding: 0.4rem 1rem;
-        }
+        .qty-controls { display: inline-flex; align-items: center; gap: 1.5rem; border: 1px solid var(--border); border-radius: 2px; padding: 0.4rem 1rem; }
         .qty-btn { background: none; border: none; font-size: 1.1rem; font-weight: 700; cursor: pointer; color: #0a0a0a; transition: transform 0.2s; }
         .qty-btn:hover { color: var(--accent); transform: scale(1.2); }
         .qty-val { font-weight: 700; font-size: 0.9rem; min-width: 15px; text-align: center; }
-        
-        .btn-remove {
-            background: none; border: none; color: var(--text-muted);
-            font-size: 0.72rem; font-weight: 700; cursor: pointer;
-            text-transform: uppercase; letter-spacing: 1.5px;
-            transition: color 0.3s;
-        }
+        .btn-remove { background: none; border: none; color: var(--text-muted); font-size: 0.72rem; font-weight: 700; cursor: pointer; text-transform: uppercase; letter-spacing: 1.5px; transition: color 0.3s; }
         .btn-remove:hover { color: var(--sale); }
 
-        /* ===== Summary ===== */
-        .cart-summary {
-            background: var(--bg-alt);
-            padding: 2.5rem;
-            border-radius: 4px;
-            border: 1px solid var(--border);
-            height: fit-content;
-            position: sticky;
-            top: 100px;
-        }
-        .summary-title {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.2rem;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 2rem;
-            padding-bottom: 1rem;
-            border-bottom: 1px solid var(--border);
-        }
-        .summary-row {
-            display: flex; justify-content: space-between;
-            margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-muted);
-        }
-        .summary-row.total {
-            font-size: 1.3rem; font-weight: 800; color: var(--text-main);
-            border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1.5rem;
-        }
-        .btn-checkout {
-            width: 100%; background: var(--btn-bg); color: #fff;
-            padding: 1.1rem; border: 1px solid var(--btn-bg); border-radius: 2px;
-            font-weight: 700; font-size: 0.78rem; letter-spacing: 2px;
-            text-transform: uppercase; cursor: pointer; margin-top: 2rem;
-            transition: all 0.35s ease; position: relative; overflow: hidden;
-        }
+        .cart-summary { background: var(--bg-alt); padding: 2.5rem; border-radius: 4px; border: 1px solid var(--border); height: fit-content; position: sticky; top: 100px; }
+        .summary-title { font-family: 'Inter', sans-serif; font-size: 1.2rem; font-weight: 900; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 2rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
+        .summary-row { display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 0.9rem; color: var(--text-muted); }
+        .summary-row.total { font-size: 1.3rem; font-weight: 800; color: var(--text-main); border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 1.5rem; }
+        .btn-checkout { width: 100%; background: var(--btn-bg); color: #fff; padding: 1.1rem; border: 1px solid var(--btn-bg); border-radius: 2px; font-weight: 700; font-size: 0.78rem; letter-spacing: 2px; text-transform: uppercase; cursor: pointer; margin-top: 2rem; transition: all 0.35s ease; }
         .btn-checkout:hover { background: var(--accent); border-color: var(--accent); transform: translateY(-2px); }
-        .summary-note {
-            font-size: 0.72rem; color: var(--text-muted); text-align: center;
-            margin-top: 1.5rem; letter-spacing: 0.5px;
+        .summary-note { font-size: 0.72rem; color: var(--text-muted); text-align: center; margin-top: 1.5rem; letter-spacing: 0.5px; }
+        
+        /* NEW: Promo info note in cart */
+        .promo-info-note { 
+            background: #fff; border: 1px dashed var(--accent); padding: 0.75rem; 
+            text-align: center; font-size: 0.75rem; color: var(--accent); 
+            border-radius: 2px; margin-bottom: 1.5rem; font-weight: 600; letter-spacing: 0.5px; 
         }
 
-        /* ===== Empty State ===== */
-        .empty-state {
-            text-align: center; padding: 6rem 1rem;
-            background: var(--bg-alt); border-radius: 4px;
-            border: 1px solid var(--border);
-        }
+        .empty-state { text-align: center; padding: 6rem 1rem; background: var(--bg-alt); border-radius: 4px; border: 1px solid var(--border); }
         .empty-state h2 { font-family: 'Inter', sans-serif; font-size: 1.8rem; margin-bottom: 1rem; font-weight: 900; }
         .empty-state p { color: var(--text-muted); margin-bottom: 2rem; font-size: 0.9rem; letter-spacing: 1px; }
-        .empty-state a {
-            display: inline-block; background: var(--btn-bg); color: #fff;
-            padding: 1.1rem 2.8rem; text-decoration: none; font-weight: 700;
-            font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px;
-            border-radius: 2px; transition: all 0.3s ease;
-        }
+        .empty-state a { display: inline-block; background: var(--btn-bg); color: #fff; padding: 1.1rem 2.8rem; text-decoration: none; font-weight: 700; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 2px; border-radius: 2px; transition: all 0.3s ease; }
         .empty-state a:hover { background: var(--accent); transform: translateY(-2px); }
 
-        /* ===== Footer ===== */
         footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; margin-top: 4rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
         .footer-grid h5 { font-size: 0.78rem; font-weight: 800; text-transform: uppercase; margin-bottom: 1.5rem; letter-spacing: 2px; color: #fff; }
@@ -205,12 +96,10 @@
         .payment-icons { display: flex; gap: 8px; align-items: center; }
         .payment-icon { background: #fff; color: #0a0a0a; padding: 4px 8px; border-radius: 3px; font-size: 0.6rem; font-weight: 800; letter-spacing: 0.5px; }
 
-        /* ===== Back to Top ===== */
         .back-to-top { position: fixed; bottom: 2rem; right: 2rem; width: 48px; height: 48px; background: #0a0a0a; color: #fff; border: none; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; opacity: 0; visibility: hidden; transition: all 0.3s; z-index: 90; box-shadow: 0 10px 30px rgba(0,0,0,0.25); }
         .back-to-top.visible { opacity: 1; visibility: visible; }
         .back-to-top:hover { background: var(--accent); transform: translateY(-3px); }
 
-        /* ===== Responsive ===== */
         @media (max-width: 1024px) {
             .cart-layout { grid-template-columns: 1fr; gap: 3rem; }
             .cart-summary { position: static; max-width: 500px; margin: 0 auto; width: 100%; }
@@ -234,55 +123,25 @@
 </head>
 <body>
     <div class="toast-container"></div>
-
-    <!-- Header -->
     <header id="main-header">
         <div class="nav-left"></div>
-        <a href="index.html" class="brand-logo">
-            <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
-        </a>
-
+        <a href="index.html" class="brand-logo"><img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img"></a>
         <div class="nav-actions">
             <a href="cart.html" class="icon-btn" aria-label="Cart">
                 <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
                 <span class="cart-count" id="nav-cart-count">0</span>
             </a>
-
             <div class="dropdown-wrapper">
-                <button class="menu-toggle-btn" onclick="toggleDropdown()" aria-label="Toggle navigation menu">☰</button>
+                <button class="menu-toggle-btn" onclick="toggleDropdown()">☰</button>
                 <div class="dropdown-menu" id="dropdown-menu">
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Navigation</div>
-                        <ul class="dropdown-links">
-                            <li><a href="index.html">Home</a></li>
-                            <li><a href="shop.html">Shop All</a></li>
-                            <li><a href="track.html">Track Order</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">Support</div>
-                        <ul class="dropdown-links">
-                            <li><a href="shop.html">Shipping Info</a></li>
-                            <li><a href="shop.html">Returns & Exchanges</a></li>
-                            <li><a href="shop.html">FAQ</a></li>
-                            <li><a href="shop.html">Size Guide</a></li>
-                        </ul>
-                    </div>
-                    <div class="dropdown-section">
-                        <div class="dropdown-title">The Egyptian King</div>
-                        <p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p>
-                        <ul class="dropdown-links">
-                            <li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li>
-                            <li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li>
-                            <li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li>
-                        </ul>
-                    </div>
+                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li><li><a href="track.html">Track Order</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">Support</div><ul class="dropdown-links"><li><a href="shop.html">Shipping Info</a></li><li><a href="shop.html">Returns & Exchanges</a></li><li><a href="shop.html">FAQ</a></li><li><a href="shop.html">Size Guide</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">The Egyptian King</div><p class="dropdown-text">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p><ul class="dropdown-links"><li><a href="https://www.instagram.com/the_egyptian_king10">Instagram</a></li><li><a href="https://www.facebook.com/the_egyptian_king10">Facebook</a></li><li><a href="https://x.com/the_egyptian___?s=11">Twitter</a></li></ul></div>
                 </div>
             </div>
         </div>
     </header>
 
-    <!-- Cart Layout -->
     <div class="cart-layout">
         <div class="cart-main">
             <h1>Your Shopping Bag</h1>
@@ -291,6 +150,10 @@
         <div class="cart-sidebar">
             <div class="cart-summary" id="summary-box" style="display:none;">
                 <h3 class="summary-title">Order Summary</h3>
+                
+                <!-- NEW PROMO NOTE -->
+                <div class="promo-info-note">You can use codes in checkout to get discounts</div>
+                
                 <div class="summary-row"><span>Subtotal</span><span id="subtotal-val">E£0.00</span></div>
                 <div class="summary-row"><span>Shipping</span><span>Calculated at checkout</span></div>
                 <div class="summary-row total"><span>Total</span><span id="total-val">E£0.00</span></div>
@@ -300,7 +163,6 @@
         </div>
     </div>
 
-    <!-- Footer -->
     <footer>
         <div class="footer-grid">
             <div class="footer-brand">
@@ -313,100 +175,45 @@
                     <a href="#" aria-label="TikTok">TT</a>
                 </div>
             </div>
-            <div>
-                <h5>Shop</h5>
-                <ul>
-                    <li><a href="shop.html">All Products</a></li>
-                    <li><a href="shop.html">Hoodies</a></li>
-                    <li><a href="shop.html">New Arrivals</a></li>
-                    <li><a href="shop.html">Best Sellers</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Support</h5>
-                <ul>
-                    <li><a href="track.html">Track Order</a></li>
-                    <li><a href="shop.html">Shipping Info</a></li>
-                    <li><a href="shop.html">Returns</a></li>
-                    <li><a href="shop.html">FAQ</a></li>
-                </ul>
-            </div>
-            <div>
-                <h5>Company</h5>
-                <ul>
-                    <li><a href="#">Our Story</a></li>
-                    <li><a href="#">Sustainability</a></li>
-                    <li><a href="#">Careers</a></li>
-                    <li><a href="#">Contact</a></li>
-                </ul>
-            </div>
+            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="shop.html">Hoodies</a></li><li><a href="shop.html">New Arrivals</a></li><li><a href="shop.html">Best Sellers</a></li></ul></div>
+            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="terms.html">Shipping Info</a></li><li><a href="terms.html">Returns</a></li><li><a href="terms.html">FAQ</a></li></ul></div>
+            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Sustainability</a></li><li><a href="#">Careers</a></li><li><a href="#">Contact</a></li></ul></div>
         </div>
         <div class="footer-bottom">
             <span class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved. WB 5.4</span>
-            <div class="payment-icons">
-                <span class="payment-icon">VISA</span>
-                <span class="payment-icon">MC</span>
-                <span class="payment-icon">AMEX</span>
-                <span class="payment-icon">PAYPAL</span>
-                <span class="payment-icon">APPLE</span>
-            </div>
+            <div class="payment-icons"><span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">APPLE</span></div>
         </div>
     </footer>
 
     <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})" aria-label="Back to top">↑</button>
 
     <script>
-        // ===== Dropdown =====
         function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
-        window.addEventListener('click', function(e) {
-            const wrapper = document.querySelector('.dropdown-wrapper');
-            if (wrapper && !wrapper.contains(e.target)) { document.getElementById('dropdown-menu').classList.remove('active'); }
-        });
-
-        // ===== Toast =====
-        function showToast(message) {
-            let container = document.querySelector('.toast-container');
-            const toast = document.createElement('div');
-            toast.className = 'toast-message';
-            toast.innerText = message;
-            container.appendChild(toast);
-            void toast.offsetWidth;
-            toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
-        }
+        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) { document.getElementById('dropdown-menu').classList.remove('active'); } });
+        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); void toast.offsetWidth; toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000); }
         window.showToast = showToast;
 
-        // ===== Cart Logic =====
         function renderCart() {
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             const container = document.getElementById('cart-container');
             const summaryBox = document.getElementById('summary-box');
-            
             if (!cart || cart.length === 0) {
-                container.innerHTML = `
-                    <div class="empty-state">
-                        <h2>Your Bag is Empty</h2>
-                        <p>Explore our collection and add some pieces to your collection.</p>
-                        <a href="shop.html">Continue Shopping</a>
-                    </div>
-                `;
+                container.innerHTML = `<div class="empty-state"><h2>Your Bag is Empty</h2><p>Explore our collection and add some pieces to your collection.</p><a href="shop.html">Continue Shopping</a></div>`;
                 summaryBox.style.display = 'none';
                 return;
             }
-            
             summaryBox.style.display = 'block';
             let subtotal = 0;
-            
             container.innerHTML = cart.map((item, index) => {
                 const itemPrice = Number(item.price) || 0;
                 const itemQty = Number(item.qty) || 1;
                 subtotal += itemPrice * itemQty;
                 return `
                     <div class="cart-item">
-                        <img src="${item.img}" alt="${item.name}" class="cart-img">
+                        <img src="${item.img || item.images[0]}" alt="${item.name}" class="cart-img">
                         <div class="cart-info">
                             <h3>${item.name}</h3>
-                            <p class="cart-price">E£${itemPrice.toFixed(2)} EGP</p>
+                            <p class="cart-price">E£${itemPrice.toFixed(2)} EGP ${item.size ? `(Size: ${item.size})` : ''}</p>
                             <div class="cart-actions">
                                 <div class="qty-controls">
                                     <button class="qty-btn" onclick="changeQty(${index}, -1)">-</button>
@@ -419,7 +226,6 @@
                     </div>
                 `;
             }).join('');
-            
             document.getElementById('subtotal-val').innerText = `E£${subtotal.toFixed(2)} EGP`;
             document.getElementById('total-val').innerText = `E£${subtotal.toFixed(2)} EGP`;
         }
@@ -428,13 +234,9 @@
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             if (!cart[index]) return;
             cart[index].qty = (cart[index].qty || 1) + delta;
-            if (cart[index].qty <= 0) { 
-                cart.splice(index, 1); 
-                showToast('Item removed from bag.'); 
-            }
+            if (cart[index].qty <= 0) { cart.splice(index, 1); showToast('Item removed from bag.'); }
             localStorage.setItem('kingCart', JSON.stringify(cart));
-            renderCart(); 
-            updateCartCount();
+            renderCart(); updateCartCount();
             if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
@@ -442,57 +244,31 @@
             let cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             cart.splice(index, 1);
             localStorage.setItem('kingCart', JSON.stringify(cart));
-            renderCart(); 
-            updateCartCount();
+            renderCart(); updateCartCount();
             showToast('Item removed from bag.');
             if (typeof saveCartToBackend === 'function') saveCartToBackend();
         }
 
         function checkout() {
-            // --- ANALYTICS & PIXEL TRACKING ---
             const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
             let totalValue = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
             if (typeof fbq !== 'undefined') fbq('track', 'InitiateCheckout', { value: totalValue, currency: 'USD' });
             if (typeof gtag !== 'undefined') gtag('event', 'begin_checkout', { value: totalValue, currency: 'USD' });
-
             showToast('Redirecting to secure checkout...');
             setTimeout(() => { window.location.href = 'checkout.html'; }, 1000);
         }
 
-        function updateCartCount() {
-            const cart = JSON.parse(localStorage.getItem('kingCart')) || [];
-            const count = cart.reduce((sum, item) => sum + (item.qty || 1), 0);
-            document.getElementById('nav-cart-count').innerText = count;
-        }
-
-        // ===== Scroll Effects =====
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('main-header');
-            const backTop = document.getElementById('back-to-top');
-            if (window.scrollY > 50) header.classList.add('scrolled');
-            else header.classList.remove('scrolled');
-            if (window.scrollY > 600) backTop.classList.add('visible');
-            else backTop.classList.remove('visible');
-        });
-
-        window.addEventListener('DOMContentLoaded', () => { 
-            renderCart(); 
-            updateCartCount(); 
-        });
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; document.getElementById('nav-cart-count').innerText = cart.reduce((sum, item) => sum + (item.qty || 1), 0); }
+        window.addEventListener('scroll', () => { const header = document.getElementById('main-header'); const backTop = document.getElementById('back-to-top'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); if (window.scrollY > 600) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
+        window.addEventListener('DOMContentLoaded', () => { renderCart(); updateCartCount(); });
     </script>
 
     <!-- Receipt Modal -->
     <div id="receipt-modal-overlay" class="receipt-overlay">
         <div class="receipt-modal-card">
-            <div id="receipt-loader" class="receipt-loader-box">
-                <div class="spinner"></div>
-                <h3>LOADING YOUR RECEIPT...</h3>
-                <p>Generating your official order confirmation image.</p>
-            </div>
+            <div id="receipt-loader" class="receipt-loader-box"><div class="spinner"></div><h3>LOADING YOUR RECEIPT...</h3><p>Generating your official order confirmation image.</p></div>
             <div id="receipt-content-box" class="receipt-content-box" style="display: none;">
-                <div class="receipt-preview-wrapper">
-                    <img id="generated-receipt-img" src="" alt="Order Receipt">
-                </div>
+                <div class="receipt-preview-wrapper"><img id="generated-receipt-img" src="" alt="Order Receipt"></div>
                 <div class="receipt-actions">
                     <button id="btn-save-receipt" class="btn-receipt primary">Save Receipt</button>
                     <button id="btn-copy-receipt" class="btn-receipt secondary">Copy Receipt</button>
@@ -501,39 +277,20 @@
             </div>
         </div>
     </div>
-
     <div id="receipt-capture-node" class="receipt-node">
         <div class="watermark-bg">THE EGYPTIAN KING</div>
-        <div class="node-header">
-            <h2>THE EGYPTIAN KING</h2>
-            <p class="node-tagline">OFFICIAL ORDER RECEIPT</p>
-        </div>
+        <div class="node-header"><h2>THE EGYPTIAN KING</h2><p class="node-tagline">OFFICIAL ORDER RECEIPT</p></div>
         <hr class="node-divider">
-        <div class="node-meta">
-            <div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div>
-            <div><strong>Date:</strong> <span id="node-order-date">---</span></div>
-            <div><strong>Payment:</strong> <span id="node-payment-method">---</span></div>
-        </div>
-        <div class="node-customer">
-            <p><strong>Customer:</strong> <span id="node-customer-name">---</span></p>
-            <p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p>
-            <p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p>
-        </div>
+        <div class="node-meta"><div><strong>Order ID:</strong> <span id="node-order-id">#EK-00000</span></div><div><strong>Date:</strong> <span id="node-order-date">---</span></div><div><strong>Payment:</strong> <span id="node-payment-method">---</span></div></div>
+        <div class="node-customer"><p><strong>Customer:</strong> <span id="node-customer-name">---</span></p><p><strong>Phone:</strong> <span id="node-customer-phone">---</span></p><p><strong>Shipping:</strong> <span id="node-customer-address">---</span></p></div>
         <hr class="node-divider">
         <div id="node-items-list" class="node-items"></div>
         <hr class="node-divider">
-        <div class="node-total">
-            <span>TOTAL PAID:</span>
-            <span id="node-total-price">E£0.00</span>
-        </div>
-        <div class="node-footer">
-            <p>Thank you for shopping with THE EGYPTIAN KING.</p>
-            <p>Keep this receipt image for delivery verification.</p>
-        </div>
+        <div class="node-total"><span>TOTAL PAID:</span><span id="node-total-price">E£0.00</span></div>
+        <div class="node-footer"><p>Thank you for shopping with THE EGYPTIAN KING.</p><p>Keep this receipt image for delivery verification.</p></div>
     </div>
-
     <style>
-    .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; justify-content:center; align-items:center; z-index:99999; padding: 1rem; }
+    .receipt-overlay { position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.85); backdrop-filter:blur(8px); display:none; justify-content:center; align-items:center; z-index:99999; }
     .receipt-overlay.active { display:flex; }
     .receipt-modal-card { background:#fff; width:100%; max-width:480px; border-radius:12px; padding:2rem; box-shadow:0 20px 50px rgba(0,0,0,0.5); text-align:center; max-height:90vh; overflow-y:auto; }
     .receipt-loader-box { display:flex; flex-direction:column; align-items:center; gap:1rem; padding:2rem 0; }
@@ -556,17 +313,14 @@
     .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
     .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
     </style>
-
     <script>
         function checkAndRenderOrderReceipt() {
             const urlParams = new URLSearchParams(window.location.search);
             if (!urlParams.has('orderSuccess')) return;
             const lastOrder = JSON.parse(localStorage.getItem('lastCompletedOrder'));
             if (!lastOrder) return;
-
             const overlay = document.getElementById('receipt-modal-overlay');
             overlay.classList.add('active');
-
             document.getElementById('node-order-id').innerText = lastOrder.orderId;
             document.getElementById('node-order-date').innerText = lastOrder.date;
             document.getElementById('node-payment-method').innerText = lastOrder.paymentMethod;
@@ -574,15 +328,8 @@
             document.getElementById('node-customer-phone').innerText = lastOrder.customer.phone;
             document.getElementById('node-customer-address').innerText = `${lastOrder.customer.address}, ${lastOrder.customer.city}`;
             document.getElementById('node-total-price').innerText = lastOrder.total;
-
             const itemsContainer = document.getElementById('node-items-list');
-            itemsContainer.innerHTML = lastOrder.items.map(item => `
-                <div class="node-item-row">
-                    <span>${item.name} ${item.size ? `(Size: ${item.size})` : ''} (x${item.qty})</span>
-                    <span>E£${(item.price * item.qty).toFixed(2)}</span>
-                </div>
-            `).join('');
-
+            itemsContainer.innerHTML = lastOrder.items.map(item => `<div class="node-item-row"><span>${item.name} ${item.size ? `(Size: ${item.size})` : ''} (x${item.qty})</span><span>E£${(item.price * item.qty).toFixed(2)}</span></div>`).join('');
             setTimeout(() => {
                 const receiptNode = document.getElementById('receipt-capture-node');
                 html2canvas(receiptNode, { scale: 2, backgroundColor: '#ffffff' }).then(canvas => {
@@ -591,39 +338,14 @@
                     imgElement.src = imageDataUrl;
                     document.getElementById('receipt-loader').style.display = 'none';
                     document.getElementById('receipt-content-box').style.display = 'block';
-
-                    document.getElementById('btn-save-receipt').onclick = function() {
-                        const a = document.createElement('a');
-                        a.href = imageDataUrl;
-                        a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`;
-                        a.click();
-                    };
-
-                    document.getElementById('btn-copy-receipt').onclick = function() {
-                        canvas.toBlob(blob => {
-                            if (navigator.clipboard && window.ClipboardItem) {
-                                const item = new ClipboardItem({ 'image/png': blob });
-                                navigator.clipboard.write([item]).then(() => {
-                                    showToast('Receipt image copied to clipboard!');
-                                });
-                            } else {
-                                showToast('Copy to clipboard is not supported on this browser.');
-                            }
-                        });
-                    };
+                    document.getElementById('btn-save-receipt').onclick = function() { const a = document.createElement('a'); a.href = imageDataUrl; a.download = `EGYPTIAN_KING_RECEIPT_${lastOrder.orderId}.png`; a.click(); };
+                    document.getElementById('btn-copy-receipt').onclick = function() { canvas.toBlob(blob => { if (navigator.clipboard && window.ClipboardItem) { const item = new ClipboardItem({ 'image/png': blob }); navigator.clipboard.write([item]).then(() => { showToast('Receipt image copied to clipboard!'); }); } else { showToast('Copy to clipboard is not supported on this browser.'); } }); };
                 });
             }, 1200);
         }
-
-        function closeReceiptModal() {
-            document.getElementById('receipt-modal-overlay').classList.remove('active');
-            window.history.replaceState({}, document.title, window.location.pathname);
-        }
-
+        function closeReceiptModal() { document.getElementById('receipt-modal-overlay').classList.remove('active'); window.history.replaceState({}, document.title, window.location.pathname); }
         window.addEventListener('DOMContentLoaded', checkAndRenderOrderReceipt);
     </script>
-    
-    <!-- Firebase SDKs & Auth Script -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
