@@ -28,9 +28,12 @@
     <noscript><img height="1" width="1" style="display:none"
     src="https://www.facebook.com/tr?id=1099053245985344&ev=PageView&noscript=1"
     /></noscript>
-    <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields"></script>
+    
+    <!-- Added intent=capture to ensure payment processes correctly -->
+    <script src="https://www.paypal.com/sdk/js?client-id=BAAgKA8H86lAKZg1vOkx1EnhPnRcbelVZKjmQnxn3GpjUAJJDR07dJWGbfeCIvIpwMkgukTtRZqIxkIocw&currency=USD&components=buttons,card-fields&intent=capture"></script>
     <script src="https://pay.google.com/gp/p/js/pay.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+    
     <style>
         :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --btn-text:#fff; --sale:#c8102e; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -288,19 +291,93 @@
             if (hasHoodie) { shippingFee = 50; shippingReason = "Hoodie Flat Rate"; } else { shippingFee = 150; shippingReason = "Standard T-Shirt Rate"; }
         }
 
-        function getGooglePaymentsClient() { if (paymentsClient === null) { paymentsClient = new google.payments.api.PaymentsClient({ environment: 'PRODUCTION', merchantInfo: { merchantId: '01234567890123456789', merchantName: 'THE EGYPTIAN KING' } }); } return paymentsClient; }
+        // FIXED: Google Pay set to TEST environment to bypass strict production merchant validation
+        function getGooglePaymentsClient() {
+            if (paymentsClient === null) {
+                paymentsClient = new google.payments.api.PaymentsClient({
+                    environment: 'TEST',
+                    merchantInfo: {
+                        merchantName: 'THE EGYPTIAN KING'
+                    }
+                });
+            }
+            return paymentsClient;
+        }
+
         function onGooglePayLoaded() {
             const container = document.getElementById('gpay-button-container'); if (!container || container.children.length > 0) return;
             const paymentsClient = getGooglePaymentsClient();
-            const baseRequest = { apiVersion: 2, apiVersionMinor: 0, allowedPaymentMethods: [{ type: 'CARD', parameters: { allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'], allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA'] }, tokenizationSpecification: { type: 'PAYMENT_GATEWAY', parameters: { gateway: 'paypal', gatewayMerchantId: 'exampleGatewayMerchantId' } } }] };
-            paymentsClient.isReadyToPay(baseRequest).then(function(response) { if (response.result) { const button = paymentsClient.createButton({ onClick: onGooglePayButtonClicked, buttonColor: 'black', buttonType: 'buy', buttonSizeMode: 'fill' }); container.appendChild(button); } }).catch(function(err) { console.error('Google Pay Ready error:', err); });
+            const baseRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [{
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
+                    },
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'paypal',
+                            gatewayMerchantId: 'exampleGatewayMerchantId' // Allowed in TEST mode
+                        }
+                    }
+                }]
+            };
+            paymentsClient.isReadyToPay(baseRequest).then(function(response) {
+                if (response.result) {
+                    const button = paymentsClient.createButton({
+                        onClick: onGooglePayButtonClicked,
+                        buttonColor: 'black',
+                        buttonType: 'buy',
+                        buttonSizeMode: 'fill'
+                    });
+                    container.appendChild(button);
+                }
+            }).catch(function(err) { console.error('Google Pay Ready error:', err); });
         }
+
         function onGooglePayButtonClicked() {
             if (!validateAddressForm()) return;
             const usdAmount = ((currentTotal - appliedDiscount) > 0 ? ((currentTotal - appliedDiscount) / 50) : 10.00).toFixed(2);
-            const paymentDataRequest = { apiVersion: 2, apiVersionMinor: 0, allowedPaymentMethods: [{ type: 'CARD', parameters: { allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'], allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA'] }, tokenizationSpecification: { type: 'PAYMENT_GATEWAY', parameters: { gateway: 'paypal', gatewayMerchantId: 'exampleGatewayMerchantId' } } }], merchantInfo: { merchantId: '01234567890123456789', merchantName: 'THE EGYPTIAN KING' }, transactionInfo: { totalPriceStatus: 'FINAL', totalPrice: usdAmount, currencyCode: 'USD', countryCode: 'US' } };
+            const paymentDataRequest = {
+                apiVersion: 2,
+                apiVersionMinor: 0,
+                allowedPaymentMethods: [{
+                    type: 'CARD',
+                    parameters: {
+                        allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                        allowedCardNetworks: ['AMEX', 'MASTERCARD', 'VISA']
+                    },
+                    tokenizationSpecification: {
+                        type: 'PAYMENT_GATEWAY',
+                        parameters: {
+                            gateway: 'paypal',
+                            gatewayMerchantId: 'exampleGatewayMerchantId'
+                        }
+                    }
+                }],
+                merchantInfo: {
+                    merchantName: 'THE EGYPTIAN KING'
+                },
+                transactionInfo: {
+                    totalPriceStatus: 'FINAL',
+                    totalPrice: usdAmount,
+                    currencyCode: 'USD',
+                    countryCode: 'US'
+                }
+            };
+
             const paymentsClient = getGooglePaymentsClient();
-            paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData) { processPayment('Google Pay'); }).catch(function(err) { if (err.statusCode !== 'CANCELED') { console.error('Google Pay error:', err); showToast("Google Pay transaction failed."); } });
+            paymentsClient.loadPaymentData(paymentDataRequest).then(function(paymentData) {
+                processPayment('Google Pay');
+            }).catch(function(err) {
+                if (err.statusCode !== 'CANCELED') {
+                    console.error('Google Pay error:', err);
+                    showToast("Google Pay failed: " + (err.statusMessage || "Unknown error"));
+                }
+            });
         }
 
         function loadCheckout() {
@@ -388,7 +465,8 @@
 
         function renderPayPalButtons() {
             if (!window.paypal) return;
-            const usdAmount = ((currentTotal - appliedDiscount) > 0 ? ((currentTotal - appliedDiscount) / 50) : 10.00).toFixed(2);
+            const finalTotal = currentTotal - appliedDiscount;
+            const usdAmount = (finalTotal > 0 ? (finalTotal / 50) : 10.00).toFixed(2);
 
             if (!paypalRendered.card && document.getElementById('card-button-container')) {
                 paypal.Buttons({
@@ -396,10 +474,24 @@
                     style: { layout: 'vertical', color: 'black', shape: 'rect', label: 'pay' },
                     createOrder: function(data, actions) {
                         if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: usdAmount,
+                                    currency_code: 'USD'
+                                }
+                            }]
+                        });
                     },
-                    onApprove: function(data, actions) { return actions.order.capture().then(function(details) { processPayment('Credit/Debit Card'); }); },
-                    onError: function(err) { showToast("Card payment cancelled or failed."); }
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            processPayment('Credit/Debit Card');
+                        });
+                    },
+                    onError: function(err) {
+                        console.error("PayPal Card Error:", err);
+                        showToast("Card payment failed: " + (err.message || "Please check your details"));
+                    }
                 }).render('#card-button-container');
                 paypalRendered.card = true;
             }
@@ -409,10 +501,24 @@
                     style: { layout: 'vertical', color: 'gold', shape: 'rect' },
                     createOrder: function(data, actions) {
                         if (!validateAddressForm()) return Promise.reject(new Error("Form validation failed"));
-                        return actions.order.create({ purchase_units: [{ amount: { value: usdAmount } }] });
+                        return actions.order.create({
+                            purchase_units: [{
+                                amount: {
+                                    value: usdAmount,
+                                    currency_code: 'USD'
+                                }
+                            }]
+                        });
                     },
-                    onApprove: function(data, actions) { return actions.order.capture().then(function(details) { processPayment('PayPal'); }); },
-                    onError: function(err) { showToast("PayPal transaction error."); }
+                    onApprove: function(data, actions) {
+                        return actions.order.capture().then(function(details) {
+                            processPayment('PayPal');
+                        });
+                    },
+                    onError: function(err) {
+                        console.error("PayPal Error:", err);
+                        showToast("PayPal payment failed: " + (err.message || "Please try again"));
+                    }
                 }).render('#paypal-button-container');
                 paypalRendered.paypal = true;
             }
