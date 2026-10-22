@@ -1,0 +1,29 @@
+# robots.txt — THE EGYPTIAN KING
+# https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/
+
+# Allow all crawlers full access to public pages
+User-agent: *
+Allow: /
+
+# Disallow private/session pages (cart, checkout, login, account, track, admin)
+Disallow: /cart.html
+Disallow: /checkout.html
+Disallow: /account.html
+Disallow: /login.html
+Disallow: /track.html
+Disallow: /admin
+
+# Block common AI training scrapers (optional — uncomment to enable)
+# User-agent: GPTBot
+# Disallow: /
+# User-agent: CCBot
+# Disallow: /
+# User-agent: Google-Extended
+# Disallow: /
+# User-agent: anthropic-ai
+# Disallow: /
+# User-agent: ClaudeBot
+# Disallow: /
+
+# Point crawlers to sitemap
+Sitemap: https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/sitemap.xml
