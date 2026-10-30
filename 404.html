@@ -1,88 +1,112 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 // LINK TERMINATED | THE EGYPTIAN KING</title>
-    <link rel="stylesheet" href="style.css">
-    <style>
-        .error-body {
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Inter', sans-serif;
-            height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            text-align: center;
-            padding: 20px;
-            overflow: hidden;
-        }
-        .error-frame {
-            border: 1px solid #222;
-            padding: 40px;
-            background: #111;
-            border-radius: 10px;
-            max-width: 500px;
-            box-shadow: 0 0 20px rgba(0,0,0,0.5);
-        }
-        .error-code {
-            font-size: 5rem;
-            font-weight: 900;
-            color: #d1ff27;
-            letter-spacing: -2px;
-            line-height: 1;
-            margin-bottom: 10px;
-        }
-        .error-msg {
-            text-transform: uppercase;
-            font-weight: 700;
-            letter-spacing: 1px;
-            margin-bottom: 20px;
-            color: #aaa;
-        }
-        .terminal-log {
-            font-family: monospace;
-            background: #000;
-            padding: 15px;
-            border-radius: 5px;
-            font-size: 0.85rem;
-            color: #ff4444;
-            text-align: left;
-            margin-bottom: 30px;
-            border-left: 3px solid #ff4444;
-        }
-        .return-btn {
-            display: inline-block;
-            background: #d1ff27;
-            color: #000;
-            padding: 12px 30px;
-            text-decoration: none;
-            font-weight: 900;
-            text-transform: uppercase;
-            border-radius: 50px;
-            transition: transform 0.3s ease;
-        }
-        .return-btn:hover {
-            transform: scale(1.05);
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>404 — THE EGYPTIAN KING</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" type="image/png" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --font-body: 'Manrope', Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', Arial, sans-serif;
+  --bg: #ffffff;
+  --text-main: #0a0a0a;
+  --text-muted: #6b6b6b;
+  --accent: #bfa15f;
+  --border: #e8e6e1;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+body {
+  background: var(--bg);
+  color: var(--text-main);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  text-align: center;
+}
+.logo {
+  margin-bottom: 3rem;
+}
+.logo img {
+  height: 26px;
+  width: auto;
+  object-fit: contain;
+}
+.error-code {
+  font-family: var(--font-display);
+  font-size: clamp(6rem, 20vw, 12rem);
+  font-weight: 700;
+  line-height: 1;
+  letter-spacing: -0.05em;
+  color: var(--text-main);
+  margin-bottom: 1rem;
+}
+.error-message {
+  font-family: var(--font-display);
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 500;
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+.error-sub {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 2.5rem;
+  max-width: 400px;
+  line-height: 1.6;
+}
+.btn-home {
+  display: inline-block;
+  background: var(--text-main);
+  color: #fff;
+  padding: 1rem 2.5rem;
+  border: 1px solid var(--text-main);
+  border-radius: 2px;
+  font-weight: 700;
+  font-size: 0.78rem;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.btn-home:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+.footer-text {
+  margin-top: 4rem;
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+@media (max-width: 480px) {
+  .error-code { font-size: 5rem; }
+  .error-message { font-size: 1.1rem; }
+  .btn-home { padding: 0.9rem 2rem; font-size: 0.7rem; }
+}
+</style>
 </head>
-<body class="error-body">
-
-    <div class="error-frame">
-        <div class="error-code">404</div>
-        <div class="error-msg">SYSTEM ERROR: Page Not Found</div>
-        
-        <div class="terminal-log">
-            > EXECUTING SEARCH...<br>
-            > ERROR: COORD_NOT_FOUND<br>
-            > STATUS: LINK TERMINATED.
-        </div>
-
-        <a href="index.html" class="return-btn">Return to Terminal</a>
-    </div>
-
+<body>
+  <a href="index.html" class="logo">
+    <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King">
+  </a>
+  <div class="error-code">404</div>
+  <div class="error-message">Page Not Found</div>
+  <p class="error-sub">The page you're looking for doesn't exist or has been moved. Let's get you back to the kingdom.</p>
+  <a href="index.html" class="btn-home">Return Home</a>
+  <div class="footer-text">© 2026 THE EGYPTIAN KING</div>
 </body>
 </html>
