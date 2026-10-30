@@ -3,14 +3,94 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>ACCOUNT— THE EGYPTIAN KING</title>
+<title>My Account — THE EGYPTIAN KING</title>
+<meta name="description" content="Manage your THE EGYPTIAN KING account, saved addresses, and view your order history.">
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/account.html">
-
 <link rel="icon" type="image/png" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
 <link rel="apple-touch-icon" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
 <meta name="theme-color" content="#0a0a0c">
-    </style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b;
+    --accent:#bfa15f; --accent-dark:#9a7f3e; --border:#e8e6e1;
+    --btn-bg:#0a0a0a; --btn-text:#fff; --sale:#c8102e;
+    --font-body:'Manrope',Arial,sans-serif;
+    --font-display:'Space Grotesk','Manrope',Arial,sans-serif;
+}
+* { box-sizing:border-box; margin:0; padding:0; font-family:var(--font-body); -webkit-font-smoothing:antialiased; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; min-height:100vh; display:flex; flex-direction:column; }
+a { text-decoration:none; color:inherit; }
+
+/* Header */
+header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); display:flex; justify-content:center; align-items:center; position:sticky; top:0; z-index:100; }
+.logo-img { height:26px; width:auto; object-fit:contain; }
+
+/* Toast */
+.toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+.toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
+.toast-message.show { opacity:1; transform:translateY(0); }
+
+/* Account Container */
+.account-container { max-width:1000px; margin:4rem auto; padding:0 1.25rem; flex:1; }
+.account-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:3rem; border-bottom:1px solid var(--border); padding-bottom:2rem; flex-wrap:wrap; gap:1rem; }
+.account-header h1 { font-family:var(--font-display); font-size:1.8rem; font-weight:700; letter-spacing:-0.035em; text-transform:uppercase; }
+.logout-link { color:var(--sale); font-weight:700; font-size:0.8rem; text-transform:uppercase; letter-spacing:1px; cursor:pointer; transition:color 0.3s; }
+.logout-link:hover { color:var(--accent); }
+
+/* Dashboard Grid */
+.dashboard-grid { display:grid; grid-template-columns:1fr 1fr; gap:3rem; }
+.card { background:var(--bg-alt); border:1px solid var(--border); padding:2rem; border-radius:4px; }
+.card h2 { font-family:var(--font-display); font-size:1.1rem; font-weight:700; letter-spacing:-0.035em; text-transform:uppercase; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
+
+/* Form */
+.form-group { margin-bottom:1rem; }
+.input-field { width:100%; padding:0.85rem 1rem; border:1px solid var(--border); border-radius:2px; font-size:0.85rem; font-family:var(--font-body); outline:none; transition:border-color 0.3s; background:#fff; }
+.input-field:focus { border-color:var(--text-main); }
+.btn-primary { width:100%; background:var(--btn-bg); color:var(--btn-text); padding:1rem; border:none; border-radius:2px; font-weight:700; font-size:0.78rem; letter-spacing:2px; text-transform:uppercase; cursor:pointer; transition:all 0.35s ease; margin-top:1rem; }
+.btn-primary:hover { background:var(--accent); }
+
+/* Order History */
+.order-row { display:flex; justify-content:space-between; padding:1rem 0; border-bottom:1px solid var(--border); }
+.order-row:last-child { border-bottom:none; }
+.order-status { font-size:0.7rem; font-weight:800; padding:4px 8px; border-radius:2px; text-transform:uppercase; letter-spacing:1px; }
+.st-received { background:#f1f5f9; color:#334155; }
+.st-printing { background:#fef3c7; color:#d97706; }
+.st-dispatched { background:#e0f2fe; color:#0284c7; }
+.st-delivered { background:#dcfce7; color:#16a34a; }
+
+/* Footer */
+footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; margin-top:4rem; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3.5rem; }
+.footer-grid h5 { font-size:0.78rem; font-weight:800; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:2px; color:#fff; }
+.footer-grid ul { list-style:none; display:flex; flex-direction:column; gap:0.85rem; }
+.footer-grid a { color:#888; text-decoration:none; font-size:0.85rem; transition:color 0.3s, padding-left 0.3s; }
+.footer-grid a:hover { color:var(--accent); padding-left:5px; }
+.footer-brand p { color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem; max-width:340px; }
+.footer-socials { display:flex; gap:0.85rem; margin-top:1.5rem; }
+.footer-socials a { width:38px; height:38px; border:1px solid #333; border-radius:50%; display:flex; align-items:center; justify-content:center; color:#fff; text-decoration:none; font-size:0.85rem; transition:all 0.3s; }
+.footer-socials a:hover { background:var(--accent); border-color:var(--accent); transform:translateY(-2px); }
+.footer-bottom { border-top:1px solid #1c1c1c; padding-top:2rem; display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:1rem; max-width:1300px; margin:0 auto; }
+.footer-bottom .copyright { color:#666; font-size:0.78rem; letter-spacing:0.5px; }
+.payment-icons { display:flex; gap:8px; align-items:center; }
+.payment-icon { background:#fff; color:#0a0a0a; padding:4px 8px; border-radius:3px; font-size:0.6rem; font-weight:800; letter-spacing:0.5px; }
+
+/* Responsive */
+@media (max-width:768px) {
+    .dashboard-grid { grid-template-columns:1fr; }
+    .footer-grid { grid-template-columns:1fr 1fr; gap:2.5rem; }
+    .footer-bottom { justify-content:center; text-align:center; flex-direction:column; gap:1.5rem; }
+}
+@media (max-width:480px) {
+    .account-container { padding:0 1rem; margin:2rem auto; }
+    .footer-grid { grid-template-columns:1fr; gap:2rem; text-align:center; }
+    .footer-grid ul { align-items:center; }
+}
+</style>
 </head>
 <body>
     <header><a href="index.html"><img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img"></a></header>
@@ -36,10 +116,56 @@
 
             <div class="card">
                 <h2>Order History</h2>
-                <div id="orders-list"><p style="color: var(--text-muted); font-size: 0.85rem;">Loading orders...</p></div>
+                <div id="orders-list"><p style="color:var(--text-muted); font-size:0.85rem;">Loading orders...</p></div>
             </div>
         </div>
     </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-brand">
+                <h5>The Egyptian King</h5>
+                <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
+                <div class="footer-socials">
+                    <a href="https://www.instagram.com/the_egyptian_king10" aria-label="Instagram">IG</a>
+                    <a href="https://www.facebook.com/the_egyptian_king10" aria-label="Facebook">FB</a>
+                    <a href="https://x.com/the_egyptian___?s=11" aria-label="Twitter">X</a>
+                    <a href="#" aria-label="TikTok">TT</a>
+                </div>
+            </div>
+            <div>
+                <h5>Shop</h5>
+                <ul>
+                    <li><a href="shop.html">All Products</a></li>
+                    <li><a href="shop.html">Hoodies</a></li>
+                    <li><a href="shop.html">New Arrivals</a></li>
+                    <li><a href="shop.html">Best Sellers</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Support</h5>
+                <ul>
+                    <li><a href="track.html">Track Order</a></li>
+                    <li><a href="terms.html">Shipping Info</a></li>
+                    <li><a href="terms.html">Returns</a></li>
+                    <li><a href="terms.html">FAQ</a></li>
+                </ul>
+            </div>
+            <div>
+                <h5>Company</h5>
+                <ul>
+                    <li><a href="#">Our Story</a></li>
+                    <li><a href="#">Sustainability</a></li>
+                    <li><a href="#">Careers</a></li>
+                    <li><a href="#">Contact</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <span class="copyright">© 2026 THE EGYPTIAN KING. All rights reserved. WB 5.4</span>
+            <div class="payment-icons"><span class="payment-icon">VISA</span><span class="payment-icon">MC</span><span class="payment-icon">AMEX</span><span class="payment-icon">PAYPAL</span><span class="payment-icon">APPLE</span></div>
+        </div>
+    </footer>
 
     <!-- Firebase SDKs -->
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
@@ -68,7 +194,7 @@
             container.appendChild(toast);
             void toast.offsetWidth;
             toast.classList.add('show');
-            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000);
+            setTimeout(() => { toast.classList.remove('show'); setTimeout(() => { toast.remove(); }, 400); }, 3000);
         }
 
         function logoutUser() {
@@ -77,7 +203,7 @@
 
         auth.onAuthStateChanged(user => {
             if (!user) {
-                window.location.href = 'login.html'; // Redirect if not logged in
+                window.location.href = 'login.html';
             } else {
                 loadUserData(user.uid);
                 loadUserOrders(user.uid);
@@ -131,5 +257,6 @@
             `).join('');
         }
     </script>
+    <script src="auth.js"></script>
 </body>
 </html>
