@@ -27,6 +27,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --sale:#c8102e; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -114,7 +115,30 @@
         @media (max-width: 1024px) { .shop-layout { grid-template-columns: 1fr; } .sidebar { position: static; border-right: none; border-bottom: 1px solid var(--border); padding-bottom: 2rem; } .filter-list { flex-direction: row; flex-wrap: wrap; gap: 1rem; } .sidebar-block { display: none; } .product-grid { grid-template-columns: repeat(3, 1fr); } .footer-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) { .product-grid { grid-template-columns: repeat(2, 1fr); } }
         @media (max-width: 480px) { .product-grid { grid-template-columns: 1fr; } }
-    </style>
+    
+/* === FONT OVERRIDE: Manrope + Space Grotesk === */
+:root {
+  --font-body: 'Manrope', Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', Arial, sans-serif;
+}
+*, *::before, *::after { font-family:var(--font-body) !important; }
+h1, h2, h3, h4, h5, h6,
+.hero-title, .section-header h2, .manifesto h2,
+.newsletter h2, .editorial-title, .editorial-copy h2,
+.product-title, .dropdown-title, .shop-hero h1,
+.page-header h1, .login-card h1, .account-header h1,
+.terms-content h2, .summary-title, .section-title,
+.cart-main h1, .checkout-main h2, .card h2,
+.timeline-step h4, .editorial-year span,
+.footer-grid h5, .order-header-info h3 {
+  font-family:var(--font-display) !important;
+  letter-spacing:-.035em;
+}
+p, li, a, button, input, textarea, select, label {
+  font-family:var(--font-body) !important;
+}
+/* === END FONT OVERRIDE === */
+</style>
 </head>
 <body>
     <div class="toast-container"></div>
