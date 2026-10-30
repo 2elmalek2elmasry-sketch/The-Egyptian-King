@@ -29,6 +29,7 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --btn-text:#fff; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -92,7 +93,30 @@
         .toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; }
         .toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; box-shadow:0 20px 40px rgba(0,0,0,0.25); border-left:3px solid var(--accent); }
         @media (max-width: 768px) { .product-layout { grid-template-columns: 1fr; gap: 2rem; } .product-title { font-size: 2rem; } }
-    </style>
+    
+/* === FONT OVERRIDE: Manrope + Space Grotesk === */
+:root {
+  --font-body: 'Manrope', Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', Arial, sans-serif;
+}
+*, *::before, *::after { font-family:var(--font-body) !important; }
+h1, h2, h3, h4, h5, h6,
+.hero-title, .section-header h2, .manifesto h2,
+.newsletter h2, .editorial-title, .editorial-copy h2,
+.product-title, .dropdown-title, .shop-hero h1,
+.page-header h1, .login-card h1, .account-header h1,
+.terms-content h2, .summary-title, .section-title,
+.cart-main h1, .checkout-main h2, .card h2,
+.timeline-step h4, .editorial-year span,
+.footer-grid h5, .order-header-info h3 {
+  font-family:var(--font-display) !important;
+  letter-spacing:-.035em;
+}
+p, li, a, button, input, textarea, select, label {
+  font-family:var(--font-body) !important;
+}
+/* === END FONT OVERRIDE === */
+</style>
 </head>
 <body>
     <header id="main-header">
