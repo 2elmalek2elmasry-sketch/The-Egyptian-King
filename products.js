@@ -43,8 +43,8 @@ const products = [
         "https://i.postimg.cc/PrGw17hP/734776c1-8372-452f-bbd2-a85dba8921a3-cleanup.png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]},
-    { id: 12, name: "Forn balady Hoodie", price: 950, rating: 4.7, reviews: 155, category: "graphic", badge: "", images: [
-        "https://i.postimg.cc/sDFh5LyD/81ae3d24-1147-4ab8-8d39-76c303fbe7a1.png",
+    { id: 12, name: "Hall of Fame Hoodie", price: 950, rating: 4.7, reviews: 155, category: "graphic", badge: "", images: [
+        "https://i.postimg.cc/HLFXddwF/64ef9c52-e4c3-4c6a-9995-56292c565a91.jpg",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]},
     { id: 13, name: "8azl banat Hoodie", price: 950, rating: 4.9, reviews: 256, category: "graphic", badge: "new", images: [
@@ -81,12 +81,12 @@ const products = [
         "https://i.postimg.cc/c4Q8hc4m/f5753ec9-1d18-4ae1-a9e7-e1b48be5e079.png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]},
-    { id: 21, name: "5amarty baladi Hoodie", price: 950, rating: 4.8, reviews: 124, category: "graphic", badge: "", images: [
-        "https://i.postimg.cc/mgB15FtC/koozee-udy0kzo66cpjc7ki.png",
+    { id: 21, name: "kayro el 2adyma Hoodie", price: 950, rating: 4.8, reviews: 124, category: "graphic", badge: "", images: [
+        "https://i.postimg.cc/BbK1zHWb/Add-a-subheading-(22).png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]},
-    { id: 22, name: "2ahwa masreya Hoodie", price: 950, rating: 4.3, reviews: 45, category: "graphic", badge: "", images: [
-        "https://i.postimg.cc/nhp9PQC4/koozee-uwudodya8xy6ip8r.png",
+    { id: 22, name: "2om kalthoum Hoodie", price: 950, rating: 4.3, reviews: 45, category: "graphic", badge: "", images: [
+        "https://i.postimg.cc/Pr0SNQrT/3421f318-84be-4d1f-bbb8-96efda5aca6d.png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
     ]},
     { id: 23, name: "2aa5r malek Hoodie", price: 950, rating: 4.4, reviews: 29, category: "graphic", badge: "", images: [
