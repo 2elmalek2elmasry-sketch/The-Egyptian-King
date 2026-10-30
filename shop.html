@@ -27,7 +27,6 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-</script>
     <style>
         :root { --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b; --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --sale:#c8102e; }
         * { box-sizing:border-box; margin:0; padding:0; font-family:'Inter',sans-serif; -webkit-font-smoothing:antialiased; }
@@ -88,6 +87,7 @@
         .badge { font-size: 0.6rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; padding: 4px 10px; border-radius: 2px; }
         .badge.new { background: #0a0a0a; color: #fff; }
         .badge.bestseller { background: var(--accent); color: #fff; }
+        .badge.hot { background: #c8102e; color: #fff; }
         .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.98); color: #fff; backdrop-filter: blur(5px); padding: 1.1rem; text-align: center; font-weight: 900; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; transform: translateY(100%); transition: transform 0.4s; border: none; cursor: pointer; width: 100%; }
         .product-card:hover .quick-add { transform: translateY(0); }
         .quick-add:hover { background: var(--accent); color: #0a0a0a; }
@@ -96,7 +96,6 @@
         .star-rating { font-size: 0.75rem; margin-bottom: 0.45rem; color: var(--accent); letter-spacing: 1px; display: flex; align-items: center; gap: 6px; }
         .star-rating span { color: var(--text-muted); font-size: 0.72rem; font-weight: 400; }
         
-        /* NEW: Thin small brand text */
         .brand-name { font-size: 0.65rem; font-weight: 300; text-transform: uppercase; letter-spacing: 1.5px; color: var(--text-muted); margin-bottom: 0.25rem; }
         
         .product-title { font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; transition: color 0.3s; }
@@ -199,7 +198,7 @@
             { id: 1, name: "Hall of Fame Hoodie", price: 950, rating: 4.8, reviews: 124, category: "graphic", badge: "", img: "https://i.postimg.cc/zfQSvnr3/Add-a-subheading-(23).png", images: ["https://i.postimg.cc/zfQSvnr3/Add-a-subheading-(23).png", "https://i.postimg.cc/HLFXddwF/64ef9c52-e4c3-4c6a-9995-56292c565a91.jpg", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
             { id: 2, name: "2ahaan el 2asab", price: 950, rating: 4.6, reviews: 89, category: "graphic", badge: "", img: "https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", images: ["https://i.postimg.cc/fRgTxjsk/Add-a-subheading-11.png", "https://i.postimg.cc/MZfBMSCg/5f31dc59-e556-41b8-9ab5-fcd5e808780b.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
             { id: 3, name: "2awraka wa2fa Hoodie", price: 950, rating: 4.9, reviews: 201, category: "graphic", badge: "new", img: "https://i.postimg.cc/C1mt9JKw/Add-a-subheading-10.png", images: ["https://i.postimg.cc/C1mt9JKw/Add-a-subheading-10.png", "https://i.postimg.cc/kXxtsyXQ/d3490dcb-3ee5-4eb7-bcbd-2954dc14e634.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
-            { id: 4, name: "kayro el 2adyma Hoodie", price: 950, rating: 4.3, reviews: 45, category: "graphic", badge: hot", img: "https://i.postimg.cc/BbK1zHWb/Add-a-subheading-(22).png", images: ["https://i.postimg.cc/BbK1zHWb/Add-a-subheading-(22).png", "https://i.postimg.cc/1tgBrvH6/5a1b0327-58bd-4a59-9aec-84861cdf617a.jpg", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
+            { id: 4, name: "kayro el 2adyma Hoodie", price: 950, rating: 4.3, reviews: 45, category: "graphic", badge: "hot", img: "https://i.postimg.cc/BbK1zHWb/Add-a-subheading-(22).png", images: ["https://i.postimg.cc/BbK1zHWb/Add-a-subheading-(22).png", "https://i.postimg.cc/1tgBrvH6/5a1b0327-58bd-4a59-9aec-84861cdf617a.jpg", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
             { id: 5, name: "2om kalthoum Hoodie", price: 950, rating: 4.7, reviews: 155, category: "graphic", badge: "bestseller", img: "https://i.postimg.cc/XJnH4NNX/Add-a-subheading-(21).png", images: ["https://i.postimg.cc/XJnH4NNX/Add-a-subheading-(21).png", "https://i.postimg.cc/Pr0SNQrT/3421f318-84be-4d1f-bbb8-96efda5aca6d.png", "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"] },
             { id: 6, name: "Malekt 3omry Hoodie", price: 950, rating: 4.2, reviews: 32, category: "graphic", badge: "", img: "https://i.postimg.cc/500V5LHd/Add-a-subheading-7.png", images: ["https://i.postimg.cc/500V5LHd/Add-a-subheading-7.png", "https://i.postimg.cc/TY8DnsGf/72aacaa5-fb81-4787-89de-a68acc106d15.png", "https://i.postimg.cc/Dyqb6cys/c8018f7d-4427-417d-8d05-f478eb566d4d.png"] },
             { id: 7, name: "masr om el donya Hoodie", price: 950, rating: 4.5, reviews: 78, category: "graphic", badge: "", img: "https://i.postimg.cc/3wmp8QSr/Add-a-subheading-6.png", images: ["https://i.postimg.cc/3wmp8QSr/Add-a-subheading-6.png", "https://i.postimg.cc/dt8T69tt/ac70b116-a99e-499e-8f04-4b6a7b731b90.png", "https://i.postimg.cc/Dyqb6cys/c8018f7d-4427-417d-8d05-f478eb566d4d.png"] }, 
@@ -243,6 +242,7 @@
                         <div class="product-badges">
                             ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
                             ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
+                            ${p.badge === 'hot' ? '<span class="badge hot">Hot</span>' : ''}
                         </div>
                         <img src="${p.img}" alt="${p.name}">
                         <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">QUICK VIEW</button>
