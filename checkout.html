@@ -3,6 +3,9 @@
 <head>
    <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
 <title>CHECKOUT — THE EGYPTIAN KING</title>
 <meta name="robots" content="noindex, nofollow">
 <link rel="canonical" href="https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/checkout.html">
@@ -96,7 +99,30 @@
 
         @media (max-width: 1024px) { .checkout-layout { grid-template-columns: 1fr; gap: 3rem; } .sidebar { position: static; max-width: 600px; margin: 0 auto; width: 100%; } .footer-grid { grid-template-columns: 1fr 1fr; } }
         @media (max-width: 768px) { .form-row { grid-template-columns: 1fr; } .footer-grid { grid-template-columns: 1fr; text-align: center; } }
-    </style>
+    
+/* === FONT OVERRIDE: Manrope + Space Grotesk === */
+:root {
+  --font-body: 'Manrope', Arial, sans-serif;
+  --font-display: 'Space Grotesk', 'Manrope', Arial, sans-serif;
+}
+*, *::before, *::after { font-family:var(--font-body) !important; }
+h1, h2, h3, h4, h5, h6,
+.hero-title, .section-header h2, .manifesto h2,
+.newsletter h2, .editorial-title, .editorial-copy h2,
+.product-title, .dropdown-title, .shop-hero h1,
+.page-header h1, .login-card h1, .account-header h1,
+.terms-content h2, .summary-title, .section-title,
+.cart-main h1, .checkout-main h2, .card h2,
+.timeline-step h4, .editorial-year span,
+.footer-grid h5, .order-header-info h3 {
+  font-family:var(--font-display) !important;
+  letter-spacing:-.035em;
+}
+p, li, a, button, input, textarea, select, label {
+  font-family:var(--font-body) !important;
+}
+/* === END FONT OVERRIDE === */
+</style>
 </head>
 <body>
     <div class="toast-container"></div>
