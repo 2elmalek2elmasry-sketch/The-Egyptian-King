@@ -88,7 +88,12 @@ const products = [
     { id: 22, name: "el sfyncs Hoodie", price: 950, rating: 4.3, reviews: 30, category: "graphic", badge: "", images: [
         "https://i.postimg.cc/76XsRG3f/098736d5-5247-42e3-b42d-7711db20f58e.png",
         "https://i.postimg.cc/wTKmDrHY/70b52cc0-abeb-4ee7-9100-0369e4ad755f.png"
+    ]},
+    { id: 23, name: "el sfyncs Hoodie", price: 950, rating: 4.3, reviews: 30, category: "graphic", badge: "", images: [
+        "https://i.postimg.cc/0jnx7Tyv/3d66b169-a2f9-4907-a4f8-946e1bb0175b.png",
+        "https://i.postimg.cc/v8rmQjbT/a1692161-00c9-4227-b043-80bba6e341bf.png"
     ]}
+
 ];
 
 function getStars(rating) {
