@@ -1,429 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>MASRY CORESYS // UNRELEASED VAULT</title>
-
-    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/J4yzQdQf/logo.png" />
-    <link rel="icon" type="image/png" sizes="96x96" href="https://i.postimg.cc/J4yzQdQf/logo.png" />
-    <link rel="shortcut icon" type="image/png" href="https://i.postimg.cc/J4yzQdQf/logo.png" />
-
-    <link rel="apple-touch-icon" href="https://i.postimg.cc/J4yzQdQf/logo.png" />
-    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/J4yzQdQf/logo.png" />
-    <meta name="apple-mobile-web-app-title" content="THE EGYPTIAN KING" />
-    <script async src="https://www.googletagmanager.com/gtag/js?id=G-Z3KYF9YLPM"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'G-Z3KYF9YLPM');
-    </script>
-
-    <style>
-        /* Base Cyber / Reset Theme */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            background-color: #0a0a0a;
-            color: #ffffff;
-            font-family: 'Courier New', Courier, monospace !important;
-            overflow-x: hidden;
-            padding-bottom: 100px;
-        }
-
-        header {
-            width: 100%;
-            padding: 30px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 1px solid #222;
-        }
-
-        .status-tag {
-            color: #d1ff27;
-            font-weight: bold;
-            letter-spacing: 2px;
-        }
-
-        .exit-btn {
-            color: #888;
-            text-decoration: none;
-            font-size: 0.9rem;
-            border: 1px solid #333;
-            padding: 8px 16px;
-            transition: all 0.3s ease;
-        }
-
-        .exit-btn:hover {
-            color: #ff4444;
-            border-color: #ff4444;
-        }
-
-        .vault-title-container {
-            max-width: 1200px;
-            margin: 60px auto 40px auto;
-            padding: 0 20px;
-        }
-
-        .vault-title-container h1 {
-            font-size: 2.5rem;
-            letter-spacing: -1px;
-            margin-bottom: 10px;
-            text-transform: uppercase;
-        }
-
-        .vault-title-container p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Scope everything under a strict vault wrapper to block theme style overrides */
-        .vault-main-wrapper {
-            max-width: 1200px;
-            margin: 40px auto;
-            padding: 0 20px;
-            font-family: 'Courier New', Courier, monospace !important;
-        }
-
-        .vault-grid {
-            display: grid !important;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)) !important;
-            gap: 40px !important;
-            width: 100% !important;
-        }
-
-        .vault-card {
-            background: #0f0f0f !important;
-            border: 1px solid #222222 !important;
-            padding: 20px !important;
-            display: flex !important;
-            flex-direction: column !important;
-            position: relative !important;
-            transition: all 0.3s ease;
-        }
-
-        .vault-card:hover {
-            border-color: #d1ff27 !important;
-            box-shadow: 0 0 15px rgba(209, 255, 39, 0.1);
-        }
-
-        /* Force standard 3:4 portrait streetwear framing */
-        .vault-img-box {
-            width: 100% !important;
-            aspect-ratio: 3 / 4 !important;
-            background: #151515 !important;
-            margin-bottom: 20px !important;
-            overflow: hidden !important;
-            border: 1px solid #1a1a1a !important;
-        }
-
-        .vault-img-box img {
-            width: 100% !important;
-            height: 100% !important;
-            object-fit: cover !important;
-        }
-
-        .vault-meta-box {
-            display: flex !important;
-            justify-content: space-between !important;
-            align-items: flex-start !important;
-            margin-bottom: 20px !important;
-        }
-
-        .vault-title {
-            font-size: 1.1rem !important;
-            text-transform: uppercase !important;
-            color: #ffffff !important;
-            letter-spacing: 1px !important;
-        }
-
-        .vault-subtitle {
-            color: #666666 !important;
-            font-size: 0.8rem !important;
-            margin-top: 4px !important;
-        }
-
-        .vault-price {
-            color: #d1ff27 !important;
-            font-weight: bold !important;
-            font-size: 1.1rem !important;
-        }
-
-        /* Styled Quick Buy Action Button */
-        .vault-buy-btn {
-            width: 100% !important;
-            background: #ffffff !important;
-            color: #000000 !important;
-            border: none !important;
-            padding: 15px !important;
-            font-family: 'Courier New', Courier, monospace !important;
-            font-weight: 900 !important;
-            letter-spacing: 2px !important;
-            cursor: pointer !important;
-            text-transform: uppercase !important;
-            transition: background 0.2s ease !important;
-        }
-
-        .vault-buy-btn:hover {
-            background: #d1ff27 !important;
-        }
-
-        /* Checkout Modal Overlay Layout */
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 1000;
-            padding: 20px;
-        }
-
-        .modal-content {
-            background: #0f0f0f;
-            border: 1px solid #222;
-            max-width: 500px;
-            width: 100%;
-            padding: 30px;
-            position: relative;
-        }
-
-        .close-modal {
-            position: absolute;
-            top: 15px; right: 20px;
-            background: none; border: none;
-            color: #666; font-size: 1.5rem;
-            cursor: pointer;
-        }
-        .close-modal:hover { color: #ff4444; }
-
-        .modal-step { display: none; margin-top: 20px; }
-        
-        .modal-summary-grid { display: flex; gap: 20px; margin-bottom: 20px; }
-        .modal-img { width: 80px; aspect-ratio: 3/4; object-fit: cover; border: 1px solid #222; }
-
-        .form-group { margin-bottom: 15px; }
-        .form-group label { display: block; font-size: 0.8rem; color: #666; margin-bottom: 5px; text-transform: uppercase; }
-        .form-group input { width: 100%; background: #151515; border: 1px solid #222; padding: 12px; color: #fff; outline: none; font-family: monospace; }
-        .form-group input:focus { border-color: #d1ff27; }
-
-        .size-selector { display: flex; gap: 10px; margin: 15px 0; }
-        .size-box { position: relative; }
-        .size-box input { position: absolute; opacity: 0; cursor: pointer; }
-        .size-label { display: block; padding: 10px 18px; border: 1px solid #333; cursor: pointer; font-weight: bold; }
-        .size-box input:checked + .size-label { background: #d1ff27; color: #000; border-color: #d1ff27; }
-
-        .modal-next-btn {
-            width: 100%; background: #d1ff27; color: #000; border: none; padding: 12px;
-            font-weight: bold; cursor: pointer; text-transform: uppercase; margin-top: 10px;
-            font-family: monospace; letter-spacing: 1px;
-        }
-
-        #scrollToTopBtn {
-            display: none; /* Hidden by default */
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            z-index: 99;
-            border: none;
-            outline: none;
-            background-color: #d1ff27; /* Neon Brand Accent */
-            color: #000000;
-            cursor: pointer;
-            padding: 15px;
-            border-radius: 50%;
-            font-size: 1.2rem;
-            width: 50px;
-            height: 50px;
-            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
-            transition: transform 0.2s ease, opacity 0.2s ease;
-        }
-
-        #scrollToTopBtn:hover {
-            transform: scale(1.1);
-            background-color: #ffffff; /* Turns white on hover */
-        }
-
-        @media (max-width: 768px) {
-            #scrollToTopBtn {
-                bottom: 20px;
-                right: 20px;
-                width: 45px;
-                height: 45px;
-                font-size: 1rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>PANTS — THE EGYPTIAN KING</title>
+<meta name="description" content="Premium baggy sweat pants and track pants. Designed in Cairo, shipped worldwide.">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/pants.html">
+<link rel="icon" type="image/png" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
+<link rel="apple-touch-icon" href="https://i.postimg.cc/T2cfkDwB/c4ab82a2-8641-4cc5-ae5-f439e5238d43.png">
+<meta name="theme-color" content="#0a0a0c">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+    --font-body:'Manrope',Arial,sans-serif;
+    --font-display:'Space Grotesk','Manrope',Arial,sans-serif;
+    --bg:#ffffff; --bg-alt:#faf9f7; --text-main:#0a0a0a; --text-muted:#6b6b6b;
+    --accent:#bfa15f; --border:#e8e6e1; --btn-bg:#0a0a0a; --sale:#c8102e;
+}
+* { box-sizing:border-box; margin:0; padding:0; font-family:var(--font-body); -webkit-font-smoothing:antialiased; }
+html { scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+body { background:var(--bg); color:var(--text-main); overflow-x:hidden; width:100%; }
+a { text-decoration:none; color:inherit; }
+.toast-container { position:fixed; bottom:2rem; left:50%; transform:translateX(-50%); z-index:10000; display:flex; flex-direction:column; gap:1rem; align-items:center; pointer-events:none; max-width:90%; }
+.toast-message { background:#0a0a0a; color:#fff; padding:1rem 2.5rem; border-radius:2px; font-weight:600; font-size:0.85rem; letter-spacing:0.5px; box-shadow:0 20px 40px rgba(0,0,0,0.25); opacity:0; transform:translateY(20px); transition:all 0.4s cubic-bezier(0.34,1.56,0.64,1); text-align:center; word-wrap:break-word; border-left:3px solid var(--accent); }
+.toast-message.show { opacity:1; transform:translateY(0); }
+header { background:rgba(255,255,255,0.98); backdrop-filter:blur(20px); border-bottom:1px solid var(--border); padding:1.1rem clamp(1.2rem,5vw,3.5rem); position:sticky; top:0; z-index:100; display:flex; justify-content:space-between; align-items:center; }
+header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
+.nav-left { flex:1; }
+.brand-logo { flex:0 0 auto; text-decoration:none; display:flex; justify-content:center; align-items:center; }
+.logo-img { height:26px; width:auto; object-fit:contain; }
+.nav-actions { flex:1; display:flex; gap:1.5rem; align-items:center; position:relative; justify-content:flex-end; }
+.icon-btn { background:none; border:none; cursor:pointer; font-size:1.15rem; color:#0a0a0a; position:relative; text-decoration:none; display:flex; align-items:center; }
+.icon-btn svg { width:22px; height:22px; stroke:#0a0a0a; stroke-width:1.5; fill:none; }
+.cart-count { position:absolute; top:-6px; right:-10px; background:var(--accent); color:#fff; font-size:0.6rem; font-weight:800; min-width:18px; height:18px; border-radius:50%; display:flex; align-items:center; justify-content:center; }
+.dropdown-wrapper { position:relative; }
+.menu-toggle-btn { background:none; border:none; font-size:1.4rem; cursor:pointer; color:var(--text-main); display:flex; align-items:center; padding:0.25rem; }
+.dropdown-menu { position:absolute; top:calc(100% + 18px); right:0; width:340px; background:#0a0a0a; color:#fff; border-radius:4px; padding:1.75rem; display:none; flex-direction:column; gap:1.5rem; box-shadow:0 25px 60px rgba(0,0,0,0.4); border:1px solid #222; z-index:1000; }
+.dropdown-menu.active { display:flex; }
+.dropdown-section { border-bottom:1px solid #1c1c1c; padding-bottom:1.25rem; }
+.dropdown-section:last-child { border-bottom:none; padding-bottom:0; }
+.dropdown-title { font-family:var(--font-display); font-size:0.7rem; font-weight:700; color:var(--accent); letter-spacing:3px; text-transform:uppercase; margin-bottom:1rem; }
+.dropdown-links { list-style:none; display:flex; flex-direction:column; gap:0.7rem; }
+.dropdown-links a { color:#fff; text-decoration:none; font-size:0.82rem; font-weight:500; text-transform:uppercase; letter-spacing:1.2px; }
+.shop-hero { background:#0a0a0a; color:#fff; text-align:center; padding:6rem 2rem 5rem; }
+.shop-hero h1 { font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem,6vw,4.5rem); letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:1rem; }
+.shop-hero p { color:#aaa; letter-spacing:3px; text-transform:uppercase; font-size:0.8rem; }
+.shop-layout { display:grid; grid-template-columns:240px 1fr; gap:3rem; max-width:1500px; margin:0 auto; padding:4rem clamp(1.2rem,5vw,3.5rem); }
+.sidebar { border-right:1px solid var(--border); padding-right:2rem; position:sticky; top:100px; height:fit-content; }
+.sidebar h3 { font-family:var(--font-display); font-weight:700; font-size:0.9rem; letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
+.filter-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
+.filter-btn { background:none; border:none; text-align:left; cursor:pointer; color:var(--text-muted); font-size:0.85rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; transition:all 0.3s ease; padding:2px 0; }
+.filter-btn:hover { color:var(--accent); padding-left:5px; }
+.filter-btn.active { color:var(--text-main); font-weight:800; }
+.filter-btn.active::before { content:'— '; color:var(--accent); }
+.sidebar-block { margin-top:2.5rem; }
+.size-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:0.5rem; }
+.size-btn { padding:0.6rem; border:1px solid var(--border); background:#fff; cursor:pointer; font-weight:700; font-size:0.75rem; transition:all 0.2s; border-radius:2px; }
+.size-btn:hover { border-color:var(--text-main); }
+.size-btn.active { background:var(--text-main); color:#fff; border-color:var(--text-main); }
+.toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:1rem; }
+.toolbar-left p { font-size:0.85rem; color:var(--text-muted); letter-spacing:1px; }
+.sort-dropdown { padding:0.6rem 1rem; border:1px solid var(--border); background:#fff; font-size:0.8rem; font-weight:600; cursor:pointer; outline:none; border-radius:2px; }
+.product-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:2.5rem 1.5rem; }
+.product-card { display:flex; flex-direction:column; cursor:pointer; position:relative; }
+.product-img-wrapper { position:relative; width:100%; aspect-ratio:3/4; background:var(--bg-alt); border-radius:4px; overflow:hidden; margin-bottom:1rem; }
+.product-img-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
+.product-card:hover .product-img-wrapper img { transform:scale(1.06); }
+.product-badges { position:absolute; top:12px; left:12px; display:flex; flex-direction:column; gap:6px; z-index:2; }
+.badge { font-size:0.6rem; font-weight:800; letter-spacing:1.5px; text-transform:uppercase; padding:4px 10px; border-radius:2px; }
+.badge.new { background:#0a0a0a; color:#fff; }
+.badge.bestseller { background:var(--accent); color:#fff; }
+.badge.hot { background:#c8102e; color:#fff; }
+.quick-add { position:absolute; bottom:0; left:0; right:0; background:rgba(10,10,10,0.98); color:#fff; backdrop-filter:blur(5px); padding:1.1rem; text-align:center; font-weight:700; font-size:0.85rem; text-transform:uppercase; letter-spacing:3px; transform:translateY(100%); transition:transform 0.4s; border:none; cursor:pointer; width:100%; }
+.product-card:hover .quick-add { transform:translateY(0); }
+.quick-add:hover { background:var(--accent); color:#0a0a0a; }
+.color-picker { display:flex; gap:8px; margin-top:0.5rem; margin-bottom:0.5rem; }
+.color-circle { width:24px; height:24px; border-radius:50%; border:2px solid #ddd; cursor:pointer; transition:all 0.2s; position:relative; flex-shrink:0; }
+.color-circle:hover { transform:scale(1.15); border-color:#aaa; }
+.color-circle.active { border-color:var(--text-main); box-shadow:0 0 0 2px #fff, 0 0 0 4px var(--text-main); }
+.product-info { padding:0 0.25rem; }
+.star-rating { font-size:0.75rem; margin-bottom:0.45rem; color:var(--accent); letter-spacing:1px; display:flex; align-items:center; gap:6px; }
+.star-rating span { color:var(--text-muted); font-size:0.72rem; font-weight:400; }
+.brand-name { font-size:0.65rem; font-weight:300; text-transform:uppercase; letter-spacing:1.5px; color:var(--text-muted); margin-bottom:0.25rem; }
+.product-title { font-family:var(--font-display); font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; transition:color 0.3s; letter-spacing:-0.01em; }
+.product-card:hover .product-title { color:var(--accent); }
+.product-price { font-size:0.92rem; color:var(--text-main); font-weight:700; }
+footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
+.footer-grid { display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:3rem; max-width:1300px; margin:0 auto 3.5rem; }
+.footer-grid h5 { font-size:0.78rem; font-weight:800; text-transform:uppercase; margin-bottom:1.5rem; letter-spacing:2px; color:#fff; }
+.footer-grid ul { list-style:none; display:flex; flex-direction:column; gap:0.85rem; }
+.footer-grid a { color:#888; text-decoration:none; font-size:0.85rem; transition:color 0.3s; }
+.footer-grid a:hover { color:var(--accent); }
+.footer-bottom { border-top:1px solid #1c1c1c; padding-top:2rem; text-align:center; color:#666; font-size:0.78rem; }
+.back-to-top { position:fixed; bottom:2rem; right:2rem; width:48px; height:48px; background:#0a0a0a; color:#fff; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem; opacity:0; visibility:hidden; transition:all 0.3s; z-index:90; }
+.back-to-top.visible { opacity:1; visibility:visible; }
+@media (max-width:1024px) { .shop-layout { grid-template-columns:1fr; } .sidebar { position:static; border-right:none; border-bottom:1px solid var(--border); padding-bottom:2rem; } .filter-list { flex-direction:row; flex-wrap:wrap; gap:1rem; } .sidebar-block { display:none; } .product-grid { grid-template-columns:repeat(3,1fr); } .footer-grid { grid-template-columns:1fr 1fr; } }
+@media (max-width:768px) { .product-grid { grid-template-columns:repeat(2,1fr); } }
+@media (max-width:480px) { .product-grid { grid-template-columns:1fr; } }
+</style>
 </head>
 <body>
-
-    <header>
-        <div class="status-tag">// UPLINK_SECURE: ACTIVE</div>
-        <a href="https://2elmalek2elmasry-sketch.github.io/The-Egyptian-King/index.html" class="exit-btn">DISCONNECT</a>
-    </header>
-
-    <div class="vault-title-container">
-        <h1>THE ARCHIVE VAULT</h1>
-        <p>RESTRICTED PIPELINE // CONFIDENTIAL ACCESS GRANTED</p>
-    </div>
-
-    <div class="vault-main-wrapper">
-        <main class="vault-grid">
-            
-            <div class="vault-card">
-                <!-- GRID IMAGE LINK UPDATED -->
-                <div class="vault-img-box">
-                    <img src="https://i.postimg.cc/QC6Sy7Bq/Untitled-design-(15).png" alt="EID MUBARAK HOODIE (UNRELEASED)">
-                </div>
-                <div class="vault-meta-box">
-                    <div>
-                        <h2 class="vault-title">EID MUBARAK HOODIE</h2>
-                        <p class="vault-subtitle">Collection: Dynasty // Unreleased Spec</p>
-                    </div>
-                    <span class="vault-price">EGP 950</span>
-                </div>
-                <!-- MODAL DATA IMAGE LINK UPDATED -->
-                <button class="vault-buy-btn" 
-                        data-product-name="EID MUBARAK HOODIE (UNRELEASED)" 
-                        data-product-price="EGP 950" 
-                        data-product-image="https://i.postimg.cc/QC6Sy7Bq/Untitled-design-(15).png">Quick Buy</button>
-            </div>
-
-        </main>
-    </div>
-
-    <!-- CHECKOUT TERMINAL MODAL -->
-    <div id="checkout-modal" class="modal-overlay">
-        <div class="modal-content">
-            <button class="close-modal" onclick="closeModal()">×</button>
-            <h3 style="text-transform: uppercase; letter-spacing: 1px;">Secure Terminal Checkout</h3>
-            
-            <!-- STEP 1: SUMMARY & SIZE -->
-            <div id="step-1-summary" class="modal-step">
-                <div class="modal-summary-grid">
-                    <img id="modal-product-image" class="modal-img" src="" alt="">
-                    <div>
-                        <h4 id="modal-product-name" style="font-size: 1rem; margin-bottom: 5px;"></h4>
-                        <p id="modal-product-price" style="color: #d1ff27; font-weight: bold;"></p>
-                    </div>
-                </div>
-                <label style="font-size: 0.8rem; color:#666; text-transform: uppercase;">Select Size:</label>
-                <div class="size-selector">
-                    <div class="size-box"><input type="radio" name="size" id="s" value="S"><label for="s" class="size-label">S</label></div>
-                    <div class="size-box"><input type="radio" name="size" id="m" value="M"><label for="m" class="size-label">M</label></div>
-                    <div class="size-box"><input type="radio" name="size" id="l" value="L"><label for="l" class="size-label">L</label></div>
-                    <div class="size-box"><input type="radio" name="size" id="xl" value="XL"><label for="xl" class="size-label">XL</label></div>
-                </div>
-                <button class="modal-next-btn" onclick="nextStep(2)">Proceed to Shipping</button>
-            </div>
-
-            <!-- STEP 2: SHIPPING DETAILS -->
-            <div id="step-2-shipping" class="modal-step">
-                <div class="form-group">
-                    <label>Full Name</label>
-                    <input type="text" id="cust-name" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label>Email Address</label>
-                    <input type="email" id="cust-email" autocomplete="off">
-                </div>
-                <div class="form-group">
-                    <label>Phone Number</label>
-                    <input type="text" id="cust-phone" autocomplete="off">
-                </div>
-                <button class="modal-next-btn" onclick="handleCheckout()">Complete Order Pipeline</button>
-            </div>
-
-            <!-- STEP 3: CONFIRMATION -->
-            <div id="step-3-confirmation" class="modal-step">
-                <div style="text-align: center; padding: 20px 0;">
-                    <p style="color: #d1ff27; font-weight: bold; font-size: 1.2rem; margin-bottom: 10px;">UPLINK DISPATCHED</p>
-                    <p style="color: #888; font-size: 0.9rem;">Check your mail application to send the confirmation order. Opening external transaction gateway...</p>
+    <div class="toast-container"></div>
+    <header id="main-header">
+        <div class="nav-left"></div>
+        <a href="index.html" class="brand-logo">
+            <img src="https://i.postimg.cc/K8TkjrC1/logo-words-transparent.png" alt="The Egyptian King" class="logo-img">
+        </a>
+        <div class="nav-actions">
+            <a href="cart.html" class="icon-btn" aria-label="Cart">
+                <svg viewBox="0 0 24 24"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+                <span class="cart-count" id="nav-cart-count">0</span>
+            </a>
+            <div class="dropdown-wrapper">
+                <button class="menu-toggle-btn" onclick="toggleDropdown()">☰</button>
+                <div class="dropdown-menu" id="dropdown-menu">
+                    <div class="dropdown-section"><div class="dropdown-title">Navigation</div><ul class="dropdown-links"><li><a href="index.html">Home</a></li><li><a href="shop.html">Shop All</a></li><li><a href="track.html">Track Order</a></li></ul></div>
+                    <div class="dropdown-section"><div class="dropdown-title">Support</div><ul class="dropdown-links"><li><a href="terms.html">Shipping Info</a></li><li><a href="terms.html">Returns</a></li></ul></div>
                 </div>
             </div>
         </div>
+    </header>
+    <section class="shop-hero">
+        <h1>Pants</h1>
+        <p>Premium Baggy Sweat Pants & Track Pants</p>
+    </section>
+    <div class="shop-layout">
+        <aside class="sidebar">
+            <h3>Categories</h3>
+            <ul class="filter-list">
+                <li><button class="filter-btn active" data-filter="all" onclick="filterPants('all')">All Pants</button></li>
+                <li><button class="filter-btn" data-filter="sweat" onclick="filterPants('sweat')">Baggy Sweat Pants</button></li>
+                <li><button class="filter-btn" data-filter="track" onclick="filterPants('track')">Baggy Track Pants</button></li>
+                <li><button class="filter-btn" data-filter="best" onclick="filterPants('best')">Best Sellers</button></li>
+            </ul>
+            <div class="sidebar-block">
+                <h3>Sizes</h3>
+                <div class="size-grid">
+                    <button class="size-btn">S</button><button class="size-btn active">M</button><button class="size-btn">L</button><button class="size-btn">XL</button><button class="size-btn">XXL</button><button class="size-btn">3XL</button>
+                </div>
+            </div>
+        </aside>
+        <main>
+            <div class="toolbar">
+                <div class="toolbar-left"><p id="product-count">Showing all pants</p></div>
+                <div class="toolbar-right">
+                    <select class="sort-dropdown" onchange="sortPants(this.value)">
+                        <option value="featured">Sort by: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+            <div class="product-grid" id="pants-grid"></div>
+        </main>
     </div>
-
+    <footer>
+        <div class="footer-grid">
+            <div><h5>The Egyptian King</h5><p style="color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
+            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="pants.html">Pants</a></li></ul></div>
+            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="terms.html">Returns</a></li></ul></div>
+            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Contact</a></li></ul></div>
+        </div>
+        <div class="footer-bottom">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
+    </footer>
+    <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
     <script>
-        let currentProduct = {};
-
-        function openModal(name, price, image) {
-            currentProduct = { name, price, image };
-            document.getElementById('modal-product-name').innerText = name;
-            document.getElementById('modal-product-price').innerText = price;
-            document.getElementById('modal-product-image').src = image;
-            document.getElementById('checkout-modal').style.display = 'flex';
-            showStep(1);
-        }
-
-        function closeModal() { document.getElementById('checkout-modal').style.display = 'none'; }
-
-        function showStep(step) {
-            document.getElementById('step-1-summary').style.display = step === 1 ? 'block' : 'none';
-            document.getElementById('step-2-shipping').style.display = step === 2 ? 'block' : 'none';
-            document.getElementById('step-3-confirmation').style.display = step === 3 ? 'block' : 'none';
-        }
-
-        function nextStep(step) { showStep(step); }
-
-        function handleCheckout() {
-            const name = document.getElementById('cust-name').value;
-            const email = document.getElementById('cust-email').value;
-            const phone = document.getElementById('cust-phone').value;
-            const size = document.querySelector('input[name="size"]:checked')?.value;
-
-            if(!name || !email || !phone || !size) {
-                alert("Please complete all fields and select a size.");
-                return;
+        // ===== PANTS DATA (inline — no external file needed) =====
+        const pants = [
+            {
+                id: 101,
+                name: "Baggy Basic SweatPants — Black",
+                price: 750,
+                rating: 4.8,
+                reviews: 124,
+                category: "sweat",
+                badge: "",
+                img: "https://i.postimg.cc/gj6JQx51/Add-a-subheading-(13).png",
+                images: [
+                    "https://i.postimg.cc/gj6JQx51/Add-a-subheading-(13).png",
+                    "https://i.postimg.cc/cC6YH1zc/Add-a-subheading-(14).png",
+                    "https://i.postimg.cc/GmL0TpYM/3a4c483f-2a1e-4117-9a4c-66777093720d.jpg",
+                    "https://i.postimg.cc/VvWGzj7f/f9129f24-94f8-4168-a1a0-ea434979fa61.png"
+                ],
+                colors: [
+                    { name: "Black", hex: "#0a0a0a", img: "https://i.postimg.cc/gj6JQx51/Add-a-subheading-(13).png", images: [
+                        "https://i.postimg.cc/gj6JQx51/Add-a-subheading-(13).png",
+                        "https://i.postimg.cc/cC6YH1zc/Add-a-subheading-(14).png",
+                        "https://i.postimg.cc/GmL0TpYM/3a4c483f-2a1e-4117-9a4c-66777093720d.jpg",
+                        "https://i.postimg.cc/VvWGzj7f/f9129f24-94f8-4168-a1a0-ea434979fa61.png"
+                    ]},
+                    { name: "Pink", hex: "#f8c5d4", img: "https://i.postimg.cc/76RhK3Bb/Add-a-subheading-(11).png", images: [
+                        "https://i.postimg.cc/76RhK3Bb/Add-a-subheading-(11).png",
+                        "https://i.postimg.cc/2y3v6jt0/Add-a-subheading-(12).png",
+                        "https://i.postimg.cc/85WX08M1/Cotton-Baggy-Fit-Pants-Steel-Grey-Textured-5.jpg",
+                        "https://i.postimg.cc/PfY06DQ3/1737a03c-fee3-4545-a549-ccbbea737446.png"
+                    ]}
+                ]
+            },
+            {
+                id: 102,
+                name: "Baggy Wave Panel Track Pants — Red",
+                price: 750,
+                rating: 4.6,
+                reviews: 89,
+                category: "track",
+                badge: "",
+                img: "https://i.postimg.cc/Fz1cRF6n/Add-a-subheading.jpg",
+                images: [
+                    "https://i.postimg.cc/Fz1cRF6n/Add-a-subheading.jpg",
+                    "https://i.postimg.cc/4xfCH3tW/0bb14c8c-c7de-4048-b82d-41fd0a6171a5.jpg",
+                    "https://i.postimg.cc/fRNHJqGH/39ae2b54-9b84-4280-bda7-daa7cb663885.png"
+                ],
+                colors: [
+                    { name: "Red", hex: "#c8102e", img: "https://i.postimg.cc/Fz1cRF6n/Add-a-subheading.jpg", images: [
+                        "https://i.postimg.cc/Fz1cRF6n/Add-a-subheading.jpg",
+                        "https://i.postimg.cc/4xfCH3tW/0bb14c8c-c7de-4048-b82d-41fd0a6171a5.jpg",
+                        "https://i.postimg.cc/fRNHJqGH/39ae2b54-9b84-4280-bda7-daa7cb663885.png"
+                    ]},
+                    { name: "Black", hex: "#0a0a0a", img: "https://i.postimg.cc/Zn03RYQc/Add-a-subheading-(10).png", images: [
+                        "https://i.postimg.cc/Zn03RYQc/Add-a-subheading-(10).png",
+                        "https://i.postimg.cc/t4Sc1NpM/b77ff217-f258-419f-a60c-79a43f6aca75.jpg",
+                        "https://i.postimg.cc/XqfhpMYH/0844a7bf-5180-4b16-a577-a548c9d97b01.png"
+                    ]}
+                ]
+            },
+            {
+                id: 103,
+                name: "Baggy Burgundy Stripe Pants",
+                price: 750,
+                rating: 4.9,
+                reviews: 201,
+                category: "sweat",
+                badge: "new",
+                img: "https://i.postimg.cc/h4J1cpqD/Add-a-subheading-(15).png",
+                images: [
+                    "https://i.postimg.cc/h4J1cpqD/Add-a-subheading-(15).png",
+                    "https://i.postimg.cc/BbtD6Zzz/Add-a-subheading-(16).png",
+                    "https://i.postimg.cc/QxqwDrPN/4018ed64-6f97-42fb-83da-f08e398551ed.jpg",
+                    "https://i.postimg.cc/DwvV4zsN/0fe0c354-067e-4c0e-9d99-b55beae41e81.png"
+                ],
+                colors: []
+            },
+            {
+                id: 104,
+                name: "Baggy Ice Blue Wide Pants",
+                price: 750,
+                rating: 4.7,
+                reviews: 155,
+                category: "track",
+                badge: "bestseller",
+                img: "https://i.postimg.cc/3NWpRrq9/Add-a-subheading-(8).png",
+                images: [
+                    "https://i.postimg.cc/3NWpRrq9/Add-a-subheading-(8).png",
+                    "https://i.postimg.cc/MGWnHKMB/Add-a-subheading-(9).png",
+                    "https://i.postimg.cc/Njsh20TP/3ab5e354-6b8e-4582-ade5-c31f92a62b40.jpg",
+                    "https://i.postimg.cc/FzVWhjPh/df706910-5e5c-4520-aebc-9a9b2afb10a8.png"
+                ],
+                colors: []
             }
+        ];
 
-            const body = `Order Details:\nProduct: ${currentProduct.name}\nSize: ${size}\nPrice: ${currentProduct.price}\n\nCustomer:\nName: ${name}\nPhone: ${phone}\nEmail: ${email}`;
-            window.location.href = `mailto:2el.malek.2el.masry@gmail.com?subject=Order: ${currentProduct.name}&body=${encodeURIComponent(body)}`;
+        function toggleDropdown() { document.getElementById('dropdown-menu').classList.toggle('active'); }
+        window.addEventListener('click', function(e) { const wrapper = document.querySelector('.dropdown-wrapper'); if (wrapper && !wrapper.contains(e.target)) document.getElementById('dropdown-menu').classList.remove('active'); });
+        function showToast(message) { let container = document.querySelector('.toast-container'); const toast = document.createElement('div'); toast.className = 'toast-message'; toast.innerText = message; container.appendChild(toast); toast.classList.add('show'); setTimeout(() => { toast.classList.remove('show'); setTimeout(() => toast.remove(), 400); }, 3000); }
+        function getStars(rating) { let r = Math.round(rating); return '★'.repeat(r) + '☆'.repeat(5 - r); }
 
-            setTimeout(() => {
-                window.open('https://www.paypal.me/OmarGlelah1', '_blank');
-                showStep(3);
-            }, 1000);
+        let currentFilter = 'all';
+        let currentSort = 'featured';
+        let selectedColors = {};
+
+        function renderPants() {
+            let filtered = [...pants];
+            if (currentFilter === 'best') { filtered = filtered.filter(p => p.badge === 'bestseller'); }
+            else if (currentFilter !== 'all') { filtered = filtered.filter(p => p.category === currentFilter); }
+            if (currentSort === 'price-asc') { filtered.sort((a, b) => a.price - b.price); }
+            else if (currentSort === 'price-desc') { filtered.sort((a, b) => b.price - a.price); }
+            else if (currentSort === 'rating') { filtered.sort((a, b) => b.rating - a.rating); }
+
+            const grid = document.getElementById('pants-grid');
+            document.getElementById('product-count').innerText = `${filtered.length} product${filtered.length > 1 ? 's' : ''}`;
+
+            grid.innerHTML = filtered.map(p => {
+                const hasColors = p.colors && p.colors.length > 0;
+                const selectedColor = selectedColors[p.id] || 0;
+                const currentImg = hasColors ? p.colors[selectedColor].img : p.img;
+                return `
+                    <div class="product-card" onclick="viewPant(${p.id})">
+                        <div class="product-img-wrapper">
+                            <div class="product-badges">
+                                ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
+                                ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
+                                ${p.badge === 'hot' ? '<span class="badge hot">Hot</span>' : ''}
+                            </div>
+                            <img src="${currentImg}" alt="${p.name}" data-product-id="${p.id}">
+                            <button class="quick-add" onclick="event.stopPropagation(); viewPant(${p.id});">QUICK VIEW</button>
+                        </div>
+                        <div class="product-info">
+                            <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
+                            <p class="brand-name">THE EGYPTIAN KING</p>
+                            <h3 class="product-title">${p.name}</h3>
+                            <p class="product-price">E£${p.price}.00 EGP</p>
+                            ${hasColors ? `
+                                <div class="color-picker" onclick="event.stopPropagation();">
+                                    ${p.colors.map((c, ci) => `
+                                        <div class="color-circle ${ci === selectedColor ? 'active' : ''}" style="background:${c.hex};" onclick="selectColor(${p.id}, ${ci})" title="${c.name}"></div>
+                                    `).join('')}
+                                </div>
+                            ` : ''}
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
 
-        document.addEventListener('click', (e) => {
-            const btn = e.target.closest('.vault-buy-btn');
-            if (btn && btn.dataset.productName) {
-                openModal(btn.dataset.productName, btn.dataset.productPrice, btn.dataset.productImage);
+        function selectColor(productId, colorIndex) {
+            selectedColors[productId] = colorIndex;
+            const product = pants.find(p => p.id === productId);
+            if (product && product.colors && product.colors[colorIndex]) {
+                const newImg = product.colors[colorIndex].img;
+                const imgEl = document.querySelector(`img[data-product-id="${productId}"]`);
+                if (imgEl) imgEl.src = newImg;
             }
-        });
+            const card = event.target.closest('.product-card');
+            if (card) { card.querySelectorAll('.color-circle').forEach((c, i) => { c.classList.toggle('active', i === colorIndex); }); }
+        }
+
+        function viewPant(id) {
+            const p = pants.find(prod => prod.id === id);
+            if (p) {
+                const selectedColor = selectedColors[id] || 0;
+                const productData = { ...p };
+                if (p.colors && p.colors.length > 0) {
+                    const color = p.colors[selectedColor];
+                    productData.img = color.img;
+                    productData.images = color.images;
+                    productData.selectedColorName = color.name;
+                    productData.allColors = p.colors;
+                }
+                localStorage.setItem('viewingProduct', JSON.stringify(productData));
+                window.location.href = 'product.html';
+            }
+        }
+
+        function filterPants(category) { currentFilter = category; document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.toggle('active', btn.dataset.filter === category)); renderPants(); }
+        function sortPants(method) { currentSort = method; renderPants(); }
+        function updateCartCount() { const cart = JSON.parse(localStorage.getItem('kingCart')) || []; document.getElementById('nav-cart-count').innerText = cart.reduce((sum, item) => sum + (item.qty || 1), 0); }
+        window.addEventListener('scroll', () => { const header = document.getElementById('main-header'); const backTop = document.getElementById('back-to-top'); if (window.scrollY > 50) header.classList.add('scrolled'); else header.classList.remove('scrolled'); if (window.scrollY > 600) backTop.classList.add('visible'); else backTop.classList.remove('visible'); });
+        document.querySelectorAll('.size-btn').forEach(btn => { btn.addEventListener('click', () => { document.querySelectorAll('.size-btn').forEach(b => b.classList.remove('active')); btn.classList.add('active'); }); });
+        window.addEventListener('DOMContentLoaded', () => { renderPants(); updateCartCount(); });
     </script>
-    <button id="scrollToTopBtn" title="Go to top">
-    <i class="fas fa-arrow-up"></i>
-</button>
-<script>
-    document.addEventListener("DOMContentLoaded", () => {
-    const topBtn = document.getElementById("scrollToTopBtn");
-
-    // Monitor page scroll to toggle visibility
-    window.onscroll = function() {
-        if (document.body.scrollTop > 400 || document.documentElement.scrollTop > 400) {
-            topBtn.style.display = "block";
-        } else {
-            topBtn.style.display = "none";
-        }
-    };
-
-    // Smooth scroll action back to top
-    topBtn.addEventListener("click", () => {
-        window.scrollTo({
-            top: 0,
-            behavior: "smooth"
-        });
-    });
-});
-</script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
+    <script src="auth.js"></script>
 </body>
 </html>
