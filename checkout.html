@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -508,27 +509,12 @@ p, li, a, button, input, textarea, select, label {
                 }
             }
 
-            const targetPhoneNumber = "213698756936"; 
-            let message = `👑 *NEW ORDER - THE EGYPTIAN KING* 👑\n*Order ID:* ${generatedOrderId}\n\n*Customer:* ${firstName} ${lastName}\n*Phone:* ${phone}\n*Email:* ${email}\n*Address:* ${address}, ${city}\n*Payment Method:* ${method}\n`;
-            if (appliedPromoCode) { message += `*Promo Code:* ${appliedPromoCode} (Discount: E£${appliedDiscount.toFixed(2)})\n`; }
-            message += `\n📦 *ORDER ITEMS:*\n`;
-            cart.forEach((item, index) => {
-                const itemTotal = item.price * item.qty;
-                const sizeText = item.size ? ` [Size: ${item.size}]` : '';
-                message += `${index + 1}. ${item.name}${sizeText} (Qty: ${item.qty}) — E£${itemTotal.toFixed(2)}\n`;
-            });
-            message += `\n*Subtotal:* E£${subtotal.toFixed(2)}\n*Shipping Fee:* E£${shippingFee.toFixed(2)} (${shippingReason})\n`;
-            if (appliedDiscount > 0) message += `*Discount:* -E£${appliedDiscount.toFixed(2)}\n`;
-            message += `*Total Amount:* E£${finalTotal.toFixed(2)}\n`;
-
             localStorage.setItem('lastCompletedOrder', JSON.stringify(lastOrder));
             localStorage.removeItem('kingCart');
             if (typeof saveCartToBackend === 'function') saveCartToBackend();
 
-            const encodedMessage = encodeURIComponent(message);
-            const whatsappURL = `https://wa.me/${targetPhoneNumber}?text=${encodedMessage}`;
             showToast("Payment confirmed! Sending receipt to your email...");
-            setTimeout(() => { window.open(whatsappURL, '_blank'); renderReceiptModal(lastOrder); }, 800);
+            setTimeout(() => { renderReceiptModal(lastOrder); }, 800);
         }
 
         function renderReceiptModal(orderData) {
