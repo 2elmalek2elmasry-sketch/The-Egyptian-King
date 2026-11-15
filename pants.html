@@ -61,8 +61,8 @@ header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
 .shop-hero { background:#0a0a0a; color:#fff; text-align:center; padding:6rem 2rem 5rem; }
 .shop-hero h1 { font-family:var(--font-display); font-weight:700; font-size:clamp(2.5rem,6vw,4.5rem); letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:1rem; }
 .shop-hero p { color:#aaa; letter-spacing:3px; text-transform:uppercase; font-size:0.8rem; }
-.shop-layout { display:grid; grid-template-columns:240px 1fr; gap:3rem; max-width:1500px; margin:0 auto; padding:4rem clamp(1.2rem,5vw,3.5rem); }
-.sidebar { border-right:1px solid var(--border); padding-right:2rem; position:sticky; top:100px; height:fit-content; }
+.shop-layout { display:block; width:100%; max-width:1500px; margin:0 auto; padding:3rem clamp(1.2rem,5vw,3.5rem); }
+.sidebar { grid-column:auto; grid-row:auto; border-right:1px solid var(--border); padding-right:1.25rem; position:static; height:auto; min-width:0; }
 .sidebar h3 { font-family:var(--font-display); font-weight:700; font-size:0.9rem; letter-spacing:-0.02em; text-transform:uppercase; margin-bottom:1.5rem; padding-bottom:1rem; border-bottom:1px solid var(--border); }
 .filter-list { list-style:none; display:flex; flex-direction:column; gap:0.8rem; }
 .filter-btn { background:none; border:none; text-align:left; cursor:pointer; color:var(--text-muted); font-size:0.85rem; font-weight:600; letter-spacing:1px; text-transform:uppercase; transition:all 0.3s ease; padding:2px 0; }
@@ -77,7 +77,7 @@ header.scrolled { padding:0.85rem clamp(1.2rem,5vw,3.5rem); }
 .toolbar { display:flex; justify-content:space-between; align-items:center; margin-bottom:2.5rem; padding-bottom:1.5rem; border-bottom:1px solid var(--border); flex-wrap:wrap; gap:1rem; }
 .toolbar-left p { font-size:0.85rem; color:var(--text-muted); letter-spacing:1px; }
 .sort-dropdown { padding:0.6rem 1rem; border:1px solid var(--border); background:#fff; font-size:0.8rem; font-weight:600; cursor:pointer; outline:none; border-radius:2px; }
-.product-grid { display:grid; grid-template-columns:repeat(auto-fill, minmax(min(100%, 280px), 1fr)); gap:2.5rem 1.5rem; }
+.product-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:2.5rem 1.5rem; align-items:start; }
 .product-card { display:flex; flex-direction:column; cursor:pointer; position:relative; }
 .product-img-wrapper { position:relative; width:100%; aspect-ratio:3/4; background:var(--bg-alt); border-radius:4px; overflow:hidden; margin-bottom:1rem; }
 .product-img-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
@@ -110,9 +110,9 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
 .footer-bottom { border-top:1px solid #1c1c1c; padding-top:2rem; text-align:center; color:#666; font-size:0.78rem; }
 .back-to-top { position:fixed; bottom:2rem; right:2rem; width:48px; height:48px; background:#0a0a0a; color:#fff; border:none; border-radius:50%; cursor:pointer; display:flex; align-items:center; justify-content:center; font-size:1.2rem; opacity:0; visibility:hidden; transition:all 0.3s; z-index:90; }
 .back-to-top.visible { opacity:1; visibility:visible; }
-@media (max-width:1024px) { .shop-layout { grid-template-columns:1fr; } .sidebar { position:static; border-right:none; border-bottom:1px solid var(--border); padding-bottom:2rem; } .filter-list { flex-direction:row; flex-wrap:wrap; gap:1rem; } .sidebar-block { display:none; } .product-grid { grid-template-columns:repeat(3,1fr); } .footer-grid { grid-template-columns:1fr 1fr; } }
-@media (max-width:768px) { .product-grid { grid-template-columns:repeat(2,1fr); } }
-@media (max-width:480px) { .product-grid { grid-template-columns:1fr; } }
+@media (max-width:1024px) { .product-grid { grid-template-columns:repeat(3,minmax(0,1fr)); } .footer-grid { grid-template-columns:1fr 1fr; } }
+ @media (max-width:768px) { .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .sidebar { grid-column:1 / -1; border-right:0; border-bottom:1px solid var(--border); padding:0 0 1.25rem; } .filter-list { flex-direction:row; flex-wrap:wrap; gap:1rem; } .sidebar-block { display:none; } }
+ @media (max-width:480px) { .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem 0.75rem; } }
 </style>
 </head>
 <body>
@@ -141,6 +141,18 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
         <p>Premium Baggy Sweat Pants & Track Pants</p>
     </section>
     <div class="shop-layout">
+            <div class="toolbar">
+                <div class="toolbar-left"><p id="product-count">Showing all pants</p></div>
+                <div class="toolbar-right">
+                    <select class="sort-dropdown" onchange="sortPants(this.value)">
+                        <option value="featured">Sort by: Featured</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                        <option value="rating">Top Rated</option>
+                    </select>
+                </div>
+            </div>
+        <div class="product-grid" id="pants-grid">
         <aside class="sidebar">
             <h3>Categories</h3>
             <ul class="filter-list">
@@ -155,21 +167,8 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
                     <button class="size-btn">S</button><button class="size-btn active">M</button><button class="size-btn">L</button><button class="size-btn">XL</button><button class="size-btn">XXL</button><button class="size-btn">3XL</button>
                 </div>
             </div>
-        </aside>
-        <main>
-            <div class="toolbar">
-                <div class="toolbar-left"><p id="product-count">Showing all pants</p></div>
-                <div class="toolbar-right">
-                    <select class="sort-dropdown" onchange="sortPants(this.value)">
-                        <option value="featured">Sort by: Featured</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="rating">Top Rated</option>
-                    </select>
-                </div>
-            </div>
-            <div class="product-grid" id="pants-grid"></div>
-        </main>
+        
+        </div>
     </div>
     <footer>
         <div class="footer-grid">
@@ -297,7 +296,10 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
             const grid = document.getElementById('pants-grid');
             document.getElementById('product-count').innerText = `${filtered.length} product${filtered.length > 1 ? 's' : ''}`;
 
-            grid.innerHTML = filtered.map(p => {
+            const sidebar = grid.querySelector('.sidebar');
+            grid.innerHTML = '';
+            if (sidebar) grid.appendChild(sidebar);
+            grid.insertAdjacentHTML('beforeend', filtered.map(p => {
                 const hasColors = p.colors && p.colors.length > 0;
                 const selectedColor = selectedColors[p.id] || 0;
                 const currentImg = hasColors ? p.colors[selectedColor].img : p.img;
@@ -327,7 +329,7 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
                         </div>
                     </div>
                 `;
-            }).join('');
+            }).join(''));
         }
 
         function selectColor(productId, colorIndex) {
