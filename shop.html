@@ -77,10 +77,12 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
         .shop-hero p { color: #aaa; letter-spacing: 3px; text-transform: uppercase; font-size: 0.8rem; }
 
         .shop-layout { display: block; width: 100%; max-width: 1500px; margin: 0 auto; padding: 3rem clamp(1.2rem, 5vw, 3.5rem); }
-        .sidebar { border: 0; border-bottom: 1px solid var(--border); padding: 0 0 1.25rem; margin-bottom: 2rem; position: static; height: auto; }
-        .sidebar h3 { margin-bottom: 0.75rem; padding-bottom: 0; border-bottom: 0; }
-        .filter-list { flex-direction: row; flex-wrap: wrap; gap: 1.25rem; }
-        .sidebar-block { display: none; }
+        .toolbar { width: 100%; }
+        .product-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 2.5rem 1.5rem; align-items: start; }
+        .sidebar { grid-column: auto; grid-row: auto; border-right: 1px solid var(--border); padding-right: 1.25rem; position: static; height: auto; min-width: 0; }
+        .sidebar h3 { margin-bottom: 1.25rem; }
+        .filter-list { flex-direction: column; flex-wrap: nowrap; gap: 0.8rem; }
+        .sidebar-block { display: block; }
         .sidebar h3 { font-family:var(--font-display); font-weight: 700; font-size: 0.9rem; letter-spacing: -0.02em; text-transform: uppercase; margin-bottom: 1.5rem; padding-bottom: 1rem; border-bottom: 1px solid var(--border); }
         .filter-list { list-style: none; display: flex; flex-direction: column; gap: 0.8rem; }
         .filter-btn { background: none; border: none; text-align: left; cursor: pointer; color: var(--text-muted); font-size: 0.85rem; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; transition: all 0.3s ease; padding: 2px 0; }
@@ -163,6 +165,18 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
     </section>
 
     <div class="shop-layout">
+        <div class="toolbar">
+            <div class="toolbar-left"><p id="product-count">Showing all products</p></div>
+            <div class="toolbar-right">
+                <select class="sort-dropdown" onchange="sortProducts(this.value)">
+                    <option value="featured">Sort by: Featured</option>
+                    <option value="price-asc">Price: Low to High</option>
+                    <option value="price-desc">Price: High to Low</option>
+                    <option value="rating">Top Rated</option>
+                </select>
+            </div>
+        </div>
+        <div class="product-grid" id="shop-grid">
         <aside class="sidebar">
             <h3>Categories</h3>
             <ul class="filter-list">
@@ -178,21 +192,7 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
                 </div>
             </div>
         </aside>
-
-        <main>
-            <div class="toolbar">
-                <div class="toolbar-left"><p id="product-count">Showing all products</p></div>
-                <div class="toolbar-right">
-                    <select class="sort-dropdown" onchange="sortProducts(this.value)">
-                        <option value="featured">Sort by: Featured</option>
-                        <option value="price-asc">Price: Low to High</option>
-                        <option value="price-desc">Price: High to Low</option>
-                        <option value="rating">Top Rated</option>
-                    </select>
-                </div>
-            </div>
-            <div class="product-grid" id="shop-grid"></div>
-        </main>
+        </div>
     </div>
 
     <footer>
@@ -257,7 +257,10 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
             const grid = document.getElementById('shop-grid');
             document.getElementById('product-count').innerText = `${filtered.length} product${filtered.length > 1 ? 's' : ''}`;
             
-            grid.innerHTML = filtered.map(p => `
+            const sidebar = grid.querySelector('.sidebar');
+            grid.innerHTML = '';
+            if (sidebar) grid.appendChild(sidebar);
+            grid.insertAdjacentHTML('beforeend', filtered.map(p => `
                 <div class="product-card" onclick="viewProduct(${p.id})">
                     <div class="product-img-wrapper">
                         <div class="product-badges">
@@ -275,7 +278,7 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
                         <p class="product-price">E£${p.price}.00 EGP</p>
                     </div>
                 </div>
-            `).join('');
+            `).join(''));
         }
 
         function viewProduct(id) {
