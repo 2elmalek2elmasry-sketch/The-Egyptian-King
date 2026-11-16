@@ -114,6 +114,35 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
  @media (max-width:768px) { .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); } .sidebar { grid-column:1 / -1; border-right:0; border-bottom:1px solid var(--border); padding:0 0 1.25rem; } .filter-list { flex-direction:row; flex-wrap:wrap; gap:1rem; } .sidebar-block { display:none; } }
  @media (max-width:480px) { .product-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:1.5rem 0.75rem; } }
 </style>
+<style id="tek-footer-styles">
+.tek-footer{background:#08080b;color:#f4f3f7;padding:54px clamp(16px,4vw,54px) 22px;margin-top:0;font-family:inherit}
+.tek-footer-shell{position:relative;isolation:isolate;overflow:hidden;max-width:1440px;margin:0 auto;border:1px solid #292632;border-radius:18px;padding:clamp(28px,4vw,58px) clamp(22px,4vw,54px) 22px;background:#0c0b11}
+.tek-footer-grid{position:relative;z-index:2;display:grid;grid-template-columns:1.35fr 1fr 1.15fr 1.35fr;gap:clamp(22px,3vw,48px);padding-bottom:48px}
+.tek-footer-brand h3{font-size:17px;letter-spacing:2.1px;font-weight:800;margin:0 0 17px;color:#f7f5fa}
+.tek-footer-brand p,.tek-footer-contact p{color:#9995a3;font-size:13px;line-height:1.85;margin:0;max-width:330px}
+.tek-footer-column{display:flex;flex-direction:column;align-items:flex-start;gap:13px}
+.tek-footer-column h4{font-size:11px;letter-spacing:2px;font-weight:800;color:#a98bff;margin:2px 0 7px}
+.tek-footer-column>a{font-size:13px;line-height:1.5;color:#aaa6b2;text-decoration:none;transition:color .2s}
+.tek-footer-column>a:hover{color:#fff}
+.tek-footer-socials{display:flex;gap:10px;margin-top:23px}
+.tek-footer-socials a{height:34px;min-width:34px;padding:0 9px;border:1px solid #393542;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:#d9d5e0;text-decoration:none;font-size:10px;font-weight:700}
+.tek-footer-socials a:hover{background:#a98bff;border-color:#a98bff;color:#100d17}
+.tek-footer-news-label{font-size:10px;letter-spacing:1.8px;font-weight:800;color:#d8d1e7;margin-top:8px}
+.tek-footer-contact p{font-size:12px;margin-top:-7px}
+.tek-newsletter-form{display:flex;width:100%;max-width:340px;gap:7px;margin-top:3px}
+.tek-newsletter-form input{min-width:0;flex:1;width:100%;height:42px;border:1px solid #383341;border-radius:5px;background:#121018;color:#fff;padding:0 12px;font-size:12px;outline:none}
+.tek-newsletter-form input:focus{border-color:#a98bff}
+.tek-newsletter-form button{height:42px;padding:0 15px;border:0;border-radius:5px;background:#a98bff;color:#110d19;font-size:10px;font-weight:800;letter-spacing:1px;cursor:pointer}
+.tek-newsletter-form button:disabled{opacity:.6;cursor:wait}
+.tek-newsletter-status{display:block;min-height:16px;color:#b9a5ff;font-size:11px;margin-top:7px}
+.tek-footer-watermark{position:relative;z-index:1;pointer-events:none;white-space:nowrap;text-align:center;font-size:clamp(34px,9.7vw,142px);line-height:.9;font-weight:900;letter-spacing:-.075em;color:rgba(255,255,255,.035);margin:-7px 0 27px;overflow:hidden}
+.tek-footer-bottom{position:relative;z-index:2;border-top:1px solid #292632;padding-top:20px;display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;color:#77727f;font-size:10px;letter-spacing:1px}
+.tek-payment-icons{display:flex;gap:7px;align-items:center;flex-wrap:wrap}
+.tek-payment-icons span{border:1px solid #3a3542;border-radius:3px;padding:5px 7px;color:#c3becb;font-size:9px;font-weight:800;letter-spacing:.4px}
+.tek-sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:900px){.tek-footer-grid{grid-template-columns:1fr 1fr}.tek-footer-brand{grid-column:1/-1}}
+@media(max-width:560px){.tek-footer{padding:30px 12px 14px}.tek-footer-shell{padding:25px 18px 18px;border-radius:13px}.tek-footer-grid{grid-template-columns:1fr 1fr;gap:28px 18px;padding-bottom:30px}.tek-footer-brand{grid-column:1/-1}.tek-footer-contact{grid-column:1/-1}.tek-footer-watermark{font-size:12vw;margin:0 0 22px}.tek-footer-bottom{justify-content:center;text-align:center;flex-direction:column;font-size:9px}.tek-newsletter-form{max-width:none}}
+</style>
 </head>
 <body>
     <div class="toast-container"></div>
@@ -170,15 +199,54 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
         
         </div>
     </div>
-    <footer>
-        <div class="footer-grid">
-            <div><h5>The Egyptian King</h5><p style="color:#888; font-size:0.88rem; line-height:1.7; margin-top:1rem;">Redefining luxury streetwear through historical grandeur and high-grade textile engineering.</p></div>
-            <div><h5>Shop</h5><ul><li><a href="shop.html">All Products</a></li><li><a href="pants.html">Pants</a></li></ul></div>
-            <div><h5>Support</h5><ul><li><a href="track.html">Track Order</a></li><li><a href="terms.html">Returns</a></li></ul></div>
-            <div><h5>Company</h5><ul><li><a href="#">Our Story</a></li><li><a href="#">Contact</a></li></ul></div>
+    <footer class="tek-footer" id="site-footer">
+  <div class="tek-footer-shell">
+    <div class="tek-footer-grid">
+      <div class="tek-footer-brand">
+        <h3>THE EGYPTIAN KING</h3>
+        <p>Redefining luxury streetwear through historical grandeur and high-grade textile engineering. Designed in Cairo, worn worldwide.</p>
+        <div class="tek-footer-socials">
+          <a href="https://www.instagram.com/the_egyptian_king_official" aria-label="Instagram" target="_blank" rel="noopener">IG</a>
+          <a href="https://www.facebook.com/the.egyptian.king.official" aria-label="Facebook" target="_blank" rel="noopener">FB</a>
+          <a href="https://x.com/the_egyptian___?s=11" aria-label="X" target="_blank" rel="noopener">X</a>
         </div>
-        <div class="footer-bottom">© 2026 THE EGYPTIAN KING. All rights reserved.</div>
-    </footer>
+      </div>
+      <div class="tek-footer-column">
+        <h4>MARKETPLACE</h4>
+        <a href="shop.html">All Products</a>
+        <a href="hoodies.html">Hoodies</a>
+        <a href="pants.html">Pants</a>
+        <a href="shop.html">New Arrivals</a>
+        <a href="shop.html">Best Sellers</a>
+      </div>
+      <div class="tek-footer-column">
+        <h4>COMPANY</h4>
+        <a href="index.html">About Us</a>
+        <a href="index.html">Founders &amp; Leadership — OMAR GLELAH</a>
+        <a href="index.html">Our Story</a>
+        <a href="#site-footer">Contact</a>
+        <a href="terms.html">Terms &amp; Conditions</a>
+      </div>
+      <div class="tek-footer-column tek-footer-contact">
+        <h4>CONTACT</h4>
+        <a href="mailto:2el.malek.2el.masry@gmail.com">2el.malek.2el.masry@gmail.com</a>
+        <span class="tek-footer-news-label">JOIN THE KINGDOM</span>
+        <p>Get updates on new drops and exclusive releases.</p>
+        <form class="tek-newsletter-form">
+          <label class="tek-sr-only" for="tek-news-footer">Your email address</label>
+          <input id="tek-news-footer" name="email" type="email" autocomplete="email" placeholder="Your email address" required>
+          <button type="submit" aria-label="Subscribe to newsletter">JOIN</button>
+        </form>
+        <span class="tek-newsletter-status" aria-live="polite"></span>
+      </div>
+    </div>
+    <div class="tek-footer-watermark" aria-hidden="true">THE EGYPTIAN KING</div>
+    <div class="tek-footer-bottom">
+      <span>© 2026 THE EGYPTIAN KING. ALL RIGHTS RESERVED.</span>
+      <div class="tek-payment-icons"><span>VISA</span><span>MC</span><span>AMEX</span><span>PAYPAL</span><span>APPLE PAY</span></div>
+    </div>
+  </div>
+</footer>
     <button class="back-to-top" id="back-to-top" onclick="window.scrollTo({top:0, behavior:'smooth'})">↑</button>
     <script>
         // ===== PANTS DATA (inline — no external file needed) =====
@@ -372,5 +440,6 @@ footer { background:#0a0a0a; color:#fff; padding:5rem 2rem 2rem; }
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-auth-compat.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore-compat.js"></script>
     <script src="auth.js"></script>
+<script src="newsletter.js"></script>
 </body>
 </html>
