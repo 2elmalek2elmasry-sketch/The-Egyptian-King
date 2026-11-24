@@ -130,20 +130,10 @@ p, li, a, button, input, textarea, select, label {
 }
 /* === END FONT OVERRIDE === */
 
-/* === THE EGYPTIAN KING: FULLY VISIBLE PRODUCT SIZE GUIDE === */
-.tek-size-guide{width:min(1200px,calc(100% - 32px));margin:0 auto 5rem;padding:clamp(20px,3vw,38px);background:#f7f6f3;color:#111;border:1px solid #e5e2dc;border-radius:10px;box-sizing:border-box}
-.tek-size-guide>h2{text-align:center;font-family:var(--font-display)!important;font-size:clamp(1.35rem,3vw,2rem);letter-spacing:.08em;margin:0 0 8px}
-.tek-size-guide-intro{text-align:center;color:#666;font-size:.85rem;margin:0 0 28px}
-.tek-size-guide-grid{display:grid;grid-template-columns:1fr 1fr;gap:clamp(18px,3vw,34px)}
-.tek-size-chart{min-width:0}
-.tek-size-chart h3{text-align:center;font-family:var(--font-display)!important;font-size:1rem;letter-spacing:.16em;margin:0 0 14px}
-.tek-size-chart table{width:100%;border-collapse:collapse;table-layout:fixed;background:#fff;font-size:clamp(10px,1.15vw,13px)}
-.tek-size-chart th{background:#171717;color:#fff;font-weight:800}
-.tek-size-chart th,.tek-size-chart td{padding:clamp(7px,1vw,11px) 3px;text-align:center;border:1px solid #d8d5cf;overflow-wrap:anywhere}
-.tek-size-chart td:first-child{font-weight:800}
-.tek-size-notes{margin:13px 0 0;padding-left:20px;color:#333;font-size:clamp(11px,1.2vw,13px);line-height:1.8}
-.tek-size-guide-foot{text-align:center;color:#777;font-size:11px;margin:22px 0 0}
-@media(max-width:700px){.tek-size-guide{width:calc(100% - 20px);padding:17px 10px;margin-bottom:3rem}.tek-size-guide-grid{grid-template-columns:1fr;gap:26px}.tek-size-chart table{font-size:12px}.tek-size-chart th,.tek-size-chart td{padding:9px 4px}}
+/* === FULL SIZE GUIDE IMAGE: NEVER CROP === */
+.tek-size-guide{width:min(1200px,calc(100% - 32px));margin:0 auto 5rem;padding:clamp(10px,2vw,24px);background:#f7f6f3;border:1px solid #e5e2dc;border-radius:10px;box-sizing:border-box}
+.tek-size-guide img{display:block;width:100%;max-width:100%;height:auto;max-height:none;object-fit:contain;object-position:center}
+@media(max-width:700px){.tek-size-guide{width:calc(100% - 20px);padding:6px;margin-bottom:3rem}}
 /* === END SIZE GUIDE === */
 
 </style>
@@ -200,40 +190,10 @@ p, li, a, button, input, textarea, select, label {
     </div>
 
 
-    <section class="tek-size-guide" id="tek-size-guide" aria-labelledby="tek-size-guide-title">
-      <h2 id="tek-size-guide-title">THE EGYPTIAN KING — SIZE GUIDE</h2>
-      <p class="tek-size-guide-intro">All measurements are in centimetres (cm). Compare with a garment that fits you well.</p>
-      <div class="tek-size-guide-grid">
-        <div class="tek-size-chart">
-          <h3>HOODIE SIZE CHART</h3>
-          <table aria-label="Hoodie size chart">
-            <thead><tr><th>SIZE</th><th>LENGTH<br>(cm)</th><th>CHEST WIDTH<br>(cm)</th><th>SLEEVE LENGTH<br>(cm)</th></tr></thead>
-            <tbody>
-              <tr><td>S</td><td>70</td><td>68</td><td>58</td></tr>
-              <tr><td>M</td><td>72</td><td>70</td><td>60</td></tr>
-              <tr><td>L</td><td>74</td><td>72</td><td>62</td></tr>
-              <tr><td>XL</td><td>76</td><td>74</td><td>64</td></tr>
-              <tr><td>XXL</td><td>78</td><td>76</td><td>66</td></tr>
-            </tbody>
-          </table>
-          <ul class="tek-size-notes"><li>Oversized / Baggy Fit</li><li>Drop Shoulders</li><li>Premium Heavyweight Fabric</li></ul>
-        </div>
-        <div class="tek-size-chart">
-          <h3>PANTS SIZE CHART</h3>
-          <table aria-label="Pants size chart">
-            <thead><tr><th>SIZE</th><th>LENGTH<br>(cm)</th><th>WAIST<br>(cm)</th><th>HIP<br>(cm)</th><th>LEG OPENING<br>(cm)</th></tr></thead>
-            <tbody>
-              <tr><td>S</td><td>104</td><td>72</td><td>110</td><td>32</td></tr>
-              <tr><td>M</td><td>106</td><td>76</td><td>114</td><td>33</td></tr>
-              <tr><td>L</td><td>108</td><td>80</td><td>118</td><td>34</td></tr>
-              <tr><td>XL</td><td>110</td><td>84</td><td>122</td><td>35</td></tr>
-              <tr><td>XXL</td><td>112</td><td>88</td><td>126</td><td>36</td></tr>
-            </tbody>
-          </table>
-          <ul class="tek-size-notes"><li>Y2K Wide Leg / Baggy Fit</li><li>Adjustable Drawstring Waist</li><li>Premium Lightweight Fabric</li></ul>
-        </div>
-      </div>
-      <p class="tek-size-guide-foot">THE EGYPTIAN KING · SIZES S–XXL</p>
+    <section class="tek-size-guide" id="tek-size-guide" aria-label="The Egyptian King hoodie and pants size chart">
+      <img src="https://i.postimg.cc/3RzKhjhx/IMG-5570.jpg"
+           alt="The Egyptian King hoodie and Y2K wide-leg pants size charts, including measurements and fit details"
+           loading="lazy" decoding="async">
     </section>
 
     <footer class="tek-footer" id="site-footer"><div class="tek-footer-shell"><div class="tek-footer-grid">
