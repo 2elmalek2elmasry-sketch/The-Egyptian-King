@@ -109,6 +109,7 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
         .badge.new { background: #0a0a0a; color: #fff; }
         .badge.bestseller { background: var(--accent); color: #fff; }
         .badge.hot { background: #c8102e; color: #fff; }
+        .badge.sale { background:#c8102e; color:#fff; box-shadow:0 3px 10px rgba(200,16,46,.18); }
         .quick-add { position: absolute; bottom: 0; left: 0; right: 0; background: rgba(10,10,10,0.98); color: #fff; backdrop-filter: blur(5px); padding: 1.1rem; text-align: center; font-weight: 700; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 3px; transform: translateY(100%); transition: transform 0.4s; border: none; cursor: pointer; width: 100%; }
         .product-card:hover .quick-add { transform: translateY(0); }
         .quick-add:hover { background: var(--accent); color: #0a0a0a; }
@@ -122,6 +123,8 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
         .product-title { font-family:var(--font-display); font-size: 0.95rem; font-weight: 700; margin-bottom: 0.4rem; transition: color 0.3s; letter-spacing: -0.01em; }
         .product-card:hover .product-title { color: var(--accent); }
         .product-price { font-size: 0.92rem; color: var(--text-main); font-weight: 700; }
+        .product-price .old-price { color:#858585; text-decoration:line-through; text-decoration-color:#c8102e; font-size:.82rem; font-weight:500; margin-right:7px; }
+        .product-price .sale-price { color:#c8102e; font-weight:900; }
 
         footer { background: #0a0a0a; color: #fff; padding: 5rem 2rem 2rem; }
         .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 3rem; max-width: 1300px; margin: 0 auto 3.5rem; }
@@ -311,6 +314,29 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
             { id: 104, name: "Baggy Ice Blue Wide Pants", price: 750, rating: 4.7, reviews: 155, category: "track", badge: "bestseller", img: "https://i.postimg.cc/3NWpRrq9/Add-a-subheading-(8).png", images: ["https://i.postimg.cc/3NWpRrq9/Add-a-subheading-(8).png", "https://i.postimg.cc/MGWnHKMB/Add-a-subheading-(9).png", "https://i.postimg.cc/Njsh20TP/3ab5e354-6b8e-4582-ade5-c31f92a62b40.jpg", "https://i.postimg.cc/FzVWhjPh/df706910-5e5c-4520-aebc-9a9b2afb10a8.png"] }
         ];
 
+        const saleDiscounts = {
+            "hall of fame hoodie": 10,
+            "8azl banat hoodie": 20,
+            "8azl banaat hoodie": 20,
+            "yomak 3asal hoodie": 15,
+            "2om kalthoum hoodie": 25,
+            "7aflet share3 hoodie": 20,
+            "basic h core — black": 10,
+            "baggy wave panel track pants — red": 10,
+            "baggy burgundy stripe pants": 15,
+            "baggy ice blue wide pants": 25
+        };
+        function applySalePricing(items) {
+            items.forEach(product => {
+                const discount = saleDiscounts[product.name.toLowerCase()];
+                if (!discount) return;
+                product.originalPrice = product.price;
+                product.discountPercent = discount;
+                product.price = Math.round(product.price * (1 - discount / 100));
+            });
+        }
+        applySalePricing(products);
+
         function getStars(rating) { let r = Math.round(rating); return '★'.repeat(r) + '☆'.repeat(5 - r); }
         let currentFilter = 'all'; let currentSort = 'featured';
 
@@ -335,6 +361,7 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
                             ${p.badge === 'new' ? '<span class="badge new">New</span>' : ''}
                             ${p.badge === 'bestseller' ? '<span class="badge bestseller">Bestseller</span>' : ''}
                             ${p.badge === 'hot' ? '<span class="badge hot">Hot</span>' : ''}
+                                ${p.discountPercent ? `<span class="badge sale">-${p.discountPercent}% OFF</span>` : ''}
                         </div>
                         <img src="${p.img}" alt="${p.name}">
                         <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">QUICK VIEW</button>
@@ -343,7 +370,7 @@ pre, code { white-space:pre-wrap; word-break:break-word; }
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
                         <p class="brand-name">THE EGYPTIAN KING</p>
                         <h3 class="product-title">${p.name}</h3>
-                        <p class="product-price">E£${p.price}.00 EGP</p>
+                        <p class="product-price">${p.discountPercent ? `<span class="old-price">E£${p.originalPrice}.00</span><span class="sale-price">E£${p.price}.00 EGP</span>` : `E£${p.price}.00 EGP`}</p>
                     </div>
                 </div>
             `).join(''));
