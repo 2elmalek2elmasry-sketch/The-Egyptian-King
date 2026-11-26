@@ -674,6 +674,11 @@ p, li, a, button, input, textarea, select, label {
 </style>
 </head>
 <body>
+    <div class="bf-announcement" role="region" aria-label="Black Friday announcement">
+        <strong>Black Friday Event</strong>
+        <span>Selected styles. Special deals.</span>
+        <a href="shop.html" aria-label="Shop Black Friday offers">Shop the offers</a>
+    </div>
     <div class="toast-container"></div>
     <header id="main-header">
         <div class="nav-left"></div>
@@ -975,7 +980,14 @@ p, li, a, button, input, textarea, select, label {
     .node-item-row { display:flex; justify-content:space-between; margin-bottom:0.4rem; font-weight:600; }
     .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
     .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
-    </style>
+    
+        /* Black Friday announcement — staging only */
+        .bf-announcement { width:100%; min-height:42px; padding:10px clamp(12px,3vw,28px); background:#0a0a0a; color:#fff; display:flex; align-items:center; justify-content:center; gap:12px; text-align:center; font-size:11px; line-height:1.5; letter-spacing:1.15px; text-transform:uppercase; }
+        .bf-announcement strong { color:#d2b46c; font-weight:800; }
+        .bf-announcement a { color:#fff; font-weight:800; text-decoration:underline; text-decoration-color:#d2b46c; text-underline-offset:3px; white-space:nowrap; }
+        .bf-announcement a:hover { color:#d2b46c; }
+        @media (max-width:560px) { .bf-announcement { flex-wrap:wrap; gap:4px 9px; padding:9px 12px; font-size:10px; letter-spacing:.8px; } }
+</style>
     <script>
         function checkAndRenderOrderReceipt() {
             const urlParams = new URLSearchParams(window.location.search);
