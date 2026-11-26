@@ -674,6 +674,12 @@ p, li, a, button, input, textarea, select, label {
 </style>
 </head>
 <body>
+    <div class="bf-announcement" role="region" aria-label="The Egyptian King Black Friday event">
+        <span class="bf-kicker">THE EGYPTIAN KING PRESENTS</span>
+        <strong>THE BLACK FRIDAY EVENT</strong>
+        <span class="bf-copy">Your favourite pieces. Exceptional prices. Selected styles only.</span>
+        <a href="shop.html" aria-label="Explore the Black Friday offers">EXPLORE THE OFFERS <span aria-hidden="true">↗</span></a>
+    </div>
     <div class="toast-container"></div>
     <header id="main-header">
         <div class="nav-left"></div>
@@ -975,7 +981,18 @@ p, li, a, button, input, textarea, select, label {
     .node-item-row { display:flex; justify-content:space-between; margin-bottom:0.4rem; font-weight:600; }
     .node-total { display:flex; justify-content:space-between; font-size:1.2rem; font-weight:900; margin-top:0.5rem; }
     .node-footer { margin-top:1.5rem; font-size:0.75rem; color:#777; text-align:center; line-height:1.4; }
-    </style>
+    
+        /* Black Friday announcement — premium campaign strip */
+        .bf-announcement { width:100%; min-height:82px; padding:13px clamp(14px,3vw,34px); background:#090909; color:#fff; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; text-align:center; border-bottom:1px solid #b99b5b; }
+        .bf-kicker { color:#b99b5b; font-size:9px; font-weight:700; letter-spacing:2.6px; line-height:1.4; }
+        .bf-announcement strong { color:#fff; font-family:'Space Grotesk',sans-serif; font-size:clamp(15px,2vw,19px); font-weight:700; letter-spacing:2px; line-height:1.2; }
+        .bf-copy { color:#d4d4d4; font-size:11px; letter-spacing:.35px; line-height:1.5; }
+        .bf-announcement a { margin-top:3px; color:#d2b46c; font-size:10px; font-weight:800; letter-spacing:1.15px; text-decoration:none; border-bottom:1px solid #d2b46c; padding-bottom:2px; }
+        .bf-announcement a span { display:inline-block; transition:transform .2s ease; }
+        .bf-announcement a:hover { color:#fff; border-color:#fff; }
+        .bf-announcement a:hover span { transform:translate(2px,-2px); }
+        @media (max-width:560px) { .bf-announcement { min-height:88px; padding:12px 12px; gap:5px; } .bf-kicker { font-size:8px; letter-spacing:2px; } .bf-announcement strong { font-size:15px; letter-spacing:1.5px; } .bf-copy { font-size:10px; } .bf-announcement a { font-size:9px; } }
+</style>
     <script>
         function checkAndRenderOrderReceipt() {
             const urlParams = new URLSearchParams(window.location.search);
