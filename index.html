@@ -912,13 +912,36 @@ p, li, a, button, input, textarea, select, label {
             "baggy burgundy stripe pants": 15,
             "baggy ice blue wide pants": 25
         };
+        function isBlackFridayWeek(date = new Date()) {
+            const year = date.getFullYear();
+            const novemberFirst = new Date(year, 10, 1);
+            const firstFridayOffset = (5 - novemberFirst.getDay() + 7) % 7;
+            const blackFriday = new Date(year, 10, 1 + firstFridayOffset + 21);
+            const weekStart = new Date(blackFriday);
+            weekStart.setDate(blackFriday.getDate() - 4);
+            weekStart.setHours(0, 0, 0, 0);
+            const weekEnd = new Date(weekStart);
+            weekEnd.setDate(weekStart.getDate() + 7);
+            return date >= weekStart && date < weekEnd;
+        }
+
+        const blackFridaySaleActive = isBlackFridayWeek();
+        const bfAnnouncement = document.querySelector('.bf-announcement');
+        if (bfAnnouncement) {
+            bfAnnouncement.style.display = blackFridaySaleActive ? '' : 'none';
+        }
+
         function applySalePricing(items) {
             items.forEach(product => {
                 const discount = saleDiscounts[product.name.toLowerCase()];
-                if (!discount) return;
                 product.originalPrice = product.price;
-                product.discountPercent = discount;
-                product.price = Math.round(product.price * (1 - discount / 100));
+                if (blackFridaySaleActive && discount) {
+                    product.discountPercent = discount;
+                    product.price = Math.round(product.originalPrice * (1 - discount / 100));
+                } else {
+                    product.discountPercent = null;
+                    product.price = product.originalPrice;
+                }
             });
         }
         applySalePricing(products);
