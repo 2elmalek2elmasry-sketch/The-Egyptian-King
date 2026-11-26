@@ -155,6 +155,7 @@
         .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,260px),1fr)); gap:2rem 1.5rem; max-width:1400px; margin:0 auto; }
         .product-card { text-decoration:none; color:inherit; display:flex; flex-direction:column; cursor:pointer; position:relative; }
         .product-img-wrapper { position:relative; width:100%; aspect-ratio:1/1.2; background:var(--bg-alt); border-radius:4px; overflow:hidden; margin-bottom:1rem; }
+        .product-badges { position:absolute; top:12px; left:12px; display:flex; flex-direction:column; gap:6px; z-index:2; }
         .product-img-wrapper img { width:100%; height:100%; object-fit:cover; transition:transform 0.6s ease; }
         .product-card:hover .product-img-wrapper img { transform:scale(1.06); }
         .product-badges { position:absolute; top:12px; left:12px; display:flex; flex-direction:column; gap:6px; z-index:2; }
@@ -176,7 +177,8 @@
         .product-title { font-size:0.95rem; font-weight:700; margin-bottom:0.4rem; letter-spacing:0.3px; transition:color 0.3s; }
         .product-card:hover .product-title { color:var(--accent); }
         .product-price { font-size:0.92rem; color:var(--text-main); font-weight:700; display:flex; gap:8px; align-items:center; }
-        .product-price .old-price { color:var(--text-muted); text-decoration:line-through; font-weight:400; font-size:0.85rem; }
+        .product-price .old-price { color:var(--text-muted); text-decoration:line-through; text-decoration-color:var(--sale); font-weight:400; font-size:0.85rem; }
+        .product-price .sale-price { color:var(--sale); font-weight:900; }
         .view-all-row { text-align:center; margin-top:3.5rem; }
 
         .manifesto { background:#0a0a0a; color:#fff; text-align:center; padding:7rem 2rem; position:relative; overflow:hidden; }
@@ -898,6 +900,29 @@ p, li, a, button, input, textarea, select, label {
             { id: 16, name: "2om kalthoum Hoodie", price: 950, rating: 4.9, reviews: 456, img: "https://i.postimg.cc/XJnH4NNX/Add-a-subheading-(21).png", images: ["https://i.postimg.cc/XJnH4NNX/Add-a-subheading-(21).png"] }
         ];
 
+        const saleDiscounts = {
+            "hall of fame hoodie": 10,
+            "8azl banat hoodie": 20,
+            "8azl banaat hoodie": 20,
+            "yomak 3asal hoodie": 15,
+            "2om kalthoum hoodie": 25,
+            "7aflet share3 hoodie": 20,
+            "basic h core — black": 10,
+            "baggy wave panel track pants — red": 10,
+            "baggy burgundy stripe pants": 15,
+            "baggy ice blue wide pants": 25
+        };
+        function applySalePricing(items) {
+            items.forEach(product => {
+                const discount = saleDiscounts[product.name.toLowerCase()];
+                if (!discount) return;
+                product.originalPrice = product.price;
+                product.discountPercent = discount;
+                product.price = Math.round(product.price * (1 - discount / 100));
+            });
+        }
+        applySalePricing(products);
+
         function getStars(rating) { let r = Math.round(rating); return '★'.repeat(r) + '☆'.repeat(5 - r); }
 
         function renderFeatured() {
@@ -905,6 +930,7 @@ p, li, a, button, input, textarea, select, label {
             grid.innerHTML = products.map(p => `
                 <div class="product-card" onclick="viewProduct(${p.id})">
                     <div class="product-img-wrapper">
+                        <div class="product-badges">${p.discountPercent ? `<span class="badge sale">-${p.discountPercent}% OFF</span>` : ""}</div>
                         <img src="${p.img}" alt="${p.name}">
                         <button class="quick-add" onclick="event.stopPropagation(); viewProduct(${p.id});">QUICK VIEW</button>
                     </div>
@@ -912,7 +938,7 @@ p, li, a, button, input, textarea, select, label {
                         <div class="star-rating">${getStars(p.rating)} <span>(${p.reviews})</span></div>
                         <p class="brand-name">THE EGYPTIAN KING</p>
                         <h3 class="product-title">${p.name}</h3>
-                        <p class="product-price">E£${p.price}.00 EGP</p>
+                        <p class="product-price">${p.discountPercent ? `<span class="old-price">E£${p.originalPrice}.00</span><span class="sale-price">E£${p.price}.00 EGP</span>` : `E£${p.price}.00 EGP`}</p>
                     </div>
                 </div>
             `).join('');
